@@ -15,7 +15,7 @@ using System.Threading;
 namespace PharMS_Steuerung
 {
     public partial class Form1 : Form
-    {
+    { // das ist ein test VS
         static Funktionen.COM Comschnitstelle;
         string ablauf;
         public bool Connection;
