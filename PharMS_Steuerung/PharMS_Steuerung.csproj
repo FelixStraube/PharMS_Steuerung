@@ -74,6 +74,7 @@
     <Compile Include="Funktionen\CfgFile.cs" />
     <Compile Include="Funktionen\COM.cs" />
     <Compile Include="Funktionen\Consolen_LOG.cs" />
+    <Compile Include="Funktionen\Sequenzeditor.cs" />
     <Compile Include="Funktionen\Datenerfassen.cs" />
     <Compile Include="Funktionen\Exporting.cs" />
     <Compile Include="Program.cs" />

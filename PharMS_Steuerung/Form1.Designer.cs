@@ -78,6 +78,8 @@
             this.Console_Eingabe = new System.Windows.Forms.TextBox();
             this.Console_Ausgabe = new System.Windows.Forms.TextBox();
             this.Verzeichnisauswahl = new System.Windows.Forms.FolderBrowserDialog();
+            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -90,6 +92,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericZellspannung)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DatenerfassungTab)).BeginInit();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.SuspendLayout();
             // 
             // AblaufListe
@@ -103,6 +106,7 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
@@ -642,6 +646,20 @@
             this.Console_Ausgabe.Size = new System.Drawing.Size(440, 198);
             this.Console_Ausgabe.TabIndex = 0;
             // 
+            // fileSystemWatcher1
+            // 
+            this.fileSystemWatcher1.EnableRaisingEvents = true;
+            this.fileSystemWatcher1.SynchronizingObject = this;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(519, 431);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Sequenzeditor";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -669,6 +687,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.DatenerfassungTab)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -730,6 +749,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Zeit;
         private System.Windows.Forms.DataGridViewTextBoxColumn Spannung1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Spannung2;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.IO.FileSystemWatcher fileSystemWatcher1;
     }
 }
 
