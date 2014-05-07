@@ -639,6 +639,7 @@
             this.Console_Ausgabe.Location = new System.Drawing.Point(30, 41);
             this.Console_Ausgabe.Multiline = true;
             this.Console_Ausgabe.Name = "Console_Ausgabe";
+            this.Console_Ausgabe.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.Console_Ausgabe.Size = new System.Drawing.Size(440, 198);
             this.Console_Ausgabe.TabIndex = 0;
             // 
