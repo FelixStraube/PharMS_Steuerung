@@ -1,29 +1,29 @@
-﻿/*Ausgab der Daten in eine Tabelle
- */
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data;
 using System.IO;
+using PharMS_Steuerung;
+using System.Drawing;
 
 
 namespace PharMS_Steuerung.Funktionen
 {
-   public  class Sequenzeditor
+    public class Sequenzeditor
     {
-        public Dictionary<string, string> dictSequenzBefehleWithOneChar;
-        public Dictionary<string, string> dictSequenzBefehleWithTwoChar;
+        private Dictionary<string, string> dictSequenzBefehleWithOneChar;
+        private Dictionary<string, string> dictSequenzBefehleWithTwoChar;
         public List<string> lstCommands;
-      
-        public Sequenzeditor()
+        private Form1 MainForm;
+
+        public Sequenzeditor(Form1 MainForm)
         {
-            dictSequenzBefehleWithOneChar =  new Dictionary<string, string>();
-            dictSequenzBefehleWithTwoChar =  new Dictionary<string, string>();
+            dictSequenzBefehleWithOneChar = new Dictionary<string, string>();
+            dictSequenzBefehleWithTwoChar = new Dictionary<string, string>();
             lstCommands = new List<string>();
+            this.MainForm = MainForm;
 
             dictSequenzBefehleWithOneChar.Add("X", "Makro  starten mit Sequenznr. ");
             dictSequenzBefehleWithOneChar.Add("x", "Makro  abbrechen mit Sequenznr. ");
@@ -41,17 +41,16 @@ namespace PharMS_Steuerung.Funktionen
             dictSequenzBefehleWithOneChar.Add("U", "Einstelllung der Potentiostatspannung [mV]");
             dictSequenzBefehleWithOneChar.Add("u", "Abfrage der Potentiostatspannung [mV]");
             dictSequenzBefehleWithOneChar.Add("y", "Potenziostat ein/aus");
-
-            
-
-            dictSequenzBefehleWithTwoChar.Add("DV", "Dosiererventil n = 1,2 Ventilpositionen  1- Richtung Wasserflasche, 2 – 8 Portventil");
+            //--------------------------------------------------------------------------
+            dictSequenzBefehleWithTwoChar.Add("DV", "Dosiererventil n = 1,2 Ventilpositionen  1- Richtung Wasserflasche, 2 – 8 Portventil"); //Messkammer leeren und spülen verwendet Dv ?
             dictSequenzBefehleWithTwoChar.Add("DS", "Geschwindigkeit mit 1 - Vmax, 40 - Vmin");
             dictSequenzBefehleWithTwoChar.Add("DP", "Ansaugmenge (µl)");
             dictSequenzBefehleWithTwoChar.Add("DD", "Ausstossmenge (µl)");
-            dictSequenzBefehleWithTwoChar.Add("DA", "Absolutposition (0…500)");     
+            dictSequenzBefehleWithTwoChar.Add("DA", "Absolutposition (0…500)");
             dictSequenzBefehleWithTwoChar.Add("dn", "Begasung  1-ein, 0-aus");
             dictSequenzBefehleWithTwoChar.Add("on", "Thermostat ein/aus");
             dictSequenzBefehleWithTwoChar.Add("dw", "Begasungsdosierer"); // TODO  Parameter fallen aus den Konzept, seperate Lösung notwendig
+            dictSequenzBefehleWithTwoChar.Add("DI", "Was ist das??");
 
             /* dwOS2A48000IS20A0\n  Z\n    - Kommandostring für Begasungsdosierer
                dw -  Kommando zur Stringeingabe
@@ -61,10 +60,6 @@ namespace PharMS_Steuerung.Funktionen
               I –Ventil auf Ausstoßöffnung (links)
               S20 – Geschwindigkeit 20 (40 Minimum)
               A0  - Absolutpositionierung auf 0*/
-
-     
-
-                   
 
             lstCommands.Add("X");
             lstCommands.Add("x");
@@ -88,14 +83,68 @@ namespace PharMS_Steuerung.Funktionen
             lstCommands.Add("DD");
             lstCommands.Add("DA");
             lstCommands.Add("dn");
-            lstCommands.Add("on");             
-                       
-            
-            //grid.DataSource = source;
+            lstCommands.Add("dw");
+            lstCommands.Add("on");
+            lstCommands.Add("DI");
 
-
+            DataGridViewComboBoxColumn colBefehl = (DataGridViewComboBoxColumn)MainForm.SequenzeditorGrid.Columns["colBefehl"];
+            foreach (string sCom in lstCommands)
+            {
+                colBefehl.Items.Add(sCom);
+            }
         }
 
+        public void FillGrid()
+        {
+            Sequenz oSequenz = GetSelectedSequenz();
+            MainForm.lbSequenzname.Text = oSequenz.sName;
+            string sOut = "";
+            int i = 0;
+            if (oSequenz == null) throw new System.ArgumentException("Parameter cannot be null", "oSequenz");  //später soll der zustand als anlegen einer neuen sequenz verstanden werden
+
+            MainForm.SequenzeditorGrid.Rows.Clear();
+
+
+            foreach (string line in oSequenz.stlSequenz)
+            {
+                if (line == "") continue;
+
+                MainForm.SequenzeditorGrid.Rows.Add();
+                DataGridViewComboBoxCell cbCell = (DataGridViewComboBoxCell)MainForm.SequenzeditorGrid.Rows[i].Cells[0];
+                sOut = "";
+                dictSequenzBefehleWithTwoChar.TryGetValue(line.Substring(0, 2), out sOut);
+                if (sOut == null)
+                {
+                    dictSequenzBefehleWithOneChar.TryGetValue(line.Substring(0, 1), out sOut);
+                    cbCell.Value = line.Substring(0, 1);
+                    MainForm.SequenzeditorGrid.Rows[i].Cells[1].Value = line.Substring(1);
+                }
+                else
+                {
+                    cbCell.Value = line.Substring(0, 2);
+                    MainForm.SequenzeditorGrid.Rows[i].Cells[1].Value = line.Substring(2);
+                }
+
+                if (MainForm.SequenzeditorGrid.Rows[i].Cells[1].Value.ToString() != "*") MainForm.SequenzeditorGrid.Rows[i].Cells[1].ReadOnly = true;
+                else
+                    MainForm.SequenzeditorGrid.Rows[i].Cells[1].Style.BackColor = Color.RosyBrown;
+
+                MainForm.SequenzeditorGrid.Rows[i].Cells[2].Value = sOut;
+
+
+                i++;
+            }
+        }
+
+        public Sequenz GetSelectedSequenz()
+        {
+            foreach (Sequenz oSequenz in MainForm.lstSequenz)
+            {
+                if (MainForm.AblaufListe.SelectedItem.ToString() == oSequenz.sName) return oSequenz;
+            }
+            return null;
+
+        }
 
     }
 }

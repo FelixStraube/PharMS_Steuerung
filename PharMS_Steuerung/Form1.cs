@@ -30,17 +30,15 @@ namespace PharMS_Steuerung
         static System.Windows.Forms.Timer Zeitsteuerung = new System.Windows.Forms.Timer();
         static int alarmCounter = 1;
         static bool exitFlag = false;
-        
+        public List<Sequenz> lstSequenz;
+        public Sequenzeditor oSequenzeditor;
+
         public Form1()
         {
-            
-           
-           
-           InitializeComponent();
-           
-     
+            InitializeComponent();
+
         }
-        
+
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
 
@@ -62,17 +60,17 @@ namespace PharMS_Steuerung
 
             //  Console.WriteLine("Incoming Data:" + lines[0]);
             int count = lines.Count;
-              ablauf = "";
+            ablauf = "";
             for (int i = 1; i < count; i++)
             {
-               if (lines[i] == "") { }
-               else ablauf = ablauf +";"+ lines[i];
+                if (lines[i] == "") { }
+                else ablauf = ablauf + ";" + lines[i];
 
             }
- 
-            Console.WriteLine("Incoming Data:"+ "Y"+comboBox1.SelectedItem.ToString() + ablauf);
-            
-            Comschnitstelle.COMSender("Y"+comboBox1.SelectedItem.ToString()+ablauf);
+
+            Console.WriteLine("Incoming Data:" + "Y" + cmbSpeicherplatz.SelectedItem.ToString() + ablauf);
+
+            Comschnitstelle.COMSender("Y" + cmbSpeicherplatz.SelectedItem.ToString() + ablauf);
 
 
 
@@ -102,17 +100,18 @@ namespace PharMS_Steuerung
             {
                 //ToCsV(dataGridView1, @"c:\export.xls");
                 Exporting Save = new Exporting(DatenerfassungTab, sfd.FileName); // Here dataGridview1 is your grid view name 
-            }              
+            }
 
-       }
+        }
 
         public bool DatenerfassungTab_Hinzu(string Time, string Daten, string Daten2)
-       {
-           if (this.InvokeRequired) { 
-           
-           return (bool) this.Invoke((Func<string,string,string, bool>)DatenerfassungTab_Hinzu, Time, Daten , Daten2);
-           
-           }
+        {
+            if (this.InvokeRequired)
+            {
+
+                return (bool)this.Invoke((Func<string, string, string, bool>)DatenerfassungTab_Hinzu, Time, Daten, Daten2);
+
+            }
             DataGridViewRow row = (DataGridViewRow)DatenerfassungTab.Rows[0].Clone();
             row.Cells[0].Value = Time;
             row.Cells[1].Value = Daten;
@@ -120,17 +119,18 @@ namespace PharMS_Steuerung
             DatenerfassungTab.Rows.Add(row);
             return true;
 
-        
+
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             if (Connection == true)
-            {   change_Label("In Arbeit", label6);
-                Comschnitstelle.COMSender("X"+comboBox2.SelectedItem.ToString());
-                
-               // label6.Text = "In Arbeit";
-                
+            {
+                change_Label("In Arbeit", label6);
+                Comschnitstelle.COMSender("X" + cmbSpeicherplatzTest.SelectedItem.ToString());
+
+                // label6.Text = "In Arbeit";
+
             }
             else
             {
@@ -145,8 +145,9 @@ namespace PharMS_Steuerung
             Comschnitstelle.COMNotSender("x");
 
         }
-   
-        public bool change_Label (string Text, Label Textlabel){
+
+        public bool change_Label(string Text, Label Textlabel)
+        {
             if (this.InvokeRequired)
             {
 
@@ -157,35 +158,35 @@ namespace PharMS_Steuerung
 
 
             return true;
-    }
- 
-        public bool change_progressBar(int aktuell,int Stepp,ProgressBar statusleist )
+        }
+
+        public bool change_progressBar(int aktuell, int Stepp, ProgressBar statusleist)
         {
             if (this.InvokeRequired)
             {
 
-                return (bool)this.Invoke((Func<int,int, ProgressBar, bool>)change_progressBar,aktuell, Stepp, statusleist);
+                return (bool)this.Invoke((Func<int, int, ProgressBar, bool>)change_progressBar, aktuell, Stepp, statusleist);
 
             }
             statusleist.Maximum = Stepp;
             statusleist.Step = 1;
             if (aktuell == 0) { statusleist.Value = 0; };
             statusleist.PerformStep();
-           if (aktuell == -1) { statusleist.Value = 0; };
+            if (aktuell == -1) { statusleist.Value = 0; };
 
-            
-            
+
+
             return true;
         }
-      
+
         private void AblaufStart_Click(object sender, EventArgs e)
         {
             Abbruch = false;
             Durchläufe = Convert.ToInt32(numericUpDown1.Value);
             Name = Masterablauf.SelectedItem.ToString();
             Thread thread1 = new Thread(new ThreadStart(Execute_Ablauf));
-            thread1.Start();        
-            
+            thread1.Start();
+
         }
 
         public void Execute_Ablauf()
@@ -200,24 +201,24 @@ namespace PharMS_Steuerung
             int count = newlines.Count;
             for (int z = 0; z < Durchläufe; z++)
             {
-     
+
                 for (int i = 1; i < count; i++)
                 {
-                    
+
                     Boolean Lauf = true;
                     do
                     {
-                        if (newlines[i] != "") 
-                        { 
+                        if (newlines[i] != "")
+                        {
                             Lauf = Comschnitstelle.COMAblaufSender("X" + newlines[i]);
                             Console.WriteLine("Line: " + i + ";" + count + ";" + "X" + newlines[i]);
                         };
                         if (Abbruch == true) { break; }
-                        
+
                         System.Threading.Thread.Sleep(1000);
 
                     } while (Lauf == false);
-                    
+
                     change_progressBar(z, Durchläufe, progressBar1);
                 }
             }
@@ -225,27 +226,27 @@ namespace PharMS_Steuerung
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            bool OrdnerExisitiert = Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "Abläufe");      //TODO Test und Temp?     
+            if (!OrdnerExisitiert)
+            {
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "Abläufe");
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\Master");
+            }
             List<string> dirs = new List<string>(Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\", "*.txt"));
             List<string> dirAblauf = new List<string>(Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\Master\\", "*.txt"));
 
-             Sequenzeditor oSequenzeditor = new Sequenzeditor();        
+            oSequenzeditor = new Sequenzeditor(this);
 
-            DataGridViewComboBoxColumn colBefehl = (DataGridViewComboBoxColumn)this.SequenzeditorGrid.Columns["colBefehl"];
-            foreach (string sCom in oSequenzeditor.lstCommands)
-            {
-                colBefehl.Items.Add(sCom);  
-            }
-            
-           
+            lstSequenz = new List<Sequenz>();
 
             AblaufListe.Items.Clear();
             //   AblaufListe.Items.Add("ROOT");
             foreach (var dir in dirs)
             {
                 FileInfo x = new FileInfo(dir);
-
                 AblaufListe.Items.Add(x.Name);
-
+                //---------------- neuer Ansatz
+                lstSequenz.Add(new Sequenz(x));
             }
 
             Masterablauf.Items.Clear();
@@ -256,44 +257,45 @@ namespace PharMS_Steuerung
                 Masterablauf.Items.Add(x.Name);
 
             }
-        
-           
+
+
         }
 
         private void Console_Senden_Click(object sender, EventArgs e)
         {
             Abbruch = true;
             Comschnitstelle.COMSender(Console_Eingabe.Text);
-        //    Funktionen.Consolen_LOG Ausgabe = new Funktionen.Consolen_LOG(Console_Eingabe.Text, this);
-           
+            //    Funktionen.Consolen_LOG Ausgabe = new Funktionen.Consolen_LOG(Console_Eingabe.Text, this);
+
 
         }
 
         private void Man_Messung_Click(object sender, EventArgs e)
         {
-            Comschnitstelle.COMSender("U"+numericZellspannung.Value);
+            Comschnitstelle.COMSender("U" + numericZellspannung.Value);
             int n = Convert.ToInt32(numeric_Intervall.Value);
             ende = Convert.ToInt32(numeric_Messdauer.Value);
             ende = ende * 60 / n;
-            if (i == 1) {
-                
+            if (i == 1)
+            {
+
                 Zeitsteuerung.Tick += new EventHandler(TimerEventProcessor);
             };
             i = i + 1;
             alarmCounter = 1;
             Zeitsteuerung.Interval = n * 1000;
             Zeitsteuerung.Start();
-                
+
 
 
         }
 
-        private static void TimerEventProcessor(Object myObject,EventArgs myEventArgs)
+        private static void TimerEventProcessor(Object myObject, EventArgs myEventArgs)
         {
-            
+
             Zeitsteuerung.Stop();
             // Displays a message box asking whether to continue running the timer.
-           
+
             if (alarmCounter <= ende)
             {
                 Console.WriteLine("teste" + alarmCounter + ":" + ende);
@@ -304,7 +306,7 @@ namespace PharMS_Steuerung
             }
             else
             {
-                Datenerfassen test = new Datenerfassen("---------,---------",Comschnitstelle.tempForm);
+                Datenerfassen test = new Datenerfassen("---------,---------", Comschnitstelle.tempForm);
                 // Stops the timer.
                 exitFlag = true;
 
@@ -315,17 +317,17 @@ namespace PharMS_Steuerung
         {
             ende = 0;
             SchleifenStopp = true;
-           
+
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButton1.Checked == true) { radioButton2.Checked = false; } 
+            if (radioButton1.Checked == true) { radioButton2.Checked = false; }
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButton2.Checked == true) { radioButton1.Checked = false; } 
+            if (radioButton2.Checked == true) { radioButton1.Checked = false; }
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -333,6 +335,11 @@ namespace PharMS_Steuerung
             Comschnitstelle.COMSender("X01");
         }
 
-       
+        private void AblaufListe_SelectedValueChanged(object sender, EventArgs e)
+        {
+            oSequenzeditor.FillGrid();
+        }
+
+
     }
 }
