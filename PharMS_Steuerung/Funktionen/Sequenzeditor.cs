@@ -13,13 +13,17 @@ using System.IO;
 
 namespace PharMS_Steuerung.Funktionen
 {
-    class Sequenzeditor
+   public  class Sequenzeditor
     {
-
+        public Dictionary<string, string> dictSequenzBefehleWithOneChar;
+        public Dictionary<string, string> dictSequenzBefehleWithTwoChar;
+        public List<string> lstCommands;
+      
         public Sequenzeditor()
         {
-            Dictionary<string, string> dictSequenzBefehleWithOneChar =
-           new Dictionary<string, string>();
+            dictSequenzBefehleWithOneChar =  new Dictionary<string, string>();
+            dictSequenzBefehleWithTwoChar =  new Dictionary<string, string>();
+            lstCommands = new List<string>();
 
             dictSequenzBefehleWithOneChar.Add("X", "Makro  starten mit Sequenznr. ");
             dictSequenzBefehleWithOneChar.Add("x", "Makro  abbrechen mit Sequenznr. ");
@@ -38,15 +42,15 @@ namespace PharMS_Steuerung.Funktionen
             dictSequenzBefehleWithOneChar.Add("u", "Abfrage der Potentiostatspannung [mV]");
             dictSequenzBefehleWithOneChar.Add("y", "Potenziostat ein/aus");
 
-            Dictionary<string, string> dictSequenzBefehleWithTwoChar =
-           new Dictionary<string, string>();
+            
 
             dictSequenzBefehleWithTwoChar.Add("DV", "Dosiererventil n = 1,2 Ventilpositionen  1- Richtung Wasserflasche, 2 – 8 Portventil");
             dictSequenzBefehleWithTwoChar.Add("DS", "Geschwindigkeit mit 1 - Vmax, 40 - Vmin");
             dictSequenzBefehleWithTwoChar.Add("DP", "Ansaugmenge (µl)");
-            dictSequenzBefehleWithTwoChar.Add("DP", "Ausstossmenge (µl)");
-            dictSequenzBefehleWithTwoChar.Add("DA", "Absolutposition (0…500)");
+            dictSequenzBefehleWithTwoChar.Add("DD", "Ausstossmenge (µl)");
+            dictSequenzBefehleWithTwoChar.Add("DA", "Absolutposition (0…500)");     
             dictSequenzBefehleWithTwoChar.Add("dn", "Begasung  1-ein, 0-aus");
+            dictSequenzBefehleWithTwoChar.Add("on", "Thermostat ein/aus");
             dictSequenzBefehleWithTwoChar.Add("dw", "Begasungsdosierer"); // TODO  Parameter fallen aus den Konzept, seperate Lösung notwendig
 
             /* dwOS2A48000IS20A0\n  Z\n    - Kommandostring für Begasungsdosierer
@@ -58,9 +62,36 @@ namespace PharMS_Steuerung.Funktionen
               S20 – Geschwindigkeit 20 (40 Minimum)
               A0  - Absolutpositionierung auf 0*/
 
-            dictSequenzBefehleWithTwoChar.Add("dn", "Begasung  1-ein, 0-aus");
-            dictSequenzBefehleWithTwoChar.Add("on", "Thermostat ein/aus");
+     
 
+                   
+
+            lstCommands.Add("X");
+            lstCommands.Add("x");
+            lstCommands.Add("W");
+            lstCommands.Add("w");
+            lstCommands.Add("v");
+            lstCommands.Add("p");
+            lstCommands.Add("f");
+            lstCommands.Add("A");
+            lstCommands.Add("a");
+            lstCommands.Add("T");
+            lstCommands.Add("t");
+            lstCommands.Add("M");
+            lstCommands.Add("G");
+            lstCommands.Add("U");
+            lstCommands.Add("u");
+            lstCommands.Add("y");
+            lstCommands.Add("DV");
+            lstCommands.Add("DS");
+            lstCommands.Add("DP");
+            lstCommands.Add("DD");
+            lstCommands.Add("DA");
+            lstCommands.Add("dn");
+            lstCommands.Add("on");             
+                       
+            
+            //grid.DataSource = source;
 
 
         }

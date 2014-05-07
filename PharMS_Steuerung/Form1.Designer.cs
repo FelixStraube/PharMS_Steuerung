@@ -55,6 +55,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.Disconnect = new System.Windows.Forms.Button();
             this.Connect = new System.Windows.Forms.Button();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.SequenzeditorGrid = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
@@ -79,13 +81,17 @@
             this.Console_Ausgabe = new System.Windows.Forms.TextBox();
             this.Verzeichnisauswahl = new System.Windows.Forms.FolderBrowserDialog();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.colBefehl = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colParametereingabe = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHelp = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SequenzeditorGrid)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numeric_Messdauer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numeric_Intervall)).BeginInit();
@@ -416,6 +422,28 @@
             this.Connect.UseVisualStyleBackColor = true;
             this.Connect.Click += new System.EventHandler(this.Connect_Click);
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.SequenzeditorGrid);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(519, 431);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Sequenzeditor";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // SequenzeditorGrid
+            // 
+            this.SequenzeditorGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.SequenzeditorGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colBefehl,
+            this.colParametereingabe,
+            this.colHelp});
+            this.SequenzeditorGrid.Location = new System.Drawing.Point(3, 3);
+            this.SequenzeditorGrid.Name = "SequenzeditorGrid";
+            this.SequenzeditorGrid.Size = new System.Drawing.Size(510, 311);
+            this.SequenzeditorGrid.TabIndex = 0;
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.radioButton2);
@@ -651,14 +679,26 @@
             this.fileSystemWatcher1.EnableRaisingEvents = true;
             this.fileSystemWatcher1.SynchronizingObject = this;
             // 
-            // tabPage4
+            // colBefehl
             // 
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(519, 431);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Sequenzeditor";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.colBefehl.Frozen = true;
+            this.colBefehl.HeaderText = "Befehl";
+            this.colBefehl.Name = "colBefehl";
+            this.colBefehl.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colBefehl.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // colParametereingabe
+            // 
+            this.colParametereingabe.Frozen = true;
+            this.colParametereingabe.HeaderText = "Parametereingabe";
+            this.colParametereingabe.Name = "colParametereingabe";
+            // 
+            // colHelp
+            // 
+            this.colHelp.Frozen = true;
+            this.colHelp.HeaderText = "Erklärung";
+            this.colHelp.Name = "colHelp";
+            this.colHelp.ReadOnly = true;
             // 
             // Form1
             // 
@@ -679,6 +719,8 @@
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.SequenzeditorGrid)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numeric_Messdauer)).EndInit();
@@ -751,6 +793,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Spannung2;
         private System.Windows.Forms.TabPage tabPage4;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
+        private System.Windows.Forms.DataGridView SequenzeditorGrid;
+        private System.Windows.Forms.DataGridViewComboBoxColumn colBefehl;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colParametereingabe;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colHelp;
     }
 }
 

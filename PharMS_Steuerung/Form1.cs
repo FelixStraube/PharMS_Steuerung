@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Collections;
 using System.Threading;
+using PharMS_Steuerung.Funktionen;
 
 
 
@@ -16,7 +17,7 @@ namespace PharMS_Steuerung
 {
     public partial class Form1 : Form
     { // das ist ein test VS
-        static Funktionen.COM Comschnitstelle;
+        static COM Comschnitstelle;
         string ablauf;
         public bool Connection;
         public string Name;
@@ -79,7 +80,7 @@ namespace PharMS_Steuerung
 
         private void Connect_Click(object sender, EventArgs e)
         {
-            Comschnitstelle = new Funktionen.COM(this);
+            Comschnitstelle = new COM(this);
             panel1.BackColor = System.Drawing.Color.Green;
             Connection = true;
 
@@ -100,7 +101,7 @@ namespace PharMS_Steuerung
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 //ToCsV(dataGridView1, @"c:\export.xls");
-                Funktionen.Exporting Save = new Funktionen.Exporting(DatenerfassungTab, sfd.FileName); // Here dataGridview1 is your grid view name 
+                Exporting Save = new Exporting(DatenerfassungTab, sfd.FileName); // Here dataGridview1 is your grid view name 
             }              
 
        }
@@ -227,6 +228,15 @@ namespace PharMS_Steuerung
             List<string> dirs = new List<string>(Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\", "*.txt"));
             List<string> dirAblauf = new List<string>(Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\Master\\", "*.txt"));
 
+             Sequenzeditor oSequenzeditor = new Sequenzeditor();        
+
+            DataGridViewComboBoxColumn colBefehl = (DataGridViewComboBoxColumn)this.SequenzeditorGrid.Columns["colBefehl"];
+            foreach (string sCom in oSequenzeditor.lstCommands)
+            {
+                colBefehl.Items.Add(sCom);  
+            }
+            
+           
 
             AblaufListe.Items.Clear();
             //   AblaufListe.Items.Add("ROOT");
@@ -294,7 +304,7 @@ namespace PharMS_Steuerung
             }
             else
             {
-                Funktionen.Datenerfassen test = new Funktionen.Datenerfassen("---------,---------",Comschnitstelle.tempForm);
+                Datenerfassen test = new Datenerfassen("---------,---------",Comschnitstelle.tempForm);
                 // Stops the timer.
                 exitFlag = true;
 
