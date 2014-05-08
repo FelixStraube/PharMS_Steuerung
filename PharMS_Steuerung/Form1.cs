@@ -358,7 +358,7 @@ namespace PharMS_Steuerung
             lstSequenz = new List<Sequenz>();
             Sequenz oSequenz = null;
             string sDBName;
-            bool bNewSequenz = false;
+            bool bNewSequenz = false, bSpeicherplatz = false;
             sDBName = DB[0];
             DB.RemoveAt(0);
             foreach (string line in DB)
@@ -374,6 +374,20 @@ namespace PharMS_Steuerung
                     bNewSequenz = false;
                     lstSequenz.Add(oSequenz = new Sequenz());
                     oSequenz.sName = line;
+                    AblaufListe.Items.Add(line);
+                    continue;
+                }
+
+                if(line =="/*-*/")
+                {
+                    bSpeicherplatz = true;
+                    continue;
+                }
+
+                if(bSpeicherplatz)
+                {
+                    bSpeicherplatz = false;
+                    oSequenz.iSpeicherplatz =  Convert.ToInt32(line);
                     continue;
                 }
 
