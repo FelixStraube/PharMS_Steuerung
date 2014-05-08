@@ -125,9 +125,16 @@ namespace PharMS_Steuerung.Funktionen
                     MainForm.SequenzeditorGrid.Rows[i].Cells[1].Value = line.Substring(2);
                 }
 
-                if (MainForm.SequenzeditorGrid.Rows[i].Cells[1].Value.ToString() != "*") MainForm.SequenzeditorGrid.Rows[i].Cells[1].ReadOnly = true;
+                if (MainForm.SequenzeditorGrid.Rows[i].Cells[1].Value.ToString() != "*")
+                {
+                    MainForm.SequenzeditorGrid.Rows[i].Cells[1].ReadOnly = true;
+                    MainForm.SequenzeditorGrid.Rows[i].Cells[1].Style.BackColor = Color.Gray;
+                }
                 else
+                {
                     MainForm.SequenzeditorGrid.Rows[i].Cells[1].Style.BackColor = Color.RosyBrown;
+                    MainForm.Uebertragen.Enabled = false;
+                }
 
                 MainForm.SequenzeditorGrid.Rows[i].Cells[2].Value = sOut;
 

@@ -226,17 +226,17 @@ namespace PharMS_Steuerung
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            bool OrdnerExisitiert = Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "Abläufe");      //TODO Test und Temp?     
-            if (!OrdnerExisitiert)
-            {
-                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "Abläufe");
-                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\Master");
-            }
-            List<string> dirs = new List<string>(Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\", "*.txt"));
-            List<string> dirAblauf = new List<string>(Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\Master\\", "*.txt"));
-
+            /*   bool OrdnerExisitiert = Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "Abläufe");      //TODO Test und Temp?     
+               if (!OrdnerExisitiert)
+               {
+                   Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "Abläufe");
+                   Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\Master");
+               }
+               List<string> dirs = new List<string>(Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\", "*.txt"));
+               List<string> dirAblauf = new List<string>(Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\Master\\", "*.txt"));
+               */
             oSequenzeditor = new Sequenzeditor(this);
-
+            /*
             lstSequenz = new List<Sequenz>();
 
             AblaufListe.Items.Clear();
@@ -258,7 +258,7 @@ namespace PharMS_Steuerung
 
             }
 
-
+            */
         }
 
         private void Console_Senden_Click(object sender, EventArgs e)
@@ -340,6 +340,48 @@ namespace PharMS_Steuerung
             oSequenzeditor.FillGrid();
         }
 
+        private void datenbankÖffnenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<string> stlAllSequenz = new List<string>();
+            if (openDatabaseDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                CfgFile oCfgFile = new CfgFile(openDatabaseDialog.FileName);
+                stlAllSequenz = oCfgFile.Ausgabe(); //Gibt die aktuell eingelesene Datei aus
+            }
+
+            extractDatabase(stlAllSequenz);
+
+        }
+
+        private void extractDatabase(List<string> DB)
+        {
+            lstSequenz = new List<Sequenz>();
+            Sequenz oSequenz = null;
+            string sDBName;
+            bool bNewSequenz = false;
+            sDBName = DB[0];
+            DB.RemoveAt(0);
+            foreach (string line in DB)
+            {
+                if (line == "@//@")
+                {                  
+                    bNewSequenz = true;
+                    continue;
+                }
+
+                if (bNewSequenz && line != "")
+                {
+                    bNewSequenz = false;
+                    lstSequenz.Add(oSequenz = new Sequenz());
+                    oSequenz.sName = line;
+                    continue;
+                }
+
+                if (oSequenz != null && line != "") oSequenz.stlSequenz.Add(line);
+            }
+
+
+        }
 
     }
 }

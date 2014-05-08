@@ -66,12 +66,13 @@ public class CfgFile
     public CfgFile(string p_sFileName)
         : this()
     {
-        sFileName = BaseDirectory + p_sFileName;
+        //sFileName = BaseDirectory + p_sFileName;
+        sFileName = p_sFileName;
 
         if (File.Exists(sFileName))
             using (StreamReader sr = new StreamReader(sFileName))
                 while (!sr.EndOfStream) lines.Add(sr.ReadLine().TrimEnd());
-        
+
     }
 
     ~CfgFile()
@@ -393,21 +394,38 @@ public class CfgFile
     /// </summary>
     /// <param name="Caption">Name des files</param>
     /// <returns>List Array ([0] Name des Eintrags)</returns>  
-     public List<string> Ausgabe (string p_sFileName){
-        
+    public List<string> Ausgabe(string p_sFileName)
+    {
+
         lines.Clear();
-        sFileName = BaseDirectory +"Abläufe\\"+ p_sFileName;
+        // sFileName = BaseDirectory +"Abläufe\\"+ p_sFileName;
 
         if (File.Exists(sFileName))
             lines.Add(p_sFileName);
+        using (StreamReader sr = new StreamReader(sFileName))
+
+            while (!sr.EndOfStream) lines.Add(sr.ReadLine().TrimEnd());
+
+        return lines;
+
+
+
+    }
+    public List<string> Ausgabe()
+    {
+
+        lines.Clear();
+        // sFileName = BaseDirectory +"Abläufe\\"+ p_sFileName;
+
+        if (File.Exists(sFileName))
             using (StreamReader sr = new StreamReader(sFileName))
-                
+
                 while (!sr.EndOfStream) lines.Add(sr.ReadLine().TrimEnd());
 
         return lines;
 
 
 
-}
+    }
 
 }

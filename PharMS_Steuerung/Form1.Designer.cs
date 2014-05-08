@@ -56,7 +56,12 @@
             this.Disconnect = new System.Windows.Forms.Button();
             this.Connect = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.lbSequenzname = new System.Windows.Forms.Label();
+            this.chkFilter = new System.Windows.Forms.CheckBox();
             this.SequenzeditorGrid = new System.Windows.Forms.DataGridView();
+            this.colBefehl = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colParametereingabe = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHelp = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
@@ -81,11 +86,14 @@
             this.Console_Ausgabe = new System.Windows.Forms.TextBox();
             this.Verzeichnisauswahl = new System.Windows.Forms.FolderBrowserDialog();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-            this.chkFilter = new System.Windows.Forms.CheckBox();
-            this.colBefehl = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colParametereingabe = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colHelp = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lbSequenzname = new System.Windows.Forms.Label();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.hilfeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.neuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.datenbankÖffnenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.speichernToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.beendenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openDatabaseDialog = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -101,6 +109,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.DatenerfassungTab)).BeginInit();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // AblaufListe
@@ -121,10 +130,10 @@
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Location = new System.Drawing.Point(7, 23);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(527, 457);
+            this.tabControl1.Size = new System.Drawing.Size(527, 600);
             this.tabControl1.TabIndex = 3;
             // 
             // tabPage1
@@ -142,7 +151,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(519, 431);
+            this.tabPage1.Size = new System.Drawing.Size(519, 574);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Übertragen";
             // 
@@ -435,10 +444,29 @@
             this.tabPage4.Controls.Add(this.SequenzeditorGrid);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(519, 431);
+            this.tabPage4.Size = new System.Drawing.Size(519, 539);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Sequenzeditor";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // lbSequenzname
+            // 
+            this.lbSequenzname.AutoSize = true;
+            this.lbSequenzname.Location = new System.Drawing.Point(3, 11);
+            this.lbSequenzname.Name = "lbSequenzname";
+            this.lbSequenzname.Size = new System.Drawing.Size(83, 13);
+            this.lbSequenzname.TabIndex = 2;
+            this.lbSequenzname.Text = "lbSequenzname";
+            // 
+            // chkFilter
+            // 
+            this.chkFilter.AutoSize = true;
+            this.chkFilter.Location = new System.Drawing.Point(3, 36);
+            this.chkFilter.Name = "chkFilter";
+            this.chkFilter.Size = new System.Drawing.Size(176, 17);
+            this.chkFilter.TabIndex = 1;
+            this.chkFilter.Text = "Filtern nach Eingabemöglichkeit";
+            this.chkFilter.UseVisualStyleBackColor = true;
             // 
             // SequenzeditorGrid
             // 
@@ -452,8 +480,31 @@
             this.colHelp});
             this.SequenzeditorGrid.Location = new System.Drawing.Point(0, 59);
             this.SequenzeditorGrid.Name = "SequenzeditorGrid";
-            this.SequenzeditorGrid.Size = new System.Drawing.Size(519, 369);
+            this.SequenzeditorGrid.Size = new System.Drawing.Size(519, 480);
             this.SequenzeditorGrid.TabIndex = 0;
+            // 
+            // colBefehl
+            // 
+            this.colBefehl.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colBefehl.Frozen = true;
+            this.colBefehl.HeaderText = "Befehl";
+            this.colBefehl.Name = "colBefehl";
+            this.colBefehl.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colBefehl.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colBefehl.Width = 60;
+            // 
+            // colParametereingabe
+            // 
+            this.colParametereingabe.Frozen = true;
+            this.colParametereingabe.HeaderText = "Parametereingabe";
+            this.colParametereingabe.Name = "colParametereingabe";
+            // 
+            // colHelp
+            // 
+            this.colHelp.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colHelp.HeaderText = "Erklärung";
+            this.colHelp.Name = "colHelp";
+            this.colHelp.ReadOnly = true;
             // 
             // tabPage2
             // 
@@ -472,7 +523,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(519, 431);
+            this.tabPage2.Size = new System.Drawing.Size(519, 539);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Empfangen";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -637,7 +688,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(519, 431);
+            this.tabPage3.Size = new System.Drawing.Size(519, 539);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Controller";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -691,54 +742,70 @@
             this.fileSystemWatcher1.EnableRaisingEvents = true;
             this.fileSystemWatcher1.SynchronizingObject = this;
             // 
-            // chkFilter
+            // menuStrip1
             // 
-            this.chkFilter.AutoSize = true;
-            this.chkFilter.Location = new System.Drawing.Point(3, 36);
-            this.chkFilter.Name = "chkFilter";
-            this.chkFilter.Size = new System.Drawing.Size(176, 17);
-            this.chkFilter.TabIndex = 1;
-            this.chkFilter.Text = "Filtern nach Eingabemöglichkeit";
-            this.chkFilter.UseVisualStyleBackColor = true;
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.hilfeToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(541, 24);
+            this.menuStrip1.TabIndex = 4;
+            this.menuStrip1.Text = "menuStrip1";
             // 
-            // colBefehl
+            // toolStripMenuItem1
             // 
-            this.colBefehl.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colBefehl.Frozen = true;
-            this.colBefehl.HeaderText = "Befehl";
-            this.colBefehl.Name = "colBefehl";
-            this.colBefehl.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colBefehl.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colBefehl.Width = 60;
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.neuToolStripMenuItem,
+            this.datenbankÖffnenToolStripMenuItem,
+            this.speichernToolStripMenuItem,
+            this.beendenToolStripMenuItem});
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(46, 20);
+            this.toolStripMenuItem1.Text = "Datei";
             // 
-            // colParametereingabe
+            // hilfeToolStripMenuItem
             // 
-            this.colParametereingabe.Frozen = true;
-            this.colParametereingabe.HeaderText = "Parametereingabe";
-            this.colParametereingabe.Name = "colParametereingabe";
+            this.hilfeToolStripMenuItem.Name = "hilfeToolStripMenuItem";
+            this.hilfeToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.hilfeToolStripMenuItem.Text = "Hilfe";
             // 
-            // colHelp
+            // neuToolStripMenuItem
             // 
-            this.colHelp.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colHelp.HeaderText = "Erklärung";
-            this.colHelp.Name = "colHelp";
-            this.colHelp.ReadOnly = true;
+            this.neuToolStripMenuItem.Name = "neuToolStripMenuItem";
+            this.neuToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.neuToolStripMenuItem.Text = "Neu";
             // 
-            // lbSequenzname
+            // datenbankÖffnenToolStripMenuItem
             // 
-            this.lbSequenzname.AutoSize = true;
-            this.lbSequenzname.Location = new System.Drawing.Point(3, 11);
-            this.lbSequenzname.Name = "lbSequenzname";
-            this.lbSequenzname.Size = new System.Drawing.Size(83, 13);
-            this.lbSequenzname.TabIndex = 2;
-            this.lbSequenzname.Text = "lbSequenzname";
+            this.datenbankÖffnenToolStripMenuItem.Name = "datenbankÖffnenToolStripMenuItem";
+            this.datenbankÖffnenToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.datenbankÖffnenToolStripMenuItem.Text = "Datenbank öffnen";
+            this.datenbankÖffnenToolStripMenuItem.Click += new System.EventHandler(this.datenbankÖffnenToolStripMenuItem_Click);
+            // 
+            // speichernToolStripMenuItem
+            // 
+            this.speichernToolStripMenuItem.Name = "speichernToolStripMenuItem";
+            this.speichernToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.speichernToolStripMenuItem.Text = "Speichern";
+            // 
+            // beendenToolStripMenuItem
+            // 
+            this.beendenToolStripMenuItem.Name = "beendenToolStripMenuItem";
+            this.beendenToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.beendenToolStripMenuItem.Text = "Beenden";
+            // 
+            // openDatabaseDialog
+            // 
+            this.openDatabaseDialog.Filter = "Pharms (*.pharms)|*.pharms";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(541, 481);
+            this.ClientSize = new System.Drawing.Size(541, 624);
             this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.menuStrip1);
             this.Name = "Form1";
             this.Text = "PharMS Controller";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -764,7 +831,10 @@
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -816,7 +886,6 @@
         public System.Windows.Forms.RadioButton radioButton2;
         public System.Windows.Forms.NumericUpDown numeric_Messdauer;
         public System.Windows.Forms.NumericUpDown numeric_Intervall;
-        private System.Windows.Forms.Button Uebertragen;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -833,6 +902,15 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colParametereingabe;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHelp;
         public System.Windows.Forms.Label lbSequenzname;
+        public System.Windows.Forms.Button Uebertragen;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem neuToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem datenbankÖffnenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem speichernToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem beendenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem hilfeToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog openDatabaseDialog;
     }
 }
 
