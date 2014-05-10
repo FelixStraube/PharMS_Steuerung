@@ -13,15 +13,25 @@ namespace PharMS_Steuerung.Funktionen
     {
         public string sName, sPath , sDBName;
         public List<string> stlSequenz;
-        public int iSpeicherplatz;
+        public int iSpeicherplatz=-999;
 
 
         public Sequenz()
         {
-            /*sName = fiFile.Name;
-            sPath = fiFile.DirectoryName;
-            iniSequenz();*/
+           
             stlSequenz = new List<string>();
+
+        }
+        public Sequenz(FileInfo fiFile)
+        {
+            stlSequenz = new List<string>();
+            sName = fiFile.Name;
+            sPath = fiFile.DirectoryName;
+
+            CfgFile oCfgFile = new CfgFile(sPath+"\\"+sName);
+            stlSequenz = oCfgFile.Ausgabe(sPath+"\\"+sName);
+            stlSequenz.RemoveAt(0);
+          
 
         }
 
@@ -29,8 +39,7 @@ namespace PharMS_Steuerung.Funktionen
         private void iniSequenz()
         {
             CfgFile oCfgFile = new CfgFile(sName);
-            stlSequenz = oCfgFile.Ausgabe(sName);
-           // stlSequenz.RemoveAt(0);
+            stlSequenz = oCfgFile.Ausgabe(sName);         
 
         }
 

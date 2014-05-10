@@ -94,7 +94,7 @@ namespace PharMS_Steuerung.Funktionen
             }
         }
 
-        public void FillGrid()
+        public void FillGridSequenzEdit()
         {
             Sequenz oSequenz = GetSelectedSequenz();
             MainForm.lbSequenzname.Text = oSequenz.sName;
@@ -112,7 +112,10 @@ namespace PharMS_Steuerung.Funktionen
                 MainForm.SequenzeditorGrid.Rows.Add();
                 DataGridViewComboBoxCell cbCell = (DataGridViewComboBoxCell)MainForm.SequenzeditorGrid.Rows[i].Cells[0];
                 sOut = "";
-                dictSequenzBefehleWithTwoChar.TryGetValue(line.Substring(0, 2), out sOut);
+
+                if (line.Length != 1) dictSequenzBefehleWithTwoChar.TryGetValue(line.Substring(0, 2), out sOut);
+                else sOut = null;
+
                 if (sOut == null)
                 {
                     dictSequenzBefehleWithOneChar.TryGetValue(line.Substring(0, 1), out sOut);
@@ -143,6 +146,20 @@ namespace PharMS_Steuerung.Funktionen
             }
         }
 
+        public void FillGridSequenz()
+        {
+            int i = 0;
+            MainForm.SequenzenGrid.Rows.Clear();
+
+            foreach (Sequenz oSequenz in MainForm.lstSequenz)
+            {
+
+                MainForm.SequenzenGrid.Rows.Add();
+                MainForm.SequenzenGrid.Rows[i].Cells[0].Value = oSequenz.sName;
+                MainForm.SequenzenGrid.Rows[i].Cells[1].Value = (oSequenz.iSpeicherplatz == -999) ? "" : oSequenz.iSpeicherplatz.ToString();
+                i++;
+            }
+        }
         public Sequenz GetSelectedSequenz()
         {
             foreach (Sequenz oSequenz in MainForm.lstSequenz)

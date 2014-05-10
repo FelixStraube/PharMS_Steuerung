@@ -32,6 +32,7 @@ namespace PharMS_Steuerung
         static bool exitFlag = false;
         public List<Sequenz> lstSequenz;
         public Sequenzeditor oSequenzeditor;
+        bool bDBIsOpen = false;
 
         public Form1()
         {
@@ -226,6 +227,17 @@ namespace PharMS_Steuerung
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            if (bDBIsOpen)
+            {
+                ImportStripMenuItem2.Enabled = true;
+                speichernToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                ImportStripMenuItem2.Enabled = false;
+                speichernToolStripMenuItem.Enabled = false;
+            }
+
             /*   bool OrdnerExisitiert = Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "Abläufe");      //TODO Test und Temp?     
                if (!OrdnerExisitiert)
                {
@@ -337,7 +349,7 @@ namespace PharMS_Steuerung
 
         private void AblaufListe_SelectedValueChanged(object sender, EventArgs e)
         {
-            oSequenzeditor.FillGrid();
+            oSequenzeditor.FillGridSequenzEdit();           
         }
 
         private void datenbankÖffnenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -350,6 +362,10 @@ namespace PharMS_Steuerung
             }
 
             extractDatabase(stlAllSequenz);
+            bDBIsOpen = true;
+            ImportStripMenuItem2.Enabled = true;
+            speichernToolStripMenuItem.Enabled = true;
+            oSequenzeditor.FillGridSequenz();
 
         }
 
@@ -364,7 +380,7 @@ namespace PharMS_Steuerung
             foreach (string line in DB)
             {
                 if (line == "@//@")
-                {                  
+                {
                     bNewSequenz = true;
                     continue;
                 }
@@ -378,16 +394,16 @@ namespace PharMS_Steuerung
                     continue;
                 }
 
-                if(line =="/*-*/")
+                if (line == "/*-*/")
                 {
                     bSpeicherplatz = true;
                     continue;
                 }
 
-                if(bSpeicherplatz)
+                if (bSpeicherplatz)
                 {
                     bSpeicherplatz = false;
-                    oSequenz.iSpeicherplatz =  Convert.ToInt32(line);
+                    oSequenz.iSpeicherplatz = Convert.ToInt32(line);
                     continue;
                 }
 
@@ -395,6 +411,22 @@ namespace PharMS_Steuerung
             }
 
 
+        }
+
+        private void ImportStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            if (openDatabaseDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                FileInfo x = new FileInfo(openDatabaseDialog.FileName);
+                lstSequenz.Add(new Sequenz(x));
+                AblaufListe.Items.Add(x.Name);
+            }
+
+        }
+
+        private void beendenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
         }
 
     }
