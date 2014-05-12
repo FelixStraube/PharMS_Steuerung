@@ -33,6 +33,7 @@ namespace PharMS_Steuerung
         public List<Sequenz> lstSequenz;
         public Sequenzeditor oSequenzeditor;
         bool bDBIsOpen = false;
+        string sDBPath;
 
         public Form1()
         {
@@ -40,10 +41,7 @@ namespace PharMS_Steuerung
 
         }
 
-        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
-        {
 
-        }
 
         private void Speicher_TextChanged(object sender, EventArgs e)
         {
@@ -349,7 +347,7 @@ namespace PharMS_Steuerung
 
         private void AblaufListe_SelectedValueChanged(object sender, EventArgs e)
         {
-            oSequenzeditor.FillGridSequenzEdit();           
+            oSequenzeditor.FillGridSequenzEdit();
         }
 
         private void datenbankÖffnenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -359,6 +357,7 @@ namespace PharMS_Steuerung
             {
                 CfgFile oCfgFile = new CfgFile(openDatabaseDialog.FileName);
                 stlAllSequenz = oCfgFile.Ausgabe(); //Gibt die aktuell eingelesene Datei aus
+                sDBPath = openDatabaseDialog.FileName;
             }
 
             extractDatabase(stlAllSequenz);
@@ -390,6 +389,7 @@ namespace PharMS_Steuerung
                     bNewSequenz = false;
                     lstSequenz.Add(oSequenz = new Sequenz());
                     oSequenz.sName = line;
+                    oSequenz.sDBName = sDBName;
                     AblaufListe.Items.Add(line);
                     continue;
                 }
@@ -427,6 +427,34 @@ namespace PharMS_Steuerung
         private void beendenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void speichernToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveDatabase();
+        }
+
+        private void SaveDatabase()
+        {
+            using (FileStream stream = File.Open(sDBPath, FileMode.Create))
+            {
+                using (StreamWriter sw = new StreamWriter(stream))
+                {
+                    sw.WriteLine(lstSequenz[0].sDBName);
+                    foreach (Sequenz oSequenz in lstSequenz)
+                    {
+                        sw.WriteLine("@//@");
+                        sw.WriteLine(oSequenz.sName);
+                        foreach (string line in oSequenz.stlSequenz)
+                        {
+                            sw.WriteLine(line);
+                        }
+                        sw.WriteLine("/*-*/");
+                        sw.WriteLine(oSequenz.iSpeicherplatz.ToString());
+                    }
+                    sw.WriteLine("@//@");
+                }
+            }
         }
 
     }

@@ -55,6 +55,12 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.Disconnect = new System.Windows.Forms.Button();
             this.Connect = new System.Windows.Forms.Button();
+            this.tabSequenzList = new System.Windows.Forms.TabPage();
+            this.SequenzenGrid = new System.Windows.Forms.DataGridView();
+            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSpeicherplatz = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colTransfer = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.colStart = new System.Windows.Forms.DataGridViewButtonColumn();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.lbSequenzname = new System.Windows.Forms.Label();
             this.chkFilter = new System.Windows.Forms.CheckBox();
@@ -91,22 +97,18 @@
             this.neuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.datenbankÖffnenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.speichernToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ImportStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.beendenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hilfeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDatabaseDialog = new System.Windows.Forms.OpenFileDialog();
-            this.ImportStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabSequenzList = new System.Windows.Forms.TabPage();
-            this.SequenzenGrid = new System.Windows.Forms.DataGridView();
-            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSpeicherplatz = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colTransfer = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.colStart = new System.Windows.Forms.DataGridViewButtonColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tabSequenzList.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SequenzenGrid)).BeginInit();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SequenzeditorGrid)).BeginInit();
             this.tabPage2.SuspendLayout();
@@ -117,8 +119,6 @@
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            this.tabSequenzList.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SequenzenGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // AblaufListe
@@ -446,6 +446,83 @@
             this.Connect.Text = "Connect";
             this.Connect.UseVisualStyleBackColor = true;
             this.Connect.Click += new System.EventHandler(this.Connect_Click);
+            // 
+            // tabSequenzList
+            // 
+            this.tabSequenzList.Controls.Add(this.SequenzenGrid);
+            this.tabSequenzList.Location = new System.Drawing.Point(4, 22);
+            this.tabSequenzList.Name = "tabSequenzList";
+            this.tabSequenzList.Size = new System.Drawing.Size(519, 574);
+            this.tabSequenzList.TabIndex = 4;
+            this.tabSequenzList.Text = "Sequenzen";
+            this.tabSequenzList.UseVisualStyleBackColor = true;
+            // 
+            // SequenzenGrid
+            // 
+            this.SequenzenGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SequenzenGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.SequenzenGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colName,
+            this.colSpeicherplatz,
+            this.colTransfer,
+            this.colStart});
+            this.SequenzenGrid.Location = new System.Drawing.Point(1, 3);
+            this.SequenzenGrid.Name = "SequenzenGrid";
+            this.SequenzenGrid.Size = new System.Drawing.Size(518, 575);
+            this.SequenzenGrid.TabIndex = 0;
+            // 
+            // colName
+            // 
+            this.colName.Frozen = true;
+            this.colName.HeaderText = "Sequenz";
+            this.colName.Name = "colName";
+            this.colName.ReadOnly = true;
+            this.colName.Width = 200;
+            // 
+            // colSpeicherplatz
+            // 
+            this.colSpeicherplatz.HeaderText = "Speicherplatz";
+            this.colSpeicherplatz.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20"});
+            this.colSpeicherplatz.Name = "colSpeicherplatz";
+            // 
+            // colTransfer
+            // 
+            this.colTransfer.HeaderText = "Übertragen";
+            this.colTransfer.Name = "colTransfer";
+            this.colTransfer.ReadOnly = true;
+            this.colTransfer.Text = "Übertragen";
+            this.colTransfer.UseColumnTextForButtonValue = true;
+            this.colTransfer.Width = 80;
+            // 
+            // colStart
+            // 
+            this.colStart.HeaderText = "Start";
+            this.colStart.Name = "colStart";
+            this.colStart.Text = "Start";
+            this.colStart.UseColumnTextForButtonValue = true;
+            this.colStart.Width = 60;
             // 
             // tabPage4
             // 
@@ -793,6 +870,14 @@
             this.speichernToolStripMenuItem.Name = "speichernToolStripMenuItem";
             this.speichernToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.speichernToolStripMenuItem.Text = "Speichern";
+            this.speichernToolStripMenuItem.Click += new System.EventHandler(this.speichernToolStripMenuItem_Click);
+            // 
+            // ImportStripMenuItem2
+            // 
+            this.ImportStripMenuItem2.Name = "ImportStripMenuItem2";
+            this.ImportStripMenuItem2.Size = new System.Drawing.Size(183, 22);
+            this.ImportStripMenuItem2.Text = "Sequenz importieren";
+            this.ImportStripMenuItem2.Click += new System.EventHandler(this.ImportStripMenuItem2_Click);
             // 
             // beendenToolStripMenuItem
             // 
@@ -810,90 +895,6 @@
             // openDatabaseDialog
             // 
             this.openDatabaseDialog.Filter = "Pharms (*.pharms)|*.pharms|Textdateien|*.txt";
-            // 
-            // ImportStripMenuItem2
-            // 
-            this.ImportStripMenuItem2.Name = "ImportStripMenuItem2";
-            this.ImportStripMenuItem2.Size = new System.Drawing.Size(183, 22);
-            this.ImportStripMenuItem2.Text = "Sequenz importieren";
-            this.ImportStripMenuItem2.Click += new System.EventHandler(this.ImportStripMenuItem2_Click);
-            // 
-            // tabSequenzList
-            // 
-            this.tabSequenzList.Controls.Add(this.SequenzenGrid);
-            this.tabSequenzList.Location = new System.Drawing.Point(4, 22);
-            this.tabSequenzList.Name = "tabSequenzList";
-            this.tabSequenzList.Size = new System.Drawing.Size(519, 574);
-            this.tabSequenzList.TabIndex = 4;
-            this.tabSequenzList.Text = "Sequenzen";
-            this.tabSequenzList.UseVisualStyleBackColor = true;
-            // 
-            // SequenzenGrid
-            // 
-            this.SequenzenGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.SequenzenGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.SequenzenGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colName,
-            this.colSpeicherplatz,
-            this.colTransfer,
-            this.colStart});
-            this.SequenzenGrid.Location = new System.Drawing.Point(1, 3);
-            this.SequenzenGrid.Name = "SequenzenGrid";
-            this.SequenzenGrid.Size = new System.Drawing.Size(518, 575);
-            this.SequenzenGrid.TabIndex = 0;
-            // 
-            // colName
-            // 
-            this.colName.Frozen = true;
-            this.colName.HeaderText = "Sequenz";
-            this.colName.Name = "colName";
-            this.colName.ReadOnly = true;
-            this.colName.Width = 200;
-            // 
-            // colSpeicherplatz
-            // 
-            this.colSpeicherplatz.HeaderText = "Speicherplatz";
-            this.colSpeicherplatz.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"});
-            this.colSpeicherplatz.Name = "colSpeicherplatz";
-            // 
-            // colTransfer
-            // 
-            this.colTransfer.HeaderText = "Übertragen";
-            this.colTransfer.Name = "colTransfer";
-            this.colTransfer.ReadOnly = true;
-            this.colTransfer.Text = "Übertragen";
-            this.colTransfer.UseColumnTextForButtonValue = true;
-            this.colTransfer.Width = 80;
-            // 
-            // colStart
-            // 
-            this.colStart.HeaderText = "Start";
-            this.colStart.Name = "colStart";
-            this.colStart.Text = "Start";
-            this.colStart.UseColumnTextForButtonValue = true;
-            this.colStart.Width = 60;
             // 
             // Form1
             // 
@@ -915,6 +916,8 @@
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tabSequenzList.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.SequenzenGrid)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SequenzeditorGrid)).EndInit();
@@ -929,8 +932,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.tabSequenzList.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.SequenzenGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
