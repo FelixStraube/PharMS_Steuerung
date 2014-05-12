@@ -225,12 +225,7 @@ namespace PharMS_Steuerung
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (bDBIsOpen)
-            {
-                ImportStripMenuItem2.Enabled = true;
-                speichernToolStripMenuItem.Enabled = true;
-            }
-            else
+            if (!bDBIsOpen)
             {
                 ImportStripMenuItem2.Enabled = false;
                 speichernToolStripMenuItem.Enabled = false;
@@ -365,7 +360,7 @@ namespace PharMS_Steuerung
             ImportStripMenuItem2.Enabled = true;
             speichernToolStripMenuItem.Enabled = true;
             oSequenzeditor.FillGridSequenz();
-
+            SequenzenGrid.RowsAdded += SequenzenGrid_RowsAdded;
         }
 
         private void extractDatabase(List<string> DB)
@@ -456,6 +451,65 @@ namespace PharMS_Steuerung
                 }
             }
         }
+
+        private void btnSaveOneSequenz_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SequenzenGrid_CurrentCellChanged(object sender, EventArgs e)
+        {
+            int i = 0;
+            AblaufListe.Items.Clear();
+            foreach (Sequenz oSequenz in lstSequenz)
+            {
+                oSequenz.sName = SequenzenGrid.Rows[i].Cells[0].Value.ToString();
+                if (SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "")
+                {
+                    oSequenz.iSpeicherplatz = -999;
+                }
+                else
+                {
+                    oSequenz.iSpeicherplatz = Convert.ToInt32(SequenzenGrid.Rows[i].Cells[1].Value.ToString());
+                }
+
+                AblaufListe.Items.Add(oSequenz.sName);
+                i++;
+            }
+        }
+
+        private void SequenzenGrid_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            lstSequenz.Add(new Sequenz());
+            SequenzenGrid.Rows[e.RowIndex - 1].Cells[1].Value = "";
+            //SequenzenGrid.Rows[e.RowIndex - 1].Cells[2].
+
+        }
+
+        private void SequenzenGrid_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex == 2)
+            {
+                //neues übertragen Ereignis 
+                foreach (Sequenz oSequenz in lstSequenz)
+                {
+                    if (SequenzenGrid.Rows[e.RowIndex].Cells[0].Value.ToString() == oSequenz.sName)
+                    {
+                        foreach (string line in oSequenz.stlSequenz)
+                        {
+                            if (line == "") continue;
+                            ablauf = ablauf + ";" + line;
+                            Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                            //Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                        }
+
+                    }
+                }
+            }
+
+
+        }
+
 
     }
 }
