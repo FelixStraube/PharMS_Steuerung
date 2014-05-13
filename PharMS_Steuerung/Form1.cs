@@ -34,6 +34,7 @@ namespace PharMS_Steuerung
         public Sequenzeditor oSequenzeditor;
         bool bDBIsOpen = false;
         string sDBPath;
+        string sDBName;
 
         public Form1()
         {
@@ -231,15 +232,15 @@ namespace PharMS_Steuerung
                 speichernToolStripMenuItem.Enabled = false;
             }
 
-            /*   bool OrdnerExisitiert = Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "Abläufe");      //TODO Test und Temp?     
-               if (!OrdnerExisitiert)
-               {
-                   Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "Abläufe");
-                   Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\Master");
-               }
-               List<string> dirs = new List<string>(Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\", "*.txt"));
-               List<string> dirAblauf = new List<string>(Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\Master\\", "*.txt"));
-               */
+            bool OrdnerExisitiert = Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "Abläufe");      //TODO Test und Temp?     
+            if (!OrdnerExisitiert)
+            {
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "Abläufe");
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\Master");
+            }
+            List<string> dirs = new List<string>(Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\", "*.txt"));
+            List<string> dirAblauf = new List<string>(Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\Master\\", "*.txt"));
+
             oSequenzeditor = new Sequenzeditor(this);
             /*
             lstSequenz = new List<Sequenz>();
@@ -252,7 +253,7 @@ namespace PharMS_Steuerung
                 AblaufListe.Items.Add(x.Name);
                 //---------------- neuer Ansatz
                 lstSequenz.Add(new Sequenz(x));
-            }
+            }*/
 
             Masterablauf.Items.Clear();
             foreach (var dir in dirAblauf)
@@ -263,7 +264,7 @@ namespace PharMS_Steuerung
 
             }
 
-            */
+
         }
 
         private void Console_Senden_Click(object sender, EventArgs e)
@@ -367,7 +368,6 @@ namespace PharMS_Steuerung
         {
             lstSequenz = new List<Sequenz>();
             Sequenz oSequenz = null;
-            string sDBName;
             bool bNewSequenz = false, bSpeicherplatz = false;
             sDBName = DB[0];
             DB.RemoveAt(0);
@@ -414,7 +414,10 @@ namespace PharMS_Steuerung
             {
                 FileInfo x = new FileInfo(openDatabaseDialog.FileName);
                 lstSequenz.Add(new Sequenz(x));
+                lstSequenz[lstSequenz.Count].sDBName = sDBName;
                 AblaufListe.Items.Add(x.Name);
+                oSequenzeditor.FillGridSequenz();
+                SequenzenGrid.RowsAdded += SequenzenGrid_RowsAdded;
             }
 
         }
@@ -480,10 +483,14 @@ namespace PharMS_Steuerung
 
         private void SequenzenGrid_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            lstSequenz.Add(new Sequenz());
-            SequenzenGrid.Rows[e.RowIndex - 1].Cells[1].Value = "";
-            //SequenzenGrid.Rows[e.RowIndex - 1].Cells[2].
+            /* Zickt zu sehr evt die möglichkeit neue Sequenzen zu erzeugen überdenken
+            if (e.RowIndex != 0) //erste leere Zeile wird nach nen GridClear erstellt 
+            {
+                lstSequenz.Add(new Sequenz());
+                SequenzenGrid.Rows[e.RowIndex - 1].Cells[1].Value = "";
+            }
 
+            */
         }
 
         private void SequenzenGrid_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -505,9 +512,43 @@ namespace PharMS_Steuerung
 
                     }
                 }
+
+                if (e.ColumnIndex == 3)
+                {
+                   //Platzhalter für Startbutton im Grid
+                }
             }
 
 
+        }
+
+        private void neuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            Stream stream;
+
+            NewDBDialog.Filter = "PharmMS (*.pharms)|*.pharms";
+            NewDBDialog.FilterIndex = 2;
+            NewDBDialog.RestoreDirectory = true;
+
+            if (NewDBDialog.ShowDialog() == DialogResult.OK)
+            {
+                if ((stream = NewDBDialog.OpenFile()) != null)
+                {
+                    using (StreamWriter sw = new StreamWriter(stream))
+                    {
+                        sDBName = Path.GetFileNameWithoutExtension(NewDBDialog.FileName);
+                        sw.WriteLine(sDBName);
+                        sDBPath = NewDBDialog.FileName;
+                    }
+                    stream.Close();
+                }
+
+                lstSequenz = new List<Sequenz>();
+                bDBIsOpen = true;
+                ImportStripMenuItem2.Enabled = true;
+                speichernToolStripMenuItem.Enabled = true;
+            }
         }
 
 

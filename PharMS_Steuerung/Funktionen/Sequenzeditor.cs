@@ -97,7 +97,7 @@ namespace PharMS_Steuerung.Funktionen
         public void FillGridSequenzEdit()
         {
             Sequenz oSequenz = GetSelectedSequenz();
-         
+
             string sOut = "";
             int i = 0;
             if (oSequenz == null) throw new System.ArgumentException("Parameter cannot be null", "oSequenz");  //später soll der zustand als anlegen einer neuen sequenz verstanden werden
@@ -157,6 +157,7 @@ namespace PharMS_Steuerung.Funktionen
                 MainForm.SequenzenGrid.Rows.Add();
                 MainForm.SequenzenGrid.Rows[i].Cells[0].Value = oSequenz.sName;
                 MainForm.SequenzenGrid.Rows[i].Cells[1].Value = (oSequenz.iSpeicherplatz == -999) ? "" : oSequenz.iSpeicherplatz.ToString();
+
                 i++;
             }
         }
