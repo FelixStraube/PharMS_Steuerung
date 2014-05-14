@@ -1,0 +1,15 @@
+U300\n
+p1;1\n
+P1\n
+c\n
+
+.
+.
+.{abfrage durch Rechner} 
+.
+.
+.
+.
+W020;00\n
+P0\n
+p1;0\n

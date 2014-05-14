@@ -1,0 +1,9 @@
+C:\Users\straube.QUODATA\Desktop\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\bin\Release\PharMS_Steuerung.exe.config
+C:\Users\straube.QUODATA\Desktop\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\bin\Release\PharMS_Steuerung.exe
+C:\Users\straube.QUODATA\Desktop\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\bin\Release\PharMS_Steuerung.pdb
+C:\Users\straube.QUODATA\Desktop\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Release\PharMS_Steuerung.Form1.resources
+C:\Users\straube.QUODATA\Desktop\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Release\PharMS_Steuerung.Properties.Resources.resources
+C:\Users\straube.QUODATA\Desktop\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Release\PharMS_Steuerung.csproj.GenerateResource.Cache
+C:\Users\straube.QUODATA\Desktop\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Release\PharMS_Steuerung.exe
+C:\Users\straube.QUODATA\Desktop\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Release\PharMS_Steuerung.pdb
+C:\Users\straube.QUODATA\Desktop\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Release\PharMS_Steuerung.csprojResolveAssemblyReference.cache

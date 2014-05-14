@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*Datenerfassung und Ausgabe in EXCEL*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
