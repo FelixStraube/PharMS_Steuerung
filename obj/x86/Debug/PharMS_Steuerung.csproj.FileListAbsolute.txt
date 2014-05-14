@@ -33,3 +33,11 @@ C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\
 C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.Form1.resources
 C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.Properties.Resources.resources
 C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.csproj.GenerateResource.Cache
+C:\Users\Alexander\Source\Repos\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.exe.config
+C:\Users\Alexander\Source\Repos\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.exe
+C:\Users\Alexander\Source\Repos\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.pdb
+C:\Users\Alexander\Source\Repos\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.exe
+C:\Users\Alexander\Source\Repos\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.pdb
+C:\Users\Alexander\Source\Repos\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.Form1.resources
+C:\Users\Alexander\Source\Repos\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.Properties.Resources.resources
+C:\Users\Alexander\Source\Repos\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.csproj.GenerateResource.Cache

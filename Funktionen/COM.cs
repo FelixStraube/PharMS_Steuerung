@@ -149,7 +149,6 @@ namespace PharMS_Steuerung.Funktionen
             Funktionen.Datenerfassen test = new Funktionen.Datenerfassen("---------,---------", tempForm);
             timeron = false;
             exitFlag = false;
-           
 
         }
                
