@@ -1,0 +1,11 @@
+﻿################################################################################
+# Diese .gitignore-Datei wurde von Microsoft(R) Visual Studio automatisch erstellt.
+################################################################################
+
+/PharMS_Steuerung/bin/Debug/Abläufe
+/PharMS_Steuerung/bin/Debug/PharMS_Steuerung.exe
+/PharMS_Steuerung/bin/Debug/PharMS_Steuerung.exe.config
+/PharMS_Steuerung/bin/Debug/PharMS_Steuerung.vshost.exe
+/PharMS_Steuerung/bin/Debug/PharMS_Steuerung.vshost.exe.config
+/PharMS_Steuerung/bin/Debug/PharMS_Steuerung.vshost.exe.manifest
+/PharMS_Steuerung/obj/x86/Debug

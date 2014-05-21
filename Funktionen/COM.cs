@@ -1,9 +1,6 @@
 ﻿/*Einlesen der Steuerzeichen und Übergabe der Eingabekomandos
- 
- 
- 
+  
  */
-
 
 using System;
 using System.Collections.Generic;
@@ -46,7 +43,7 @@ namespace PharMS_Steuerung.Funktionen
             System.Console.Out.WriteLine("Das ist Com Port  " + ComPort);
             port = new SerialPort(ComPort, 9600, Parity.None, 8, StopBits.One);
             Console.WriteLine("Incoming Data:");
-
+            
             port.DataReceived += new SerialDataReceivedEventHandler(port_DataReceived);
             if (port.IsOpen) return;
             else { port.Open(); bereit = true; };
@@ -55,7 +52,7 @@ namespace PharMS_Steuerung.Funktionen
           SerialDataReceivedEventArgs e)
         {
             if (!port.IsOpen) return;
-
+            
             eingabe = port.ReadLine();
             //eingabe = port.ReadExisting();
             Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG(eingabe, tempForm);
@@ -73,8 +70,8 @@ namespace PharMS_Steuerung.Funktionen
                     {
                         alarmCounter2 = 1;
                         timeron = true;
-                        Thread thread1 = new Thread(new ThreadStart(Execute));
-                        thread1.Start();
+                        Thread threadMesswertEmpfang = new Thread(new ThreadStart(Execute));
+                        threadMesswertEmpfang.Start();
                     }
 
                 }
@@ -117,7 +114,7 @@ namespace PharMS_Steuerung.Funktionen
        
         public void Execute()
         {
-            int n = Convert.ToInt32(tempForm.numeric_Intervall.Value);
+            int n = Convert.ToInt32(tempForm.numeric_Intervall.Value); //
             ende = Convert.ToInt32(tempForm.numeric_Messdauer.Value);
             ende = ende * 60 / n;
             tempForm.SchleifenStopp = false;
@@ -126,8 +123,7 @@ namespace PharMS_Steuerung.Funktionen
                  
                  if (tempForm.SchleifenStopp == true) { exitFlag = true; }
                  else
-                 {
-                     
+                 {                    
                      
                      if (alarmCounter2 <= ende)
                      {
@@ -164,7 +160,6 @@ namespace PharMS_Steuerung.Funktionen
             port.WriteLine(Caption);
 
             bereit = false;
-
 
         }
         public bool COMAblaufSender(String Caption)
