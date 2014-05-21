@@ -1,9 +1,6 @@
 ﻿/*Einlesen der Steuerzeichen und Übergabe der Eingabekomandos
- 
- 
- 
+  
  */
-
 
 using System;
 using System.Collections.Generic;
@@ -25,18 +22,17 @@ namespace PharMS_Steuerung.Funktionen
         //= new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
         public Form1 tempForm = new Form1();
         public bool bereit;
-        public bool timeron = false;
-
+        public System.Windows.Forms.Timer tmrMesswerteTimer;
         /// <summary>
         /// Öffnet COM Port und aktiviert data Recieved
         /// </summary>
         /// static System.Windows.Forms.Timer Zeitsteuerung = new System.Windows.Forms.Timer();
         /// Timer 
-        static int alarmCounter2 = 1;
+        private int iTickInterval, iTickAktuell;
         static bool exitFlag = false;
         static int ende;
 
-        
+
 
         public COM(Form1 Ausgabefenster)
         {
@@ -60,26 +56,29 @@ namespace PharMS_Steuerung.Funktionen
             //eingabe = port.ReadExisting();
             Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG(eingabe, tempForm);
             string steuerzeichen = eingabe.Substring(0, 1);
-            
-             switch (steuerzeichen)
+
+            switch (steuerzeichen)
             {
                 case "M":
-                if (tempForm.radioButton2.Checked == true) { Funktionen.Datenerfassen Ausgabe_manuel = new Datenerfassen(eingabe, tempForm); }
-                if (tempForm.radioButton1.Checked == true)
-                {
-                    if (timeron == true) { Funktionen.Datenerfassen Ausgabe_automatisch = new Datenerfassen(eingabe, tempForm); }
-
-                    else
+                    if (tempForm.radioButton2.Checked == true) { Funktionen.Datenerfassen Ausgabe_manuel = new Datenerfassen(eingabe, tempForm); }
+                    if (tempForm.radioButton1.Checked == true)
                     {
-                        alarmCounter2 = 1;
-                        timeron = true;
-                        Thread thread1 = new Thread(new ThreadStart(Execute));
-                        thread1.Start();
+                        if (tmrMesswerteTimer != null) { Funktionen.Datenerfassen Ausgabe_automatisch = new Datenerfassen(eingabe, tempForm); }
+
+                        else
+                        {
+                            tmrMesswerteTimer = new System.Windows.Forms.Timer();
+                            iTickInterval = Convert.ToInt32(tempForm.numeric_Intervall.Value);
+                            tmrMesswerteTimer.Interval = iTickInterval * 1000;  //s zu ms
+                            tmrMesswerteTimer.Tick += new EventHandler(Execute);
+                            ende = Convert.ToInt32(tempForm.numeric_Messdauer.Value);
+                            ende = ende * 60 / iTickInterval;
+                            tmrMesswerteTimer.Start();
+                        }
+
                     }
 
-                }
-            
-                break;
+                    break;
 
                 case "Z":
                     AbfrageStatus("s");
@@ -91,67 +90,49 @@ namespace PharMS_Steuerung.Funktionen
                         case "s00":
                         case "s20":
                             if (tempForm.label6.Text == "In Arbeit")
-                               {
-                                 tempForm.change_Label("Bereit", tempForm.label6);
-                                }
+                            {
+                                tempForm.change_Label("Bereit", tempForm.label6);
+                            }
 
-                             bereit = true;
-                       break;
+                            bereit = true;
+                            break;
                         case "s10":
-                     
+
                             System.Threading.Thread.Sleep(5000);
                             AbfrageStatus("s");
                             break;
-                       
+
                         default: break;
                     }
-                    
+
                     break;
-                
-                
-                default:break;
+
+
+                default: break;
             }
-            
+
             Console.WriteLine("Eingelesen von Com 3" + eingabe + "/" + steuerzeichen);
         }
-       
-        public void Execute()
+
+        private void Execute(Object myObject, EventArgs myEventArgs)
         {
-            int n = Convert.ToInt32(tempForm.numeric_Intervall.Value);
-            ende = Convert.ToInt32(tempForm.numeric_Messdauer.Value);
-            ende = ende * 60 / n;
-            tempForm.SchleifenStopp = false;
-
-            do
-                 
-                 if (tempForm.SchleifenStopp == true) { exitFlag = true; }
-                 else
-                 {
-                     
-                     
-                     if (alarmCounter2 <= ende)
-                     {
-                         Console.WriteLine("teste" + alarmCounter2 + ":" + ende);
-                         // Restarts the timer and increments the counter.
-                         COMSender("M");
-                         alarmCounter2 += 1;
-                         System.Threading.Thread.Sleep(n * 1000);
-
-                     }
-                     else
-                     {
-                         // Stops the timer.
-                          exitFlag = true;
-                     }
-                 }
-                      while (exitFlag != true );
-
-            Funktionen.Datenerfassen test = new Funktionen.Datenerfassen("---------,---------", tempForm);
-            timeron = false;
-            exitFlag = false;
+            if (iTickAktuell >= ende)
+            {
+                tmrMesswerteTimer.Stop();
+                tmrMesswerteTimer.Enabled = false;
+                tmrMesswerteTimer.Dispose();
+            }
+            else
+            {
+                Console.WriteLine("teste" + iTickInterval + ":" + ende);
+                // Restarts the timer and increments the counter.
+                COMSender("M");
+                Funktionen.Datenerfassen test = new Funktionen.Datenerfassen("---------,---------", tempForm);
+                iTickAktuell = iTickAktuell + iTickInterval;
+            }
 
         }
-               
+
         /// <summary>
         /// Sendet einen String an geöffneten com port
         /// </summary>
@@ -160,11 +141,10 @@ namespace PharMS_Steuerung.Funktionen
         {
             if (!port.IsOpen) return;
 
-            Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : "+Caption, tempForm);
+            Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : " + Caption, tempForm);
             port.WriteLine(Caption);
 
             bereit = false;
-
 
         }
         public bool COMAblaufSender(String Caption)
@@ -177,18 +157,19 @@ namespace PharMS_Steuerung.Funktionen
             }
             if (bereit == true)
             {
-                Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : "+Caption, tempForm);
+                Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : " + Caption, tempForm);
                 port.WriteLine(Caption);
-                
+
                 bereit = false;
                 return true;
             }
             else
             {
-               // Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : s", tempForm);
+                // Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : s", tempForm);
                 System.Threading.Thread.Sleep(100);
                 //port.WriteLine("s");
-                return false; }
+                return false;
+            }
         }
         public void COMDisconnect()
         {
@@ -204,11 +185,11 @@ namespace PharMS_Steuerung.Funktionen
         }
         public void AbfrageStatus(String Caption)
         {
-            if (!port.IsOpen);
+            if (!port.IsOpen) ;
             Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : " + Caption, tempForm);
             port.WriteLine(Caption);
-           
-           ;
+
+            ;
 
         }
 
