@@ -212,7 +212,7 @@ namespace PharMS_Steuerung
                     {
                         if (newlines[i] != "")
                         {
-                           // Lauf = Comschnitstelle.COMAblaufSender("X" + newlines[i]);
+                            Lauf = Comschnitstelle.COMAblaufSender("X" + newlines[i]);
                             Console.WriteLine("Line: " + i + ";" + count + ";" + "X" + newlines[i]);
                         };
                         if (Abbruch == true) { break; }
@@ -503,6 +503,7 @@ namespace PharMS_Steuerung
         {
             if (e.ColumnIndex == 2)
             {
+                ablauf = "";
                 //neues übertragen Ereignis 
                 foreach (Sequenz oSequenz in lstSequenz)
                 {
@@ -512,10 +513,11 @@ namespace PharMS_Steuerung
                         {
                             if (line == "") continue;
                             ablauf = ablauf + ";" + line;
-                            Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
-                            //Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                            
+                            
                         }
-
+                        //Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                         Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
                     }
                 }
 
