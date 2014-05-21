@@ -9,3 +9,5 @@
 /PharMS_Steuerung/bin/Debug/PharMS_Steuerung.vshost.exe.config
 /PharMS_Steuerung/bin/Debug/PharMS_Steuerung.vshost.exe.manifest
 /PharMS_Steuerung/obj/x86/Debug
+bin/Debug/PharMS_Steuerung.exe
+bin/Debug/PharMS_Steuerung.pdb
