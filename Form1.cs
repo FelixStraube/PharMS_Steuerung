@@ -199,6 +199,7 @@ namespace PharMS_Steuerung
             //  Console.WriteLine("Incoming Data:" + lines[0]);
             newlines = test.Ausgabe("Master\\" + Name);
             int count = newlines.Count;
+            change_progressBar(-1, 0, progressBar1);
             for (int z = 0; z < Durchläufe; z++)
             {
 
@@ -210,7 +211,7 @@ namespace PharMS_Steuerung
                     {
                         if (newlines[i] != "")
                         {
-                            Lauf = Comschnitstelle.COMAblaufSender("X" + newlines[i]);
+                           // Lauf = Comschnitstelle.COMAblaufSender("X" + newlines[i]);
                             Console.WriteLine("Line: " + i + ";" + count + ";" + "X" + newlines[i]);
                         };
                         if (Abbruch == true) { break; }
@@ -218,10 +219,12 @@ namespace PharMS_Steuerung
                         System.Threading.Thread.Sleep(1000);
 
                     } while (Lauf == false);
-
-                    change_progressBar(z, Durchläufe, progressBar1);
+                   
                 }
-            }
+              
+            change_progressBar(z, Durchläufe, progressBar1);
+            } 
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)

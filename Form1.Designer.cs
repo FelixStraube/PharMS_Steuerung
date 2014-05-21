@@ -653,6 +653,11 @@
             // numeric_Messdauer
             // 
             this.numeric_Messdauer.Location = new System.Drawing.Point(144, 391);
+            this.numeric_Messdauer.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.numeric_Messdauer.Name = "numeric_Messdauer";
             this.numeric_Messdauer.Size = new System.Drawing.Size(120, 20);
             this.numeric_Messdauer.TabIndex = 12;
@@ -669,6 +674,11 @@
             // numeric_Intervall
             // 
             this.numeric_Intervall.Location = new System.Drawing.Point(144, 330);
+            this.numeric_Intervall.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.numeric_Intervall.Minimum = new decimal(new int[] {
             1,
             0,
