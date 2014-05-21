@@ -74,6 +74,7 @@ namespace PharMS_Steuerung.Funktionen
                             tmrMesswerteTimer.Elapsed += new ElapsedEventHandler(Execute);
                             ende = Convert.ToInt32(tempForm.numeric_Messdauer.Value);
                             ende = ende * 60 / iTickInterval;
+                            iTickAktuell = 0;
                             tmrMesswerteTimer.Start();
                         }
 
@@ -118,7 +119,8 @@ namespace PharMS_Steuerung.Funktionen
         private void Execute(Object myObject, EventArgs myEventArgs)
         {
             if (iTickAktuell >= ende)
-            {
+            {   
+                Funktionen.Datenerfassen test = new Funktionen.Datenerfassen("---------,---------", tempForm);
                 tmrMesswerteTimer.Stop();
                 tmrMesswerteTimer.Enabled = false;
                 tmrMesswerteTimer.Dispose();
@@ -128,7 +130,7 @@ namespace PharMS_Steuerung.Funktionen
                 Console.WriteLine("teste" + iTickInterval + ":" + ende);
                 // Restarts the timer and increments the counter.
                 COMSender("M");
-                Funktionen.Datenerfassen test = new Funktionen.Datenerfassen("---------,---------", tempForm);
+                
                 iTickAktuell = iTickAktuell + iTickInterval;
             }
 
@@ -186,7 +188,7 @@ namespace PharMS_Steuerung.Funktionen
         }
         public void AbfrageStatus(String Caption)
         {
-            if (!port.IsOpen) ;
+            if (!port.IsOpen) return;
             Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : " + Caption, tempForm);
             port.WriteLine(Caption);
 
