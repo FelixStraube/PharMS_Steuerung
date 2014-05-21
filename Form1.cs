@@ -33,6 +33,7 @@ namespace PharMS_Steuerung
         public List<Sequenz> lstSequenz;
         public Sequenzeditor oSequenzeditor;
         bool bDBIsOpen = false;
+        bool bDBIsOpening = false;
         string sDBPath;
         string sDBName;
 
@@ -184,8 +185,8 @@ namespace PharMS_Steuerung
             Abbruch = false;
             Durchläufe = Convert.ToInt32(numericUpDown1.Value);
             Name = Masterablauf.SelectedItem.ToString();
-            Thread thread1 = new Thread(new ThreadStart(Execute_Ablauf));
-            thread1.Start();
+            Thread threadAblaufStart = new Thread(new ThreadStart(Execute_Ablauf));
+            threadAblaufStart.Start();
 
         }
 
@@ -294,9 +295,6 @@ namespace PharMS_Steuerung
             alarmCounter = 1;
             Zeitsteuerung.Interval = n * 1000;
             Zeitsteuerung.Start();
-
-
-
         }
 
         private static void TimerEventProcessor(Object myObject, EventArgs myEventArgs)
@@ -357,14 +355,16 @@ namespace PharMS_Steuerung
                 CfgFile oCfgFile = new CfgFile(openDatabaseDialog.FileName);
                 stlAllSequenz = oCfgFile.Ausgabe(); //Gibt die aktuell eingelesene Datei aus
                 sDBPath = openDatabaseDialog.FileName;
-            }
 
-            extractDatabase(stlAllSequenz);
-            bDBIsOpen = true;
-            ImportStripMenuItem2.Enabled = true;
-            speichernToolStripMenuItem.Enabled = true;
-            oSequenzeditor.FillGridSequenz();
-            SequenzenGrid.RowsAdded += SequenzenGrid_RowsAdded;
+                bDBIsOpening = true;
+                extractDatabase(stlAllSequenz);
+                bDBIsOpen = true;
+                ImportStripMenuItem2.Enabled = true;
+                speichernToolStripMenuItem.Enabled = true;
+                oSequenzeditor.FillGridSequenz();
+                SequenzenGrid.RowsAdded += SequenzenGrid_RowsAdded;
+                bDBIsOpening = false;
+            }
         }
 
         private void extractDatabase(List<string> DB)
@@ -469,16 +469,19 @@ namespace PharMS_Steuerung
             AblaufListe.Items.Clear();
             foreach (Sequenz oSequenz in lstSequenz)
             {
-                oSequenz.sName = SequenzenGrid.Rows[i].Cells[0].Value.ToString();
-                if (SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "")
+                if (!bDBIsOpening)
                 {
-                    oSequenz.iSpeicherplatz = -999;
-                }
-                else
-                {
-                    oSequenz.iSpeicherplatz = Convert.ToInt32(SequenzenGrid.Rows[i].Cells[1].Value.ToString());
-                }
 
+                    oSequenz.sName = SequenzenGrid.Rows[i].Cells[0].Value.ToString();
+                    if (SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "")
+                    {
+                        oSequenz.iSpeicherplatz = -999;
+                    }
+                    else
+                    {
+                        oSequenz.iSpeicherplatz = Convert.ToInt32(SequenzenGrid.Rows[i].Cells[1].Value.ToString());
+                    }
+                }
                 AblaufListe.Items.Add(oSequenz.sName);
                 i++;
             }
@@ -518,7 +521,7 @@ namespace PharMS_Steuerung
 
                 if (e.ColumnIndex == 3)
                 {
-                   //Platzhalter für Startbutton im Grid
+                    //Platzhalter für Startbutton im Grid
                 }
             }
 
