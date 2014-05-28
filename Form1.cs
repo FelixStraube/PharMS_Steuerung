@@ -184,7 +184,9 @@ namespace PharMS_Steuerung
         {
             Abbruch = false;
             Durchläufe = Convert.ToInt32(numericUpDown1.Value);
+            if (Masterablauf.SelectedItem == null) { return; };
             Name = Masterablauf.SelectedItem.ToString();
+                   
             Thread threadAblaufStart = new Thread(new ThreadStart(Execute_Ablauf));
             threadAblaufStart.Start();
 
@@ -516,7 +518,7 @@ namespace PharMS_Steuerung
                             
                             
                         }
-                        //Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                         Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
                          Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
                     }
                 }

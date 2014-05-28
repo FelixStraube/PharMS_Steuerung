@@ -20,6 +20,7 @@ namespace PharMS_Steuerung.Funktionen
        public DataGrid tet = new DataGrid();
        string Sensor1;
        string Sensor2;
+       private System.IO.StreamWriter file;
        /// <summary>
        /// Schreibt String in Tabelle(Tab 2) und csv Datei 
        /// </summary>
@@ -64,7 +65,9 @@ namespace PharMS_Steuerung.Funktionen
            
            if (Datei_vorhanden == true)
            {
-               using (System.IO.StreamWriter file = new System.IO.StreamWriter(BaseDirectory + "Temp\\" + Filename,true))
+
+               try { file = new System.IO.StreamWriter(BaseDirectory + "Temp\\" + Filename, true); }
+               catch { return; };
                {
                  
                    file.WriteLine(Zeit + ";" + Sensor1 + ";" + Sensor2);

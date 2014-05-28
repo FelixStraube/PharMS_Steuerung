@@ -64,7 +64,12 @@ namespace PharMS_Steuerung.Funktionen
                     if (tempForm.radioButton2.Checked == true) { Funktionen.Datenerfassen Ausgabe_manuel = new Datenerfassen(eingabe, tempForm); }
                     if (tempForm.radioButton1.Checked == true)
                     {
-                        if (tmrMesswerteTimer != null) { Funktionen.Datenerfassen Ausgabe_automatisch = new Datenerfassen(eingabe, tempForm); }
+                        if (tmrMesswerteTimer == null)
+                        {
+                            tmrMesswerteTimer = new System.Timers.Timer();
+                            tmrMesswerteTimer.Enabled = false;
+                        }
+                        if (tmrMesswerteTimer.Enabled == true) { Funktionen.Datenerfassen Ausgabe_automatisch = new Datenerfassen(eingabe, tempForm); }
 
                         else
                         {
@@ -113,7 +118,7 @@ namespace PharMS_Steuerung.Funktionen
                 default: break;
             }
 
-            Console.WriteLine("Eingelesen von Com 3" + eingabe + "/" + steuerzeichen);
+         //   Console.WriteLine("Eingelesen von Com 3" + eingabe + "/" + steuerzeichen);
         }
 
         private void Execute(Object myObject, EventArgs myEventArgs)
@@ -122,12 +127,13 @@ namespace PharMS_Steuerung.Funktionen
             {   
                 Funktionen.Datenerfassen test = new Funktionen.Datenerfassen("---------,---------", tempForm);
                 tmrMesswerteTimer.Stop();
-                tmrMesswerteTimer.Enabled = false;
-                tmrMesswerteTimer.Dispose();
+//                tmrMesswerteTimer.Enabled = false;
+//                tmrMesswerteTimer.Dispose();
+                tmrMesswerteTimer.Close();
             }
             else
             {
-                Console.WriteLine("teste" + iTickInterval + ":" + ende);
+              //  Console.WriteLine("teste" + iTickInterval + ":" + ende);
                 // Restarts the timer and increments the counter.
                 COMSender("M");
                 
