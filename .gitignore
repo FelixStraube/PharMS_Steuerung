@@ -2,6 +2,6 @@
 # Diese .gitignore-Datei wurde von Microsoft(R) Visual Studio automatisch erstellt.
 ################################################################################
 
-/PharMS_Steuerung/bin
-/PharMS_Steuerung/obj
+/PharMS_Steuerung/bin/
+/PharMS_Steuerung/obj/
 

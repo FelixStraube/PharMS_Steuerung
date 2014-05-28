@@ -43,13 +43,6 @@ namespace PharMS_Steuerung
 
         }
 
-
-
-        private void Speicher_TextChanged(object sender, EventArgs e)
-        {
-            // string Name = Speicher.SelectedText.ToString();
-        }
-
         private void Uebertragen_Click(object sender, EventArgs e)
         {
 
@@ -69,9 +62,9 @@ namespace PharMS_Steuerung
 
             }
 
-            Console.WriteLine("Incoming Data:" + "Y" + cmbSpeicherplatz.SelectedItem.ToString() + ablauf);
+           // Console.WriteLine("Incoming Data:" + "Y" + cmbSpeicherplatz.SelectedItem.ToString() + ablauf);
 
-            Comschnitstelle.COMSender("Y" + cmbSpeicherplatz.SelectedItem.ToString() + ablauf);
+            //Comschnitstelle.COMSender("Y" + cmbSpeicherplatz.SelectedItem.ToString() + ablauf);
 
 
 
@@ -405,7 +398,11 @@ namespace PharMS_Steuerung
                     continue;
                 }
 
-                if (oSequenz != null && line != "") oSequenz.stlSequenz.Add(line);
+                if (oSequenz != null && line != "")
+                {
+                    if (line.Contains("*")) oSequenz.bIsTemplate = true; 
+                    oSequenz.stlSequenz.Add(line);
+                }
             }
 
 
@@ -420,7 +417,7 @@ namespace PharMS_Steuerung
                 lstSequenz[lstSequenz.Count].sDBName = sDBName;
                 AblaufListe.Items.Add(x.Name);
                 oSequenzeditor.FillGridSequenz();
-                SequenzenGrid.RowsAdded += SequenzenGrid_RowsAdded;
+               // SequenzenGrid.RowsAdded += SequenzenGrid_RowsAdded;
             }
 
         }
@@ -447,7 +444,7 @@ namespace PharMS_Steuerung
                         sw.WriteLine("@//@");
                         sw.WriteLine(oSequenz.sName);
                         foreach (string line in oSequenz.stlSequenz)
-                        {
+                        {                            
                             sw.WriteLine(line);
                         }
                         sw.WriteLine("/*-*/");
@@ -460,7 +457,25 @@ namespace PharMS_Steuerung
 
         private void btnSaveOneSequenz_Click(object sender, EventArgs e)
         {
+            if (txtNewName.TextLength == 0)
+            {
+                MessageBox.Show("Bitte geben Sie einen Namen für die neue Sequenz an");
+                return;
+            }
 
+            lstSequenz.Add(new Sequenz());
+            lstSequenz[lstSequenz.Count-1].sDBName = sDBName;
+            lstSequenz[lstSequenz.Count-1].sName = txtNewName.Text;
+            AblaufListe.Items.Add(lstSequenz[lstSequenz.Count-1].sName);
+
+           for (int i = 0; i < SequenzeditorGrid.RowCount-1; i++)
+			{
+             lstSequenz[lstSequenz.Count-1].stlSequenz.Add(SequenzeditorGrid.Rows[i].Cells[0].Value.ToString() + SequenzeditorGrid.Rows[i].Cells[1].Value.ToString()); 
+            }
+            oSequenzeditor.FillGridSequenz();
+            oSequenzeditor.FillGridSequenzEdit();
+
+           
         }
 
         private void SequenzenGrid_CurrentCellChanged(object sender, EventArgs e)
@@ -471,7 +486,7 @@ namespace PharMS_Steuerung
             {
                 if (!bDBIsOpening)
                 {
-
+                    if (SequenzenGrid.Rows[i].Cells[0].Value == null) continue; // nach den Speichern der Sequenz ist existiert noch kein Eintrag im Grid jedoch in der Objectlist
                     oSequenz.sName = SequenzenGrid.Rows[i].Cells[0].Value.ToString();
                     if (SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "")
                     {
