@@ -148,7 +148,7 @@ namespace PharMS_Steuerung.Funktionen
                 }
                 else
                 {
-                    MainForm.SequenzeditorGrid.Rows[i].Cells[1].Style.BackColor = Color.RosyBrown;              
+                    MainForm.SequenzeditorGrid.Rows[i].Cells[1].Style.BackColor = Color.RosyBrown;
                 }
 
                 MainForm.SequenzeditorGrid.Rows[i].Cells[2].Value = sOut;
@@ -165,15 +165,12 @@ namespace PharMS_Steuerung.Funktionen
 
             foreach (Sequenz oSequenz in MainForm.lstSequenz)
             {
-
+                if (oSequenz.bIsTemplate) continue;
                 MainForm.SequenzenGrid.Rows.Add();
                 MainForm.SequenzenGrid.Rows[i].Cells[0].Value = oSequenz.sName;
                 MainForm.SequenzenGrid.Rows[i].Cells[1].Value = (oSequenz.iSpeicherplatz == -999) ? "" : oSequenz.iSpeicherplatz.ToString();
-                if (oSequenz.bIsTemplate)
-                {
-                    MainForm.SequenzenGrid.Rows[i].Cells[0].Style.BackColor = Color.RosyBrown;
-                    MainForm.SequenzenGrid.Rows[i].Cells[1].ReadOnly = true;
-                }
+                MainForm.SequenzenGrid.Rows[i].Cells[3].Value = oSequenz.ObjectKey;
+
                 i++;
             }
         }

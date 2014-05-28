@@ -123,22 +123,27 @@
   <metadata name="colSpeicherplatz.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="colTransfer.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="colDelete.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="colStart.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colSpeicherplatz.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colTransfer.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colStart.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="colDelete.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        /9j/4AAQSkZJRgABAQEAAAAAAAD/2wBDAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8k
+        KDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5Ojf/2wBDAQoKCg0MDRoPDxo3JR8lNzc3Nzc3Nzc3Nzc3
+        NzQ4Nzc3Nzc3NDc0LDc3NDA4LDc3KzQrNzc3Mjc3NzgsNyw3Nzf/wAARCAAYABgDAREAAhEBAxEB/8QA
+        FwAAAwEAAAAAAAAAAAAAAAAAAwQHAv/EADAQAAAEBAMFBgcAAAAAAAAAAAECAwQFERIxIUFRAAYHE1IU
+        IkJicfAVFhcyM2Fj/8QAGgEAAQUBAAAAAAAAAAAAAAAAAgABAwQGBf/EACwRAAAFAAcHBQEAAAAAAAAA
+        AAABAgMRBAUxQWHB4RIhIlFx0fAUFSRSoRP/2gAMAwEAAhEDEQA/AKPG48BlFEUTnTRSOJDmKMjGOGQa
+        AG0K3LiHSo1EktpV4Efes5YcJcOfbtMgplrLr/Vs7YbN/bdiCKrzNzAB3e3mocJNnKiiqC6gETUMNRyH
+        HIdQHX2DNu74MHS6DCTWndFoQ4jROEsXZSgYReSAXRU5Sol3avPanOV8JbBSFJT1E1UMPuT9c8M+4lzi
+        PuVPxkAhZ3HEdqZuGNQmiIK0Ujhc6hbh4oKyhjRAQHsgKSp5cu9T/S9WcrYT2t0U0n1Gcrtt5MQXBnjl
+        3C3EHchcjpaIwxBd42dK1rt05mVSUHxk1Acwy9LM+wZntJElVVqlKSadOIsO6OR+a7+mjn5bnzC/EPv7
+        FUHKp6Kuvz2nhbHZek4MQPvvyJjg/eumYxw+3IXO6RiMTQXZtmqtaDdSZVVVA8Z9ADIM/S6YYMj2lAq1
+        rVKkm00czad0ci80/9k=
+</value>
+  </data>
+  <metadata name="colIndex.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="colBefehl.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -148,15 +153,6 @@
     <value>True</value>
   </metadata>
   <metadata name="colHelp.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Zeit.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Spannung1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Spannung2.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="Zeit.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -185,14 +181,5 @@
   </metadata>
   <metadata name="NewDBDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>614, 17</value>
-  </metadata>
-  <metadata name="colBefehl.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colParametereingabe.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colHelp.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
   </metadata>
 </root>

@@ -14,7 +14,8 @@ namespace PharMS_Steuerung.Funktionen
         public string sName, sPath , sDBName;
         public List<string> stlSequenz;
         public int iSpeicherplatz=-999;
-        public bool bIsTemplate; 
+        public bool bIsTemplate;
+        public int ObjectKey;
 
 
         public Sequenz()
