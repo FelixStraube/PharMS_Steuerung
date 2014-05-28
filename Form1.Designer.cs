@@ -53,11 +53,20 @@
             this.Connect = new System.Windows.Forms.Button();
             this.tabSequenzList = new System.Windows.Forms.TabPage();
             this.SequenzenGrid = new System.Windows.Forms.DataGridView();
+            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSpeicherplatz = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colDelete = new System.Windows.Forms.DataGridViewImageColumn();
+            this.colIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabSequenzedit = new System.Windows.Forms.TabPage();
+            this.txtNewName = new System.Windows.Forms.TextBox();
+            this.lblNewName = new System.Windows.Forms.Label();
             this.btnSaveOneSequenz = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.chkFilter = new System.Windows.Forms.CheckBox();
             this.SequenzeditorGrid = new System.Windows.Forms.DataGridView();
+            this.colBefehl = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colParametereingabe = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHelp = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
@@ -92,15 +101,7 @@
             this.hilfeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDatabaseDialog = new System.Windows.Forms.OpenFileDialog();
             this.NewDBDialog = new System.Windows.Forms.SaveFileDialog();
-            this.colBefehl = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colParametereingabe = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colHelp = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lblNewName = new System.Windows.Forms.Label();
-            this.txtNewName = new System.Windows.Forms.TextBox();
-            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSpeicherplatz = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colDelete = new System.Windows.Forms.DataGridViewImageColumn();
-            this.colIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnUebertragen = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -375,6 +376,7 @@
             // 
             // tabSequenzList
             // 
+            this.tabSequenzList.Controls.Add(this.btnUebertragen);
             this.tabSequenzList.Controls.Add(this.SequenzenGrid);
             this.tabSequenzList.Location = new System.Drawing.Point(4, 22);
             this.tabSequenzList.Name = "tabSequenzList";
@@ -385,8 +387,7 @@
             // 
             // SequenzenGrid
             // 
-            this.SequenzenGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.SequenzenGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SequenzenGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.SequenzenGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -396,10 +397,54 @@
             this.colIndex});
             this.SequenzenGrid.Location = new System.Drawing.Point(1, 3);
             this.SequenzenGrid.Name = "SequenzenGrid";
-            this.SequenzenGrid.Size = new System.Drawing.Size(518, 575);
+            this.SequenzenGrid.Size = new System.Drawing.Size(518, 500);
             this.SequenzenGrid.TabIndex = 0;
             this.SequenzenGrid.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.SequenzenGrid_CellMouseClick);
-          
+            // 
+            // colName
+            // 
+            this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colName.HeaderText = "Sequenz";
+            this.colName.Name = "colName";
+            // 
+            // colSpeicherplatz
+            // 
+            this.colSpeicherplatz.HeaderText = "Speicherplatz";
+            this.colSpeicherplatz.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20"});
+            this.colSpeicherplatz.Name = "colSpeicherplatz";
+            // 
+            // colDelete
+            // 
+            this.colDelete.HeaderText = "Löschen";
+            this.colDelete.Image = ((System.Drawing.Image)(resources.GetObject("colDelete.Image")));
+            this.colDelete.Name = "colDelete";
+            this.colDelete.Width = 60;
+            // 
+            // colIndex
+            // 
+            this.colIndex.HeaderText = "Index";
+            this.colIndex.Name = "colIndex";
+            this.colIndex.Visible = false;
             // 
             // tabSequenzedit
             // 
@@ -416,6 +461,24 @@
             this.tabSequenzedit.TabIndex = 3;
             this.tabSequenzedit.Text = "Sequenzeditor";
             this.tabSequenzedit.UseVisualStyleBackColor = true;
+            // 
+            // txtNewName
+            // 
+            this.txtNewName.Location = new System.Drawing.Point(142, 519);
+            this.txtNewName.Name = "txtNewName";
+            this.txtNewName.Size = new System.Drawing.Size(151, 20);
+            this.txtNewName.TabIndex = 14;
+            this.txtNewName.Visible = false;
+            // 
+            // lblNewName
+            // 
+            this.lblNewName.AutoSize = true;
+            this.lblNewName.Location = new System.Drawing.Point(5, 519);
+            this.lblNewName.Name = "lblNewName";
+            this.lblNewName.Size = new System.Drawing.Size(134, 13);
+            this.lblNewName.TabIndex = 13;
+            this.lblNewName.Text = "Name der neuen Sequenz:";
+            this.lblNewName.Visible = false;
             // 
             // btnSaveOneSequenz
             // 
@@ -461,6 +524,30 @@
             this.SequenzeditorGrid.Size = new System.Drawing.Size(519, 456);
             this.SequenzeditorGrid.TabIndex = 0;
             // 
+            // colBefehl
+            // 
+            this.colBefehl.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colBefehl.Frozen = true;
+            this.colBefehl.HeaderText = "Befehl";
+            this.colBefehl.Name = "colBefehl";
+            this.colBefehl.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colBefehl.Width = 60;
+            // 
+            // colParametereingabe
+            // 
+            this.colParametereingabe.Frozen = true;
+            this.colParametereingabe.HeaderText = "Parametereingabe";
+            this.colParametereingabe.Name = "colParametereingabe";
+            this.colParametereingabe.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colHelp
+            // 
+            this.colHelp.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colHelp.HeaderText = "Erklärung";
+            this.colHelp.Name = "colHelp";
+            this.colHelp.ReadOnly = true;
+            this.colHelp.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.radioButton2);
@@ -478,7 +565,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(519, 574);
+            this.tabPage2.Size = new System.Drawing.Size(519, 346);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Empfangen";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -653,7 +740,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(519, 574);
+            this.tabPage3.Size = new System.Drawing.Size(519, 346);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Controller";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -775,92 +862,15 @@
             // 
             this.openDatabaseDialog.Filter = "Pharms (*.pharms)|*.pharms|Textdateien|*.txt";
             // 
-            // colBefehl
+            // btnUebertragen
             // 
-            this.colBefehl.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colBefehl.Frozen = true;
-            this.colBefehl.HeaderText = "Befehl";
-            this.colBefehl.Name = "colBefehl";
-            this.colBefehl.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colBefehl.Width = 60;
-            // 
-            // colParametereingabe
-            // 
-            this.colParametereingabe.Frozen = true;
-            this.colParametereingabe.HeaderText = "Parametereingabe";
-            this.colParametereingabe.Name = "colParametereingabe";
-            this.colParametereingabe.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colHelp
-            // 
-            this.colHelp.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colHelp.HeaderText = "Erklärung";
-            this.colHelp.Name = "colHelp";
-            this.colHelp.ReadOnly = true;
-            this.colHelp.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // lblNewName
-            // 
-            this.lblNewName.AutoSize = true;
-            this.lblNewName.Location = new System.Drawing.Point(5, 519);
-            this.lblNewName.Name = "lblNewName";
-            this.lblNewName.Size = new System.Drawing.Size(134, 13);
-            this.lblNewName.TabIndex = 13;
-            this.lblNewName.Text = "Name der neuen Sequenz:";
-            this.lblNewName.Visible = false;
-            // 
-            // txtNewName
-            // 
-            this.txtNewName.Location = new System.Drawing.Point(142, 519);
-            this.txtNewName.Name = "txtNewName";
-            this.txtNewName.Size = new System.Drawing.Size(151, 20);
-            this.txtNewName.TabIndex = 14;
-            this.txtNewName.Visible = false;
-            // 
-            // colName
-            // 
-            this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colName.HeaderText = "Sequenz";
-            this.colName.Name = "colName";
-            // 
-            // colSpeicherplatz
-            // 
-            this.colSpeicherplatz.HeaderText = "Speicherplatz";
-            this.colSpeicherplatz.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"});
-            this.colSpeicherplatz.Name = "colSpeicherplatz";
-            // 
-            // colDelete
-            // 
-            this.colDelete.HeaderText = "Löschen";
-            this.colDelete.Image = ((System.Drawing.Image)(resources.GetObject("colDelete.Image")));
-            this.colDelete.Name = "colDelete";
-            this.colDelete.Width = 60;
-            // 
-            // colIndex
-            // 
-            this.colIndex.HeaderText = "Index";
-            this.colIndex.Name = "colIndex";
-            this.colIndex.Visible = false;
+            this.btnUebertragen.Location = new System.Drawing.Point(18, 529);
+            this.btnUebertragen.Name = "btnUebertragen";
+            this.btnUebertragen.Size = new System.Drawing.Size(75, 23);
+            this.btnUebertragen.TabIndex = 1;
+            this.btnUebertragen.Text = "Übertragen";
+            this.btnUebertragen.UseVisualStyleBackColor = true;
+            this.btnUebertragen.Click += new System.EventHandler(this.btnUebertragen_Click);
             // 
             // Form1
             // 
@@ -980,6 +990,7 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn colSpeicherplatz;
         private System.Windows.Forms.DataGridViewImageColumn colDelete;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIndex;
+        private System.Windows.Forms.Button btnUebertragen;
     }
 }
 

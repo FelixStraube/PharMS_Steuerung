@@ -487,28 +487,14 @@ namespace PharMS_Steuerung
         {
             if (e.ColumnIndex == 2)
             {
-                ablauf = "";
-                //neues übertragen Ereignis 
+                int i = 0;
                 foreach (Sequenz oSequenz in lstSequenz)
                 {
-                    if (SequenzenGrid.Rows[e.RowIndex].Cells[0].Value.ToString() == oSequenz.sName)
-                    {
-                        foreach (string line in oSequenz.stlSequenz)
-                        {
-                            if (line == "") continue;
-                            ablauf = ablauf + ";" + line;
-
-
-                        }
-                        //Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
-                        Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
-                    }
+                    if (SequenzenGrid.Rows[e.RowIndex].Cells[3].Value.ToString() == oSequenz.ObjectKey.ToString()) break;
+                    i++;
                 }
-
-                if (e.ColumnIndex == 3)
-                {
-                    //Platzhalter für Startbutton im Grid
-                }
+                lstSequenz.RemoveAt(i);
+                oSequenzeditor.FillGridSequenz();
             }
         }
 
@@ -560,6 +546,28 @@ namespace PharMS_Steuerung
 
             }
 
+        }
+
+        private void btnUebertragen_Click(object sender, EventArgs e)
+        {
+
+            /* ablauf = "";
+             //neues übertragen Ereignis 
+             foreach (Sequenz oSequenz in lstSequenz)
+             {
+                 if (SequenzenGrid.Rows[e.RowIndex].Cells[0].Value.ToString() == oSequenz.sName)
+                 {
+                     foreach (string line in oSequenz.stlSequenz)
+                     {
+                         if (line == "") continue;
+                         ablauf = ablauf + ";" + line;
+
+
+                     }
+                     //Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                     Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                 }
+             }*/
         }
 
 
