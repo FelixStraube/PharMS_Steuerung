@@ -10,6 +10,7 @@ using System.IO.Ports;
 using System.Windows.Forms;
 using System.IO;
 using System.Threading;
+using System.Timers;
 
 namespace PharMS_Steuerung.Funktionen
 {// [STAThread] 
@@ -22,7 +23,7 @@ namespace PharMS_Steuerung.Funktionen
         //= new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
         public Form1 tempForm = new Form1();
         public bool bereit;
-        public System.Windows.Forms.Timer tmrMesswerteTimer;
+        public System.Timers.Timer tmrMesswerteTimer;
         /// <summary>
         /// Öffnet COM Port und aktiviert data Recieved
         /// </summary>
@@ -67,12 +68,13 @@ namespace PharMS_Steuerung.Funktionen
 
                         else
                         {
-                            tmrMesswerteTimer = new System.Windows.Forms.Timer();
+                            tmrMesswerteTimer = new System.Timers.Timer();
                             iTickInterval = Convert.ToInt32(tempForm.numeric_Intervall.Value);
                             tmrMesswerteTimer.Interval = iTickInterval * 1000;  //s zu ms
-                            tmrMesswerteTimer.Tick += new EventHandler(Execute);
+                            tmrMesswerteTimer.Elapsed += new ElapsedEventHandler(Execute);
                             ende = Convert.ToInt32(tempForm.numeric_Messdauer.Value);
                             ende = ende * 60 / iTickInterval;
+                            iTickAktuell = 0;
                             tmrMesswerteTimer.Start();
                         }
 
@@ -117,7 +119,8 @@ namespace PharMS_Steuerung.Funktionen
         private void Execute(Object myObject, EventArgs myEventArgs)
         {
             if (iTickAktuell >= ende)
-            {
+            {   
+                Funktionen.Datenerfassen test = new Funktionen.Datenerfassen("---------,---------", tempForm);
                 tmrMesswerteTimer.Stop();
                 tmrMesswerteTimer.Enabled = false;
                 tmrMesswerteTimer.Dispose();
@@ -127,7 +130,7 @@ namespace PharMS_Steuerung.Funktionen
                 Console.WriteLine("teste" + iTickInterval + ":" + ende);
                 // Restarts the timer and increments the counter.
                 COMSender("M");
-                Funktionen.Datenerfassen test = new Funktionen.Datenerfassen("---------,---------", tempForm);
+                
                 iTickAktuell = iTickAktuell + iTickInterval;
             }
 
@@ -185,7 +188,7 @@ namespace PharMS_Steuerung.Funktionen
         }
         public void AbfrageStatus(String Caption)
         {
-            if (!port.IsOpen) ;
+            if (!port.IsOpen) return;
             Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : " + Caption, tempForm);
             port.WriteLine(Caption);
 
