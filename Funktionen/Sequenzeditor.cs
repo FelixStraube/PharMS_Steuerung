@@ -98,6 +98,19 @@ namespace PharMS_Steuerung.Funktionen
         {
             Sequenz oSequenz = GetSelectedSequenz();
 
+            if (oSequenz.bIsTemplate)
+            {
+                MainForm.btnSaveOneSequenz.Enabled = true;
+                MainForm.lblNewName.Visible = true;
+                MainForm.txtNewName.Visible = true;
+            }
+            else
+            {
+                MainForm.btnSaveOneSequenz.Enabled = false;
+                MainForm.lblNewName.Visible = false;
+                MainForm.txtNewName.Visible = false;
+            }
+
             string sOut = "";
             int i = 0;
             if (oSequenz == null) throw new System.ArgumentException("Parameter cannot be null", "oSequenz");  //später soll der zustand als anlegen einer neuen sequenz verstanden werden
@@ -136,7 +149,6 @@ namespace PharMS_Steuerung.Funktionen
                 else
                 {
                     MainForm.SequenzeditorGrid.Rows[i].Cells[1].Style.BackColor = Color.RosyBrown;
-                    MainForm.Uebertragen.Enabled = false;
                 }
 
                 MainForm.SequenzeditorGrid.Rows[i].Cells[2].Value = sOut;
@@ -153,10 +165,11 @@ namespace PharMS_Steuerung.Funktionen
 
             foreach (Sequenz oSequenz in MainForm.lstSequenz)
             {
-
+                if (oSequenz.bIsTemplate) continue;
                 MainForm.SequenzenGrid.Rows.Add();
                 MainForm.SequenzenGrid.Rows[i].Cells[0].Value = oSequenz.sName;
                 MainForm.SequenzenGrid.Rows[i].Cells[1].Value = (oSequenz.iSpeicherplatz == -999) ? "" : oSequenz.iSpeicherplatz.ToString();
+                MainForm.SequenzenGrid.Rows[i].Cells[3].Value = oSequenz.ObjectKey;
 
                 i++;
             }
@@ -165,6 +178,7 @@ namespace PharMS_Steuerung.Funktionen
         {
             foreach (Sequenz oSequenz in MainForm.lstSequenz)
             {
+                if (MainForm.AblaufListe.SelectedItem == null) continue;
                 if (MainForm.AblaufListe.SelectedItem.ToString() == oSequenz.sName) return oSequenz;
             }
             return null;

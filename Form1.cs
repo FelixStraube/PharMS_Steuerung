@@ -36,18 +36,12 @@ namespace PharMS_Steuerung
         bool bDBIsOpening = false;
         string sDBPath;
         string sDBName;
+        public int maxObjectKey;
 
         public Form1()
         {
             InitializeComponent();
 
-        }
-
-
-
-        private void Speicher_TextChanged(object sender, EventArgs e)
-        {
-            // string Name = Speicher.SelectedText.ToString();
         }
 
         private void Uebertragen_Click(object sender, EventArgs e)
@@ -69,9 +63,9 @@ namespace PharMS_Steuerung
 
             }
 
-            Console.WriteLine("Incoming Data:" + "Y" + cmbSpeicherplatz.SelectedItem.ToString() + ablauf);
+            // Console.WriteLine("Incoming Data:" + "Y" + cmbSpeicherplatz.SelectedItem.ToString() + ablauf);
 
-            Comschnitstelle.COMSender("Y" + cmbSpeicherplatz.SelectedItem.ToString() + ablauf);
+            //Comschnitstelle.COMSender("Y" + cmbSpeicherplatz.SelectedItem.ToString() + ablauf);
 
 
 
@@ -222,12 +216,12 @@ namespace PharMS_Steuerung
                         System.Threading.Thread.Sleep(1000);
 
                     } while (Lauf == false);
-                   
+
                 }
-              
-            change_progressBar(z, Durchläufe, progressBar1);
-            } 
-            
+
+                change_progressBar(z, Durchläufe, progressBar1);
+            }
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -359,12 +353,12 @@ namespace PharMS_Steuerung
                 sDBPath = openDatabaseDialog.FileName;
 
                 bDBIsOpening = true;
+                maxObjectKey = 0;
                 extractDatabase(stlAllSequenz);
                 bDBIsOpen = true;
                 ImportStripMenuItem2.Enabled = true;
                 speichernToolStripMenuItem.Enabled = true;
                 oSequenzeditor.FillGridSequenz();
-                SequenzenGrid.RowsAdded += SequenzenGrid_RowsAdded;
                 bDBIsOpening = false;
             }
         }
@@ -388,6 +382,7 @@ namespace PharMS_Steuerung
                 {
                     bNewSequenz = false;
                     lstSequenz.Add(oSequenz = new Sequenz());
+                    oSequenz.ObjectKey = maxObjectKey++;
                     oSequenz.sName = line;
                     oSequenz.sDBName = sDBName;
                     AblaufListe.Items.Add(line);
@@ -407,7 +402,11 @@ namespace PharMS_Steuerung
                     continue;
                 }
 
-                if (oSequenz != null && line != "") oSequenz.stlSequenz.Add(line);
+                if (oSequenz != null && line != "")
+                {
+                    if (line.Contains("*")) oSequenz.bIsTemplate = true;
+                    oSequenz.stlSequenz.Add(line);
+                }
             }
 
 
@@ -419,10 +418,11 @@ namespace PharMS_Steuerung
             {
                 FileInfo x = new FileInfo(openDatabaseDialog.FileName);
                 lstSequenz.Add(new Sequenz(x));
+                lstSequenz[lstSequenz.Count].ObjectKey = maxObjectKey++;
                 lstSequenz[lstSequenz.Count].sDBName = sDBName;
                 AblaufListe.Items.Add(x.Name);
                 oSequenzeditor.FillGridSequenz();
-                SequenzenGrid.RowsAdded += SequenzenGrid_RowsAdded;
+                // SequenzenGrid.RowsAdded += SequenzenGrid_RowsAdded;
             }
 
         }
@@ -462,53 +462,37 @@ namespace PharMS_Steuerung
 
         private void btnSaveOneSequenz_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void SequenzenGrid_CurrentCellChanged(object sender, EventArgs e)
-        {
-            int i = 0;
-            AblaufListe.Items.Clear();
-            foreach (Sequenz oSequenz in lstSequenz)
+            if (txtNewName.TextLength == 0)
             {
-                if (!bDBIsOpening)
-                {
-
-                    oSequenz.sName = SequenzenGrid.Rows[i].Cells[0].Value.ToString();
-                    if (SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "")
-                    {
-                        oSequenz.iSpeicherplatz = -999;
-                    }
-                    else
-                    {
-                        oSequenz.iSpeicherplatz = Convert.ToInt32(SequenzenGrid.Rows[i].Cells[1].Value.ToString());
-                    }
-                }
-                AblaufListe.Items.Add(oSequenz.sName);
-                i++;
-            }
-        }
-
-        private void SequenzenGrid_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-            /* Zickt zu sehr evt die möglichkeit neue Sequenzen zu erzeugen überdenken
-            if (e.RowIndex != 0) //erste leere Zeile wird nach nen GridClear erstellt 
-            {
-                lstSequenz.Add(new Sequenz());
-                SequenzenGrid.Rows[e.RowIndex - 1].Cells[1].Value = "";
+                MessageBox.Show("Bitte geben Sie einen Namen für die neue Sequenz an");
+                return;
             }
 
-            */
+            lstSequenz.Add(new Sequenz());
+            lstSequenz[lstSequenz.Count - 1].ObjectKey = maxObjectKey++;
+            lstSequenz[lstSequenz.Count - 1].sDBName = sDBName;
+            lstSequenz[lstSequenz.Count - 1].sName = txtNewName.Text;
+            AblaufListe.Items.Add(lstSequenz[lstSequenz.Count - 1].sName);
+
+            for (int i = 0; i < SequenzeditorGrid.RowCount - 1; i++)
+            {
+                lstSequenz[lstSequenz.Count - 1].stlSequenz.Add(SequenzeditorGrid.Rows[i].Cells[0].Value.ToString() + SequenzeditorGrid.Rows[i].Cells[1].Value.ToString());
+            }
+            oSequenzeditor.FillGridSequenz();
+            oSequenzeditor.FillGridSequenzEdit();
+
+
         }
+
 
         private void SequenzenGrid_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.ColumnIndex == 2)
             {
-                ablauf = "";
-                //neues übertragen Ereignis 
+                int i = 0;
                 foreach (Sequenz oSequenz in lstSequenz)
                 {
+<<<<<<< HEAD
                     if (SequenzenGrid.Rows[e.RowIndex].Cells[0].Value.ToString() == oSequenz.sName)
                     {
                         foreach (string line in oSequenz.stlSequenz)
@@ -526,17 +510,19 @@ namespace PharMS_Steuerung
                 if (e.ColumnIndex == 3)
                 {
                     //Platzhalter für Startbutton im Grid
+=======
+                    if (SequenzenGrid.Rows[e.RowIndex].Cells[3].Value.ToString() == oSequenz.ObjectKey.ToString()) break;
+                    i++;
+>>>>>>> dd2403d0287f827b4b3706b139d95ddaccb92d3b
                 }
+                lstSequenz.RemoveAt(i);
+                oSequenzeditor.FillGridSequenz();
             }
-
-
         }
 
         private void neuToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             Stream stream;
-
             NewDBDialog.Filter = "PharmMS (*.pharms)|*.pharms";
             NewDBDialog.FilterIndex = 2;
             NewDBDialog.RestoreDirectory = true;
@@ -559,6 +545,51 @@ namespace PharMS_Steuerung
                 ImportStripMenuItem2.Enabled = true;
                 speichernToolStripMenuItem.Enabled = true;
             }
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int Key;
+            AblaufListe.Items.Clear();
+            foreach (Sequenz oSequenz in lstSequenz)
+            {
+                for (int i = 0; i < SequenzenGrid.RowCount - 1; i++)
+                {
+                    Key = Convert.ToInt32(SequenzenGrid.Rows[i].Cells[3].Value.ToString());
+                    if (Key == oSequenz.ObjectKey)
+                    {
+                        oSequenz.sName = SequenzenGrid.Rows[i].Cells[0].Value.ToString();
+                        if (SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "") oSequenz.iSpeicherplatz = -999;
+                        else oSequenz.iSpeicherplatz = Convert.ToInt32(SequenzenGrid.Rows[i].Cells[1].Value.ToString()); //bei Übertragen Click wird der Speicherplatz auch nochmal gespeichert
+                        break;
+                    }
+                }
+                AblaufListe.Items.Add(oSequenz.sName);
+
+            }
+
+        }
+
+        private void btnUebertragen_Click(object sender, EventArgs e)
+        {
+
+            /* ablauf = "";
+             //neues übertragen Ereignis 
+             foreach (Sequenz oSequenz in lstSequenz)
+             {
+                 if (SequenzenGrid.Rows[e.RowIndex].Cells[0].Value.ToString() == oSequenz.sName)
+                 {
+                     foreach (string line in oSequenz.stlSequenz)
+                     {
+                         if (line == "") continue;
+                         ablauf = ablauf + ";" + line;
+
+
+                     }
+                     //Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                     Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                 }
+             }*/
         }
 
 
