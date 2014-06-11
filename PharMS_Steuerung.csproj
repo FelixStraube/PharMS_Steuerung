@@ -55,6 +55,7 @@
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -74,6 +75,7 @@
     <Compile Include="Funktionen\CfgFile.cs" />
     <Compile Include="Funktionen\COM.cs" />
     <Compile Include="Funktionen\Consolen_LOG.cs" />
+    <Compile Include="Funktionen\LiveChart.cs" />
     <Compile Include="Funktionen\Sequenz.cs" />
     <Compile Include="Funktionen\Sequenzeditor.cs" />
     <Compile Include="Funktionen\Datenerfassen.cs" />

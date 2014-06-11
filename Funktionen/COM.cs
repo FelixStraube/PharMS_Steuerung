@@ -78,7 +78,7 @@ namespace PharMS_Steuerung.Funktionen
                             tmrMesswerteTimer.Interval = iTickInterval * 1000;  //s zu ms
                             tmrMesswerteTimer.Elapsed += new ElapsedEventHandler(Execute);
                             ende = Convert.ToInt32(tempForm.numeric_Messdauer.Value);
-                            ende = ende * 60 / iTickInterval;
+                            ende = ende * 60; /// iTickInterval;
                             iTickAktuell = 0;
                             tmrMesswerteTimer.Start();
                         }
@@ -126,6 +126,11 @@ namespace PharMS_Steuerung.Funktionen
             if (iTickAktuell >= ende)
             {   
                 Funktionen.Datenerfassen test = new Funktionen.Datenerfassen("---------,---------", tempForm);
+//Live chart cler und in Datenfeld aufnehmen
+
+                LiveChart ChartAusgabe = new LiveChart();
+                ChartAusgabe.erfassen("0","0",tempForm,true,true);
+
                 tmrMesswerteTimer.Stop();
 //                tmrMesswerteTimer.Enabled = false;
 //                tmrMesswerteTimer.Dispose();
