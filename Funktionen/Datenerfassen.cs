@@ -41,10 +41,7 @@ namespace PharMS_Steuerung.Funktionen
            string Zeit = string.Format("{0:d/M/yyyy HH:mm:ss}", Time);
           
            Ausgabefenster.DatenerfassungTab_Hinzu(Zeit, Sensor1, Sensor2);
-           LiveChart Ausgabe = new LiveChart();
-          
-           //Ausgabe zu Graphen
-           Ausgabe.erfassen(Sensor1, Sensor2,Ausgabefenster,false);
+           
            
            String BaseDirectory = AppDomain.CurrentDomain.BaseDirectory;
            string Filename = "Daten Vom " + string.Format("{0:d/M/yyyy}", Time) + ".txt";

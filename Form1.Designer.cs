@@ -29,10 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.AblaufListe = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -56,7 +52,6 @@
             this.Disconnect = new System.Windows.Forms.Button();
             this.Connect = new System.Windows.Forms.Button();
             this.tabSequenzList = new System.Windows.Forms.TabPage();
-            this.btnUebertragen = new System.Windows.Forms.Button();
             this.SequenzenGrid = new System.Windows.Forms.DataGridView();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSpeicherplatz = new System.Windows.Forms.DataGridViewComboBoxColumn();
@@ -94,9 +89,6 @@
             this.Console_Senden = new System.Windows.Forms.Button();
             this.Console_Eingabe = new System.Windows.Forms.TextBox();
             this.Console_Ausgabe = new System.Windows.Forms.TextBox();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.LiveGrid = new System.Windows.Forms.DataGridView();
-            this.LiveChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.Verzeichnisauswahl = new System.Windows.Forms.FolderBrowserDialog();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -109,9 +101,7 @@
             this.hilfeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDatabaseDialog = new System.Windows.Forms.OpenFileDialog();
             this.NewDBDialog = new System.Windows.Forms.SaveFileDialog();
-            this.button1 = new System.Windows.Forms.Button();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnUebertragen = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -127,9 +117,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericZellspannung)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DatenerfassungTab)).BeginInit();
             this.tabPage3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.LiveGrid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.LiveChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -153,7 +140,6 @@
             this.tabControl1.Controls.Add(this.tabSequenzedit);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Location = new System.Drawing.Point(7, 23);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -399,16 +385,6 @@
             this.tabSequenzList.Text = "Sequenzen";
             this.tabSequenzList.UseVisualStyleBackColor = true;
             // 
-            // btnUebertragen
-            // 
-            this.btnUebertragen.Location = new System.Drawing.Point(18, 529);
-            this.btnUebertragen.Name = "btnUebertragen";
-            this.btnUebertragen.Size = new System.Drawing.Size(75, 23);
-            this.btnUebertragen.TabIndex = 1;
-            this.btnUebertragen.Text = "Übertragen";
-            this.btnUebertragen.UseVisualStyleBackColor = true;
-            this.btnUebertragen.Click += new System.EventHandler(this.btnUebertragen_Click);
-            // 
             // SequenzenGrid
             // 
             this.SequenzenGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -589,7 +565,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(519, 574);
+            this.tabPage2.Size = new System.Drawing.Size(519, 346);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Empfangen";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -764,7 +740,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(519, 574);
+            this.tabPage3.Size = new System.Drawing.Size(519, 346);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Controller";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -812,53 +788,6 @@
             this.Console_Ausgabe.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.Console_Ausgabe.Size = new System.Drawing.Size(440, 198);
             this.Console_Ausgabe.TabIndex = 0;
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.button1);
-            this.tabPage4.Controls.Add(this.LiveGrid);
-            this.tabPage4.Controls.Add(this.LiveChart);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(519, 574);
-            this.tabPage4.TabIndex = 5;
-            this.tabPage4.Text = "Live Chart";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // LiveGrid
-            // 
-            this.LiveGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.LiveGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2});
-            this.LiveGrid.Location = new System.Drawing.Point(70, 344);
-            this.LiveGrid.Name = "LiveGrid";
-            this.LiveGrid.Size = new System.Drawing.Size(328, 150);
-            this.LiveGrid.TabIndex = 1;
-            this.LiveGrid.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.LiveGrid_RowHeaderMouseDoubleClick);
-            // 
-            // LiveChart
-            // 
-            chartArea2.Name = "ChartArea1";
-            this.LiveChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.LiveChart.Legends.Add(legend2);
-            this.LiveChart.Location = new System.Drawing.Point(31, 32);
-            this.LiveChart.Name = "LiveChart";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series4.Legend = "Legend1";
-            series4.Name = "Series2";
-            this.LiveChart.Series.Add(series3);
-            this.LiveChart.Series.Add(series4);
-            this.LiveChart.Size = new System.Drawing.Size(466, 289);
-            this.LiveChart.TabIndex = 0;
-            this.LiveChart.Text = "chart1";
             // 
             // fileSystemWatcher1
             // 
@@ -933,25 +862,15 @@
             // 
             this.openDatabaseDialog.Filter = "Pharms (*.pharms)|*.pharms|Textdateien|*.txt";
             // 
-            // button1
+            // btnUebertragen
             // 
-            this.button1.Location = new System.Drawing.Point(70, 518);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Column1";
-            this.Column1.Name = "Column1";
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Column2";
-            this.Column2.Name = "Column2";
+            this.btnUebertragen.Location = new System.Drawing.Point(18, 529);
+            this.btnUebertragen.Name = "btnUebertragen";
+            this.btnUebertragen.Size = new System.Drawing.Size(75, 23);
+            this.btnUebertragen.TabIndex = 1;
+            this.btnUebertragen.Text = "Übertragen";
+            this.btnUebertragen.UseVisualStyleBackColor = true;
+            this.btnUebertragen.Click += new System.EventHandler(this.btnUebertragen_Click);
             // 
             // Form1
             // 
@@ -984,9 +903,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.DatenerfassungTab)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.LiveGrid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.LiveChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -1075,12 +991,6 @@
         private System.Windows.Forms.DataGridViewImageColumn colDelete;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIndex;
         private System.Windows.Forms.Button btnUebertragen;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        public System.Windows.Forms.DataVisualization.Charting.Chart LiveChart;
-        public System.Windows.Forms.DataGridView LiveGrid;
     }
 }
 

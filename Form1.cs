@@ -429,7 +429,6 @@ namespace PharMS_Steuerung
 
         private void beendenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-          
             Close();
         }
 
@@ -493,7 +492,7 @@ namespace PharMS_Steuerung
                 int i = 0;
                 foreach (Sequenz oSequenz in lstSequenz)
                 {
-//<<<<<<< HEAD
+<<<<<<< HEAD
                     if (SequenzenGrid.Rows[e.RowIndex].Cells[0].Value.ToString() == oSequenz.sName)
                     {
                         foreach (string line in oSequenz.stlSequenz)
@@ -511,10 +510,10 @@ namespace PharMS_Steuerung
                 if (e.ColumnIndex == 3)
                 {
                     //Platzhalter für Startbutton im Grid
-//=======
-                 //   if (SequenzenGrid.Rows[e.RowIndex].Cells[3].Value.ToString() == oSequenz.ObjectKey.ToString()) break;
-                  //  i++;
-//>>>>>>> dd2403d0287f827b4b3706b139d95ddaccb92d3b
+=======
+                    if (SequenzenGrid.Rows[e.RowIndex].Cells[3].Value.ToString() == oSequenz.ObjectKey.ToString()) break;
+                    i++;
+>>>>>>> dd2403d0287f827b4b3706b139d95ddaccb92d3b
                 }
                 lstSequenz.RemoveAt(i);
                 oSequenzeditor.FillGridSequenz();
@@ -592,86 +591,6 @@ namespace PharMS_Steuerung
                  }
              }*/
         }
-     
-        public bool Messungen_Tabelle(int MessungNR, string Bezeichnung)
-        {
-            if (this.InvokeRequired)
-            {
-
-                return (bool)this.Invoke((Func<int, string,bool>)Messungen_Tabelle,MessungNR, Bezeichnung);
-
-            }
-            DataGridViewRow row = (DataGridViewRow)LiveGrid.Rows[0].Clone();
-            row.Cells[0].Value = MessungNR;
-            row.Cells[1].Value = Bezeichnung;
-
-            LiveGrid.Rows.Add(row);
-            return true;
-
-
-        }
-
-
-        public bool Live_Chart_add(int x, int Sen1 ,int Sen2, bool clear )
-        {
-            if (this.InvokeRequired)
-            {
-
-                return (bool)this.Invoke((Func<int, int,int, bool, bool>)Live_Chart_add, x , Sen1, Sen2 ,clear);
-
-            }
-            
-            if (clear == true)
-            {
-                foreach (var series in LiveChart.Series)
-                {
-                    series.Points.Clear();
-                }
-               
-
-            }
-                LiveChart.Series[0].Points.AddXY(x, Sen1);
-                LiveChart.Series[1].Points.AddXY(x, Sen2);
-                LiveChart.Update();
-
-            return true;
-
-
-        }
-
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            LiveChart Ausgabe = new LiveChart();
-
-            //Ausgabe zu Graphen
-          
-            Random z = new Random();
-            for (int r = 0; r < 100; r++)
-            {
-                int x = z.Next(100);
-                string s1 = x.ToString();
-                x = z.Next(100);
-                string s2 = x.ToString();
-
-                Ausgabe.erfassen(s1, s2, this, false,true);
-            }
-            System.Threading.Thread.Sleep(5000);
-            Ausgabe.erfassen("0", "0", this, true,true);
-
-        }
-
-
-        private void LiveGrid_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            LiveChart Ausgabe = new LiveChart();
-            
-            int selectedrowindex = LiveGrid.SelectedCells[0].RowIndex;
-            DataGridViewRow selectedRow = LiveGrid.Rows[selectedrowindex];
-            string a = Convert.ToString(selectedRow.Index.ToString());
-            Ausgabe.erfassen(a, "0", this, true,false);
-        }
-
-
 
 
     }
