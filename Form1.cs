@@ -37,6 +37,8 @@ namespace PharMS_Steuerung
         string sDBPath;
         string sDBName;
         public int maxObjectKey;
+        public List<int> lstMaster = new List<int>();
+
 
         public Form1()
         {
@@ -180,7 +182,7 @@ namespace PharMS_Steuerung
             Durchläufe = Convert.ToInt32(numericUpDown1.Value);
             if (Masterablauf.SelectedItem == null) { return; };
             Name = Masterablauf.SelectedItem.ToString();
-                   
+
             Thread threadAblaufStart = new Thread(new ThreadStart(Execute_Ablauf));
             threadAblaufStart.Start();
 
@@ -359,6 +361,7 @@ namespace PharMS_Steuerung
                 ImportStripMenuItem2.Enabled = true;
                 speichernToolStripMenuItem.Enabled = true;
                 oSequenzeditor.FillGridSequenz();
+                oSequenzeditor.FillGridMaster();
                 bDBIsOpening = false;
             }
         }
@@ -367,7 +370,7 @@ namespace PharMS_Steuerung
         {
             lstSequenz = new List<Sequenz>();
             Sequenz oSequenz = null;
-            bool bNewSequenz = false, bSpeicherplatz = false;
+            bool bNewSequenz = false, bSpeicherplatz = false, bMaster = false;
             sDBName = DB[0];
             DB.RemoveAt(0);
             foreach (string line in DB)
@@ -378,7 +381,7 @@ namespace PharMS_Steuerung
                     continue;
                 }
 
-                if (bNewSequenz && line != "")
+                if (bNewSequenz && line != "" && line != "/*M*/")
                 {
                     bNewSequenz = false;
                     lstSequenz.Add(oSequenz = new Sequenz());
@@ -402,14 +405,27 @@ namespace PharMS_Steuerung
                     continue;
                 }
 
+                if (line == "/*M*/")//Dadurch das der Master am ende der Datei geschrieben wird ist es egal das der bMaster immer true ist
+                {
+                    bNewSequenz = false;
+                    bMaster = true;
+                    continue;
+                }
+
+                if (bMaster)
+                {
+                    lstMaster.Add(Convert.ToInt32(line));
+                    continue;
+                }
+
                 if (oSequenz != null && line != "")
                 {
                     if (line.Contains("*")) oSequenz.bIsTemplate = true;
                     oSequenz.stlSequenz.Add(line);
                 }
+
+
             }
-
-
         }
 
         private void ImportStripMenuItem2_Click(object sender, EventArgs e)
@@ -418,8 +434,8 @@ namespace PharMS_Steuerung
             {
                 FileInfo x = new FileInfo(openDatabaseDialog.FileName);
                 lstSequenz.Add(new Sequenz(x));
-                lstSequenz[lstSequenz.Count].ObjectKey = maxObjectKey++;
-                lstSequenz[lstSequenz.Count].sDBName = sDBName;
+                lstSequenz[lstSequenz.Count - 1].ObjectKey = maxObjectKey++;
+                lstSequenz[lstSequenz.Count - 1].sDBName = sDBName;
                 AblaufListe.Items.Add(x.Name);
                 oSequenzeditor.FillGridSequenz();
                 // SequenzenGrid.RowsAdded += SequenzenGrid_RowsAdded;
@@ -456,6 +472,12 @@ namespace PharMS_Steuerung
                         sw.WriteLine(oSequenz.iSpeicherplatz.ToString());
                     }
                     sw.WriteLine("@//@");
+                    sw.WriteLine("/*M*/");
+                    foreach (int iMaster in lstMaster)
+                    {
+                        sw.WriteLine(iMaster.ToString());
+                    }
+
                 }
             }
         }
@@ -480,8 +502,6 @@ namespace PharMS_Steuerung
             }
             oSequenzeditor.FillGridSequenz();
             oSequenzeditor.FillGridSequenzEdit();
-
-
         }
 
 
@@ -490,31 +510,31 @@ namespace PharMS_Steuerung
             if (e.ColumnIndex == 2)
             {
                 int i = 0;
-                foreach (Sequenz oSequenz in lstSequenz)
-                {
-<<<<<<< HEAD
-                    if (SequenzenGrid.Rows[e.RowIndex].Cells[0].Value.ToString() == oSequenz.sName)
-                    {
-                        foreach (string line in oSequenz.stlSequenz)
-                        {
-                            if (line == "") continue;
-                            ablauf = ablauf + ";" + line;
-                            
-                            
-                        }
-                         Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
-                         Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
-                    }
-                }
+                /* foreach (Sequenz oSequenz in lstSequenz)
+                 {
 
-                if (e.ColumnIndex == 3)
-                {
-                    //Platzhalter für Startbutton im Grid
-=======
-                    if (SequenzenGrid.Rows[e.RowIndex].Cells[3].Value.ToString() == oSequenz.ObjectKey.ToString()) break;
-                    i++;
->>>>>>> dd2403d0287f827b4b3706b139d95ddaccb92d3b
-                }
+                     if (SequenzenGrid.Rows[e.RowIndex].Cells[0].Value.ToString() == oSequenz.sName)
+                     {
+                         foreach (string line in oSequenz.stlSequenz)
+                         {
+                             if (line == "") continue;
+                             ablauf = ablauf + ";" + line;
+                            
+                            
+                         }
+                          Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                          Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                     }
+                 }
+
+                 if (e.ColumnIndex == 3)
+                 {
+                     //Platzhalter für Startbutton im Grid
+
+                     if (SequenzenGrid.Rows[e.RowIndex].Cells[3].Value.ToString() == oSequenz.ObjectKey.ToString()) break;
+                     i++;
+
+                 }*/
                 lstSequenz.RemoveAt(i);
                 oSequenzeditor.FillGridSequenz();
             }
@@ -566,12 +586,22 @@ namespace PharMS_Steuerung
                 }
                 AblaufListe.Items.Add(oSequenz.sName);
 
+                MasterGrid.RowValidating -= MasterGrid_RowValidating;                
+                oSequenzeditor.FillGridMaster();
+               MasterGrid.RowValidating += MasterGrid_RowValidating;
             }
-
         }
 
         private void btnUebertragen_Click(object sender, EventArgs e)
         {
+            for (int i = 0; i < SequenzenGrid.Rows.Count - 1; i++)
+            {
+                foreach (Sequenz oSequenz in lstSequenz)
+                {
+                    if (Convert.ToInt32(SequenzenGrid.Rows[i].Cells[3].Value) == oSequenz.ObjectKey)
+                        oSequenz.iSpeicherplatz = (SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "") ? -999 : Convert.ToInt32(SequenzenGrid.Rows[i].Cells[1].Value);
+                }
+            }
 
             /* ablauf = "";
              //neues übertragen Ereignis 
@@ -593,5 +623,28 @@ namespace PharMS_Steuerung
         }
 
 
+
+        public void MasterGrid_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            MasterGrid.Rows[e.RowIndex].Cells[0].Value = (e.RowIndex == 0) ? 1 : Convert.ToInt32(MasterGrid.Rows[e.RowIndex - 1].Cells[0].Value) + 1;
+
+            foreach (Sequenz oSequenz in lstSequenz)
+            {
+                if (oSequenz.iSpeicherplatz == Convert.ToInt32(MasterGrid.Rows[e.RowIndex].Cells[1].Value))
+                    MasterGrid.Rows[e.RowIndex].Cells[2].Value = oSequenz.sName;
+            }
+            lstMaster.Add(Convert.ToInt32(MasterGrid.Rows[e.RowIndex].Cells[1].Value));
+        }
+
+        private void MasterGrid_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+
+            if (e.Exception != null)
+            {
+                MessageBox.Show("Masterablauf inkonsistent, der Masterablauf wird verworfen!");
+                lstMaster.Clear();
+                oSequenzeditor.FillGridMaster();
+            }
+        }
     }
 }

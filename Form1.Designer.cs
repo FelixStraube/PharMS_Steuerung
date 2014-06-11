@@ -52,6 +52,7 @@
             this.Disconnect = new System.Windows.Forms.Button();
             this.Connect = new System.Windows.Forms.Button();
             this.tabSequenzList = new System.Windows.Forms.TabPage();
+            this.btnUebertragen = new System.Windows.Forms.Button();
             this.SequenzenGrid = new System.Windows.Forms.DataGridView();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSpeicherplatz = new System.Windows.Forms.DataGridViewComboBoxColumn();
@@ -67,6 +68,11 @@
             this.colBefehl = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.colParametereingabe = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHelp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabMasterablauf = new System.Windows.Forms.TabPage();
+            this.MasterGrid = new System.Windows.Forms.DataGridView();
+            this.colOrder = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSpeicherplatzMaster = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colNameMaster = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
@@ -101,7 +107,6 @@
             this.hilfeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDatabaseDialog = new System.Windows.Forms.OpenFileDialog();
             this.NewDBDialog = new System.Windows.Forms.SaveFileDialog();
-            this.btnUebertragen = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -111,6 +116,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.SequenzenGrid)).BeginInit();
             this.tabSequenzedit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SequenzeditorGrid)).BeginInit();
+            this.tabMasterablauf.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MasterGrid)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numeric_Messdauer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numeric_Intervall)).BeginInit();
@@ -132,12 +139,13 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabSequenzList);
             this.tabControl1.Controls.Add(this.tabSequenzedit);
+            this.tabControl1.Controls.Add(this.tabMasterablauf);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(7, 23);
@@ -385,10 +393,20 @@
             this.tabSequenzList.Text = "Sequenzen";
             this.tabSequenzList.UseVisualStyleBackColor = true;
             // 
+            // btnUebertragen
+            // 
+            this.btnUebertragen.Location = new System.Drawing.Point(18, 529);
+            this.btnUebertragen.Name = "btnUebertragen";
+            this.btnUebertragen.Size = new System.Drawing.Size(75, 23);
+            this.btnUebertragen.TabIndex = 1;
+            this.btnUebertragen.Text = "Übertragen";
+            this.btnUebertragen.UseVisualStyleBackColor = true;
+            this.btnUebertragen.Click += new System.EventHandler(this.btnUebertragen_Click);
+            // 
             // SequenzenGrid
             // 
-            this.SequenzenGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SequenzenGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.SequenzenGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.SequenzenGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colName,
@@ -511,9 +529,9 @@
             // 
             // SequenzeditorGrid
             // 
-            this.SequenzeditorGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SequenzeditorGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.SequenzeditorGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.SequenzeditorGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colBefehl,
@@ -548,6 +566,54 @@
             this.colHelp.ReadOnly = true;
             this.colHelp.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // tabMasterablauf
+            // 
+            this.tabMasterablauf.Controls.Add(this.MasterGrid);
+            this.tabMasterablauf.Location = new System.Drawing.Point(4, 22);
+            this.tabMasterablauf.Name = "tabMasterablauf";
+            this.tabMasterablauf.Size = new System.Drawing.Size(519, 574);
+            this.tabMasterablauf.TabIndex = 5;
+            this.tabMasterablauf.Text = "Masterablauf";
+            this.tabMasterablauf.UseVisualStyleBackColor = true;
+            // 
+            // MasterGrid
+            // 
+            this.MasterGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.MasterGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.MasterGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colOrder,
+            this.colSpeicherplatzMaster,
+            this.colNameMaster});
+            this.MasterGrid.Location = new System.Drawing.Point(0, 3);
+            this.MasterGrid.Name = "MasterGrid";
+            this.MasterGrid.Size = new System.Drawing.Size(519, 512);
+            this.MasterGrid.TabIndex = 1;
+            this.MasterGrid.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.MasterGrid_DataError);
+            // 
+            // colOrder
+            // 
+            this.colOrder.Frozen = true;
+            this.colOrder.HeaderText = "";
+            this.colOrder.Name = "colOrder";
+            this.colOrder.ReadOnly = true;
+            this.colOrder.Width = 20;
+            // 
+            // colSpeicherplatzMaster
+            // 
+            this.colSpeicherplatzMaster.Frozen = true;
+            this.colSpeicherplatzMaster.HeaderText = "Speicherplatz";
+            this.colSpeicherplatzMaster.Name = "colSpeicherplatzMaster";
+            this.colSpeicherplatzMaster.Width = 60;
+            // 
+            // colNameMaster
+            // 
+            this.colNameMaster.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colNameMaster.HeaderText = "Sequenz";
+            this.colNameMaster.Name = "colNameMaster";
+            this.colNameMaster.ReadOnly = true;
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.radioButton2);
@@ -565,7 +631,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(519, 346);
+            this.tabPage2.Size = new System.Drawing.Size(519, 574);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Empfangen";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -740,7 +806,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(519, 346);
+            this.tabPage3.Size = new System.Drawing.Size(519, 574);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Controller";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -862,16 +928,6 @@
             // 
             this.openDatabaseDialog.Filter = "Pharms (*.pharms)|*.pharms|Textdateien|*.txt";
             // 
-            // btnUebertragen
-            // 
-            this.btnUebertragen.Location = new System.Drawing.Point(18, 529);
-            this.btnUebertragen.Name = "btnUebertragen";
-            this.btnUebertragen.Size = new System.Drawing.Size(75, 23);
-            this.btnUebertragen.TabIndex = 1;
-            this.btnUebertragen.Text = "Übertragen";
-            this.btnUebertragen.UseVisualStyleBackColor = true;
-            this.btnUebertragen.Click += new System.EventHandler(this.btnUebertragen_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -895,6 +951,8 @@
             this.tabSequenzedit.ResumeLayout(false);
             this.tabSequenzedit.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SequenzeditorGrid)).EndInit();
+            this.tabMasterablauf.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.MasterGrid)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numeric_Messdauer)).EndInit();
@@ -991,6 +1049,11 @@
         private System.Windows.Forms.DataGridViewImageColumn colDelete;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIndex;
         private System.Windows.Forms.Button btnUebertragen;
+        private System.Windows.Forms.TabPage tabMasterablauf;
+        public System.Windows.Forms.DataGridView MasterGrid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOrder;
+        private System.Windows.Forms.DataGridViewComboBoxColumn colSpeicherplatzMaster;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNameMaster;
     }
 }
 
