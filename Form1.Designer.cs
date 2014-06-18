@@ -114,12 +114,12 @@
             this.hilfeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDatabaseDialog = new System.Windows.Forms.OpenFileDialog();
             this.NewDBDialog = new System.Windows.Forms.SaveFileDialog();
-<<<<<<< HEAD
+//<<<<<<< HEAD
             this.button1 = new System.Windows.Forms.Button();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-=======
->>>>>>> 246326ef06412631c989eda2d776e62fc04eb8ef
+//=======
+//>>>>>>> 246326ef06412631c989eda2d776e62fc04eb8ef
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -992,7 +992,7 @@
             // 
             this.openDatabaseDialog.Filter = "Pharms (*.pharms)|*.pharms|Textdateien|*.txt";
             // 
-<<<<<<< HEAD
+//<<<<<<< HEAD
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(70, 518);
@@ -1013,8 +1013,8 @@
             this.Column2.HeaderText = "Column2";
             this.Column2.Name = "Column2";
             // 
-=======
->>>>>>> 246326ef06412631c989eda2d776e62fc04eb8ef
+//=======
+//>>>>>>> 246326ef06412631c989eda2d776e62fc04eb8ef
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1139,20 +1139,20 @@
         private System.Windows.Forms.DataGridViewImageColumn colDelete;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIndex;
         private System.Windows.Forms.Button btnUebertragen;
-<<<<<<< HEAD
+//<<<<<<< HEAD
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         public System.Windows.Forms.DataVisualization.Charting.Chart LiveChart;
         public System.Windows.Forms.DataGridView LiveGrid;
-=======
+//=======
         private System.Windows.Forms.TabPage tabMasterablauf;
         public System.Windows.Forms.DataGridView MasterGrid;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrder;
         private System.Windows.Forms.DataGridViewComboBoxColumn colSpeicherplatzMaster;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNameMaster;
->>>>>>> 246326ef06412631c989eda2d776e62fc04eb8ef
+//>>>>>>> 246326ef06412631c989eda2d776e62fc04eb8ef
     }
 }
 

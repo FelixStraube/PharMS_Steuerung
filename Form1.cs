@@ -511,56 +511,59 @@ namespace PharMS_Steuerung
             if (e.ColumnIndex == 2)
             {
                 int i = 0;
-<<<<<<< HEAD
+                //<<<<<<< HEAD
                 foreach (Sequenz oSequenz in lstSequenz)
                 {
-//<<<<<<< HEAD
+                    //<<<<<<< HEAD
                     if (SequenzenGrid.Rows[e.RowIndex].Cells[0].Value.ToString() == oSequenz.sName)
                     {
                         foreach (string line in oSequenz.stlSequenz)
                         {
                             if (line == "") continue;
                             ablauf = ablauf + ";" + line;
-=======
-                /* foreach (Sequenz oSequenz in lstSequenz)
-                 {
+                            //=======
+                            /* foreach (Sequenz oSequenz in lstSequenz)
+                             {
 
-                     if (SequenzenGrid.Rows[e.RowIndex].Cells[0].Value.ToString() == oSequenz.sName)
-                     {
-                         foreach (string line in oSequenz.stlSequenz)
-                         {
-                             if (line == "") continue;
-                             ablauf = ablauf + ";" + line;
->>>>>>> 246326ef06412631c989eda2d776e62fc04eb8ef
+                                 if (SequenzenGrid.Rows[e.RowIndex].Cells[0].Value.ToString() == oSequenz.sName)
+                                 {
+                                     foreach (string line in oSequenz.stlSequenz)
+                                     {
+                                         if (line == "") continue;
+                                         ablauf = ablauf + ";" + line;
+            >>>>>>> 246326ef06412631c989eda2d776e62fc04eb8ef
                             
                             
-                         }
-                          Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
-                          Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
-                     }
-                 }
+                                     }
+                                      Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                                      Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                                 }
+                             }
 
-<<<<<<< HEAD
-                if (e.ColumnIndex == 3)
-                {
-                    //Platzhalter für Startbutton im Grid
-//=======
-                 //   if (SequenzenGrid.Rows[e.RowIndex].Cells[3].Value.ToString() == oSequenz.ObjectKey.ToString()) break;
-                  //  i++;
-//>>>>>>> dd2403d0287f827b4b3706b139d95ddaccb92d3b
+            <<<<<<< HEAD
+                            if (e.ColumnIndex == 3)
+                            {
+                                //Platzhalter für Startbutton im Grid
+            //=======
+                             //   if (SequenzenGrid.Rows[e.RowIndex].Cells[3].Value.ToString() == oSequenz.ObjectKey.ToString()) break;
+                              //  i++;
+            //>>>>>>> dd2403d0287f827b4b3706b139d95ddaccb92d3b
+                            }
+            =======
+                             if (e.ColumnIndex == 3)
+                             {
+                                 //Platzhalter für Startbutton im Grid
+
+                                 if (SequenzenGrid.Rows[e.RowIndex].Cells[3].Value.ToString() == oSequenz.ObjectKey.ToString()) break;
+                                 i++;
+
+                             }*/
+                            //>>>>>>> 246326ef06412631c989eda2d776e62fc04eb8ef
+                            lstSequenz.RemoveAt(i);
+                            oSequenzeditor.FillGridSequenz();
+                        }
+                    }
                 }
-=======
-                 if (e.ColumnIndex == 3)
-                 {
-                     //Platzhalter für Startbutton im Grid
-
-                     if (SequenzenGrid.Rows[e.RowIndex].Cells[3].Value.ToString() == oSequenz.ObjectKey.ToString()) break;
-                     i++;
-
-                 }*/
->>>>>>> 246326ef06412631c989eda2d776e62fc04eb8ef
-                lstSequenz.RemoveAt(i);
-                oSequenzeditor.FillGridSequenz();
             }
         }
 
