@@ -472,17 +472,17 @@ namespace PharMS_Steuerung
             if (e.ColumnIndex == 2)
             {
                 int i = 0;
-
+               
                 foreach (Sequenz oSequenz in lstSequenz)
                 {
-
+                
                     if (SequenzenGrid.Rows[e.RowIndex].Cells[0].Value.ToString() == oSequenz.sName)
                     {
                         foreach (string line in oSequenz.stlSequenz)
                         {
                             if (line == "") continue;
                             ablauf = ablauf + ";" + line;
-
+                           
                             /* foreach (Sequenz oSequenz in lstSequenz)
                              {
 
@@ -491,7 +491,10 @@ namespace PharMS_Steuerung
                                      foreach (string line in oSequenz.stlSequenz)
                                      {
                                          if (line == "") continue;
-                                         ablauf = ablauf + ";" + line;  
+                                         ablauf = ablauf + ";" + line;
+
+                            
+                            
                                      }
                                       Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
                                       Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
@@ -506,7 +509,7 @@ namespace PharMS_Steuerung
                                  i++;
 
                              }*/
-
+                            
                             lstSequenz.RemoveAt(i);
                             oSequenzeditor.FillGridSequenz();
                         }
@@ -665,7 +668,8 @@ namespace PharMS_Steuerung
             int selectedrowindex = LiveGrid.SelectedCells[0].RowIndex;
             DataGridViewRow selectedRow = LiveGrid.Rows[selectedrowindex];
             string a = Convert.ToString(selectedRow.Index.ToString());
-            Ausgabe.erfassen(a, "0", this, true, false);
+        //    Ausgabe.erfassen(a, "0", this, true,false);
+            Ausgabe.ausgabeSpeicher(a, this);
         }
 
         public void MasterGrid_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
