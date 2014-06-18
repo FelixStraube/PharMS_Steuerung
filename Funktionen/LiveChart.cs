@@ -14,7 +14,7 @@ namespace PharMS_Steuerung.Funktionen
         public DataSet RealGraph = new DataSet("RealTime_Graph");
         public DataRow workRow;
         public DataTable Messungen;
-        public List<Array> Speicherliste = new List<Array>();
+        static List<Array> Speicherliste = new List<Array>();
         public List<int> templist1 = new List<int>();
         public List<int> templist2 = new List<int>();
         static int x = 0;
@@ -27,7 +27,7 @@ namespace PharMS_Steuerung.Funktionen
              int intSen1 = Convert.ToInt32(Sensor1);
              int intSen2 = Convert.ToInt32(Sensor2);
              templist1.Add(intSen1);
-             templist1.Add(intSen2);
+             templist2.Add(intSen2);
             
             if (live == true){
               
@@ -38,8 +38,9 @@ namespace PharMS_Steuerung.Funktionen
                 aktFenster.Messungen_Tabelle(MessungNR, "Messungxy");
                 MessungNR = MessungNR + 1;
                 
-                Speicherliste.Add(listezuArray(templist1,templist2));    
-                    
+                Speicherliste.Add(listezuArray(templist1,templist2));
+                
+                   
                 aktFenster.Live_Chart_add(x, 0, 0 , clear);
                  
                 }
@@ -59,45 +60,68 @@ namespace PharMS_Steuerung.Funktionen
             }
         
         }
-        public void ausgabeSpeicher(string ListeNummer,Form1 aktFenster ) {
+        public void ausgabeSpeicher(string ListeNummer, Form1 aktFenster)
+        {
             int iListe = Convert.ToInt32(ListeNummer);
-            if (iListe > 0)
+            if (iListe >= 0)
             {
-        /*         RealGraph.Tables.Add(aktFenster.LiveGrid())
-                
-                 string ausgabe = RealGraph.Tables["Messungen"].Rows[iListe][0].ToString();
+                // RealGraph.Tables.Add(aktFenster.LiveGrid());
 
-                 int l = Convert.ToInt32(ausgabe);
+                //   string ausgabe = RealGraph.Tables["Messungen"].Rows[iListe][0].ToString();
 
-                 foreach (var series in chart1.Series)
-                 {
-                     series.Points.Clear();
+                int l = iListe;
 
-                     int Schritlänge = 1;
-                     int Lauf = 0;
-                     foreach (int i in list[l - 1])
-                         if (Lauf == 0)
-                         {
-                             Lauf = Lauf + 1;
-                             Schritlänge = i;
-                         }
-                         else
-                         {
-                             chart1.Series[0].Points.AddXY(Schritlänge * Lauf, i);
-                         }
+                foreach (var series in aktFenster.LiveChart.Series)
+                {
+                    series.Points.Clear();
+
+                    int Schritlänge = 1;
+                    int Lauf = 0;
+                    int xAchseSen1 = 0;
+                    int xAchseSen2 = 0;
+                    int Auswahl = 0;
+
+                    foreach (int i in Speicherliste[l])
+                    {
+
+                     if (Lauf == 0)
+                        {
+
+                            Lauf = Lauf + 1;
+                            Schritlänge = i;
+                        }
+                        else
+                        {
+                            if (Auswahl == 0) 
+                            {
+                                aktFenster.LiveChart.Series[0].Points.AddXY(xAchseSen1 * Lauf, i);
+                            xAchseSen1 = xAchseSen1 + 1;
+                            Auswahl = 1;
+                          }
+                        else 
+                            {
+                                aktFenster.LiveChart.Series[1].Points.AddXY(xAchseSen2 * Lauf, i);
+                                xAchseSen2 = xAchseSen2 + 1;
+                                Auswahl = 0;
+                            }
+                        }
+                    }
                  }
-             */
             }
-        
+                
+
+            
         }
         private Array listezuArray (List<int> sensor1, List<int> sensor2){
-        int[][] r = new int[sensor1.Count()][];
+        int[,] r = new int[sensor1.Count(),2];
         
             
             for (int g = 1; g < sensor1.Count(); g++)
         {
-            r[g][1] = sensor1[g];
-            r[g][2] = sensor2[g];
+            int i = sensor1[g];
+            r[g,0] = i;
+                //sensor1[g];
+            r[g,1] = sensor2[g];
         } 
         
 

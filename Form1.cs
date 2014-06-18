@@ -511,17 +511,17 @@ namespace PharMS_Steuerung
             if (e.ColumnIndex == 2)
             {
                 int i = 0;
-                //<<<<<<< HEAD
+               
                 foreach (Sequenz oSequenz in lstSequenz)
                 {
-                    //<<<<<<< HEAD
+                
                     if (SequenzenGrid.Rows[e.RowIndex].Cells[0].Value.ToString() == oSequenz.sName)
                     {
                         foreach (string line in oSequenz.stlSequenz)
                         {
                             if (line == "") continue;
                             ablauf = ablauf + ";" + line;
-                            //=======
+                           
                             /* foreach (Sequenz oSequenz in lstSequenz)
                              {
 
@@ -531,7 +531,7 @@ namespace PharMS_Steuerung
                                      {
                                          if (line == "") continue;
                                          ablauf = ablauf + ";" + line;
-            >>>>>>> 246326ef06412631c989eda2d776e62fc04eb8ef
+
                             
                             
                                      }
@@ -540,16 +540,15 @@ namespace PharMS_Steuerung
                                  }
                              }
 
-            <<<<<<< HEAD
+
                             if (e.ColumnIndex == 3)
                             {
                                 //Platzhalter für Startbutton im Grid
-            //=======
+         
                              //   if (SequenzenGrid.Rows[e.RowIndex].Cells[3].Value.ToString() == oSequenz.ObjectKey.ToString()) break;
-                              //  i++;
-            //>>>>>>> dd2403d0287f827b4b3706b139d95ddaccb92d3b
+   
                             }
-            =======
+        
                              if (e.ColumnIndex == 3)
                              {
                                  //Platzhalter für Startbutton im Grid
@@ -558,7 +557,7 @@ namespace PharMS_Steuerung
                                  i++;
 
                              }*/
-                            //>>>>>>> 246326ef06412631c989eda2d776e62fc04eb8ef
+                            
                             lstSequenz.RemoveAt(i);
                             oSequenzeditor.FillGridSequenz();
                         }
@@ -724,7 +723,8 @@ namespace PharMS_Steuerung
             int selectedrowindex = LiveGrid.SelectedCells[0].RowIndex;
             DataGridViewRow selectedRow = LiveGrid.Rows[selectedrowindex];
             string a = Convert.ToString(selectedRow.Index.ToString());
-            Ausgabe.erfassen(a, "0", this, true,false);
+        //    Ausgabe.erfassen(a, "0", this, true,false);
+            Ausgabe.ausgabeSpeicher(a, this);
         }
 
 
