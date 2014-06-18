@@ -10,7 +10,7 @@ using System.Drawing;
 
 
 namespace PharMS_Steuerung.Funktionen
-{
+{//Für alle DataGrids
     public class Sequenzeditor
     {
         private Dictionary<string, string> dictSequenzBefehleWithOneChar;
@@ -153,7 +153,6 @@ namespace PharMS_Steuerung.Funktionen
 
                 MainForm.SequenzeditorGrid.Rows[i].Cells[2].Value = sOut;
 
-
                 i++;
             }
         }
@@ -174,6 +173,31 @@ namespace PharMS_Steuerung.Funktionen
                 i++;
             }
         }
+
+        public void FillGridMaster()
+        {
+            int i = 0;
+
+            MainForm.MasterGrid.Rows.Clear();           
+            (MainForm.MasterGrid.Columns[1] as DataGridViewComboBoxColumn).Items.Clear();
+        
+            foreach (Sequenz oSequenz in MainForm.lstSequenz)
+            {
+                if (oSequenz.iSpeicherplatz != -999) (MainForm.MasterGrid.Columns[1] as DataGridViewComboBoxColumn).Items.Add(oSequenz.iSpeicherplatz.ToString());
+
+            }
+
+            foreach (int iMaster in MainForm.lstMaster)
+            {
+                MainForm.MasterGrid.Rows.Add();
+
+                MainForm.MasterGrid.Rows[i].Cells[1].Value = iMaster.ToString();
+
+                i++;
+            }
+    
+        }
+
         public Sequenz GetSelectedSequenz()
         {
             foreach (Sequenz oSequenz in MainForm.lstSequenz)
