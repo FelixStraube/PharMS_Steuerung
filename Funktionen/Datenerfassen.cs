@@ -44,7 +44,7 @@ namespace PharMS_Steuerung.Funktionen
            LiveChart Ausgabe = new LiveChart();
           
            //Ausgabe zu Graphen
-           Ausgabe.erfassen(Sensor1, Sensor2,Ausgabefenster,false);
+           Ausgabe.erfassen(Sensor1, Sensor2,Ausgabefenster,false,true);
            
            String BaseDirectory = AppDomain.CurrentDomain.BaseDirectory;
            string Filename = "Daten Vom " + string.Format("{0:d/M/yyyy}", Time) + ".txt";
