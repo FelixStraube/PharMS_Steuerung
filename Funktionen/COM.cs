@@ -96,10 +96,10 @@ namespace PharMS_Steuerung.Funktionen
                     {
                         case "s00":
                         case "s20":
-                            if (tempForm.label6.Text == "In Arbeit")
+                            /*if (tempForm.label6.Text == "In Arbeit")
                             {
                                 tempForm.change_Label("Bereit", tempForm.label6);
-                            }
+                            }*/
 
                             bereit = true;
                             break;
