@@ -38,6 +38,7 @@ namespace PharMS_Steuerung
         string sDBName;
         public int maxObjectKey;
         public List<int> lstMaster = new List<int>();
+        static bool Live_Cahrtausgabe = true;
 
 
         public Form1()
@@ -182,10 +183,11 @@ namespace PharMS_Steuerung
                     Boolean Lauf = true;
                     do
                     {
+                        if (Abbruch == true) return;
                         Lauf = Comschnitstelle.COMAblaufSender("X" + lstMaster[i]);
                         Console.WriteLine("Line: " + i + ";" + lstMaster.Count + ";" + "X" + lstMaster[i]);
 
-                        if (Abbruch == true) break;
+                        
 
                         System.Threading.Thread.Sleep(1000);
 
@@ -243,7 +245,7 @@ namespace PharMS_Steuerung
         {
             Abbruch = true;
             Comschnitstelle.COMSender(Console_Eingabe.Text);
-            //    Funktionen.Consolen_LOG Ausgabe = new Funktionen.Consolen_LOG(Console_Eingabe.Text, this);
+            Funktionen.Consolen_LOG Ausgabe = new Funktionen.Consolen_LOG(Console_Eingabe.Text, this);
         }
 
         private void Man_Messung_Click(object sender, EventArgs e)
@@ -298,7 +300,7 @@ namespace PharMS_Steuerung
             if (radioButton2.Checked == true) { radioButton1.Checked = false; }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void Initialisierung_Click(object sender, EventArgs e)
         {
             Comschnitstelle.COMSender("X01");
         }
@@ -471,19 +473,20 @@ namespace PharMS_Steuerung
         {
             if (e.ColumnIndex == 2)
             {
-                int i = 0;
-               
-                foreach (Sequenz oSequenz in lstSequenz)
+                int i = e.RowIndex+1;
+                lstSequenz.RemoveAt(i);
+                oSequenzeditor.FillGridSequenz(); 
+               /* foreach (Sequenz oSequenz in lstSequenz)
                 {
                 
                     if (SequenzenGrid.Rows[e.RowIndex].Cells[0].Value.ToString() == oSequenz.sName)
                     {
-                        foreach (string line in oSequenz.stlSequenz)
-                        {
+                       foreach (string line in oSequenz.stlSequenz)
+                        { 
                             if (line == "") continue;
                             ablauf = ablauf + ";" + line;
-                           
-                            /* foreach (Sequenz oSequenz in lstSequenz)
+                          
+                            foreach (Sequenz oSequenz in lstSequenz)
                              {
 
                                  if (SequenzenGrid.Rows[e.RowIndex].Cells[0].Value.ToString() == oSequenz.sName)
@@ -491,11 +494,11 @@ namespace PharMS_Steuerung
                                      foreach (string line in oSequenz.stlSequenz)
                                      {
                                          if (line == "") continue;
-                                         ablauf = ablauf + ";" + line;
+                                         ablauf = ablauf + ";" + line; 
 
                             
                             
-                                     }
+                                     } 
                                       Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
                                       Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
                                     }
@@ -508,13 +511,14 @@ namespace PharMS_Steuerung
                                  if (SequenzenGrid.Rows[e.RowIndex].Cells[3].Value.ToString() == oSequenz.ObjectKey.ToString()) break;
                                  i++;
 
-                             }*/
+                             
                             
-                            lstSequenz.RemoveAt(i);
-                            oSequenzeditor.FillGridSequenz();
+                            
                         }
+                     
+                       }
                     }
-                }
+                }*/
             }
         }
 
@@ -584,11 +588,14 @@ namespace PharMS_Steuerung
                 }
             }
 
-            /* ablauf = "";
+             ablauf = "";
              //neues übertragen Ereignis 
              foreach (Sequenz oSequenz in lstSequenz)
              {
-                 if (SequenzenGrid.Rows[e.RowIndex].Cells[0].Value.ToString() == oSequenz.sName)
+                // if (SequenzenGrid.Rows[e.RowIndex].Cells[0].Value.ToString() == oSequenz.sName)
+        
+               
+               if (SequenzenGrid.CurrentRow.Cells[0].Value.ToString() == oSequenz.sName)
                  {
                      foreach (string line in oSequenz.stlSequenz)
                      {
@@ -597,12 +604,15 @@ namespace PharMS_Steuerung
 
 
                      }
-                     //Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                   if (  oSequenz.iSpeicherplatz.ToString() != "-999"){
+                   Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                   Console.WriteLine("Incoming Data gesendet:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                   }
                      Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
                  }
-             }*/
+             }
         }
-
+                 
         public bool Messungen_Tabelle(int MessungNR, string Bezeichnung)
         {
             if (this.InvokeRequired)
@@ -618,11 +628,11 @@ namespace PharMS_Steuerung
         }
 
 
-        public bool Live_Chart_add(int x, int Sen1, int Sen2, bool clear)
+        public bool Live_Chart_add(int x, decimal Sen1, decimal Sen2, bool clear)
         {
             if (this.InvokeRequired)
             {
-                return (bool)this.Invoke((Func<int, int, int, bool, bool>)Live_Chart_add, x, Sen1, Sen2, clear);
+                return (bool)this.Invoke((Func<int, decimal, decimal, bool, bool>)Live_Chart_add, x, Sen1, Sen2, clear);
             }
 
             if (clear == true)
@@ -639,10 +649,16 @@ namespace PharMS_Steuerung
             return true;
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void LiveChart_klick(object sender, EventArgs e)
         {
             LiveChart Ausgabe = new LiveChart();
-
+            Live_Cahrtausgabe = true;
+            Live_Chart_anzeigen.Visible = false;
+            Live_Chart_add(0, 0, 0, true);
+           // Ausgabe.erfassen("0", "0", this, true, true);
+            
+            
+            /*  
             //Ausgabe zu Graphen
 
             Random z = new Random();
@@ -655,21 +671,24 @@ namespace PharMS_Steuerung
 
                 Ausgabe.erfassen(s1, s2, this, false, true);
             }
-            System.Threading.Thread.Sleep(5000);
-            Ausgabe.erfassen("0", "0", this, true, true);
-
+            System.Threading.Thread.Sleep(5000); 
+            
+          */ 
         }
 
 
         private void LiveGrid_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             LiveChart Ausgabe = new LiveChart();
-
+            Live_Cahrtausgabe = false;
+            Live_Chart_anzeigen.Visible = true;
             int selectedrowindex = LiveGrid.SelectedCells[0].RowIndex;
             DataGridViewRow selectedRow = LiveGrid.Rows[selectedrowindex];
             string a = Convert.ToString(selectedRow.Index.ToString());
-        //    Ausgabe.erfassen(a, "0", this, true,false);
+           // Ausgabe.erfassen(a, "0", this, true,false);
+           
             Ausgabe.ausgabeSpeicher(a, this);
+
         }
 
         public void MasterGrid_RowValidating(object sender, DataGridViewCellCancelEventArgs e)

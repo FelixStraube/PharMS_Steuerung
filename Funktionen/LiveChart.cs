@@ -15,19 +15,97 @@ namespace PharMS_Steuerung.Funktionen
         public DataRow workRow;
         public DataTable Messungen;
         static List<Array> Speicherliste = new List<Array>();
-        public List<int> templist1 = new List<int>();
-        public List<int> templist2 = new List<int>();
+        static List<decimal> templist1 = new List<decimal>();
+        static List<decimal> templist2 = new List<decimal>();
         static int x = 0;
         static int MessungNR = 0;
+
+
  //       public bool live = true;
         public void erfassen ( string Sensor1, string Sensor2, Form1 aktFenster ,bool clear,bool live)
         {    
             
              x = x + 1;
-             int intSen1 = Convert.ToInt32(Sensor1);
-             int intSen2 = Convert.ToInt32(Sensor2);
-             templist1.Add(intSen1);
-             templist2.Add(intSen2);
+             decimal intSen1 = 0;
+             decimal intSen2 = 0;
+             string Ganzzahl="";
+             string Nachkomma="";
+             if (Sensor1 != "--------")
+             {
+                 if (Sensor1.Substring(0, 1) == "-")
+                 {
+                     string[] words = Sensor1.Split('.');
+                     foreach (string word in words)
+
+                     Ganzzahl = words[0].Substring(1, words[0].Length - 1);
+                     if (Ganzzahl != "")
+                     {
+                         Nachkomma = words[1];
+                     }
+                     intSen1 = Convert.ToDecimal(Ganzzahl+","+Nachkomma);
+
+                     intSen1 = intSen1 * -1;
+
+                 }
+                 else
+                 {
+                     string[] words = Sensor1.Split('.');
+                     foreach (string word in words)
+
+                         Ganzzahl = words[0].Substring(1, words[0].Length - 1);
+                     if (Ganzzahl != "")
+                     {
+                         Nachkomma = words[1];  
+                         intSen1 = Convert.ToDecimal(Ganzzahl + "," + Nachkomma);
+                     }
+
+                   
+
+                     
+                 }
+             }
+             else
+             {
+               //  return;
+             }
+
+             if (Sensor2 != "---------")
+             {
+                if (Sensor2.Substring(0, 1) == "-")
+                 {
+                     string[] words = Sensor2.Split('.');
+                     foreach (string word in words)
+
+                     Ganzzahl = words[0].Substring(1, words[0].Length - 1);
+                     Nachkomma = words[1];
+
+                     intSen2 = Convert.ToDecimal(Ganzzahl + "," + Nachkomma);
+
+                     intSen2 = intSen2 * -1;
+
+                     
+                 }
+                 else
+                 {
+                     string[] words = Sensor2.Split('.');
+                     foreach (string word in words)
+
+                         Ganzzahl = words[0].Substring(1, words[0].Length - 1);
+                     if (Ganzzahl != "")
+                     {
+                         Nachkomma = words[1];
+                         intSen2 = Convert.ToDecimal(Ganzzahl + "," + Nachkomma);
+                     }
+
+                     
+
+                 }
+             }
+             else { //return; 
+                  }
+
+            templist1.Add(intSen1);
+            templist2.Add(intSen2);
             
             if (live == true){
               
@@ -44,7 +122,7 @@ namespace PharMS_Steuerung.Funktionen
                 aktFenster.Live_Chart_add(x, 0, 0 , clear);
                  
                 }
-                aktFenster.Live_Chart_add(x,intSen1,intSen2,clear);
+              aktFenster.Live_Chart_add(x,intSen1,intSen2,clear);
            }
 
             if (live == false) {
@@ -54,6 +132,8 @@ namespace PharMS_Steuerung.Funktionen
                     aktFenster.Messungen_Tabelle(MessungNR, "Messungxy");
                     MessungNR = MessungNR + 1;
                     Speicherliste.Add(listezuArray(templist1, templist2));
+                    templist1.Clear();
+                    templist2.Clear();
                 }
                
           
@@ -75,13 +155,13 @@ namespace PharMS_Steuerung.Funktionen
                 {
                     series.Points.Clear();
 
-                    int Schritlänge = 1;
+                    decimal Schritlänge = 1;
                     int Lauf = 0;
                     int xAchseSen1 = 0;
                     int xAchseSen2 = 0;
                     int Auswahl = 0;
 
-                    foreach (int i in Speicherliste[l])
+                    foreach (decimal i in Speicherliste[l])
                     {
 
                      if (Lauf == 0)
@@ -112,13 +192,14 @@ namespace PharMS_Steuerung.Funktionen
 
             
         }
-        private Array listezuArray (List<int> sensor1, List<int> sensor2){
-        int[,] r = new int[sensor1.Count(),2];
+        private Array listezuArray(List<decimal> sensor1, List<decimal> sensor2)
+        {
+            decimal[,] r = new decimal[sensor1.Count(), 2];
         
             
-            for (int g = 1; g < sensor1.Count(); g++)
+            for (int g = 1; g < sensor1.Count()-1; g++)
         {
-            int i = sensor1[g];
+            decimal i = sensor1[g];
             r[g,0] = i;
                 //sensor1[g];
             r[g,1] = sensor2[g];
