@@ -29,32 +29,13 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.AblaufListe = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.button3 = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.Sequenz = new System.Windows.Forms.Label();
-            this.Masterablauf = new System.Windows.Forms.ComboBox();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.AblaufStart = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.cmbSpeicherplatzTest = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.btnStart = new System.Windows.Forms.Button();
-            this.NOTSTOPP = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.Disconnect = new System.Windows.Forms.Button();
-            this.Connect = new System.Windows.Forms.Button();
             this.tabSequenzList = new System.Windows.Forms.TabPage();
             this.btnUebertragen = new System.Windows.Forms.Button();
             this.SequenzenGrid = new System.Windows.Forms.DataGridView();
@@ -93,12 +74,6 @@
             this.Zeit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Spannung1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Spannung2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.Console_Senden = new System.Windows.Forms.Button();
-            this.Console_Eingabe = new System.Windows.Forms.TextBox();
-            this.Console_Ausgabe = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
             this.LiveGrid = new System.Windows.Forms.DataGridView();
@@ -117,11 +92,24 @@
             this.hilfeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDatabaseDialog = new System.Windows.Forms.OpenFileDialog();
             this.NewDBDialog = new System.Windows.Forms.SaveFileDialog();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.AblaufStart = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.Console_Senden = new System.Windows.Forms.Button();
+            this.Console_Eingabe = new System.Windows.Forms.TextBox();
+            this.Console_Ausgabe = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button3 = new System.Windows.Forms.Button();
+            this.NOTSTOPP = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.Disconnect = new System.Windows.Forms.Button();
+            this.Connect = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            this.groupBox2.SuspendLayout();
             this.tabSequenzList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SequenzenGrid)).BeginInit();
             this.tabSequenzedit.SuspendLayout();
@@ -133,12 +121,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.numeric_Intervall)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericZellspannung)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DatenerfassungTab)).BeginInit();
-            this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LiveGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LiveChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // AblaufListe
@@ -160,7 +149,6 @@
             this.tabControl1.Controls.Add(this.tabSequenzedit);
             this.tabControl1.Controls.Add(this.tabMasterablauf);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Location = new System.Drawing.Point(7, 23);
             this.tabControl1.Name = "tabControl1";
@@ -172,229 +160,18 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.White;
-            this.tabPage1.Controls.Add(this.button3);
-            this.tabPage1.Controls.Add(this.groupBox3);
-            this.tabPage1.Controls.Add(this.groupBox2);
-            this.tabPage1.Controls.Add(this.NOTSTOPP);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.panel1);
-            this.tabPage1.Controls.Add(this.Disconnect);
-            this.tabPage1.Controls.Add(this.Connect);
+            this.tabPage1.Controls.Add(this.groupBox1);
+            this.tabPage1.Controls.Add(this.label16);
+            this.tabPage1.Controls.Add(this.label15);
+            this.tabPage1.Controls.Add(this.Console_Senden);
+            this.tabPage1.Controls.Add(this.Console_Eingabe);
+            this.tabPage1.Controls.Add(this.Console_Ausgabe);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(519, 574);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Übertragen";
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(228, 295);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 33;
-            this.button3.Text = "Initialisieren";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox3.Controls.Add(this.Sequenz);
-            this.groupBox3.Controls.Add(this.Masterablauf);
-            this.groupBox3.Controls.Add(this.progressBar1);
-            this.groupBox3.Controls.Add(this.numericUpDown1);
-            this.groupBox3.Controls.Add(this.AblaufStart);
-            this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.groupBox3.Location = new System.Drawing.Point(6, 129);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(507, 117);
-            this.groupBox3.TabIndex = 32;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Automatischer Ablauf";
-            // 
-            // Sequenz
-            // 
-            this.Sequenz.AutoSize = true;
-            this.Sequenz.Location = new System.Drawing.Point(6, 31);
-            this.Sequenz.Name = "Sequenz";
-            this.Sequenz.Size = new System.Drawing.Size(49, 13);
-            this.Sequenz.TabIndex = 25;
-            this.Sequenz.Text = "Sequenz";
-            // 
-            // Masterablauf
-            // 
-            this.Masterablauf.FormattingEnabled = true;
-            this.Masterablauf.Location = new System.Drawing.Point(6, 47);
-            this.Masterablauf.Name = "Masterablauf";
-            this.Masterablauf.Size = new System.Drawing.Size(183, 21);
-            this.Masterablauf.TabIndex = 22;
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(9, 74);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(183, 23);
-            this.progressBar1.TabIndex = 29;
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(246, 48);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(40, 20);
-            this.numericUpDown1.TabIndex = 21;
-            // 
-            // AblaufStart
-            // 
-            this.AblaufStart.Location = new System.Drawing.Point(382, 48);
-            this.AblaufStart.Name = "AblaufStart";
-            this.AblaufStart.Size = new System.Drawing.Size(75, 23);
-            this.AblaufStart.TabIndex = 19;
-            this.AblaufStart.Text = "Start";
-            this.AblaufStart.UseVisualStyleBackColor = true;
-            this.AblaufStart.Click += new System.EventHandler(this.AblaufStart_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(231, 31);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(59, 13);
-            this.label5.TabIndex = 23;
-            this.label5.Text = "Durchläufe\r\n";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.cmbSpeicherplatzTest);
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.btnStart);
-            this.groupBox2.Location = new System.Drawing.Point(7, 21);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(507, 100);
-            this.groupBox2.TabIndex = 31;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Ablauf testen";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(61, 33);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(43, 13);
-            this.label7.TabIndex = 24;
-            this.label7.Text = "Status :";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(60, 47);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(57, 20);
-            this.label6.TabIndex = 17;
-            this.label6.Text = "Bereit";
-            // 
-            // cmbSpeicherplatzTest
-            // 
-            this.cmbSpeicherplatzTest.FormattingEnabled = true;
-            this.cmbSpeicherplatzTest.Items.AddRange(new object[] {
-            "01",
-            "02",
-            "03",
-            "04",
-            "05",
-            "06",
-            "07",
-            "08",
-            "09",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"});
-            this.cmbSpeicherplatzTest.Location = new System.Drawing.Point(246, 49);
-            this.cmbSpeicherplatzTest.Name = "cmbSpeicherplatzTest";
-            this.cmbSpeicherplatzTest.Size = new System.Drawing.Size(40, 21);
-            this.cmbSpeicherplatzTest.TabIndex = 7;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(231, 33);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(71, 13);
-            this.label4.TabIndex = 14;
-            this.label4.Text = "Speicherplatz";
-            // 
-            // btnStart
-            // 
-            this.btnStart.Location = new System.Drawing.Point(382, 49);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(75, 23);
-            this.btnStart.TabIndex = 3;
-            this.btnStart.Text = "Start";
-            this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // NOTSTOPP
-            // 
-            this.NOTSTOPP.BackColor = System.Drawing.Color.Red;
-            this.NOTSTOPP.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.NOTSTOPP.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NOTSTOPP.Location = new System.Drawing.Point(363, 276);
-            this.NOTSTOPP.Name = "NOTSTOPP";
-            this.NOTSTOPP.Size = new System.Drawing.Size(128, 57);
-            this.NOTSTOPP.TabIndex = 15;
-            this.NOTSTOPP.Text = "STOPP";
-            this.NOTSTOPP.UseVisualStyleBackColor = false;
-            this.NOTSTOPP.Click += new System.EventHandler(this.NOTSTOPP_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(67, 271);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(43, 13);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "Status :";
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.Orange;
-            this.panel1.Location = new System.Drawing.Point(32, 290);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(127, 43);
-            this.panel1.TabIndex = 10;
-            // 
-            // Disconnect
-            // 
-            this.Disconnect.Location = new System.Drawing.Point(228, 327);
-            this.Disconnect.Name = "Disconnect";
-            this.Disconnect.Size = new System.Drawing.Size(75, 23);
-            this.Disconnect.TabIndex = 9;
-            this.Disconnect.Text = "Disconnect";
-            this.Disconnect.UseVisualStyleBackColor = true;
-            this.Disconnect.Click += new System.EventHandler(this.Disconnect_Click);
-            // 
-            // Connect
-            // 
-            this.Connect.Location = new System.Drawing.Point(228, 261);
-            this.Connect.Name = "Connect";
-            this.Connect.Size = new System.Drawing.Size(75, 23);
-            this.Connect.TabIndex = 8;
-            this.Connect.Text = "Connect";
-            this.Connect.UseVisualStyleBackColor = true;
-            this.Connect.Click += new System.EventHandler(this.Connect_Click);
             // 
             // tabSequenzList
             // 
@@ -582,6 +359,10 @@
             // 
             // tabMasterablauf
             // 
+            this.tabMasterablauf.Controls.Add(this.progressBar1);
+            this.tabMasterablauf.Controls.Add(this.numericUpDown1);
+            this.tabMasterablauf.Controls.Add(this.AblaufStart);
+            this.tabMasterablauf.Controls.Add(this.label5);
             this.tabMasterablauf.Controls.Add(this.MasterGrid);
             this.tabMasterablauf.Location = new System.Drawing.Point(4, 22);
             this.tabMasterablauf.Name = "tabMasterablauf";
@@ -600,7 +381,7 @@
             this.colOrder,
             this.colSpeicherplatzMaster,
             this.colNameMaster});
-            this.MasterGrid.Location = new System.Drawing.Point(0, 3);
+            this.MasterGrid.Location = new System.Drawing.Point(0, 50);
             this.MasterGrid.Name = "MasterGrid";
             this.MasterGrid.Size = new System.Drawing.Size(519, 512);
             this.MasterGrid.TabIndex = 1;
@@ -809,66 +590,6 @@
             this.Spannung2.HeaderText = "Sensor 2 [ nA ]";
             this.Spannung2.Name = "Spannung2";
             // 
-            // tabPage3
-            // 
-            this.tabPage3.AutoScroll = true;
-            this.tabPage3.Controls.Add(this.label16);
-            this.tabPage3.Controls.Add(this.label15);
-            this.tabPage3.Controls.Add(this.Console_Senden);
-            this.tabPage3.Controls.Add(this.Console_Eingabe);
-            this.tabPage3.Controls.Add(this.Console_Ausgabe);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(519, 574);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Controller";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(27, 25);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(49, 13);
-            this.label16.TabIndex = 5;
-            this.label16.Text = "Ausgabe";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(30, 282);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(46, 13);
-            this.label15.TabIndex = 4;
-            this.label15.Text = "Eingabe";
-            // 
-            // Console_Senden
-            // 
-            this.Console_Senden.Location = new System.Drawing.Point(30, 350);
-            this.Console_Senden.Name = "Console_Senden";
-            this.Console_Senden.Size = new System.Drawing.Size(75, 23);
-            this.Console_Senden.TabIndex = 2;
-            this.Console_Senden.Text = "Senden";
-            this.Console_Senden.UseVisualStyleBackColor = true;
-            this.Console_Senden.Click += new System.EventHandler(this.Console_Senden_Click);
-            // 
-            // Console_Eingabe
-            // 
-            this.Console_Eingabe.Location = new System.Drawing.Point(30, 298);
-            this.Console_Eingabe.Name = "Console_Eingabe";
-            this.Console_Eingabe.Size = new System.Drawing.Size(369, 20);
-            this.Console_Eingabe.TabIndex = 1;
-            // 
-            // Console_Ausgabe
-            // 
-            this.Console_Ausgabe.Location = new System.Drawing.Point(30, 41);
-            this.Console_Ausgabe.Multiline = true;
-            this.Console_Ausgabe.Name = "Console_Ausgabe";
-            this.Console_Ausgabe.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.Console_Ausgabe.Size = new System.Drawing.Size(440, 198);
-            this.Console_Ausgabe.TabIndex = 0;
-            // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.button1);
@@ -916,22 +637,22 @@
             // 
             // LiveChart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.LiveChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.LiveChart.Legends.Add(legend1);
+            chartArea4.Name = "ChartArea1";
+            this.LiveChart.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.LiveChart.Legends.Add(legend4);
             this.LiveChart.Location = new System.Drawing.Point(31, 32);
             this.LiveChart.Name = "LiveChart";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series2.Legend = "Legend1";
-            series2.Name = "Series2";
-            this.LiveChart.Series.Add(series1);
-            this.LiveChart.Series.Add(series2);
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series7.Legend = "Legend1";
+            series7.Name = "Series1";
+            series8.ChartArea = "ChartArea1";
+            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series8.Legend = "Legend1";
+            series8.Name = "Series2";
+            this.LiveChart.Series.Add(series7);
+            this.LiveChart.Series.Add(series8);
             this.LiveChart.Size = new System.Drawing.Size(466, 289);
             this.LiveChart.TabIndex = 0;
             this.LiveChart.Text = "chart1";
@@ -1009,6 +730,153 @@
             // 
             this.openDatabaseDialog.Filter = "Pharms (*.pharms)|*.pharms|Textdateien|*.txt";
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(16, 21);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(183, 23);
+            this.progressBar1.TabIndex = 33;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(257, 24);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(40, 20);
+            this.numericUpDown1.TabIndex = 31;
+            // 
+            // AblaufStart
+            // 
+            this.AblaufStart.Location = new System.Drawing.Point(393, 24);
+            this.AblaufStart.Name = "AblaufStart";
+            this.AblaufStart.Size = new System.Drawing.Size(75, 23);
+            this.AblaufStart.TabIndex = 30;
+            this.AblaufStart.Text = "Start";
+            this.AblaufStart.UseVisualStyleBackColor = true;
+            this.AblaufStart.Click += new System.EventHandler(this.AblaufStart_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(254, 8);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(59, 13);
+            this.label5.TabIndex = 32;
+            this.label5.Text = "Durchläufe\r\n";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(29, 11);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(49, 13);
+            this.label16.TabIndex = 38;
+            this.label16.Text = "Ausgabe";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(32, 228);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(46, 13);
+            this.label15.TabIndex = 37;
+            this.label15.Text = "Eingabe";
+            // 
+            // Console_Senden
+            // 
+            this.Console_Senden.Location = new System.Drawing.Point(35, 284);
+            this.Console_Senden.Name = "Console_Senden";
+            this.Console_Senden.Size = new System.Drawing.Size(75, 23);
+            this.Console_Senden.TabIndex = 36;
+            this.Console_Senden.Text = "Senden";
+            this.Console_Senden.UseVisualStyleBackColor = true;
+            // 
+            // Console_Eingabe
+            // 
+            this.Console_Eingabe.Location = new System.Drawing.Point(32, 244);
+            this.Console_Eingabe.Name = "Console_Eingabe";
+            this.Console_Eingabe.Size = new System.Drawing.Size(369, 20);
+            this.Console_Eingabe.TabIndex = 35;
+            // 
+            // Console_Ausgabe
+            // 
+            this.Console_Ausgabe.Location = new System.Drawing.Point(32, 27);
+            this.Console_Ausgabe.Multiline = true;
+            this.Console_Ausgabe.Name = "Console_Ausgabe";
+            this.Console_Ausgabe.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.Console_Ausgabe.Size = new System.Drawing.Size(440, 198);
+            this.Console_Ausgabe.TabIndex = 34;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.button3);
+            this.groupBox1.Controls.Add(this.NOTSTOPP);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.panel1);
+            this.groupBox1.Controls.Add(this.Disconnect);
+            this.groupBox1.Controls.Add(this.Connect);
+            this.groupBox1.Location = new System.Drawing.Point(19, 325);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(481, 225);
+            this.groupBox1.TabIndex = 39;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Connection";
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(207, 102);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 39;
+            this.button3.Text = "Initialisieren";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // NOTSTOPP
+            // 
+            this.NOTSTOPP.BackColor = System.Drawing.Color.Red;
+            this.NOTSTOPP.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.NOTSTOPP.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NOTSTOPP.Location = new System.Drawing.Point(342, 83);
+            this.NOTSTOPP.Name = "NOTSTOPP";
+            this.NOTSTOPP.Size = new System.Drawing.Size(128, 57);
+            this.NOTSTOPP.TabIndex = 38;
+            this.NOTSTOPP.Text = "STOPP";
+            this.NOTSTOPP.UseVisualStyleBackColor = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(46, 78);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(43, 13);
+            this.label1.TabIndex = 37;
+            this.label1.Text = "Status :";
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Orange;
+            this.panel1.Location = new System.Drawing.Point(11, 97);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(127, 43);
+            this.panel1.TabIndex = 36;
+            // 
+            // Disconnect
+            // 
+            this.Disconnect.Location = new System.Drawing.Point(207, 134);
+            this.Disconnect.Name = "Disconnect";
+            this.Disconnect.Size = new System.Drawing.Size(75, 23);
+            this.Disconnect.TabIndex = 35;
+            this.Disconnect.Text = "bbb";
+            this.Disconnect.UseVisualStyleBackColor = true;
+            // 
+            // Connect
+            // 
+            this.Connect.Location = new System.Drawing.Point(207, 68);
+            this.Connect.Name = "Connect";
+            this.Connect.Size = new System.Drawing.Size(75, 23);
+            this.Connect.TabIndex = 34;
+            this.Connect.Text = "Connect";
+            this.Connect.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1022,17 +890,13 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.tabSequenzList.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SequenzenGrid)).EndInit();
             this.tabSequenzedit.ResumeLayout(false);
             this.tabSequenzedit.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SequenzeditorGrid)).EndInit();
             this.tabMasterablauf.ResumeLayout(false);
+            this.tabMasterablauf.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MasterGrid)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
@@ -1040,14 +904,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.numeric_Intervall)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericZellspannung)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DatenerfassungTab)).EndInit();
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.LiveGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LiveChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1056,52 +921,26 @@
         #endregion
 
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.Button btnStart;
    //     private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
         //    private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
-        private System.Windows.Forms.ComboBox cmbSpeicherplatzTest;
-      //  private Microsoft.VisualBasic.PowerPacks.LineShape lineShape2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button Disconnect;
-        private System.Windows.Forms.Button Connect;
+        //  private Microsoft.VisualBasic.PowerPacks.LineShape lineShape2;
       //  private Microsoft.VisualBasic.PowerPacks.LineShape lineShape3;
         private System.Windows.Forms.FolderBrowserDialog Verzeichnisauswahl;
         public System.Windows.Forms.DataGridView DatenerfassungTab;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button NOTSTOPP;
-
-        public System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox Masterablauf;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.Button AblaufStart;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label Sequenz;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.NumericUpDown numericZellspannung;
         private System.Windows.Forms.Button Messung_Stopp;
         private System.Windows.Forms.Button Man_Messung;
         private System.Windows.Forms.Label label11;
-        public System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Button Console_Senden;
-        public System.Windows.Forms.TextBox Console_Eingabe;
-        public System.Windows.Forms.TextBox Console_Ausgabe;
         public System.Windows.Forms.TabControl tabControl1;
         public System.Windows.Forms.TabPage tabPage2;
         public System.Windows.Forms.RadioButton radioButton1;
         public System.Windows.Forms.RadioButton radioButton2;
         public System.Windows.Forms.NumericUpDown numeric_Messdauer;
         public System.Windows.Forms.NumericUpDown numeric_Intervall;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Zeit;
         private System.Windows.Forms.DataGridViewTextBoxColumn Spannung1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Spannung2;
@@ -1133,7 +972,6 @@
         private System.Windows.Forms.DataGridViewImageColumn colDelete;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIndex;
         private System.Windows.Forms.Button btnUebertragen;
-
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
@@ -1146,6 +984,22 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrder;
         private System.Windows.Forms.DataGridViewComboBoxColumn colSpeicherplatzMaster;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNameMaster;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Button Console_Senden;
+        public System.Windows.Forms.TextBox Console_Eingabe;
+        public System.Windows.Forms.TextBox Console_Ausgabe;
+        public System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Button AblaufStart;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button NOTSTOPP;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button Disconnect;
+        private System.Windows.Forms.Button Connect;
 
     }
 }
