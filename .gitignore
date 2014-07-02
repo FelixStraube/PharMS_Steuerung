@@ -19,3 +19,7 @@ PharMS_Steuerung.suo
 obj/x86/Debug/PharMS_Steuerung.csproj.GenerateResource.Cache
 obj/x86/Debug/PharMS_Steuerung.exe
 obj/x86/Debug/PharMS_Steuerung.exe
+bin/Debug/PharMS_Steuerung.vshost.exe
+obj/x86/Debug/DesignTimeResolveAssemblyReferences.cache
+obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+PharMS_Steuerung.v12.suo
