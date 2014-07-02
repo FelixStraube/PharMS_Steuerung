@@ -1,0 +1,53 @@
+I:\Arbeit\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.exe
+I:\Arbeit\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.pdb
+I:\Arbeit\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.Properties.Resources.resources
+I:\Arbeit\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.exe
+I:\Arbeit\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.pdb
+I:\Arbeit\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.Form1.resources
+I:\Arbeit\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.csprojResolveAssemblyReference.cache
+I:\Arbeit\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.csproj.GenerateResource.Cache
+C:\Users\straube.QUODATA\Desktop\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.exe
+C:\Users\straube.QUODATA\Desktop\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.pdb
+C:\Users\straube.QUODATA\Desktop\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.exe.config
+C:\Users\straube.QUODATA\Desktop\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.csprojResolveAssemblyReference.cache
+C:\Users\straube.QUODATA\Desktop\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.Form1.resources
+C:\Users\straube.QUODATA\Desktop\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.Properties.Resources.resources
+C:\Users\straube.QUODATA\Desktop\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.csproj.GenerateResource.Cache
+C:\Users\straube.QUODATA\Desktop\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.exe
+C:\Users\straube.QUODATA\Desktop\PharMS_steuerung\PharMS_Steuerung\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.pdb
+C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.exe.config
+C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.exe
+C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.pdb
+C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.exe
+C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.pdb
+C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.csprojResolveAssemblyReference.cache
+C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.Form1.resources
+C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.Properties.Resources.resources
+C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.csproj.GenerateResource.Cache
+C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.exe.config
+C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.exe
+C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.pdb
+C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.exe
+C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.pdb
+C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.Form1.resources
+C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.Properties.Resources.resources
+C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.csproj.GenerateResource.Cache
+C:\Users\Alexander\Source\Repos\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.exe.config
+C:\Users\Alexander\Source\Repos\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.exe
+C:\Users\Alexander\Source\Repos\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.pdb
+C:\Users\Alexander\Source\Repos\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.exe
+C:\Users\Alexander\Source\Repos\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.pdb
+C:\Users\Alexander\Source\Repos\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.Form1.resources
+C:\Users\Alexander\Source\Repos\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.Properties.Resources.resources
+C:\Users\Alexander\Source\Repos\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.csproj.GenerateResource.Cache
+C:\Users\straube.QUODATA\Documents\Visual Studio 2010\Projects\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.csprojResolveAssemblyReference.cache
+C:\Users\Thiessen\Documents\GitHub\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.exe.config
+C:\Users\Thiessen\Documents\GitHub\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.exe
+C:\Users\Thiessen\Documents\GitHub\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.pdb
+C:\Users\Thiessen\Documents\GitHub\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.csprojResolveAssemblyReference.cache
+C:\Users\Thiessen\Documents\GitHub\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.Form1.resources
+C:\Users\Thiessen\Documents\GitHub\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.Properties.Resources.resources
+C:\Users\Thiessen\Documents\GitHub\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.csproj.GenerateResource.Cache
+C:\Users\Thiessen\Documents\GitHub\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.exe
+C:\Users\Thiessen\Documents\GitHub\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.pdb
+C:\Users\Alexander\Source\Repos\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.csprojResolveAssemblyReference.cache

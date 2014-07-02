@@ -180,10 +180,12 @@ namespace PharMS_Steuerung.Funktionen
 
             MainForm.MasterGrid.Rows.Clear();
             (MainForm.MasterGrid.Columns[1] as DataGridViewComboBoxColumn).Items.Clear();
+            (MainForm.MasterGrid.Columns[2] as DataGridViewComboBoxColumn).Items.Clear();
 
             foreach (Sequenz oSequenz in MainForm.lstSequenz)
             {
                 if (oSequenz.iSpeicherplatz != -999) (MainForm.MasterGrid.Columns[1] as DataGridViewComboBoxColumn).Items.Add(oSequenz.iSpeicherplatz.ToString());
+                if (oSequenz.iSpeicherplatz != -999) (MainForm.MasterGrid.Columns[2] as DataGridViewComboBoxColumn).Items.Add(oSequenz.sName);
             }
 
             foreach (int iMaster in MainForm.lstMaster)
@@ -191,7 +193,7 @@ namespace PharMS_Steuerung.Funktionen
                 MainForm.MasterGrid.Rows.Add();
 
                 MainForm.MasterGrid.Rows[i].Cells[1].Value = iMaster.ToString();
-                MainForm.MasterGrid.Rows[i].Cells[0].Value = (i == 0) ? 1 : Convert.ToInt32(MainForm.MasterGrid.Rows[i-1].Cells[0].Value) + 1;
+                MainForm.MasterGrid.Rows[i].Cells[0].Value = (i == 0) ? 1 : Convert.ToInt32(MainForm.MasterGrid.Rows[i - 1].Cells[0].Value) + 1;
 
                 foreach (Sequenz oSequenz in MainForm.lstSequenz)
                 {
