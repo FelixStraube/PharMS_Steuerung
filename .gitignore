@@ -34,3 +34,5 @@ PharMS_Steuerung.v12.suo
 bin/Debug/PharMS_Steuerung.pdb
 obj/x86/Debug/DesignTimeResolveAssemblyReferences.cache
 PharMS_Steuerung.v12.suo
+obj/x86/Debug/DesignTimeResolveAssemblyReferences.cache
+*.cache

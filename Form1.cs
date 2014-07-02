@@ -475,7 +475,7 @@ namespace PharMS_Steuerung
         {
             if (e.ColumnIndex == 2)
             {
-                int i = e.RowIndex + 1;
+                int i = e.RowIndex;
                 lstSequenz.RemoveAt(i);
 
                 oSequenzeditor.FillGridSequenz();
@@ -567,7 +567,7 @@ namespace PharMS_Steuerung
                 }
             }
 
-            /* ablauf = "";
+             ablauf = "";
              //neues übertragen Ereignis 
              foreach (Sequenz oSequenz in lstSequenz)
              {
@@ -589,7 +589,7 @@ namespace PharMS_Steuerung
                    }
                      Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
                  }
-             }*/
+             }
         }
 
         public bool Messungen_Tabelle(int MessungNR, string Bezeichnung)
