@@ -15,7 +15,7 @@ using PharMS_Steuerung.Funktionen;
 
 namespace PharMS_Steuerung
 {
-   
+
     public partial class Form1 : Form
     { // das ist ein test VS
         static COM Comschnitstelle;
@@ -189,7 +189,7 @@ namespace PharMS_Steuerung
                         Lauf = Comschnitstelle.COMAblaufSender("X" + lstMaster[i]);
                         Console.WriteLine("Line: " + i + ";" + lstMaster.Count + ";" + "X" + lstMaster[i]);
 
-                        
+
 
                         System.Threading.Thread.Sleep(1000);
 
@@ -217,9 +217,9 @@ namespace PharMS_Steuerung
             List<string> dirAblauf = new List<string>(Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\Master\\", "*.txt"));
 
             oSequenzeditor = new Sequenzeditor(this);
-            
+
             tabControl1.Visible = false;
-            
+
             /*
             lstSequenz = new List<Sequenz>();
 
@@ -475,9 +475,9 @@ namespace PharMS_Steuerung
         {
             if (e.ColumnIndex == 2)
             {
-                int i = e.RowIndex+1;
+                int i = e.RowIndex + 1;
                 lstSequenz.RemoveAt(i);
-                oSequenzeditor.FillGridSequenz();               
+                oSequenzeditor.FillGridSequenz();
             }
 
             if (e.Button == MouseButtons.Right)
@@ -489,13 +489,13 @@ namespace PharMS_Steuerung
                 int currentMouseOverRow = e.RowIndex;
 
 
-                m.Show(SequenzenGrid, new Point(e.X, Cursor.Position.Y-145)); //Menü erscheint sonste wo
+                m.Show(SequenzenGrid, new Point(e.X, Cursor.Position.Y - 145)); //Menü erscheint sonste wo
 
             }
 
         }
 
-        void mnItemUebertragen_Click(object sender,EventArgs e)
+        void mnItemUebertragen_Click(object sender, EventArgs e)
         {
             throw new NotImplementedException(); // Argumente irgendwie übergeben für aktuelle Zeile oder globale Variable anlegen
         }
@@ -540,7 +540,7 @@ namespace PharMS_Steuerung
                     if (Key == oSequenz.ObjectKey)
                     {
                         oSequenz.sName = SequenzenGrid.Rows[i].Cells[0].Value.ToString();
-                        if (SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "") oSequenz.iSpeicherplatz = -999;
+                        if (SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "" || SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "     ") oSequenz.iSpeicherplatz = -999;
                         else oSequenz.iSpeicherplatz = Convert.ToInt32(SequenzenGrid.Rows[i].Cells[1].Value.ToString()); //bei Übertragen Click wird der Speicherplatz auch nochmal gespeichert
                         break;
                     }
@@ -562,7 +562,7 @@ namespace PharMS_Steuerung
                 foreach (Sequenz oSequenz in lstSequenz)
                 {
                     if (Convert.ToInt32(SequenzenGrid.Rows[i].Cells[3].Value) == oSequenz.ObjectKey)
-                        oSequenz.iSpeicherplatz = (SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "") ? -999 : Convert.ToInt32(SequenzenGrid.Rows[i].Cells[1].Value);
+                        oSequenz.iSpeicherplatz = (SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "" || SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "     ") ? -999 : Convert.ToInt32(SequenzenGrid.Rows[i].Cells[1].Value);
                 }
             }
 
@@ -590,7 +590,7 @@ namespace PharMS_Steuerung
                  }
              }*/
         }
-                 
+
         public bool Messungen_Tabelle(int MessungNR, string Bezeichnung)
         {
             if (this.InvokeRequired)
@@ -633,9 +633,9 @@ namespace PharMS_Steuerung
             Live_Cahrtausgabe = true;
             Live_Chart_anzeigen.Visible = false;
             Live_Chart_add(0, 0, 0, true);
-           // Ausgabe.erfassen("0", "0", this, true, true);
-            
-            
+            // Ausgabe.erfassen("0", "0", this, true, true);
+
+
             /*  
             //Ausgabe zu Graphen
 
@@ -651,7 +651,7 @@ namespace PharMS_Steuerung
             }
             System.Threading.Thread.Sleep(5000); 
             
-          */ 
+          */
         }
 
 
@@ -663,24 +663,34 @@ namespace PharMS_Steuerung
             int selectedrowindex = LiveGrid.SelectedCells[0].RowIndex;
             DataGridViewRow selectedRow = LiveGrid.Rows[selectedrowindex];
             string a = Convert.ToString(selectedRow.Index.ToString());
-           // Ausgabe.erfassen(a, "0", this, true,false);
-           
+            // Ausgabe.erfassen(a, "0", this, true,false);
+
             Ausgabe.ausgabeSpeicher(a, this);
 
         }
 
         public void MasterGrid_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
         {
-            MasterGrid.Rows[e.RowIndex].Cells[0].Value = (e.RowIndex == 0) ? 1 : Convert.ToInt32(MasterGrid.Rows[e.RowIndex - 1].Cells[0].Value) + 1;
-
+            bool bMatch = false;
             foreach (Sequenz oSequenz in lstSequenz)
             {
                 if (oSequenz.iSpeicherplatz == Convert.ToInt32(MasterGrid.Rows[e.RowIndex].Cells[1].Value))
+                {
                     MasterGrid.Rows[e.RowIndex].Cells[2].Value = oSequenz.sName;
+                    bMatch = true;
+                }
+                else
+                    if (oSequenz.sName == Convert.ToString(MasterGrid.Rows[e.RowIndex].Cells[2].Value))
+                    {
+                        MasterGrid.Rows[e.RowIndex].Cells[1].Value = oSequenz.iSpeicherplatz.ToString();
+                        bMatch = true;
+                    }
             }
 
             if (e.RowIndex >= lstMaster.Count)
                 lstMaster.Add(Convert.ToInt32(MasterGrid.Rows[e.RowIndex].Cells[1].Value));
+
+            if (bMatch) MasterGrid.Rows[e.RowIndex].Cells[0].Value = (e.RowIndex == 0) ? 1 : Convert.ToInt32(MasterGrid.Rows[e.RowIndex - 1].Cells[0].Value) + 1;
         }
 
         private void MasterGrid_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -697,16 +707,22 @@ namespace PharMS_Steuerung
         private void SequenzenGrid_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             if (e.ColumnIndex == 1)
-               
 
-            foreach (Sequenz oSequenz in lstSequenz)
-            {
-                if (oSequenz.iSpeicherplatz.ToString() == (sender as DataGridView).CurrentCell.EditedFormattedValue.ToString())
+
+                foreach (Sequenz oSequenz in lstSequenz)
                 {
-                    MessageBox.Show("Speicherplatz bereits vergeben!");
-                    e.Cancel = true; 
+                    if (oSequenz.iSpeicherplatz.ToString() == (sender as DataGridView).CurrentCell.EditedFormattedValue.ToString() && (sender as DataGridView).CurrentCell.EditedFormattedValue.ToString() != "     ")
+                    {
+                        MessageBox.Show("Speicherplatz bereits vergeben!");
+                        e.Cancel = true;
+                    }
                 }
-            }
-        }        
+        }
+
+        private void MasterGrid_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
+        {
+            lstMaster.RemoveAt((sender as DataGridView).NewRowIndex);
+            oSequenzeditor.FillGridMaster();
+        }
     }
 }
