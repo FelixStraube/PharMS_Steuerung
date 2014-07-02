@@ -29,3 +29,8 @@ PharMS_Steuerung.v12.suo
 /obj
 =======
 >>>>>>> 93ba4ab51b41e47dcc2ebda6c0b9d1979bb5b60f
+
+*.exe
+bin/Debug/PharMS_Steuerung.pdb
+obj/x86/Debug/DesignTimeResolveAssemblyReferences.cache
+PharMS_Steuerung.v12.suo
