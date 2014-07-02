@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.AblaufListe = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -328,6 +328,7 @@
             this.SequenzenGrid.Size = new System.Drawing.Size(518, 500);
             this.SequenzenGrid.TabIndex = 0;
             this.SequenzenGrid.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.SequenzenGrid_CellMouseClick);
+            this.SequenzenGrid.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.SequenzenGrid_CellValidating);
             // 
             // colName
             // 
@@ -339,7 +340,6 @@
             // 
             this.colSpeicherplatz.HeaderText = "Speicherplatz";
             this.colSpeicherplatz.Items.AddRange(new object[] {
-            "1",
             "2",
             "3",
             "4",
@@ -667,15 +667,20 @@
             // 
             this.numericZellspannung.Location = new System.Drawing.Point(21, 331);
             this.numericZellspannung.Maximum = new decimal(new int[] {
-            300,
+            500,
             0,
             0,
             0});
+            this.numericZellspannung.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
             this.numericZellspannung.Name = "numericZellspannung";
             this.numericZellspannung.Size = new System.Drawing.Size(71, 20);
             this.numericZellspannung.TabIndex = 9;
             this.numericZellspannung.Value = new decimal(new int[] {
-            250,
+            300,
             0,
             0,
             0});
@@ -795,27 +800,32 @@
             // 
             // LiveChart
             // 
-            chartArea1.AxisX.Title = " Time [s]";
-            chartArea1.AxisY.Title = "Signal [nA]";
-            chartArea1.Name = "ChartArea1";
-            this.LiveChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.LiveChart.Legends.Add(legend1);
+            chartArea2.AxisX.Title = " Time [s]";
+            chartArea2.AxisY.Title = "Signal [nA]";
+            chartArea2.Name = "ChartArea1";
+            this.LiveChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.LiveChart.Legends.Add(legend2);
             this.LiveChart.Location = new System.Drawing.Point(31, 32);
             this.LiveChart.Name = "LiveChart";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend1";
-            series1.Name = "Sensor 1";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.Name = "Sensor 2";
-            this.LiveChart.Series.Add(series1);
-            this.LiveChart.Series.Add(series2);
+            this.LiveChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
+            series3.BorderWidth = 5;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Legend = "Legend1";
+            series3.MarkerColor = System.Drawing.Color.White;
+            series3.Name = "Sensor 1";
+            series4.BorderWidth = 5;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Legend = "Legend1";
+            series4.Name = "Sensor 2";
+            this.LiveChart.Series.Add(series3);
+            this.LiveChart.Series.Add(series4);
             this.LiveChart.Size = new System.Drawing.Size(466, 289);
             this.LiveChart.TabIndex = 0;
             this.LiveChart.Text = "chart1";
+            this.LiveChart.Click += new System.EventHandler(this.LiveChart_Click);
             // 
             // fileSystemWatcher1
             // 
@@ -980,10 +990,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colHelp;
         public System.Windows.Forms.TextBox txtNewName;
         public System.Windows.Forms.Label lblNewName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colName;
-        private System.Windows.Forms.DataGridViewComboBoxColumn colSpeicherplatz;
-        private System.Windows.Forms.DataGridViewImageColumn colDelete;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colIndex;
         private System.Windows.Forms.Button btnUebertragen;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Button Live_Chart_anzeigen;
@@ -1013,6 +1019,10 @@
         private System.Windows.Forms.Button Connect;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colName;
+        private System.Windows.Forms.DataGridViewComboBoxColumn colSpeicherplatz;
+        private System.Windows.Forms.DataGridViewImageColumn colDelete;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colIndex;
 
     }
 }

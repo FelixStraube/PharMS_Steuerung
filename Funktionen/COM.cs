@@ -179,9 +179,9 @@ namespace PharMS_Steuerung.Funktionen
             }
             else
             {
-                Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : s", tempForm);
+               /* Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : s", tempForm);
                 System.Threading.Thread.Sleep(100);
-                port.WriteLine("s");
+                port.WriteLine("s");*/
                 return false;
             }
         }
