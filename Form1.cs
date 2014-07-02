@@ -15,6 +15,7 @@ using PharMS_Steuerung.Funktionen;
 
 namespace PharMS_Steuerung
 {
+   
     public partial class Form1 : Form
     { // das ist ein test VS
         static COM Comschnitstelle;
@@ -46,6 +47,7 @@ namespace PharMS_Steuerung
             InitializeComponent();
 
         }
+
 
         private void Uebertragen_Click(object sender, EventArgs e)
         {
@@ -178,7 +180,7 @@ namespace PharMS_Steuerung
             change_progressBar(-1, 0, progressBar1);
             for (int z = 0; z < Durchläufe; z++)
             {
-                for (int i = 1; i < lstMaster.Count; i++)
+                for (int i = 0; i < lstMaster.Count; i++) // warum hast du davor mit 1 angefangen
                 {
                     Boolean Lauf = true;
                     do
@@ -475,51 +477,27 @@ namespace PharMS_Steuerung
             {
                 int i = e.RowIndex+1;
                 lstSequenz.RemoveAt(i);
-                oSequenzeditor.FillGridSequenz(); 
-               /* foreach (Sequenz oSequenz in lstSequenz)
-                {
-                
-                    if (SequenzenGrid.Rows[e.RowIndex].Cells[0].Value.ToString() == oSequenz.sName)
-                    {
-                       foreach (string line in oSequenz.stlSequenz)
-                        { 
-                            if (line == "") continue;
-                            ablauf = ablauf + ";" + line;
-                          
-                            foreach (Sequenz oSequenz in lstSequenz)
-                             {
-
-                                 if (SequenzenGrid.Rows[e.RowIndex].Cells[0].Value.ToString() == oSequenz.sName)
-                                 {
-                                     foreach (string line in oSequenz.stlSequenz)
-                                     {
-                                         if (line == "") continue;
-                                         ablauf = ablauf + ";" + line; 
-
-                            
-                            
-                                     } 
-                                      Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
-                                      Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
-                                    }
-                             }
-                                  
-                             if (e.ColumnIndex == 3)
-                             {
-                                 //Platzhalter für Startbutton im Grid
-
-                                 if (SequenzenGrid.Rows[e.RowIndex].Cells[3].Value.ToString() == oSequenz.ObjectKey.ToString()) break;
-                                 i++;
-
-                             
-                            
-                            
-                        }
-                     
-                       }
-                    }
-                }*/
+                oSequenzeditor.FillGridSequenz();               
             }
+
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenu m = new ContextMenu();
+                m.MenuItems.Add(new MenuItem("Übertragen"));
+                m.MenuItems[0].Click += mnItemUebertragen_Click;
+
+                int currentMouseOverRow = e.RowIndex;
+
+
+                m.Show(SequenzenGrid, new Point(e.X, Cursor.Position.Y-145)); //Menü erscheint sonste wo
+
+            }
+
+        }
+
+        void mnItemUebertragen_Click(object sender,EventArgs e)
+        {
+            throw new NotImplementedException(); // Argumente irgendwie übergeben für aktuelle Zeile oder globale Variable anlegen
         }
 
         private void neuToolStripMenuItem_Click(object sender, EventArgs e)
@@ -588,7 +566,7 @@ namespace PharMS_Steuerung
                 }
             }
 
-             ablauf = "";
+            /* ablauf = "";
              //neues übertragen Ereignis 
              foreach (Sequenz oSequenz in lstSequenz)
              {
@@ -610,7 +588,7 @@ namespace PharMS_Steuerung
                    }
                      Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
                  }
-             }
+             }*/
         }
                  
         public bool Messungen_Tabelle(int MessungNR, string Bezeichnung)
@@ -715,5 +693,20 @@ namespace PharMS_Steuerung
                 oSequenzeditor.FillGridMaster();
             }
         }
+
+        private void SequenzenGrid_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            if (e.ColumnIndex == 1)
+               
+
+            foreach (Sequenz oSequenz in lstSequenz)
+            {
+                if (oSequenz.iSpeicherplatz.ToString() == (sender as DataGridView).CurrentCell.EditedFormattedValue.ToString())
+                {
+                    MessageBox.Show("Speicherplatz bereits vergeben!");
+                    e.Cancel = true; 
+                }
+            }
+        }        
     }
 }

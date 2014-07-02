@@ -50,3 +50,4 @@ C:\Users\Thiessen\Documents\GitHub\PharMS_Steuerung\obj\x86\Debug\PharMS_Steueru
 C:\Users\Thiessen\Documents\GitHub\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.csproj.GenerateResource.Cache
 C:\Users\Thiessen\Documents\GitHub\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.exe
 C:\Users\Thiessen\Documents\GitHub\PharMS_Steuerung\bin\Debug\PharMS_Steuerung.pdb
+C:\Users\Alexander\Source\Repos\PharMS_Steuerung\obj\x86\Debug\PharMS_Steuerung.csprojResolveAssemblyReference.cache

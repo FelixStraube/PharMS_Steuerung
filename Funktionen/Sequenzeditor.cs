@@ -160,7 +160,7 @@ namespace PharMS_Steuerung.Funktionen
         public void FillGridSequenz()
         {
             int i = 0;
-            MainForm.SequenzenGrid.Rows.Clear();
+            MainForm.SequenzenGrid.Rows.Clear();           
 
             foreach (Sequenz oSequenz in MainForm.lstSequenz)
             {
