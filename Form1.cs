@@ -15,11 +15,7 @@ using PharMS_Steuerung.Funktionen;
 
 namespace PharMS_Steuerung
 {
-<<<<<<< HEAD
-   
-=======
 
->>>>>>> 93ba4ab51b41e47dcc2ebda6c0b9d1979bb5b60f
     public partial class Form1 : Form
     { // das ist ein test VS
         static COM Comschnitstelle;
@@ -481,11 +477,9 @@ namespace PharMS_Steuerung
             {
                 int i = e.RowIndex + 1;
                 lstSequenz.RemoveAt(i);
-<<<<<<< HEAD
-                oSequenzeditor.FillGridSequenz();               
-=======
+
                 oSequenzeditor.FillGridSequenz();
->>>>>>> 93ba4ab51b41e47dcc2ebda6c0b9d1979bb5b60f
+
             }
 
             if (e.Button == MouseButtons.Right)
@@ -496,22 +490,13 @@ namespace PharMS_Steuerung
 
                 int currentMouseOverRow = e.RowIndex;
 
-
-<<<<<<< HEAD
-                m.Show(SequenzenGrid, new Point(e.X, Cursor.Position.Y-145)); //Menü erscheint sonste wo
-=======
                 m.Show(SequenzenGrid, new Point(e.X, Cursor.Position.Y - 145)); //Menü erscheint sonste wo
->>>>>>> 93ba4ab51b41e47dcc2ebda6c0b9d1979bb5b60f
-
             }
 
         }
 
-<<<<<<< HEAD
-        void mnItemUebertragen_Click(object sender,EventArgs e)
-=======
+
         void mnItemUebertragen_Click(object sender, EventArgs e)
->>>>>>> 93ba4ab51b41e47dcc2ebda6c0b9d1979bb5b60f
         {
             throw new NotImplementedException(); // Argumente irgendwie übergeben für aktuelle Zeile oder globale Variable anlegen
         }
@@ -723,25 +708,6 @@ namespace PharMS_Steuerung
         private void SequenzenGrid_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             if (e.ColumnIndex == 1)
-<<<<<<< HEAD
-               
-
-            foreach (Sequenz oSequenz in lstSequenz)
-            {
-                if (oSequenz.iSpeicherplatz.ToString() == (sender as DataGridView).CurrentCell.EditedFormattedValue.ToString())
-                {
-                    MessageBox.Show("Speicherplatz bereits vergeben!");
-                    e.Cancel = true; 
-                }
-            }
-        }
-
-        private void LiveChart_Click(object sender, EventArgs e)
-        {
-
-        }        
-=======
-
 
                 foreach (Sequenz oSequenz in lstSequenz)
                 {
@@ -753,11 +719,17 @@ namespace PharMS_Steuerung
                 }
         }
 
+        private void LiveChart_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
         private void MasterGrid_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
         {
             lstMaster.RemoveAt((sender as DataGridView).NewRowIndex);
             oSequenzeditor.FillGridMaster();
         }
->>>>>>> 93ba4ab51b41e47dcc2ebda6c0b9d1979bb5b60f
+
     }
 }

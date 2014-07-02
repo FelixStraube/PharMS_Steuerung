@@ -33,13 +33,12 @@
             System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-<<<<<<< HEAD
+
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-=======
->>>>>>> 93ba4ab51b41e47dcc2ebda6c0b9d1979bb5b60f
+
             this.AblaufListe = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -336,7 +335,7 @@
             this.SequenzenGrid.TabIndex = 0;
             this.SequenzenGrid.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.SequenzenGrid_CellMouseClick);
             this.SequenzenGrid.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.SequenzenGrid_CellValidating);
-<<<<<<< HEAD
+
             // 
             // colName
             // 
@@ -381,8 +380,7 @@
             this.colIndex.HeaderText = "Index";
             this.colIndex.Name = "colIndex";
             this.colIndex.Visible = false;
-=======
->>>>>>> 93ba4ab51b41e47dcc2ebda6c0b9d1979bb5b60f
+
             // 
             // tabSequenzedit
             // 
@@ -789,7 +787,7 @@
             // 
             // LiveChart
             // 
-<<<<<<< HEAD
+
             chartArea2.AxisX.Title = " Time [s]";
             chartArea2.AxisY.Title = "Signal [nA]";
             chartArea2.Name = "ChartArea1";
@@ -812,26 +810,8 @@
             series4.Name = "Sensor 2";
             this.LiveChart.Series.Add(series3);
             this.LiveChart.Series.Add(series4);
-=======
-            chartArea4.AxisX.Title = " Time [s]";
-            chartArea4.AxisY.Title = "Signal [nA]";
-            chartArea4.Name = "ChartArea1";
-            this.LiveChart.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.LiveChart.Legends.Add(legend4);
-            this.LiveChart.Location = new System.Drawing.Point(31, 32);
-            this.LiveChart.Name = "LiveChart";
-            series7.ChartArea = "ChartArea1";
-            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series7.Legend = "Legend1";
-            series7.Name = "Sensor 1";
-            series8.ChartArea = "ChartArea1";
-            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series8.Legend = "Legend1";
-            series8.Name = "Sensor 2";
-            this.LiveChart.Series.Add(series7);
-            this.LiveChart.Series.Add(series8);
->>>>>>> 93ba4ab51b41e47dcc2ebda6c0b9d1979bb5b60f
+           
+
             this.LiveChart.Size = new System.Drawing.Size(466, 289);
             this.LiveChart.TabIndex = 0;
             this.LiveChart.Text = "chart1";
@@ -1098,12 +1078,11 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn colSpeicherplatz;
         private System.Windows.Forms.DataGridViewImageColumn colDelete;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIndex;
-<<<<<<< HEAD
-=======
+
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrder;
         private System.Windows.Forms.DataGridViewComboBoxColumn colSpeicherplatzMaster;
         private System.Windows.Forms.DataGridViewComboBoxColumn colNameMaster;
->>>>>>> 93ba4ab51b41e47dcc2ebda6c0b9d1979bb5b60f
+
 
     }
 }
