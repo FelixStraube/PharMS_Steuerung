@@ -40,6 +40,7 @@ namespace PharMS_Steuerung
         public int maxObjectKey;
         public List<int> lstMaster = new List<int>();
         static bool Live_Cahrtausgabe = true;
+        private int iSpeicherplatzForMNItem = -999;
 
 
         public Form1()
@@ -485,20 +486,22 @@ namespace PharMS_Steuerung
             if (e.Button == MouseButtons.Right)
             {
                 ContextMenu m = new ContextMenu();
-                m.MenuItems.Add(new MenuItem("Übertragen"));
-                m.MenuItems[0].Click += mnItemUebertragen_Click;
+                m.MenuItems.Add(new MenuItem("Starten"));
+                m.MenuItems[0].Click += mnItemStarten_Click;
+                if (SequenzenGrid.Rows[e.RowIndex].Cells[1].Value != null)
+                    if (SequenzenGrid.Rows[e.RowIndex].Cells[1].Value.ToString() != "" && SequenzenGrid.Rows[e.RowIndex].Cells[1].Value.ToString() != "     ")
+                    {
+                        iSpeicherplatzForMNItem = Convert.ToInt32(SequenzenGrid.Rows[e.RowIndex].Cells[1].Value.ToString());
 
-                int currentMouseOverRow = e.RowIndex;
-
-                m.Show(SequenzenGrid, new Point(e.X, Cursor.Position.Y - 145)); //Menü erscheint sonste wo
+                        m.Show(SequenzenGrid, new Point(e.X, Cursor.Position.Y - 145)); //Menü erscheint sonste wo
+                    }
             }
-
         }
 
 
-        void mnItemUebertragen_Click(object sender, EventArgs e)
+        void mnItemStarten_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException(); // Argumente irgendwie übergeben für aktuelle Zeile oder globale Variable anlegen
+            Comschnitstelle.COMSender("X"+ iSpeicherplatzForMNItem.ToString());
         }
 
         private void neuToolStripMenuItem_Click(object sender, EventArgs e)
@@ -693,7 +696,7 @@ namespace PharMS_Steuerung
                 lstMaster.Add(Convert.ToInt32(MasterGrid.Rows[e.RowIndex].Cells[1].Value));
 
             if (bMatch) MasterGrid.Rows[e.RowIndex].Cells[0].Value = (e.RowIndex == 0) ? 1 : Convert.ToInt32(MasterGrid.Rows[e.RowIndex - 1].Cells[0].Value) + 1;
-            
+
         }
 
         private void MasterGrid_DataError(object sender, DataGridViewDataErrorEventArgs e)
