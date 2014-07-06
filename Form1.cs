@@ -567,29 +567,30 @@ namespace PharMS_Steuerung
                 }
             }
 
-             ablauf = "";
-             //neues übertragen Ereignis 
-             foreach (Sequenz oSequenz in lstSequenz)
-             {
+            ablauf = "";
+            //neues übertragen Ereignis 
+            foreach (Sequenz oSequenz in lstSequenz)
+            {
                 // if (SequenzenGrid.Rows[e.RowIndex].Cells[0].Value.ToString() == oSequenz.sName)
-        
-               
-               if (SequenzenGrid.CurrentRow.Cells[0].Value.ToString() == oSequenz.sName)
-                 {
-                     foreach (string line in oSequenz.stlSequenz)
-                     {
-                         if (line == "") continue;
-                         ablauf = ablauf + ";" + line;
 
 
-                     }
-                   if (  oSequenz.iSpeicherplatz.ToString() != "-999"){
-                   Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
-                   Console.WriteLine("Incoming Data gesendet:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
-                   }
-                     Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
-                 }
-             }
+                if (SequenzenGrid.CurrentRow.Cells[0].Value.ToString() == oSequenz.sName)
+                {
+                    foreach (string line in oSequenz.stlSequenz)
+                    {
+                        if (line == "") continue;
+                        ablauf = ablauf + ";" + line;
+
+
+                    }
+                    if (oSequenz.iSpeicherplatz.ToString() != "-999")
+                    {
+                        Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                        Console.WriteLine("Incoming Data gesendet:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                    }
+                    Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                }
+            }
         }
 
         public bool Messungen_Tabelle(int MessungNR, string Bezeichnung)
@@ -688,10 +689,11 @@ namespace PharMS_Steuerung
                     }
             }
 
-            if (e.RowIndex >= lstMaster.Count)
+            if (e.RowIndex >= lstMaster.Count && bMatch)
                 lstMaster.Add(Convert.ToInt32(MasterGrid.Rows[e.RowIndex].Cells[1].Value));
 
             if (bMatch) MasterGrid.Rows[e.RowIndex].Cells[0].Value = (e.RowIndex == 0) ? 1 : Convert.ToInt32(MasterGrid.Rows[e.RowIndex - 1].Cells[0].Value) + 1;
+            
         }
 
         private void MasterGrid_DataError(object sender, DataGridViewDataErrorEventArgs e)

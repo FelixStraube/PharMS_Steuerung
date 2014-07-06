@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.AblaufListe = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -51,10 +51,6 @@
             this.tabSequenzList = new System.Windows.Forms.TabPage();
             this.btnUebertragen = new System.Windows.Forms.Button();
             this.SequenzenGrid = new System.Windows.Forms.DataGridView();
-            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSpeicherplatz = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colDelete = new System.Windows.Forms.DataGridViewImageColumn();
-            this.colIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabSequenzedit = new System.Windows.Forms.TabPage();
             this.txtNewName = new System.Windows.Forms.TextBox();
             this.lblNewName = new System.Windows.Forms.Label();
@@ -108,6 +104,10 @@
             this.hilfeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDatabaseDialog = new System.Windows.Forms.OpenFileDialog();
             this.NewDBDialog = new System.Windows.Forms.SaveFileDialog();
+            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSpeicherplatz = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colDelete = new System.Windows.Forms.DataGridViewImageColumn();
+            this.colIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -329,70 +329,6 @@
             this.SequenzenGrid.TabIndex = 0;
             this.SequenzenGrid.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.SequenzenGrid_CellMouseClick);
             this.SequenzenGrid.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.SequenzenGrid_CellValidating);
-            // 
-            // colName
-            // 
-            this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colName.HeaderText = "Sequenz";
-            this.colName.Name = "colName";
-            // 
-            // colSpeicherplatz
-            // 
-            this.colSpeicherplatz.HeaderText = "Speicherplatz";
-            this.colSpeicherplatz.Items.AddRange(new object[] {
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20",
-            "     "});
-            this.colSpeicherplatz.Name = "colSpeicherplatz";
-            // 
-            // colDelete
-            // 
-            this.colDelete.HeaderText = "Löschen";
-            this.colDelete.Image = ((System.Drawing.Image)(resources.GetObject("colDelete.Image")));
-            this.colDelete.Name = "colDelete";
-            this.colDelete.Width = 60;
-            // 
-            // colIndex
-            // 
-            this.colIndex.HeaderText = "Index";
-            this.colIndex.Name = "colIndex";
-            this.colIndex.Visible = false;
             // 
             // tabSequenzedit
             // 
@@ -922,6 +858,51 @@
             // 
             this.openDatabaseDialog.Filter = "Pharms (*.pharms)|*.pharms|Textdateien|*.txt";
             // 
+            // colName
+            // 
+            this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colName.HeaderText = "Sequenz";
+            this.colName.Name = "colName";
+            // 
+            // colSpeicherplatz
+            // 
+            this.colSpeicherplatz.HeaderText = "Speicherplatz";
+            this.colSpeicherplatz.Items.AddRange(new object[] {
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "     "});
+            this.colSpeicherplatz.Name = "colSpeicherplatz";
+            // 
+            // colDelete
+            // 
+            this.colDelete.HeaderText = "Löschen";
+            this.colDelete.Image = ((System.Drawing.Image)(resources.GetObject("colDelete.Image")));
+            this.colDelete.Name = "colDelete";
+            this.colDelete.Width = 60;
+            // 
+            // colIndex
+            // 
+            this.colIndex.HeaderText = "Index";
+            this.colIndex.Name = "colIndex";
+            this.colIndex.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1038,14 +1019,14 @@
         private System.Windows.Forms.Button Connect;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colName;
-        private System.Windows.Forms.DataGridViewComboBoxColumn colSpeicherplatz;
-        private System.Windows.Forms.DataGridViewImageColumn colDelete;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colIndex;
 
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrder;
         private System.Windows.Forms.DataGridViewComboBoxColumn colSpeicherplatzMaster;
         private System.Windows.Forms.DataGridViewComboBoxColumn colNameMaster;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colName;
+        private System.Windows.Forms.DataGridViewComboBoxColumn colSpeicherplatz;
+        private System.Windows.Forms.DataGridViewImageColumn colDelete;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colIndex;
 
 
     }
