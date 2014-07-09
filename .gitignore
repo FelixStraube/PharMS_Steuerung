@@ -45,3 +45,8 @@ obj/x86/Debug/PharMS_Steuerung.csprojResolveAssemblyReference.cache
 obj/x86/Debug/PharMS_Steuerung.exe
 obj/x86/Debug/PharMS_Steuerung.pdb
 PharMS_Steuerung.v12.suo
+*.exe
+bin/Debug/PharMS_Steuerung.pdb
+*.cache
+*.pdb
+PharMS_Steuerung.suo

@@ -17,7 +17,7 @@ namespace PharMS_Steuerung
 {
 
     public partial class Form1 : Form
-    { // das ist ein test VS
+    {
         static COM Comschnitstelle;
         string ablauf;
         public bool Connection;
@@ -33,6 +33,7 @@ namespace PharMS_Steuerung
         static bool exitFlag = false;
         public List<Sequenz> lstSequenz;
         public Sequenzeditor oSequenzeditor;
+        public static List<string> stlLog = new List<string>();
         bool bDBIsOpen = false;
         bool bDBIsOpening = false;
         string sDBPath;
@@ -82,6 +83,7 @@ namespace PharMS_Steuerung
             Comschnitstelle = new COM(this);
             panel1.BackColor = System.Drawing.Color.Green;
             Connection = true;
+            tmCheckCOM.Enabled = true;
 
         }
 
@@ -501,7 +503,7 @@ namespace PharMS_Steuerung
 
         void mnItemStarten_Click(object sender, EventArgs e)
         {
-            Comschnitstelle.COMSender("X"+ iSpeicherplatzForMNItem.ToString());
+            Comschnitstelle.COMSender("X" + iSpeicherplatzForMNItem.ToString());
         }
 
         private void neuToolStripMenuItem_Click(object sender, EventArgs e)
@@ -734,6 +736,39 @@ namespace PharMS_Steuerung
         {
             lstMaster.RemoveAt((sender as DataGridView).NewRowIndex);
             oSequenzeditor.FillGridMaster();
+        }
+
+        private void tmCheckCOM_Tick(object sender, EventArgs e)
+        {
+     
+            bool bNeedNewLine = true;
+
+            if (Comschnitstelle == null)
+            {
+                stlLog.Add("Portstatus: Comschnitstelle existiert nicht");
+                tmCheckCOM.Enabled = false;
+            }
+
+
+            if (Comschnitstelle.port.IsOpen)
+            {
+                if (bNeedNewLine) stlLog.Add("Portstatus: " + Comschnitstelle.port.IsOpen.ToString() + "    " + System.DateTime.Now.ToString());
+                bNeedNewLine = false;
+
+            }
+            else
+            {
+                bNeedNewLine = true;
+                stlLog.Add("Portstatus: " + Comschnitstelle.port.IsOpen.ToString() + "    " + System.DateTime.Now.ToString());
+                stlLog.Add("Versuch der Reaktivierung");
+                Comschnitstelle.port.Close();
+                Comschnitstelle.port.Open();
+            }           
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            File.WriteAllLines("LogCOM.txt", stlLog);
         }
 
     }

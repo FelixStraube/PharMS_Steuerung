@@ -18,9 +18,8 @@ namespace PharMS_Steuerung.Funktionen
     {// Create the serial port with basic settings
         public string eingabe;
         private string[] empfangene_snr = new string[50];
-        // public StreamWriter softw_vers_in_temptxt = new StreamWriter(@"C:\Bio\temp.txt")
-        private SerialPort port;
-        //= new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
+        public SerialPort port;
+
         public Form1 tempForm = new Form1();
         public bool bereit;
         public System.Timers.Timer tmrMesswerteTimer;
@@ -118,30 +117,30 @@ namespace PharMS_Steuerung.Funktionen
                 default: break;
             }
 
-         //   Console.WriteLine("Eingelesen von Com 3" + eingabe + "/" + steuerzeichen);
+            //   Console.WriteLine("Eingelesen von Com 3" + eingabe + "/" + steuerzeichen);
         }
 
         private void Execute(Object myObject, EventArgs myEventArgs)
         {
             if (iTickAktuell >= ende)
-            {   
+            {
                 Funktionen.Datenerfassen test = new Funktionen.Datenerfassen("---------,---------", tempForm);
-//Live chart cler und in Datenfeld aufnehmen
+                //Live chart cler und in Datenfeld aufnehmen
 
                 LiveChart ChartAusgabe = new LiveChart();
-                ChartAusgabe.erfassen("0","0",tempForm,true,true);
+                ChartAusgabe.erfassen("0", "0", tempForm, true, true);
 
                 tmrMesswerteTimer.Stop();
-//                tmrMesswerteTimer.Enabled = false;
-//                tmrMesswerteTimer.Dispose();
+                //                tmrMesswerteTimer.Enabled = false;
+                //                tmrMesswerteTimer.Dispose();
                 tmrMesswerteTimer.Close();
             }
             else
             {
-              //  Console.WriteLine("teste" + iTickInterval + ":" + ende);
+                //  Console.WriteLine("teste" + iTickInterval + ":" + ende);
                 // Restarts the timer and increments the counter.
                 COMSender("M");
-                
+
                 iTickAktuell = iTickAktuell + iTickInterval;
             }
 
@@ -154,7 +153,7 @@ namespace PharMS_Steuerung.Funktionen
         public void COMSender(String Caption)
         {
             if (!port.IsOpen) return;
-
+            Form1.stlLog.Add("Gesendet : " + Caption + "    " + System.DateTime.Now.ToString());
             Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : " + Caption, tempForm);
             port.WriteLine(Caption);
 
@@ -179,9 +178,9 @@ namespace PharMS_Steuerung.Funktionen
             }
             else
             {
-               /* Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : s", tempForm);
-                System.Threading.Thread.Sleep(100);
-                port.WriteLine("s");*/
+                /* Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : s", tempForm);
+                 System.Threading.Thread.Sleep(100);
+                 port.WriteLine("s");*/
                 return false;
             }
         }
