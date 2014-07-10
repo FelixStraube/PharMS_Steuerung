@@ -97,7 +97,7 @@ namespace PharMS_Steuerung.Funktionen
         public void FillGridSequenzEdit()
         {
             Sequenz oSequenz = GetSelectedSequenz();
-
+            if (oSequenz == null) return;
             if (oSequenz.bIsTemplate)
             {
                 MainForm.btnSaveOneSequenz.Enabled = true;
@@ -113,7 +113,7 @@ namespace PharMS_Steuerung.Funktionen
 
             string sOut = "";
             int i = 0;
-            if (oSequenz == null) throw new System.ArgumentException("Parameter cannot be null", "oSequenz");  //später soll der zustand als anlegen einer neuen sequenz verstanden werden
+          
 
             MainForm.SequenzeditorGrid.Rows.Clear();
 

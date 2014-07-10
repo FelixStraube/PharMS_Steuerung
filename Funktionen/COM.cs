@@ -60,8 +60,8 @@ namespace PharMS_Steuerung.Funktionen
             switch (steuerzeichen)
             {
                 case "M":
-                    if (tempForm.radioButton2.Checked == true) { Funktionen.Datenerfassen Ausgabe_manuel = new Datenerfassen(eingabe, tempForm); }
-                    if (tempForm.radioButton1.Checked == true)
+                    if (tempForm.rbManuelleMessung.Checked == true) { Funktionen.Datenerfassen Ausgabe_manuel = new Datenerfassen(eingabe, tempForm); }
+                    if (tempForm.rbAktiveMessung.Checked == true)
                     {
                         if (tmrMesswerteTimer == null)
                         {
@@ -103,6 +103,11 @@ namespace PharMS_Steuerung.Funktionen
                             bereit = true;
                             break;
                         case "s10":
+
+                            System.Threading.Thread.Sleep(5000);
+                            AbfrageStatus("s");
+                            break;
+                        case "s30":
 
                             System.Threading.Thread.Sleep(5000);
                             AbfrageStatus("s");

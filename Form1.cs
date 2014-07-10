@@ -42,6 +42,7 @@ namespace PharMS_Steuerung
         public List<int> lstMaster = new List<int>();
         static bool Live_Cahrtausgabe = true;
         private int iSpeicherplatzForMNItem = -999;
+        string AblaufListeVorAuswahl = "";
 
 
         public Form1()
@@ -51,32 +52,30 @@ namespace PharMS_Steuerung
         }
 
 
-        private void Uebertragen_Click(object sender, EventArgs e)
-        {
+        /*  private void Uebertragen_Click(object sender, EventArgs e)
+          {
 
-            string Name = AblaufListe.SelectedItem.ToString();
+              string Name = AblaufListe.SelectedItem.ToString();
 
-            CfgFile test = new CfgFile(Name);
-            List<String> lines = new List<string>();
-            lines = test.Ausgabe(Name);
+              CfgFile test = new CfgFile(Name);
+              List<String> lines = new List<string>();
+              lines = test.Ausgabe(Name);
 
-            //  Console.WriteLine("Incoming Data:" + lines[0]);
-            int count = lines.Count;
-            ablauf = "";
-            for (int i = 1; i < count; i++)
-            {
-                if (lines[i] == "") { }
-                else ablauf = ablauf + ";" + lines[i];
+              //  Console.WriteLine("Incoming Data:" + lines[0]);
+              int count = lines.Count;
+              ablauf = "";
+              for (int i = 1; i < count; i++)
+              {
+                  if (lines[i] == "") { }
+                  else ablauf = ablauf + ";" + lines[i];
 
-            }
+              }
 
-            // Console.WriteLine("Incoming Data:" + "Y" + cmbSpeicherplatz.SelectedItem.ToString() + ablauf);
+              // Console.WriteLine("Incoming Data:" + "Y" + cmbSpeicherplatz.SelectedItem.ToString() + ablauf);
 
-            //Comschnitstelle.COMSender("Y" + cmbSpeicherplatz.SelectedItem.ToString() + ablauf);
+              //Comschnitstelle.COMSender("Y" + cmbSpeicherplatz.SelectedItem.ToString() + ablauf);
 
-
-
-        }
+          }*/
 
         private void Connect_Click(object sender, EventArgs e)
         {
@@ -121,19 +120,6 @@ namespace PharMS_Steuerung
             return true;
         }
 
-        /* private void button1_Click(object sender, EventArgs e)
-         {
-             if (Connection == true)
-             {
-                 change_Label("In Arbeit", label6);
-                 Comschnitstelle.COMSender("X" + cmbSpeicherplatzTest.SelectedItem.ToString());
-
-             }
-             else
-             {
-                 MessageBox.Show("COM nicht Verbunden");
-             }
-         }*/
 
         private void NOTSTOPP_Click(object sender, EventArgs e)
         {
@@ -192,8 +178,6 @@ namespace PharMS_Steuerung
                         Lauf = Comschnitstelle.COMAblaufSender("X" + lstMaster[i]);
                         Console.WriteLine("Line: " + i + ";" + lstMaster.Count + ";" + "X" + lstMaster[i]);
 
-
-
                         System.Threading.Thread.Sleep(1000);
 
                     } while (Lauf == false);
@@ -206,8 +190,9 @@ namespace PharMS_Steuerung
         {
             if (!bDBIsOpen)
             {
-                ImportStripMenuItem2.Enabled = false;
-                speichernToolStripMenuItem.Enabled = false;
+                mnItemImport.Enabled = false;
+                mnItemSpeichern.Enabled = false;
+                mnItemSpeichernUnter.Enabled = false;
             }
 
             bool OrdnerExisitiert = Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "Abläufe");      //TODO Test und Temp?     
@@ -222,28 +207,6 @@ namespace PharMS_Steuerung
             oSequenzeditor = new Sequenzeditor(this);
 
             tabControl1.Visible = false;
-
-            /*
-            lstSequenz = new List<Sequenz>();
-
-            AblaufListe.Items.Clear();
-            //   AblaufListe.Items.Add("ROOT");
-            foreach (var dir in dirs)
-            {
-                FileInfo x = new FileInfo(dir);
-                AblaufListe.Items.Add(x.Name);
-                //---------------- neuer Ansatz
-                lstSequenz.Add(new Sequenz(x));
-            }
-
-            Masterablauf.Items.Clear();
-            foreach (var dir in dirAblauf)
-            {
-                FileInfo x = new FileInfo(dir);
-
-                Masterablauf.Items.Add(x.Name);
-
-            }*/
         }
 
         private void Console_Senden_Click(object sender, EventArgs e)
@@ -297,12 +260,12 @@ namespace PharMS_Steuerung
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButton1.Checked == true) { radioButton2.Checked = false; }
+            if (rbAktiveMessung.Checked == true) { rbManuelleMessung.Checked = false; }
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButton2.Checked == true) { radioButton1.Checked = false; }
+            if (rbManuelleMessung.Checked == true) { rbAktiveMessung.Checked = false; }
         }
 
         private void Initialisierung_Click(object sender, EventArgs e)
@@ -328,8 +291,9 @@ namespace PharMS_Steuerung
                 maxObjectKey = 0;
                 extractDatabase(stlAllSequenz);
                 bDBIsOpen = true;
-                ImportStripMenuItem2.Enabled = true;
-                speichernToolStripMenuItem.Enabled = true;
+                mnItemImport.Enabled = true;
+                mnItemSpeichern.Enabled = true;
+                mnItemSpeichernUnter.Enabled = true;
                 oSequenzeditor.FillGridSequenz();
                 oSequenzeditor.FillGridMaster();
                 bDBIsOpening = false;
@@ -482,21 +446,33 @@ namespace PharMS_Steuerung
                 lstSequenz.RemoveAt(i);
 
                 oSequenzeditor.FillGridSequenz();
-
             }
 
+        }
+        private void SequenzenGrid_MouseClick(object sender, MouseEventArgs e)
+        {
             if (e.Button == MouseButtons.Right)
             {
                 ContextMenu m = new ContextMenu();
-                m.MenuItems.Add(new MenuItem("Starten"));
-                m.MenuItems[0].Click += mnItemStarten_Click;
-                if (SequenzenGrid.Rows[e.RowIndex].Cells[1].Value != null)
-                    if (SequenzenGrid.Rows[e.RowIndex].Cells[1].Value.ToString() != "" && SequenzenGrid.Rows[e.RowIndex].Cells[1].Value.ToString() != "     ")
-                    {
-                        iSpeicherplatzForMNItem = Convert.ToInt32(SequenzenGrid.Rows[e.RowIndex].Cells[1].Value.ToString());
 
-                        m.Show(SequenzenGrid, new Point(e.X, Cursor.Position.Y - 145)); //Menü erscheint sonste wo
-                    }
+                m.MenuItems.Add(new MenuItem("Editieren"));
+                m.MenuItems[0].Click += mnItemEditieren_Click;
+
+                int icurrentMouseOverRow = SequenzenGrid.HitTest(e.X, e.Y).RowIndex;
+
+                if (icurrentMouseOverRow >= 0)
+                {
+                    AblaufListeVorAuswahl = SequenzenGrid.Rows[icurrentMouseOverRow].Cells[0].Value.ToString();
+                    if (SequenzenGrid.Rows[icurrentMouseOverRow].Cells[1].Value != null)
+                        if (SequenzenGrid.Rows[icurrentMouseOverRow].Cells[1].Value.ToString() != "" && SequenzenGrid.Rows[icurrentMouseOverRow].Cells[1].Value.ToString() != "     ")
+                        {
+                            m.MenuItems.Add(new MenuItem("Starten"));
+                            m.MenuItems[1].Click += mnItemStarten_Click;
+                            iSpeicherplatzForMNItem = Convert.ToInt32(SequenzenGrid.Rows[icurrentMouseOverRow].Cells[1].Value.ToString());
+                        }
+                    m.Show(SequenzenGrid, new Point(e.X, e.Y));
+                }
+
             }
         }
 
@@ -504,6 +480,10 @@ namespace PharMS_Steuerung
         void mnItemStarten_Click(object sender, EventArgs e)
         {
             Comschnitstelle.COMSender("X" + iSpeicherplatzForMNItem.ToString());
+        }
+        void mnItemEditieren_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedTab = tabSequenzedit;
         }
 
         private void neuToolStripMenuItem_Click(object sender, EventArgs e)
@@ -528,8 +508,8 @@ namespace PharMS_Steuerung
 
                 lstSequenz = new List<Sequenz>();
                 bDBIsOpen = true;
-                ImportStripMenuItem2.Enabled = true;
-                speichernToolStripMenuItem.Enabled = true;
+                mnItemImport.Enabled = true;
+                mnItemSpeichern.Enabled = true;
             }
             tabControl1.Visible = true;
         }
@@ -552,11 +532,11 @@ namespace PharMS_Steuerung
                     }
                 }
                 AblaufListe.Items.Add(oSequenz.sName);
-
-
             }
-
+          
+            AblaufListe.SelectedItem = AblaufListeVorAuswahl;
             MasterGrid.RowValidating -= MasterGrid_RowValidating;
+            oSequenzeditor.FillGridSequenzEdit();
             oSequenzeditor.FillGridMaster();
             MasterGrid.RowValidating += MasterGrid_RowValidating;
         }
@@ -572,29 +552,21 @@ namespace PharMS_Steuerung
                 }
             }
 
-            ablauf = "";
             //neues übertragen Ereignis 
             foreach (Sequenz oSequenz in lstSequenz)
             {
-                // if (SequenzenGrid.Rows[e.RowIndex].Cells[0].Value.ToString() == oSequenz.sName)
-
-
-                if (SequenzenGrid.CurrentRow.Cells[0].Value.ToString() == oSequenz.sName)
+                ablauf = "";
+                foreach (string line in oSequenz.stlSequenz)
                 {
-                    foreach (string line in oSequenz.stlSequenz)
-                    {
-                        if (line == "") continue;
-                        ablauf = ablauf + ";" + line;
-
-
-                    }
-                    if (oSequenz.iSpeicherplatz.ToString() != "-999")
-                    {
-                        Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
-                        Console.WriteLine("Incoming Data gesendet:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
-                    }
-                    Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                    if (line == "") continue;
+                    ablauf = ablauf + ";" + line;
                 }
+                if (oSequenz.iSpeicherplatz.ToString() != "-999")
+                {
+                    //  Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                    Console.WriteLine("Incoming Data gesendet:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                }
+                Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
             }
         }
 
@@ -640,10 +612,11 @@ namespace PharMS_Steuerung
             Live_Cahrtausgabe = true;
             Live_Chart_anzeigen.Visible = false;
             Live_Chart_add(0, 0, 0, true);
-            // Ausgabe.erfassen("0", "0", this, true, true);
+
+            /*Ausgabe.erfassen("0", "0", this, true, true);
 
 
-            /*  
+
             //Ausgabe zu Graphen
 
             Random z = new Random();
@@ -656,9 +629,9 @@ namespace PharMS_Steuerung
 
                 Ausgabe.erfassen(s1, s2, this, false, true);
             }
-            System.Threading.Thread.Sleep(5000); 
-            
-          */
+            System.Threading.Thread.Sleep(5000);*/
+
+
         }
 
 
@@ -726,11 +699,6 @@ namespace PharMS_Steuerung
                 }
         }
 
-        private void LiveChart_Click(object sender, EventArgs e)
-        {
-
-        }
-
 
         private void MasterGrid_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
         {
@@ -740,7 +708,7 @@ namespace PharMS_Steuerung
 
         private void tmCheckCOM_Tick(object sender, EventArgs e)
         {
-     
+
             bool bNeedNewLine = true;
 
             if (Comschnitstelle == null)
@@ -763,12 +731,69 @@ namespace PharMS_Steuerung
                 stlLog.Add("Versuch der Reaktivierung");
                 Comschnitstelle.port.Close();
                 Comschnitstelle.port.Open();
-            }           
+            }
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             File.WriteAllLines("LogCOM.txt", stlLog);
+        }
+
+        private void rbTemperierungEin_CheckedChanged(object sender, EventArgs e)
+        {
+            txtboxTemperatur.ReadOnly = true;
+            if (rbTemperierungEin.Checked) txtboxTemperatur.ReadOnly = false;
+        }
+
+        private void btnNeueMessung_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Möchten Sie die bestehende Messdaten sichern?", "Messdaten", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                button2.PerformClick();
+            }
+            else
+            {
+                DatenerfassungTab.Rows.Clear();
+            }
+        }
+
+        private void rbAktiveMessung_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbAktiveMessung.Checked)
+            {
+                lbMessmethode.Text = "aktive Messung";
+                btnNeueMessung.Enabled = false;
+            }
+            if (rbManuelleMessung.Checked)
+            {
+                lbMessmethode.Text = "manuelle Messung";
+                btnNeueMessung.Enabled = true;
+            }
+        }
+
+        private void mnItemSpeichernUnter_Click(object sender, EventArgs e)
+        {
+            Stream stream;
+            NewDBDialog.Filter = "PharmMS (*.pharms)|*.pharms";
+            NewDBDialog.FilterIndex = 2;
+            NewDBDialog.RestoreDirectory = true;
+
+            if (NewDBDialog.ShowDialog() == DialogResult.OK)
+            {
+                if ((stream = NewDBDialog.OpenFile()) != null)
+                {
+                    using (StreamWriter sw = new StreamWriter(stream))
+                    {
+                        sDBName = Path.GetFileNameWithoutExtension(NewDBDialog.FileName);
+                        lstSequenz[0].sDBName = sDBName;
+                        sw.WriteLine(sDBName);
+                        sDBPath = NewDBDialog.FileName;
+                    }
+                    stream.Close();
+                    SaveDatabase();
+                }
+            }
         }
 
     }
