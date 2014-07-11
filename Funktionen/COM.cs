@@ -94,6 +94,9 @@ namespace PharMS_Steuerung.Funktionen
                     switch (eingabe)
                     {
                         case "s00":
+                            bereit = true;
+                            break;
+
                         case "s20":
                             /*if (tempForm.label6.Text == "In Arbeit")
                             {
@@ -107,17 +110,24 @@ namespace PharMS_Steuerung.Funktionen
                             System.Threading.Thread.Sleep(5000);
                             AbfrageStatus("s");
                             break;
+
                         case "s30":
 
                             System.Threading.Thread.Sleep(5000);
                             AbfrageStatus("s");
                             break;
 
+                        case "s40":
+
+                            System.Threading.Thread.Sleep(5000);
+                            AbfrageStatus("s");
+                            break;
+
+
                         default: break;
                     }
 
                     break;
-
 
                 default: break;
             }
@@ -206,9 +216,24 @@ namespace PharMS_Steuerung.Funktionen
             if (!port.IsOpen) return;
             Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : " + Caption, tempForm);
             port.WriteLine(Caption);
+        }
 
-            ;
+        public void Execute_Commands(params string[] Commands)
+        {
 
+            for (int i = 0; i < Commands.Count(); i++)
+            {
+                Boolean Lauf = true;
+                do
+                {
+                    if (tempForm.Abbruch == true) return;
+                    Lauf = COMAblaufSender(Commands[i]);
+                    Console.WriteLine("Line: " + Commands[i]);
+                    System.Threading.Thread.Sleep(1000);
+
+                } while (Lauf == false);
+            }
+            MessageBox.Show("Die Sequenz wurde abgearbeitet!"); 
         }
 
     }

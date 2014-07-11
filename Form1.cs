@@ -84,6 +84,12 @@ namespace PharMS_Steuerung
             Connection = true;
             tmCheckCOM.Enabled = true;
 
+            if (Comschnitstelle.bereit)
+            {
+                btnElektrodenTest.Enabled = true;
+                btnLeitungDes.Enabled = true;
+                btnReg.Enabled = true;
+            }
         }
 
         private void Disconnect_Click(object sender, EventArgs e)
@@ -91,6 +97,9 @@ namespace PharMS_Steuerung
             Comschnitstelle.COMDisconnect();
             panel1.BackColor = System.Drawing.Color.Red;
             Connection = false;
+            btnElektrodenTest.Enabled = false;
+            btnLeitungDes.Enabled = false;
+            btnReg.Enabled = false;
         }
 
         public void button2_Click(object sender, EventArgs e)
@@ -169,7 +178,7 @@ namespace PharMS_Steuerung
             change_progressBar(-1, 0, progressBar1);
             for (int z = 0; z < Durchläufe; z++)
             {
-                for (int i = 0; i < lstMaster.Count; i++) // warum hast du davor mit 1 angefangen
+                for (int i = 0; i < lstMaster.Count; i++) // warum hast du davor mit 1 angefangen und warum befindet sich die Methode überhaupt in der MainForm?
                 {
                     Boolean Lauf = true;
                     do
@@ -207,6 +216,26 @@ namespace PharMS_Steuerung
             oSequenzeditor = new Sequenzeditor(this);
 
             tabControl1.Visible = false;
+
+           /*
+            List<String> stlTest = new List<string>();
+            CfgFile oCfgFile = new CfgFile("C:\\Users\\Alexander\\Desktop\\blubb\\Temp\\Daten Vom 1.4.2014.txt");
+            stlTest = oCfgFile.Ausgabe();
+
+            foreach (string line in stlTest)
+            {
+                Datenerfassen test = new Datenerfassen(line, this);
+            }
+
+            chtMessung.Series[0].XValueMember = DatenerfassungTab.Columns[1].DataPropertyName;
+            chtMessung.Series[0].YValueMembers = DatenerfassungTab.Columns[0].DataPropertyName;
+            chtMessung.Series[1].XValueMember = DatenerfassungTab.Columns[2].DataPropertyName;
+            chtMessung.Series[1].YValueMembers = DatenerfassungTab.Columns[0].DataPropertyName;
+            chtMessung.DataSource = DatenerfassungTab;
+                */
+
+
+
         }
 
         private void Console_Senden_Click(object sender, EventArgs e)
@@ -533,7 +562,7 @@ namespace PharMS_Steuerung
                 }
                 AblaufListe.Items.Add(oSequenz.sName);
             }
-          
+
             AblaufListe.SelectedItem = AblaufListeVorAuswahl;
             MasterGrid.RowValidating -= MasterGrid_RowValidating;
             oSequenzeditor.FillGridSequenzEdit();
@@ -563,7 +592,7 @@ namespace PharMS_Steuerung
                 }
                 if (oSequenz.iSpeicherplatz.ToString() != "-999")
                 {
-                    //  Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                    Comschnitstelle.COMSender("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
                     Console.WriteLine("Incoming Data gesendet:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
                 }
                 Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
@@ -796,5 +825,53 @@ namespace PharMS_Steuerung
             }
         }
 
+        private void btnElektrodenTest_Click(object sender, EventArgs e)
+        {
+            if (Comschnitstelle.bereit)
+            {
+                Comschnitstelle.COMSender(Sequenz.ElektrodenTest());
+                Console.WriteLine("Incoming Data gesendet:" + Sequenz.ElektrodenTest());
+                Comschnitstelle.COMSender("X20");
+                Console.WriteLine("X20");
+                tabControl1.SelectedTab = tabPage2;
+            }
+            else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
+        }
+
+        private void btnLeitungDes_Click(object sender, EventArgs e)
+        {
+            if (Comschnitstelle.bereit)
+            {
+                tabControl1.SelectedTab = tabPage1;
+                Comschnitstelle.COMSender(Sequenz.LeitungenSpuelen(true));
+                Console.WriteLine("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(true));
+
+                Comschnitstelle.COMSender(Sequenz.LeitungenSpuelen(false));
+                Console.WriteLine("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(false));
+
+                Thread threadDeviceParams = new Thread(() => Comschnitstelle.Execute_Commands("X18", "X19"));
+                threadDeviceParams.Start();
+
+            }
+            else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
+        }
+
+        private void btnReg_Click(object sender, EventArgs e)
+        {
+            int i = 0;
+            List<String> lstReg = new List<string>();
+            lstReg.Add("U-500");
+            lstReg.Add("W0,30");
+            lstReg.Add("U000");
+            string concat = String.Join(String.Empty, lstReg.ToArray());
+            if (Comschnitstelle.bereit)
+            {
+                // Comschnitstelle.COMSender(concat);
+                Thread threadDeviceParams = new Thread(() => Comschnitstelle.Execute_Commands(lstReg.ToArray()));
+                threadDeviceParams.Start();
+                tabControl1.SelectedTab = tabPage1;
+            }
+            else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
+        }
     }
 }
