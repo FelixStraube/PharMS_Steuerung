@@ -77,13 +77,14 @@ namespace PharMS_Steuerung.Funktionen
                      foreach (string word in words)
 
                      Ganzzahl = words[0].Substring(1, words[0].Length - 1);
-                     Nachkomma = words[1];
+                     if (words.Count() > 1)
+                     {
+                         Nachkomma = words[1];
 
-                     intSen2 = Convert.ToDecimal(Ganzzahl + "," + Nachkomma);
+                         intSen2 = Convert.ToDecimal(Ganzzahl + "," + Nachkomma);
+                     }
 
-                     intSen2 = intSen2 * -1;
-
-                     
+                     intSen2 = intSen2 * -1;                     
                  }
                  else
                  {

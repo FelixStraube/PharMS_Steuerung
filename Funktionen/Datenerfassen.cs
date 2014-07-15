@@ -37,7 +37,7 @@ namespace PharMS_Steuerung.Funktionen
             foreach (string word in words)
 
              Sensor1 = words[0].Substring(1,words[0].Length-1);
-                Sensor1 = words[1].Substring(1, words[0].Length - 1);
+             Sensor2 = words[1].Substring(1, words[1].Length - 1);
             //Sensor1 = words[1];
            // Sensor2 = words[2];
 

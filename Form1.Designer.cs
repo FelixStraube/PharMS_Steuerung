@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.Verzeichnisauswahl = new System.Windows.Forms.FolderBrowserDialog();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -65,6 +65,9 @@
             this.Man_Messung = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.DatenerfassungTab = new System.Windows.Forms.DataGridView();
+            this.Zeit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Spannung1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Spannung2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabMasterablauf = new System.Windows.Forms.TabPage();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.AblaufStart = new System.Windows.Forms.Button();
@@ -100,7 +103,11 @@
             this.Console_Ausgabe = new System.Windows.Forms.TextBox();
             this.tabDeviceParameter = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.numSpuelen = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
             this.btnLeitungDes = new System.Windows.Forms.Button();
+            this.numDesinfektion = new System.Windows.Forms.NumericUpDown();
             this.btnElektrodenTest = new System.Windows.Forms.Button();
             this.btnReg = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -132,16 +139,15 @@
             this.Connect = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabProben = new System.Windows.Forms.TabPage();
+            this.chtMessung = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.txtProbe3 = new System.Windows.Forms.TextBox();
             this.txtProbe2 = new System.Windows.Forms.TextBox();
             this.txtProbe1 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.chtMessung = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.Zeit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Spannung1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Spannung2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtProbe4 = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -159,6 +165,8 @@
             this.tabPage1.SuspendLayout();
             this.tabDeviceParameter.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numSpuelen)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numDesinfektion)).BeginInit();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numeric_Messdauer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numeric_Intervall)).BeginInit();
@@ -306,28 +314,28 @@
             // 
             // LiveChart
             // 
-            chartArea3.AxisX.Title = " Time [s]";
-            chartArea3.AxisY.Title = "Signal [nA]";
-            chartArea3.Name = "ChartArea1";
-            this.LiveChart.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.LiveChart.Legends.Add(legend3);
+            chartArea2.AxisX.Title = " Time [s]";
+            chartArea2.AxisY.Title = "Signal [nA]";
+            chartArea2.Name = "ChartArea1";
+            this.LiveChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.LiveChart.Legends.Add(legend2);
             this.LiveChart.Location = new System.Drawing.Point(31, 32);
             this.LiveChart.Name = "LiveChart";
             this.LiveChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-            series5.BorderWidth = 5;
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series5.Legend = "Legend1";
-            series5.MarkerColor = System.Drawing.Color.White;
-            series5.Name = "Sensor 1";
-            series6.BorderWidth = 5;
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series6.Legend = "Legend1";
-            series6.Name = "Sensor 2";
-            this.LiveChart.Series.Add(series5);
-            this.LiveChart.Series.Add(series6);
+            series3.BorderWidth = 5;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Legend = "Legend1";
+            series3.MarkerColor = System.Drawing.Color.White;
+            series3.Name = "Sensor 1";
+            series4.BorderWidth = 5;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Legend = "Legend1";
+            series4.Name = "Sensor 2";
+            this.LiveChart.Series.Add(series3);
+            this.LiveChart.Series.Add(series4);
             this.LiveChart.Size = new System.Drawing.Size(466, 289);
             this.LiveChart.TabIndex = 0;
             this.LiveChart.Text = "chart1";
@@ -410,6 +418,28 @@
             this.DatenerfassungTab.Name = "DatenerfassungTab";
             this.DatenerfassungTab.Size = new System.Drawing.Size(405, 522);
             this.DatenerfassungTab.TabIndex = 0;
+            // 
+            // Zeit
+            // 
+            this.Zeit.DataPropertyName = "Time";
+            this.Zeit.FillWeight = 120F;
+            this.Zeit.HeaderText = "Zeit";
+            this.Zeit.Name = "Zeit";
+            this.Zeit.Width = 120;
+            // 
+            // Spannung1
+            // 
+            this.Spannung1.DataPropertyName = "Sensor1";
+            this.Spannung1.HeaderText = "Sensor 1 [ nA ]";
+            this.Spannung1.Name = "Spannung1";
+            this.Spannung1.Width = 120;
+            // 
+            // Spannung2
+            // 
+            this.Spannung2.DataPropertyName = "Sensor2";
+            this.Spannung2.HeaderText = "Sensor 2 [ nA ]";
+            this.Spannung2.Name = "Spannung2";
+            this.Spannung2.Width = 120;
             // 
             // tabMasterablauf
             // 
@@ -763,7 +793,11 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.numSpuelen);
+            this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.btnLeitungDes);
+            this.groupBox2.Controls.Add(this.numDesinfektion);
             this.groupBox2.Controls.Add(this.btnElektrodenTest);
             this.groupBox2.Controls.Add(this.btnReg);
             this.groupBox2.Controls.Add(this.groupBox5);
@@ -777,6 +811,46 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Geräteparameter";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(380, 347);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(111, 13);
+            this.label8.TabIndex = 27;
+            this.label8.Text = "Anzahl der Spülzyklen";
+            // 
+            // numSpuelen
+            // 
+            this.numSpuelen.Location = new System.Drawing.Point(383, 363);
+            this.numSpuelen.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numSpuelen.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numSpuelen.Name = "numSpuelen";
+            this.numSpuelen.Size = new System.Drawing.Size(49, 20);
+            this.numSpuelen.TabIndex = 26;
+            this.numSpuelen.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(224, 347);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(154, 13);
+            this.label7.TabIndex = 25;
+            this.label7.Text = "Anzahl der Desinfektionszyklen";
+            // 
             // btnLeitungDes
             // 
             this.btnLeitungDes.Enabled = false;
@@ -787,6 +861,28 @@
             this.btnLeitungDes.Text = "Leitungen desinfizieren und spülen";
             this.btnLeitungDes.UseVisualStyleBackColor = true;
             this.btnLeitungDes.Click += new System.EventHandler(this.btnLeitungDes_Click);
+            // 
+            // numDesinfektion
+            // 
+            this.numDesinfektion.Location = new System.Drawing.Point(227, 363);
+            this.numDesinfektion.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numDesinfektion.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numDesinfektion.Name = "numDesinfektion";
+            this.numDesinfektion.Size = new System.Drawing.Size(49, 20);
+            this.numDesinfektion.TabIndex = 24;
+            this.numDesinfektion.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // btnElektrodenTest
             // 
@@ -898,7 +994,7 @@
             0,
             -2147483648});
             this.numericZellspannung.Name = "numericZellspannung";
-            this.numericZellspannung.Size = new System.Drawing.Size(71, 20);
+            this.numericZellspannung.Size = new System.Drawing.Size(94, 20);
             this.numericZellspannung.TabIndex = 19;
             this.numericZellspannung.Value = new decimal(new int[] {
             300,
@@ -911,9 +1007,9 @@
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(152, 19);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(71, 13);
+            this.label11.Size = new System.Drawing.Size(94, 13);
             this.label11.TabIndex = 18;
-            this.label11.Text = "Zellspannung";
+            this.label11.Text = "Zellspannung /mV";
             // 
             // rbManuelleMessung
             // 
@@ -959,6 +1055,7 @@
             this.txtboxTemperatur.ReadOnly = true;
             this.txtboxTemperatur.Size = new System.Drawing.Size(70, 20);
             this.txtboxTemperatur.TabIndex = 4;
+            this.txtboxTemperatur.Text = "37";
             // 
             // rbTemperierungAus
             // 
@@ -1155,6 +1252,8 @@
             // 
             // tabProben
             // 
+            this.tabProben.Controls.Add(this.txtProbe4);
+            this.tabProben.Controls.Add(this.label9);
             this.tabProben.Controls.Add(this.chtMessung);
             this.tabProben.Controls.Add(this.txtProbe3);
             this.tabProben.Controls.Add(this.txtProbe2);
@@ -1169,6 +1268,30 @@
             this.tabProben.TabIndex = 7;
             this.tabProben.Text = "Proben";
             this.tabProben.UseVisualStyleBackColor = true;
+            // 
+            // chtMessung
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chtMessung.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chtMessung.Legends.Add(legend1);
+            this.chtMessung.Location = new System.Drawing.Point(54, 127);
+            this.chtMessung.Name = "chtMessung";
+            series1.BorderWidth = 4;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.Name = "Sensor1";
+            series2.BorderWidth = 4;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Legend = "Legend1";
+            series2.Name = "Sensor2";
+            this.chtMessung.Series.Add(series1);
+            this.chtMessung.Series.Add(series2);
+            this.chtMessung.Size = new System.Drawing.Size(464, 300);
+            this.chtMessung.TabIndex = 6;
+            this.chtMessung.Text = "chart1";
             // 
             // txtProbe3
             // 
@@ -1221,51 +1344,22 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "Bezeichnung Inkubationsgefäß 1:";
             // 
-            // chtMessung
+            // txtProbe4
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chtMessung.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chtMessung.Legends.Add(legend4);
-            this.chtMessung.Location = new System.Drawing.Point(54, 127);
-            this.chtMessung.Name = "chtMessung";
-            series7.BorderWidth = 4;
-            series7.ChartArea = "ChartArea1";
-            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series7.Legend = "Legend1";
-            series7.Name = "Sensor1";
-            series8.BorderWidth = 4;
-            series8.ChartArea = "ChartArea1";
-            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series8.Legend = "Legend1";
-            series8.Name = "Sensor2";
-            this.chtMessung.Series.Add(series7);
-            this.chtMessung.Series.Add(series8);
-            this.chtMessung.Size = new System.Drawing.Size(464, 300);
-            this.chtMessung.TabIndex = 6;
-            this.chtMessung.Text = "chart1";
+            this.txtProbe4.Location = new System.Drawing.Point(191, 101);
+            this.txtProbe4.Name = "txtProbe4";
+            this.txtProbe4.Size = new System.Drawing.Size(127, 20);
+            this.txtProbe4.TabIndex = 8;
+            this.txtProbe4.Text = "Probe 4";
             // 
-            // Zeit
+            // label9
             // 
-            this.Zeit.DataPropertyName = "Time";
-            this.Zeit.FillWeight = 120F;
-            this.Zeit.HeaderText = "Zeit";
-            this.Zeit.Name = "Zeit";
-            this.Zeit.Width = 120;
-            // 
-            // Spannung1
-            // 
-            this.Spannung1.DataPropertyName = "Sensor1";
-            this.Spannung1.HeaderText = "Sensor 1 [ nA ]";
-            this.Spannung1.Name = "Spannung1";
-            this.Spannung1.Width = 120;
-            // 
-            // Spannung2
-            // 
-            this.Spannung2.DataPropertyName = "Sensor2";
-            this.Spannung2.HeaderText = "Sensor 2 [ nA ]";
-            this.Spannung2.Name = "Spannung2";
-            this.Spannung2.Width = 120;
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(19, 104);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(166, 13);
+            this.label9.TabIndex = 7;
+            this.label9.Text = "Bezeichnung Inkubationsgefäß 3:";
             // 
             // Form1
             // 
@@ -1301,6 +1395,9 @@
             this.tabPage1.PerformLayout();
             this.tabDeviceParameter.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numSpuelen)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numDesinfektion)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numeric_Messdauer)).EndInit();
@@ -1433,6 +1530,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Zeit;
         private System.Windows.Forms.DataGridViewTextBoxColumn Spannung1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Spannung2;
+        private System.Windows.Forms.Label label8;
+        public System.Windows.Forms.NumericUpDown numSpuelen;
+        private System.Windows.Forms.Label label7;
+        public System.Windows.Forms.NumericUpDown numDesinfektion;
+        private System.Windows.Forms.TextBox txtProbe4;
+        private System.Windows.Forms.Label label9;
 
 
     }

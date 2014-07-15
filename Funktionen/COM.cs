@@ -60,7 +60,10 @@ namespace PharMS_Steuerung.Funktionen
             switch (steuerzeichen)
             {
                 case "M":
-                    if (tempForm.rbManuelleMessung.Checked == true) { Funktionen.Datenerfassen Ausgabe_manuel = new Datenerfassen(eingabe, tempForm); }
+                    if (tempForm.rbManuelleMessung.Checked == true) 
+                    { 
+                        Funktionen.Datenerfassen Ausgabe_manuel = new Datenerfassen(eingabe, tempForm); 
+                    }
                     if (tempForm.rbAktiveMessung.Checked == true)
                     {
                         if (tmrMesswerteTimer == null)
@@ -68,8 +71,10 @@ namespace PharMS_Steuerung.Funktionen
                             tmrMesswerteTimer = new System.Timers.Timer();
                             tmrMesswerteTimer.Enabled = false;
                         }
-                        if (tmrMesswerteTimer.Enabled == true) { Funktionen.Datenerfassen Ausgabe_automatisch = new Datenerfassen(eingabe, tempForm); }
-
+                        if (tmrMesswerteTimer.Enabled == true) 
+                        { 
+                            Funktionen.Datenerfassen Ausgabe_automatisch = new Datenerfassen(eingabe, tempForm);
+                        }
                         else
                         {
                             tmrMesswerteTimer = new System.Timers.Timer();
@@ -218,22 +223,24 @@ namespace PharMS_Steuerung.Funktionen
             port.WriteLine(Caption);
         }
 
-        public void Execute_Commands(params string[] Commands)
-        {
-
-            for (int i = 0; i < Commands.Count(); i++)
+        public void Execute_Commands(int repeat, params string[] Commands)
+        {        
+            for (int j = 0; j < repeat; j++)
             {
-                Boolean Lauf = true;
-                do
+                for (int i = 0; i < Commands.Count(); i++)
                 {
-                    if (tempForm.Abbruch == true) return;
-                    Lauf = COMAblaufSender(Commands[i]);
-                    Console.WriteLine("Line: " + Commands[i]);
-                    System.Threading.Thread.Sleep(1000);
+                    Boolean Lauf = true; //Pufferzeit mitschicken wenn der Befehl lange zum abarbeiten braucht und eine eventbehandlung stattfindet, wenn der Thread fertig ist
+                    do
+                    {
+                        if (tempForm.Abbruch == true) return;
+                        Lauf = COMAblaufSender(Commands[i]);
+                        Console.WriteLine("Line: " + Commands[i]);
+                        System.Threading.Thread.Sleep(1000);
 
-                } while (Lauf == false);
+                    } while (Lauf == false);
+                }
             }
-            MessageBox.Show("Die Sequenz wurde abgearbeitet!"); 
+            //tempForm.Invoke(new Action(() => { MessageBox.Show(tempForm, "Die Sequenz wurde abgearbeitet!"); }));
         }
 
     }

@@ -248,6 +248,5 @@ namespace PharMS_Steuerung.Funktionen
             else return concat2;
         }
 
-
     }
 }
