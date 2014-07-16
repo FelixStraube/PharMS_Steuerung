@@ -226,8 +226,8 @@ namespace PharMS_Steuerung.Funktionen
         public void AbfrageStatus()
         {
             if (!port.IsOpen) return;
-            Thread.Sleep(500); //um zu verhindern dass das Gerät mit Abfragen zugespamt wird (führt sonst zu fehlern)
-            Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : s", tempForm);
+            Thread.Sleep(1000); //um zu verhindern dass das Gerät mit Abfragen zugespamt wird (führt sonst zu fehlern)
+           // Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : s", tempForm);
             port.WriteLine("s");
         }
 

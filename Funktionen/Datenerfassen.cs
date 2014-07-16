@@ -17,7 +17,8 @@ namespace PharMS_Steuerung.Funktionen
     {
 
         public DateTime Time = DateTime.Now;
-        public DataGrid tet = new DataGrid();
+        public DataGrid tet = new DataGrid();       
+        public DataTable TableMeasurements = new DataTable();
         string Sensor1;
         string Sensor2;
         private System.IO.StreamWriter file;
@@ -29,36 +30,41 @@ namespace PharMS_Steuerung.Funktionen
         /// 
         public Datenerfassen(String Daten, Form1 Ausgabefenster)
         {
+            TableMeasurements.Columns.Add("Time", typeof(DateTime));
+            TableMeasurements.Columns.Add("Sensor1", typeof(Double));
+            TableMeasurements.Columns.Add("Sensor2", typeof(Double));
+
             bool Datei_vorhanden = false;
 
 
-             string[] words = Daten.Split(',');
+            string[] words = Daten.Split(',');
             //string[] words = Daten.Split(';');
             foreach (string word in words)
 
-             Sensor1 = words[0].Substring(1,words[0].Length-1);
-             Sensor2 = words[1].Substring(1, words[1].Length - 1);
+                Sensor1 = words[0].Substring(1, words[0].Length - 1);
+            Sensor2 = words[1].Substring(1, words[1].Length - 1);
             //Sensor1 = words[1];
-           // Sensor2 = words[2];
+            // Sensor2 = words[2];
 
-             string Zeit = string.Format("{0:d/M/yyyy HH:mm:ss}", Time);
+            string Zeit = string.Format("{0:d/M/yyyy HH:mm:ss}", Time);
             //string Zeit = words[0];
 
             Ausgabefenster.DatenerfassungTab_Hinzu(Zeit, Sensor1, Sensor2);
-            
+
             LiveChart Ausgabe = new LiveChart();
 
-           // Ausgabe zu Graphen
-             Ausgabe.erfassen(Sensor1, Sensor2,Ausgabefenster,false,true);
+            // Ausgabe zu Graphen
+            Ausgabe.erfassen(Sensor1, Sensor2, Ausgabefenster, false, true);
 
-            
+
             String BaseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string Filename = "Daten Vom " + string.Format("{0:d/M/yyyy}", Time) + ".txt";
             List<string> dirs = new List<string>(Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory + "Temp\\", "*.txt"));
             foreach (var test in dirs)
             {
                 FileInfo x = new FileInfo(test);
-                if (x.Name == Filename) {
+                if (x.Name == Filename)
+                {
 
                     Datei_vorhanden = true;
                 }
@@ -66,26 +72,41 @@ namespace PharMS_Steuerung.Funktionen
             if (Datei_vorhanden == false)
             {
                 System.IO.File.Create(AppDomain.CurrentDomain.BaseDirectory + "Temp\\" + Filename);
-               
+
                 Datei_vorhanden = true;
 
             }
-           
-           
+
+
             if (Datei_vorhanden == true)
             {
 
                 try { file = new System.IO.StreamWriter(BaseDirectory + "Temp\\" + Filename, true); }
                 catch { return; };
                 {
-                 
+
                     file.WriteLine(Zeit + ";" + Sensor1 + ";" + Sensor2);
                     file.Close();
-                       
+
                 }
-            }   
+            }
         }
 
+        public void BuildSource(String Daten)
+        {            
+            string[] words = Daten.Split(';');
+            //foreach (string word in words)
 
+           string Sensor1a = words[1].Replace(".",",");
+           string Sensor2b = words[2].Replace(".", ",");
+           TableMeasurements.Rows.Add(Time, Convert.ToDouble(Sensor1a), Convert.ToDouble(Sensor2b));
+
+            // string Zeit = string.Format("{0:d/M/yyyy HH:mm:ss}", Time);
+            //string Zeit = words[0];
+
+
+            
+        }
     }
+    
 }

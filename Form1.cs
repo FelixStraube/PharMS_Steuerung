@@ -173,7 +173,7 @@ namespace PharMS_Steuerung
             threadAblaufStart.Start();
 
         }
-       
+
         private void Form1_Load(object sender, EventArgs e)
         {
             if (!bDBIsOpen)
@@ -196,24 +196,23 @@ namespace PharMS_Steuerung
 
             tabControl1.Visible = false;
 
-            /*
-             List<String> stlTest = new List<string>();
-             CfgFile oCfgFile = new CfgFile("C:\\Users\\Alexander\\Desktop\\blubb\\Temp\\Daten Vom 1.4.2014.txt");
-             stlTest = oCfgFile.Ausgabe();
 
-             foreach (string line in stlTest)
-             {
-                 Datenerfassen test = new Datenerfassen(line, this);
-             }
+         /*   List<String> stlTest = new List<string>();
+            CfgFile oCfgFile = new CfgFile("C:\\Users\\Alexander\\Desktop\\blubb\\Temp\\Daten Vom 1.4.2014.txt");
+            stlTest = oCfgFile.Ausgabe();
+            Datenerfassen test = new Datenerfassen("", this);
+            foreach (string line in stlTest)
+            {
+                test.BuildSource(line);
+            }
 
-             chtMessung.Series[0].XValueMember = DatenerfassungTab.Columns[1].DataPropertyName;
-             chtMessung.Series[0].YValueMembers = DatenerfassungTab.Columns[0].DataPropertyName;
-             chtMessung.Series[1].XValueMember = DatenerfassungTab.Columns[2].DataPropertyName;
-             chtMessung.Series[1].YValueMembers = DatenerfassungTab.Columns[0].DataPropertyName;
-             chtMessung.DataSource = DatenerfassungTab;
-                 */
-
-
+          
+            chtMessung.Series[0].XValueMember = "Time";
+            chtMessung.Series[0].YValueMembers = "Sensor1";
+            chtMessung.DataSource = test.TableMeasurements;
+            chtMessung.DataBind();
+            chtMessung.Series[1].XValueMember = "Time";
+            chtMessung.Series[1].YValueMembers = "Sensor2";*/
 
         }
 
@@ -551,6 +550,7 @@ namespace PharMS_Steuerung
 
         private void btnUebertragen_Click(object sender, EventArgs e)
         {
+            List<String> lstCommands = new List<string>();
             for (int i = 0; i < SequenzenGrid.Rows.Count - 1; i++)
             {
                 foreach (Sequenz oSequenz in lstSequenz)
@@ -571,15 +571,17 @@ namespace PharMS_Steuerung
                 }
                 if (oSequenz.iSpeicherplatz.ToString() != "-999")
                 {
-                    Comschnitstelle.SendToCOM("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
-                    Thread.Sleep(500); //Evt verhindert dies das unvollständige übertragen von Sequenzen
+                    lstCommands.Add("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);         
                     Console.WriteLine("Incoming Data gesendet:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
                     stlLog.Add("Incoming Data gesendet:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf + "    " + System.DateTime.Now.ToString());
-                }
-                Console.WriteLine("Incoming Data:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
+                }                
             }
-            MessageBox.Show("Sequenzen wurden an das Gerät übertragen!");
-            stlLog.Add("Sequenzen wurden an das Gerät übertragen!" + "    " + System.DateTime.Now.ToString());
+
+            BackgroundWorker BackgroundWorkerSendSequenz = new BackgroundWorker();
+            stlLog.Add("Start BackgroundWorkerSendSequenz" + "    " + System.DateTime.Now.ToString());
+            BackgroundWorkerSendSequenz.RunWorkerCompleted += BackgroundWorkerSendSequenz_RunWorkerCompleted;
+            BackgroundWorkerSendSequenz.DoWork += BackgroundWorkerCommands_DoWork;
+            BackgroundWorkerSendSequenz.RunWorkerAsync(new HelpClass(1, lstCommands.ToArray()));           
         }
 
         public bool Messungen_Tabelle(int MessungNR, string Bezeichnung)
@@ -721,29 +723,29 @@ namespace PharMS_Steuerung
         private void tmCheckCOM_Tick(object sender, EventArgs e)
         {
 
-           /* bool bNeedNewLine = true;
+            /* bool bNeedNewLine = true;
 
-            if (Comschnitstelle == null)
-            {
-                stlLog.Add("Portstatus: Comschnitstelle existiert nicht");
-                tmCheckCOM.Enabled = false;
-            }
+             if (Comschnitstelle == null)
+             {
+                 stlLog.Add("Portstatus: Comschnitstelle existiert nicht");
+                 tmCheckCOM.Enabled = false;
+             }
 
 
-            if (Comschnitstelle.port.IsOpen)
-            {
-                if (bNeedNewLine) stlLog.Add("Portstatus: " + Comschnitstelle.port.IsOpen.ToString() + "    " + System.DateTime.Now.ToString());
-                bNeedNewLine = false;
+             if (Comschnitstelle.port.IsOpen)
+             {
+                 if (bNeedNewLine) stlLog.Add("Portstatus: " + Comschnitstelle.port.IsOpen.ToString() + "    " + System.DateTime.Now.ToString());
+                 bNeedNewLine = false;
 
-            }
-            else
-            {
-                bNeedNewLine = true;
-                stlLog.Add("Portstatus: " + Comschnitstelle.port.IsOpen.ToString() + "    " + System.DateTime.Now.ToString());
-                stlLog.Add("Versuch der Reaktivierung");
-                Comschnitstelle.port.Close();
-                Comschnitstelle.port.Open();
-            }*/
+             }
+             else
+             {
+                 bNeedNewLine = true;
+                 stlLog.Add("Portstatus: " + Comschnitstelle.port.IsOpen.ToString() + "    " + System.DateTime.Now.ToString());
+                 stlLog.Add("Versuch der Reaktivierung");
+                 Comschnitstelle.port.Close();
+                 Comschnitstelle.port.Open();
+             }*/
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -813,7 +815,7 @@ namespace PharMS_Steuerung
         }
 
         private void btnElektrodenTest_Click(object sender, EventArgs e)
-        {           
+        {
             if (Comschnitstelle.bereit)
             {
                 Comschnitstelle.SendToCOM(Sequenz.ElektrodenTest());
@@ -843,16 +845,16 @@ namespace PharMS_Steuerung
                 stlLog.Add("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(false) + "    " + System.DateTime.Now.ToString());
                 MessageBox.Show("Schritt 1: Desinfektion \n 1. Inkubationsgefäße gegen Blindgefäße austauschen! \n 2. Zuleitungen 1, 2, 3, 6, 7 zu Ventil 2 in separates Abfallgefäß führen! \n 3. Puffergefäß gegen Desinfektionsmittelgefäß austauschen!");
 
-              
+
                 BackgroundWorker BackgroundWorkerDesinfect = new BackgroundWorker();
                 stlLog.Add("Start BackgroundWorkerDesinfect" + "    " + System.DateTime.Now.ToString());
                 BackgroundWorkerDesinfect.RunWorkerCompleted += BackgroundWorkerDesinfect_RunWorkerCompleted;
                 BackgroundWorkerDesinfect.DoWork += BackgroundWorkerCommands_DoWork;
-                BackgroundWorkerDesinfect.RunWorkerAsync(new HelpClass((int)numDesinfektion.Value, "X18", "X19","W0,01"));
+                BackgroundWorkerDesinfect.RunWorkerAsync(new HelpClass((int)numDesinfektion.Value, "X18", "X19", "W0,01"));
 
             }
             else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
-        }        
+        }
 
         private void btnReg_Click(object sender, EventArgs e)
         {
@@ -861,14 +863,14 @@ namespace PharMS_Steuerung
             lstReg.Add("U-500");
             lstReg.Add("W0,30");
             lstReg.Add("U000");
-      
+
             if (Comschnitstelle.bereit)
             {
                 BackgroundWorker BackgroundWorkerReg = new BackgroundWorker();
                 stlLog.Add("Start BackgroundWorkerReg" + "    " + System.DateTime.Now.ToString());
                 BackgroundWorkerReg.DoWork += BackgroundWorkerCommands_DoWork;
                 BackgroundWorkerReg.RunWorkerCompleted += BackgroundWorkerReg_RunWorkerCompleted;
-                BackgroundWorkerReg.RunWorkerAsync(new HelpClass(1, lstReg.ToArray()));                
+                BackgroundWorkerReg.RunWorkerAsync(new HelpClass(1, lstReg.ToArray()));
                 tabControl1.SelectedTab = tabPage1;
             }
             else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
@@ -879,16 +881,21 @@ namespace PharMS_Steuerung
             stlLog.Add("Completed BackgroundWorkerReg" + "    " + System.DateTime.Now.ToString());
             MessageBox.Show("Elektroden wurden regeneriert!");
         }
+        void BackgroundWorkerSendSequenz_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MessageBox.Show("Sequenzen wurden an das Gerät übertragen!");
+            stlLog.Add("Sequenzen wurden an das Gerät übertragen!" + "    " + System.DateTime.Now.ToString());
+        }
         void BackgroundWorkerDesinfect_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            stlLog.Add("Completed BackgroundWorkerDesinfect"+ "    " + System.DateTime.Now.ToString());
+            stlLog.Add("Completed BackgroundWorkerDesinfect" + "    " + System.DateTime.Now.ToString());
             MessageBox.Show("Schritt 2: Spülen \n Desinfektionsmittelgefäß gegen Puffergefäß austauschen!");
 
             BackgroundWorker BackgroundWorkerFlush = new BackgroundWorker();
             stlLog.Add("Start BackgroundWorkerFlush" + "    " + System.DateTime.Now.ToString());
             BackgroundWorkerFlush.RunWorkerCompleted += BackgroundWorkerFlush_RunWorkerCompleted;
             BackgroundWorkerFlush.DoWork += BackgroundWorkerCommands_DoWork;
-            BackgroundWorkerFlush.RunWorkerAsync(new HelpClass((int)numSpuelen.Value, "X18", "X19","W0,01"));       
+            BackgroundWorkerFlush.RunWorkerAsync(new HelpClass((int)numSpuelen.Value, "X18", "X19", "W0,01"));
         }
         void BackgroundWorkerFlush_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
