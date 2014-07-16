@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.Verzeichnisauswahl = new System.Windows.Forms.FolderBrowserDialog();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -139,6 +139,8 @@
             this.Connect = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabProben = new System.Windows.Forms.TabPage();
+            this.txtProbe4 = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.chtMessung = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.txtProbe3 = new System.Windows.Forms.TextBox();
             this.txtProbe2 = new System.Windows.Forms.TextBox();
@@ -146,8 +148,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.txtProbe4 = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -314,32 +314,31 @@
             // 
             // LiveChart
             // 
-            chartArea2.AxisX.Title = " Time [s]";
-            chartArea2.AxisY.Title = "Signal [nA]";
-            chartArea2.Name = "ChartArea1";
-            this.LiveChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.LiveChart.Legends.Add(legend2);
+            chartArea3.AxisX.Title = " Time [s]";
+            chartArea3.AxisY.Title = "Signal [nA]";
+            chartArea3.Name = "ChartArea1";
+            this.LiveChart.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.LiveChart.Legends.Add(legend3);
             this.LiveChart.Location = new System.Drawing.Point(31, 32);
             this.LiveChart.Name = "LiveChart";
             this.LiveChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-            series3.BorderWidth = 5;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Legend = "Legend1";
-            series3.MarkerColor = System.Drawing.Color.White;
-            series3.Name = "Sensor 1";
-            series4.BorderWidth = 5;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Legend = "Legend1";
-            series4.Name = "Sensor 2";
-            this.LiveChart.Series.Add(series3);
-            this.LiveChart.Series.Add(series4);
+            series5.BorderWidth = 5;
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series5.Legend = "Legend1";
+            series5.MarkerColor = System.Drawing.Color.White;
+            series5.Name = "Sensor 1";
+            series6.BorderWidth = 5;
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series6.Legend = "Legend1";
+            series6.Name = "Sensor 2";
+            this.LiveChart.Series.Add(series5);
+            this.LiveChart.Series.Add(series6);
             this.LiveChart.Size = new System.Drawing.Size(466, 289);
             this.LiveChart.TabIndex = 0;
             this.LiveChart.Text = "chart1";
-            this.LiveChart.Click += new System.EventHandler(this.LiveChart_klick);
             // 
             // tabPage2
             // 
@@ -1067,6 +1066,7 @@
             this.rbTemperierungAus.TabStop = true;
             this.rbTemperierungAus.Text = "Aus";
             this.rbTemperierungAus.UseVisualStyleBackColor = true;
+            this.rbTemperierungAus.CheckedChanged += new System.EventHandler(this.rbTemperierungAus_CheckedChanged);
             // 
             // lbTemperatur
             // 
@@ -1080,6 +1080,7 @@
             // rbTemperierungEin
             // 
             this.rbTemperierungEin.AutoSize = true;
+            this.rbTemperierungEin.Checked = true;
             this.rbTemperierungEin.Location = new System.Drawing.Point(13, 22);
             this.rbTemperierungEin.Name = "rbTemperierungEin";
             this.rbTemperierungEin.Size = new System.Drawing.Size(40, 17);
@@ -1103,6 +1104,7 @@
             // rbPumpeAbfallAus
             // 
             this.rbPumpeAbfallAus.AutoSize = true;
+            this.rbPumpeAbfallAus.Checked = true;
             this.rbPumpeAbfallAus.Location = new System.Drawing.Point(15, 67);
             this.rbPumpeAbfallAus.Name = "rbPumpeAbfallAus";
             this.rbPumpeAbfallAus.Size = new System.Drawing.Size(43, 17);
@@ -1110,6 +1112,7 @@
             this.rbPumpeAbfallAus.TabStop = true;
             this.rbPumpeAbfallAus.Text = "Aus";
             this.rbPumpeAbfallAus.UseVisualStyleBackColor = true;
+            this.rbPumpeAbfallAus.CheckedChanged += new System.EventHandler(this.rbPumpeAbfallAus_CheckedChanged);
             // 
             // rbPumpeAbfallEin
             // 
@@ -1121,6 +1124,7 @@
             this.rbPumpeAbfallEin.TabStop = true;
             this.rbPumpeAbfallEin.Text = "Ein";
             this.rbPumpeAbfallEin.UseVisualStyleBackColor = true;
+            this.rbPumpeAbfallEin.CheckedChanged += new System.EventHandler(this.rbPumpeAbfallEin_CheckedChanged);
             // 
             // groupBox3
             // 
@@ -1136,6 +1140,7 @@
             // rbPumpeMesszelleAus
             // 
             this.rbPumpeMesszelleAus.AutoSize = true;
+            this.rbPumpeMesszelleAus.Checked = true;
             this.rbPumpeMesszelleAus.Location = new System.Drawing.Point(15, 67);
             this.rbPumpeMesszelleAus.Name = "rbPumpeMesszelleAus";
             this.rbPumpeMesszelleAus.Size = new System.Drawing.Size(43, 17);
@@ -1143,6 +1148,7 @@
             this.rbPumpeMesszelleAus.TabStop = true;
             this.rbPumpeMesszelleAus.Text = "Aus";
             this.rbPumpeMesszelleAus.UseVisualStyleBackColor = true;
+            this.rbPumpeMesszelleAus.CheckedChanged += new System.EventHandler(this.rbPumpeMesszelleAus_CheckedChanged);
             // 
             // rbPumpeMesszelleEin
             // 
@@ -1151,9 +1157,9 @@
             this.rbPumpeMesszelleEin.Name = "rbPumpeMesszelleEin";
             this.rbPumpeMesszelleEin.Size = new System.Drawing.Size(40, 17);
             this.rbPumpeMesszelleEin.TabIndex = 0;
-            this.rbPumpeMesszelleEin.TabStop = true;
             this.rbPumpeMesszelleEin.Text = "Ein";
             this.rbPumpeMesszelleEin.UseVisualStyleBackColor = true;
+            this.rbPumpeMesszelleEin.CheckedChanged += new System.EventHandler(this.rbPumpeMesszelleEin_CheckedChanged);
             // 
             // groupBox1
             // 
@@ -1168,7 +1174,6 @@
             this.groupBox1.Size = new System.Drawing.Size(540, 137);
             this.groupBox1.TabIndex = 40;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Connection";
             // 
             // button3
             // 
@@ -1269,26 +1274,43 @@
             this.tabProben.Text = "Proben";
             this.tabProben.UseVisualStyleBackColor = true;
             // 
+            // txtProbe4
+            // 
+            this.txtProbe4.Location = new System.Drawing.Point(191, 101);
+            this.txtProbe4.Name = "txtProbe4";
+            this.txtProbe4.Size = new System.Drawing.Size(127, 20);
+            this.txtProbe4.TabIndex = 8;
+            this.txtProbe4.Text = "Probe 4";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(19, 104);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(166, 13);
+            this.label9.TabIndex = 7;
+            this.label9.Text = "Bezeichnung Inkubationsgefäß 3:";
+            // 
             // chtMessung
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chtMessung.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chtMessung.Legends.Add(legend1);
+            chartArea4.Name = "ChartArea1";
+            this.chtMessung.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chtMessung.Legends.Add(legend4);
             this.chtMessung.Location = new System.Drawing.Point(54, 127);
             this.chtMessung.Name = "chtMessung";
-            series1.BorderWidth = 4;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend1";
-            series1.Name = "Sensor1";
-            series2.BorderWidth = 4;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.Name = "Sensor2";
-            this.chtMessung.Series.Add(series1);
-            this.chtMessung.Series.Add(series2);
+            series7.BorderWidth = 4;
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series7.Legend = "Legend1";
+            series7.Name = "Sensor1";
+            series8.BorderWidth = 4;
+            series8.ChartArea = "ChartArea1";
+            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series8.Legend = "Legend1";
+            series8.Name = "Sensor2";
+            this.chtMessung.Series.Add(series7);
+            this.chtMessung.Series.Add(series8);
             this.chtMessung.Size = new System.Drawing.Size(464, 300);
             this.chtMessung.TabIndex = 6;
             this.chtMessung.Text = "chart1";
@@ -1343,23 +1365,6 @@
             this.label3.Size = new System.Drawing.Size(166, 13);
             this.label3.TabIndex = 0;
             this.label3.Text = "Bezeichnung Inkubationsgefäß 1:";
-            // 
-            // txtProbe4
-            // 
-            this.txtProbe4.Location = new System.Drawing.Point(191, 101);
-            this.txtProbe4.Name = "txtProbe4";
-            this.txtProbe4.Size = new System.Drawing.Size(127, 20);
-            this.txtProbe4.TabIndex = 8;
-            this.txtProbe4.Text = "Probe 4";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(19, 104);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(166, 13);
-            this.label9.TabIndex = 7;
-            this.label9.Text = "Bezeichnung Inkubationsgefäß 3:";
             // 
             // Form1
             // 
@@ -1422,9 +1427,9 @@
 
         #endregion
 
-        //     private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
-        //    private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
-        //  private Microsoft.VisualBasic.PowerPacks.LineShape lineShape2;
+      //     private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
+      //    private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
+      //  private Microsoft.VisualBasic.PowerPacks.LineShape lineShape2;
       //  private Microsoft.VisualBasic.PowerPacks.LineShape lineShape3;
         private System.Windows.Forms.FolderBrowserDialog Verzeichnisauswahl;
         private System.IO.FileSystemWatcher fileSystemWatcher1;

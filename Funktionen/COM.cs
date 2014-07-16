@@ -142,14 +142,14 @@ namespace PharMS_Steuerung.Funktionen
 
         private void Execute(Object myObject, EventArgs myEventArgs)
         {
-            if (iTickAktuell >= ende)
+            if (iTickAktuell == ende)
             {
                 Funktionen.Datenerfassen test = new Funktionen.Datenerfassen("---------,---------", tempForm);
                 //Live chart cler und in Datenfeld aufnehmen
 
                 LiveChart ChartAusgabe = new LiveChart();
                 ChartAusgabe.erfassen("0", "0", tempForm, true, true);
-
+                iTickAktuell = iTickAktuell + iTickInterval;
                 tmrMesswerteTimer.Stop();
                 //                tmrMesswerteTimer.Enabled = false;
                 //                tmrMesswerteTimer.Dispose();

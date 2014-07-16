@@ -772,7 +772,23 @@ namespace PharMS_Steuerung
         private void rbTemperierungEin_CheckedChanged(object sender, EventArgs e)
         {
             txtboxTemperatur.ReadOnly = true;
-            if (rbTemperierungEin.Checked) txtboxTemperatur.ReadOnly = false;
+            if (rbTemperierungEin.Checked)
+            {   
+                txtboxTemperatur.ReadOnly = false;
+                string Temp = txtboxTemperatur.Text.ToString();
+               if (Temp.IndexOf(",")!= null){
+                   Temp=Temp.Replace(",", ".");
+
+               };
+               Comschnitstelle.COMSender("T"+Temp);
+               System.Threading.Thread.Sleep(500);
+               Comschnitstelle.COMSender("o1");
+
+
+
+            }
+
+            
         }
 
         private void btnNeueMessung_Click(object sender, EventArgs e)
@@ -907,6 +923,51 @@ namespace PharMS_Steuerung
         private void BackgroundWorkerCommands_DoWork(object sender, DoWorkEventArgs e)
         {
             Comschnitstelle.Execute_Commands(((HelpClass)e.Argument).iRepeat, ((HelpClass)e.Argument).arrCommands);
+        }
+
+        private void rbPumpeMesszelleAus_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbPumpeMesszelleAus.Checked)
+            {
+                rbPumpeMesszelleEin.Checked = false;
+                Comschnitstelle.COMSender("p1,1");
+            }
+        }
+
+        private void rbPumpeMesszelleEin_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbPumpeMesszelleEin.Checked)
+            {
+                rbPumpeMesszelleAus.Checked = false;
+                Comschnitstelle.COMSender("p1,0");
+            }
+        }
+
+        private void rbPumpeAbfallEin_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbPumpeAbfallEin.Checked)
+            {
+                rbPumpeAbfallAus.Checked = false;
+                Comschnitstelle.COMSender("p2,1");
+            }
+        }
+
+        private void rbPumpeAbfallAus_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbPumpeAbfallAus.Checked)
+            {
+                rbPumpeAbfallEin.Checked = false;
+                Comschnitstelle.COMSender("p2,0");
+            }
+        }
+
+        private void rbTemperierungAus_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbTemperierungAus.Checked)
+            {
+                rbTemperierungEin.Checked = false;
+                Comschnitstelle.COMSender("o0");
+            }
         }
 
     }

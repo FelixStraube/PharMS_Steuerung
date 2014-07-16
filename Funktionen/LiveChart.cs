@@ -118,7 +118,8 @@ namespace PharMS_Steuerung.Funktionen
                 MessungNR = MessungNR + 1;
                 
                 Speicherliste.Add(listezuArray(templist1,templist2));
-                
+                templist1.Clear();
+                templist2.Clear();
                    
                 aktFenster.Live_Chart_add(x, 0, 0 , clear);
                  
@@ -156,7 +157,7 @@ namespace PharMS_Steuerung.Funktionen
                 {
                     series.Points.Clear();
 
-                    decimal Schritlänge = 1;
+                    decimal Schritlänge = 1*aktFenster.numeric_Intervall.Value;
                     int Lauf = 0;
                     int xAchseSen1 = 0;
                     int xAchseSen2 = 0;
