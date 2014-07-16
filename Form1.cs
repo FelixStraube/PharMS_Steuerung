@@ -134,7 +134,7 @@ namespace PharMS_Steuerung
         {
             change_progressBar(-1, 0, progressBar1);
             Abbruch = true;
-            Comschnitstelle.SendToCOM("x");
+            Comschnitstelle.NotStop();
         }
 
         public bool change_Label(string Text, Label Textlabel)
@@ -197,7 +197,7 @@ namespace PharMS_Steuerung
             tabControl1.Visible = false;
 
 
-         /*   List<String> stlTest = new List<string>();
+          /*  List<String> stlTest = new List<string>();
             CfgFile oCfgFile = new CfgFile("C:\\Users\\Alexander\\Desktop\\blubb\\Temp\\Daten Vom 1.4.2014.txt");
             stlTest = oCfgFile.Ausgabe();
             Datenerfassen test = new Datenerfassen("", this);
@@ -206,13 +206,14 @@ namespace PharMS_Steuerung
                 test.BuildSource(line);
             }
 
-          
+            //chtMessung.Series[1].XValueMember = "Time";
+            //chtMessung.Series[1].YValueMembers = "Sensor2";
+           
             chtMessung.Series[0].XValueMember = "Time";
             chtMessung.Series[0].YValueMembers = "Sensor1";
             chtMessung.DataSource = test.TableMeasurements;
-            chtMessung.DataBind();
-            chtMessung.Series[1].XValueMember = "Time";
-            chtMessung.Series[1].YValueMembers = "Sensor2";*/
+            chtMessung.DataBind();*/
+
 
         }
 
@@ -764,9 +765,9 @@ namespace PharMS_Steuerung
                    Temp=Temp.Replace(",", ".");
 
                };
-               Comschnitstelle.COMSender("T"+Temp);
+               Comschnitstelle.SendToCOM("T"+Temp);
                System.Threading.Thread.Sleep(500);
-               Comschnitstelle.COMSender("o1");
+               Comschnitstelle.SendToCOM("o1");
 
 
 
@@ -928,7 +929,7 @@ namespace PharMS_Steuerung
             if (rbPumpeMesszelleAus.Checked)
             {
                 rbPumpeMesszelleEin.Checked = false;
-                Comschnitstelle.COMSender("p1,1");
+                Comschnitstelle.SendToCOM("p1,1");
             }
         }
 
@@ -937,7 +938,7 @@ namespace PharMS_Steuerung
             if (rbPumpeMesszelleEin.Checked)
             {
                 rbPumpeMesszelleAus.Checked = false;
-                Comschnitstelle.COMSender("p1,0");
+                Comschnitstelle.SendToCOM("p1,0");
             }
         }
 
@@ -946,16 +947,16 @@ namespace PharMS_Steuerung
             if (rbPumpeAbfallEin.Checked)
             {
                 rbPumpeAbfallAus.Checked = false;
-                Comschnitstelle.COMSender("p2,1");
+                Comschnitstelle.SendToCOM("p2,1");
             }
         }
 
         private void rbPumpeAbfallAus_CheckedChanged(object sender, EventArgs e)
         {
-            if (rbPumpeAbfallAus.Checked)
+            if (rbPumpeAbfallEin.Checked)
             {
                 rbPumpeAbfallEin.Checked = false;
-                Comschnitstelle.COMSender("p2,0");
+                Comschnitstelle.SendToCOM("p2,0");
             }
         }
 
@@ -964,7 +965,7 @@ namespace PharMS_Steuerung
             if (rbTemperierungAus.Checked)
             {
                 rbTemperierungEin.Checked = false;
-                Comschnitstelle.COMSender("o0");
+                Comschnitstelle.SendToCOM("o0");
             }
         }
 

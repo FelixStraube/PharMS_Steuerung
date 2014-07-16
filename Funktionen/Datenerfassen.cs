@@ -34,7 +34,7 @@ namespace PharMS_Steuerung.Funktionen
             TableMeasurements.Columns.Add("Sensor1", typeof(Double));
             TableMeasurements.Columns.Add("Sensor2", typeof(Double));
 
-            bool Datei_vorhanden = false;
+           /* bool Datei_vorhanden = false;
 
 
             string[] words = Daten.Split(',');
@@ -89,7 +89,7 @@ namespace PharMS_Steuerung.Funktionen
                     file.Close();
 
                 }
-            }
+            }*/
         }
 
         public void BuildSource(String Daten)

@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.Verzeichnisauswahl = new System.Windows.Forms.FolderBrowserDialog();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -314,28 +314,28 @@
             // 
             // LiveChart
             // 
-            chartArea3.AxisX.Title = " Time [s]";
-            chartArea3.AxisY.Title = "Signal [nA]";
-            chartArea3.Name = "ChartArea1";
-            this.LiveChart.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.LiveChart.Legends.Add(legend3);
+            chartArea2.AxisX.Title = " Time [s]";
+            chartArea2.AxisY.Title = "Signal [nA]";
+            chartArea2.Name = "ChartArea1";
+            this.LiveChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.LiveChart.Legends.Add(legend2);
             this.LiveChart.Location = new System.Drawing.Point(31, 32);
             this.LiveChart.Name = "LiveChart";
             this.LiveChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-            series5.BorderWidth = 5;
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series5.Legend = "Legend1";
-            series5.MarkerColor = System.Drawing.Color.White;
-            series5.Name = "Sensor 1";
-            series6.BorderWidth = 5;
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series6.Legend = "Legend1";
-            series6.Name = "Sensor 2";
-            this.LiveChart.Series.Add(series5);
-            this.LiveChart.Series.Add(series6);
+            series3.BorderWidth = 5;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Legend = "Legend1";
+            series3.MarkerColor = System.Drawing.Color.White;
+            series3.Name = "Sensor 1";
+            series4.BorderWidth = 5;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Legend = "Legend1";
+            series4.Name = "Sensor 2";
+            this.LiveChart.Series.Add(series3);
+            this.LiveChart.Series.Add(series4);
             this.LiveChart.Size = new System.Drawing.Size(466, 289);
             this.LiveChart.TabIndex = 0;
             this.LiveChart.Text = "chart1";
@@ -1293,24 +1293,29 @@
             // 
             // chtMessung
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chtMessung.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chtMessung.Legends.Add(legend4);
+            chartArea1.AxisX.IsLabelAutoFit = false;
+            chartArea1.AxisX.LabelStyle.Angle = 90;
+            chartArea1.Name = "ChartArea1";
+            this.chtMessung.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chtMessung.Legends.Add(legend1);
             this.chtMessung.Location = new System.Drawing.Point(54, 127);
             this.chtMessung.Name = "chtMessung";
-            series7.BorderWidth = 4;
-            series7.ChartArea = "ChartArea1";
-            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series7.Legend = "Legend1";
-            series7.Name = "Sensor1";
-            series8.BorderWidth = 4;
-            series8.ChartArea = "ChartArea1";
-            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series8.Legend = "Legend1";
-            series8.Name = "Sensor2";
-            this.chtMessung.Series.Add(series7);
-            this.chtMessung.Series.Add(series8);
+            series1.BorderWidth = 4;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(1)), true);
+            series1.Legend = "Legend1";
+            series1.Name = "Sensor1";
+            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            series2.BorderWidth = 4;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Legend = "Legend1";
+            series2.Name = "Sensor2";
+            this.chtMessung.Series.Add(series1);
+            this.chtMessung.Series.Add(series2);
             this.chtMessung.Size = new System.Drawing.Size(464, 300);
             this.chtMessung.TabIndex = 6;
             this.chtMessung.Text = "chart1";
