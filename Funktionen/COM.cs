@@ -16,12 +16,13 @@ namespace PharMS_Steuerung.Funktionen
 {// [STAThread] 
     class COM
     {// Create the serial port with basic settings
-        public string eingabe;
+        public string Status;
         private string[] empfangene_snr = new string[50];
         public SerialPort port;
 
         public Form1 tempForm = new Form1();
         public bool bereit;
+
         public System.Timers.Timer tmrMesswerteTimer;
         /// <summary>
         /// Öffnet COM Port und aktiviert data Recieved
@@ -29,7 +30,6 @@ namespace PharMS_Steuerung.Funktionen
         /// static System.Windows.Forms.Timer Zeitsteuerung = new System.Windows.Forms.Timer();
         /// Timer 
         private int iTickInterval, iTickAktuell;
-        static bool exitFlag = false;
         static int ende;
 
 
@@ -52,17 +52,19 @@ namespace PharMS_Steuerung.Funktionen
         {
             if (!port.IsOpen) return;
 
-            eingabe = port.ReadLine();
+            Status = port.ReadLine();
             //eingabe = port.ReadExisting();
-            Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG(eingabe, tempForm);
-            string steuerzeichen = eingabe.Substring(0, 1);
+            Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG(Status, tempForm);
+            string steuerzeichen = Status.Substring(0, 1);
+            string sMsg;
+            tempForm.stlLog.Add("Data received from device:  " + Status + "     " + System.DateTime.Now.ToString());
 
             switch (steuerzeichen)
             {
                 case "M":
-                    if (tempForm.rbManuelleMessung.Checked == true) 
-                    { 
-                        Funktionen.Datenerfassen Ausgabe_manuel = new Datenerfassen(eingabe, tempForm); 
+                    if (tempForm.rbManuelleMessung.Checked == true)
+                    {
+                        Funktionen.Datenerfassen Ausgabe_manuel = new Datenerfassen(Status, tempForm);
                     }
                     if (tempForm.rbAktiveMessung.Checked == true)
                     {
@@ -71,9 +73,9 @@ namespace PharMS_Steuerung.Funktionen
                             tmrMesswerteTimer = new System.Timers.Timer();
                             tmrMesswerteTimer.Enabled = false;
                         }
-                        if (tmrMesswerteTimer.Enabled == true) 
-                        { 
-                            Funktionen.Datenerfassen Ausgabe_automatisch = new Datenerfassen(eingabe, tempForm);
+                        if (tmrMesswerteTimer.Enabled == true)
+                        {
+                            Funktionen.Datenerfassen Ausgabe_automatisch = new Datenerfassen(Status, tempForm);
                         }
                         else
                         {
@@ -92,11 +94,11 @@ namespace PharMS_Steuerung.Funktionen
                     break;
 
                 case "Z":
-                    AbfrageStatus("s");
+                    AbfrageStatus();
                     break;
 
                 case "s":
-                    switch (eingabe)
+                    switch (Status)
                     {
                         case "s00":
                             bereit = true;
@@ -113,25 +115,46 @@ namespace PharMS_Steuerung.Funktionen
                         case "s10":
 
                             System.Threading.Thread.Sleep(5000);
-                            AbfrageStatus("s");
+                            AbfrageStatus();
                             break;
 
                         case "s30":
 
                             System.Threading.Thread.Sleep(5000);
-                            AbfrageStatus("s");
+                            AbfrageStatus();
                             break;
 
                         case "s40":
 
                             System.Threading.Thread.Sleep(5000);
-                            AbfrageStatus("s");
+                            AbfrageStatus();
                             break;
-
-
                         default: break;
                     }
 
+                    break;
+                case "E":
+                    switch (Status)
+                    {
+                        case "E01":
+                            sMsg = "Unbekanntes Kommando! Überprüfen Sie bitte ihre Sequenz auf Fehler.";
+                            tempForm.Invoke(new Action(() => { MessageBox.Show(tempForm, sMsg); }));
+                            break;
+                        case "E02":
+                            sMsg = "Unzulässiges Element! Überprüfen Sie bitte ihre Sequenz auf Fehler.";
+                            tempForm.Invoke(new Action(() => { MessageBox.Show(tempForm, sMsg); }));
+                            break;
+                        case "E03":
+                            sMsg = "Unzulässiges Argument! Überprüfen Sie bitte ihre Sequenz auf Fehler.";
+                            tempForm.Invoke(new Action(() => { MessageBox.Show(tempForm, sMsg); }));
+                            break;      
+                        default:
+                            sMsg = "Unbekannter Fehler!";
+                            tempForm.Invoke(new Action(() => { MessageBox.Show(tempForm, sMsg); }));
+                            break;
+                    }
+                    bereit = false;
+                    SendToCOM("x");
                     break;
 
                 default: break;
@@ -159,7 +182,7 @@ namespace PharMS_Steuerung.Funktionen
             {
                 //  Console.WriteLine("teste" + iTickInterval + ":" + ende);
                 // Restarts the timer and increments the counter.
-                COMSender("M");
+                SendToCOM("M");
 
                 iTickAktuell = iTickAktuell + iTickInterval;
             }
@@ -170,17 +193,8 @@ namespace PharMS_Steuerung.Funktionen
         /// Sendet einen String an geöffneten com port
         /// </summary>
         /// <param name="Caption">String</param>
-        public void COMSender(String Caption)
-        {
-            if (!port.IsOpen) return;
-            Form1.stlLog.Add("Gesendet : " + Caption + "    " + System.DateTime.Now.ToString());
-            Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : " + Caption, tempForm);
-            port.WriteLine(Caption);
 
-            bereit = false;
-
-        }
-        public bool COMAblaufSender(String Caption)
+        public bool SendToCOM(String Caption, bool bCheckStatus = false)
         {
             if (!port.IsOpen)
             {
@@ -190,41 +204,35 @@ namespace PharMS_Steuerung.Funktionen
             }
             if (bereit == true)
             {
+                tempForm.stlLog.Add("Gesendet : " + Caption + "    " + System.DateTime.Now.ToString());
                 Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : " + Caption, tempForm);
                 port.WriteLine(Caption);
 
                 bereit = false;
                 return true;
             }
-            else
+            if (bCheckStatus)
             {
-                /* Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : s", tempForm);
-                 System.Threading.Thread.Sleep(100);
-                 port.WriteLine("s");*/
-                return false;
+                Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : s", tempForm);
+                AbfrageStatus();
             }
+            return false;
         }
         public void COMDisconnect()
         {
             port.Close();
         }
-        public void COMNotSender(String Caption)
+
+        public void AbfrageStatus()
         {
             if (!port.IsOpen) return;
-            Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : " + Caption, tempForm);
-            port.WriteLine(Caption);
-
-
-        }
-        public void AbfrageStatus(String Caption)
-        {
-            if (!port.IsOpen) return;
-            Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : " + Caption, tempForm);
-            port.WriteLine(Caption);
+            Thread.Sleep(500); //um zu verhindern dass das Gerät mit Abfragen zugespamt wird (führt sonst zu fehlern)
+            Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : s", tempForm);
+            port.WriteLine("s");
         }
 
         public void Execute_Commands(int repeat, params string[] Commands)
-        {        
+        {
             for (int j = 0; j < repeat; j++)
             {
                 for (int i = 0; i < Commands.Count(); i++)
@@ -233,7 +241,7 @@ namespace PharMS_Steuerung.Funktionen
                     do
                     {
                         if (tempForm.Abbruch == true) return;
-                        Lauf = COMAblaufSender(Commands[i]);
+                        Lauf = SendToCOM(Commands[i], true);
                         Console.WriteLine("Line: " + Commands[i]);
                         System.Threading.Thread.Sleep(1000);
 
@@ -242,6 +250,30 @@ namespace PharMS_Steuerung.Funktionen
             }
             //tempForm.Invoke(new Action(() => { MessageBox.Show(tempForm, "Die Sequenz wurde abgearbeitet!"); }));
         }
+
+        public void Execute_Ablauf()
+        {
+            // change_progressBar(-1, 0, progressBar1);
+            for (int z = 0; z < tempForm.Durchläufe; z++)
+            {
+                for (int i = 0; i < tempForm.lstMaster.Count; i++) // warum hast du davor mit 1 angefangen und warum befindet sich die Methode überhaupt in der MainForm?
+                {
+                    Boolean Lauf = true;
+                    do
+                    {
+                        if (tempForm.Abbruch == true) return;
+                        Lauf = SendToCOM("X" + tempForm.lstMaster[i], true);
+                        Console.WriteLine("Line: " + i + ";" + tempForm.lstMaster.Count + ";" + "X" + tempForm.lstMaster[i]);
+                        tempForm.stlLog.Add("Line: " + i + ";" + tempForm.lstMaster.Count + ";" + "X" + tempForm.lstMaster[i]);
+                        System.Threading.Thread.Sleep(1000);
+
+                    } while (Lauf == false);
+                }
+                //change_progressBar(z, Durchläufe, progressBar1);
+            }
+            tempForm.stlLog.Add("Completed threadAblaufStart" + "    " + System.DateTime.Now.ToString());
+        }
+
 
     }
 }
