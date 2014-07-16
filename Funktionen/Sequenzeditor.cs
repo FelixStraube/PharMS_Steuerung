@@ -41,13 +41,13 @@ namespace PharMS_Steuerung.Funktionen
             dictSequenzBefehleWithOneChar.Add("U", "Einstelllung der Potentiostatspannung [mV]");
             dictSequenzBefehleWithOneChar.Add("u", "Abfrage der Potentiostatspannung [mV]");
             dictSequenzBefehleWithOneChar.Add("y", "Potenziostat ein/aus");
+            dictSequenzBefehleWithOneChar.Add("d", "Begaser ein/aus");
             //--------------------------------------------------------------------------
             dictSequenzBefehleWithTwoChar.Add("DV", "Dosiererventil n = 1,2 Ventilpositionen  1- Richtung Wasserflasche, 2 – 8 Portventil"); //Messkammer leeren und spülen verwendet Dv ?
             dictSequenzBefehleWithTwoChar.Add("DS", "Geschwindigkeit mit 1 - Vmax, 40 - Vmin");
             dictSequenzBefehleWithTwoChar.Add("DP", "Ansaugmenge (µl)");
             dictSequenzBefehleWithTwoChar.Add("DD", "Ausstossmenge (µl)");
-            dictSequenzBefehleWithTwoChar.Add("DA", "Absolutposition (0…500)");
-            dictSequenzBefehleWithTwoChar.Add("dn", "Begasung  1-ein, 0-aus");
+            dictSequenzBefehleWithTwoChar.Add("DA", "Absolutposition (0…500)");           
             dictSequenzBefehleWithTwoChar.Add("on", "Thermostat ein/aus");
             dictSequenzBefehleWithTwoChar.Add("dw", "Begasungsdosierer"); // TODO  Parameter fallen aus den Konzept, seperate Lösung notwendig
             dictSequenzBefehleWithTwoChar.Add("DI", "Was ist das??");
