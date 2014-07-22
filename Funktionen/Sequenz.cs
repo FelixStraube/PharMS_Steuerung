@@ -49,64 +49,37 @@ namespace PharMS_Steuerung.Funktionen
         public static string ElektrodenTest()
         {
             List<String> lstSequenz = new List<string>();
-            lstSequenz.Add("Y20;");
-            lstSequenz.Add("DV2;");
-            lstSequenz.Add("DS2;");
-            lstSequenz.Add("v2,2;");
-            lstSequenz.Add("DP1000;");
-            lstSequenz.Add("v2,5;");
-            lstSequenz.Add("v1,8;");
-            lstSequenz.Add("DA0;");
-            lstSequenz.Add("v2,3;");
-            lstSequenz.Add("DP1000;");
-            lstSequenz.Add("v2,5;");
-            lstSequenz.Add("v1,8;");
-            lstSequenz.Add("DA0;");
-            lstSequenz.Add("v2,2;");
-            lstSequenz.Add("DP750;");
-            lstSequenz.Add("v2,5;");
-            lstSequenz.Add("v1,1;");
-            lstSequenz.Add("DA0;");
-            lstSequenz.Add("v2,3;");
-            lstSequenz.Add("DP750;");
-            lstSequenz.Add("v2,5;");
-            lstSequenz.Add("v1,1;");
-            lstSequenz.Add("DA0;");
-            lstSequenz.Add("p1,1;");
-            lstSequenz.Add("U300;");
-            lstSequenz.Add("W2,0;");
-            lstSequenz.Add("M;");
-            lstSequenz.Add("W5,10;");
-            lstSequenz.Add("p1,0;");
-            lstSequenz.Add("U000;");
-            lstSequenz.Add("DV2;");
-            lstSequenz.Add("DS4;");
-            lstSequenz.Add("v1,1;");
-            lstSequenz.Add("v2,5;");
-            lstSequenz.Add("U000;");
-            lstSequenz.Add("DP2500;");
-            lstSequenz.Add("p1,1;");
-            lstSequenz.Add("v1,8;");
-            lstSequenz.Add("DD2500;");
-            lstSequenz.Add("W0,30;");
-            lstSequenz.Add("DV1;");
-            lstSequenz.Add("DP2000;");
-            lstSequenz.Add("DV2;");
-            lstSequenz.Add("v1,1;");
-            lstSequenz.Add("DA0;");
-            lstSequenz.Add("DV1;");
-            lstSequenz.Add("DP1500;");
-            lstSequenz.Add("DV2;");
-            lstSequenz.Add("DA0;");
-            lstSequenz.Add("W1,0;");
-            lstSequenz.Add("p1,0;");
-            lstSequenz.Add("DP2500;");
-            lstSequenz.Add("v1,8;");
-            lstSequenz.Add("DA0;");
-            lstSequenz.Add("v1,1;");
-            lstSequenz.Add("DP2500;");
-            lstSequenz.Add("v1,8;");
-            lstSequenz.Add("DA0");
+
+
+            bool OrdnerExisitiert = Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "Abläufe");
+            if (!OrdnerExisitiert)
+            {
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "Abläufe");
+            }
+            CfgFile oCfgFile = new CfgFile(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\Elektrodentest.txt");
+            lstSequenz = oCfgFile.Ausgabe(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\Elektrodentest.txt");
+            lstSequenz.RemoveAt(0);
+            lstSequenz[0] = "Y20;";
+
+            string concat = String.Join(String.Empty, lstSequenz.ToArray());
+            return concat;
+
+        }
+
+        public static string ElektrodenReg()
+        {
+            List<String> lstSequenz = new List<string>();
+
+
+            bool OrdnerExisitiert = Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "Abläufe");
+            if (!OrdnerExisitiert)
+            {
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "Abläufe");
+            }
+            CfgFile oCfgFile = new CfgFile(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\ElektrodenRegenerieren.txt");
+            lstSequenz = oCfgFile.Ausgabe(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\ElektrodenRegenerieren.txt");
+            lstSequenz.RemoveAt(0);
+            lstSequenz[0] = "Y20;";
 
             string concat = String.Join(String.Empty, lstSequenz.ToArray());
             return concat;

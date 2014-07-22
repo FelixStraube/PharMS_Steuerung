@@ -197,22 +197,22 @@ namespace PharMS_Steuerung
             tabControl1.Visible = false;
 
 
-          /*  List<String> stlTest = new List<string>();
-            CfgFile oCfgFile = new CfgFile("C:\\Users\\Alexander\\Desktop\\blubb\\Temp\\Daten Vom 1.4.2014.txt");
-            stlTest = oCfgFile.Ausgabe();
-            Datenerfassen test = new Datenerfassen("", this);
-            foreach (string line in stlTest)
-            {
-                test.BuildSource(line);
-            }
+            /*  List<String> stlTest = new List<string>();
+              CfgFile oCfgFile = new CfgFile("C:\\Users\\Alexander\\Desktop\\blubb\\Temp\\Daten Vom 1.4.2014.txt");
+              stlTest = oCfgFile.Ausgabe();
+              Datenerfassen test = new Datenerfassen("", this);
+              foreach (string line in stlTest)
+              {
+                  test.BuildSource(line);
+              }
 
-            //chtMessung.Series[1].XValueMember = "Time";
-            //chtMessung.Series[1].YValueMembers = "Sensor2";
+              //chtMessung.Series[1].XValueMember = "Time";
+              //chtMessung.Series[1].YValueMembers = "Sensor2";
            
-            chtMessung.Series[0].XValueMember = "Time";
-            chtMessung.Series[0].YValueMembers = "Sensor1";
-            chtMessung.DataSource = test.TableMeasurements;
-            chtMessung.DataBind();*/
+              chtMessung.Series[0].XValueMember = "Time";
+              chtMessung.Series[0].YValueMembers = "Sensor1";
+              chtMessung.DataSource = test.TableMeasurements;
+              chtMessung.DataBind();*/
 
 
         }
@@ -220,13 +220,13 @@ namespace PharMS_Steuerung
         private void Console_Senden_Click(object sender, EventArgs e)
         {
             Abbruch = true;
-            Comschnitstelle.SendToCOM(Console_Eingabe.Text);
+            Comschnitstelle.SendToCOM(Console_Eingabe.Text, true);
             Funktionen.Consolen_LOG Ausgabe = new Funktionen.Consolen_LOG(Console_Eingabe.Text, this);
         }
 
         private void Man_Messung_Click(object sender, EventArgs e)
         {
-            Comschnitstelle.SendToCOM("U" + numericZellspannung.Value);
+            Comschnitstelle.SendToCOM("U" + numericZellspannung.Value, true);
             int n = Convert.ToInt32(numeric_Intervall.Value);
             ende = Convert.ToInt32(numeric_Messdauer.Value);
             ende = ende * 60 / n;
@@ -238,7 +238,7 @@ namespace PharMS_Steuerung
             Zeitsteuerung.Start();
         }
 
-        private static void TimerEventProcessor(Object myObject, EventArgs myEventArgs)
+        private void TimerEventProcessor(Object myObject, EventArgs myEventArgs)
         {
 
             Zeitsteuerung.Stop();
@@ -248,14 +248,19 @@ namespace PharMS_Steuerung
             {
                 Console.WriteLine("teste" + alarmCounter + ":" + ende);
                 // Restarts the timer and increments the counter.
-                Comschnitstelle.SendToCOM("M");
+                Comschnitstelle.SendToCOM("M", true);
                 alarmCounter += 1;
                 Zeitsteuerung.Enabled = true;
+                DatenerfassungTab.Refresh();
+                DatenerfassungTab.PerformLayout();
             }
             else
             {
-                Datenerfassen test = new Datenerfassen("---------,---------", Comschnitstelle.tempForm);
+                //Datenerfassen test = new Datenerfassen("---------,---------", Comschnitstelle.tempForm);
                 // Stops the timer.
+                DatenerfassungTab.Refresh();
+                DatenerfassungTab.PerformLayout();
+                Exporting Save = new Exporting(DatenerfassungTab, Application.StartupPath+"Messdaten.txt");
                 exitFlag = true;
             }
         }
@@ -278,7 +283,7 @@ namespace PharMS_Steuerung
 
         private void Initialisierung_Click(object sender, EventArgs e)
         {
-            Comschnitstelle.SendToCOM("X01");
+            Comschnitstelle.SendToCOM("X01", true);
         }
 
         private void AblaufListe_SelectedValueChanged(object sender, EventArgs e)
@@ -487,7 +492,7 @@ namespace PharMS_Steuerung
 
         void mnItemStarten_Click(object sender, EventArgs e)
         {
-            Comschnitstelle.SendToCOM("X" + iSpeicherplatzForMNItem.ToString());
+            Comschnitstelle.SendToCOM("X" + iSpeicherplatzForMNItem.ToString(), true);
         }
         void mnItemEditieren_Click(object sender, EventArgs e)
         {
@@ -547,6 +552,18 @@ namespace PharMS_Steuerung
             oSequenzeditor.FillGridSequenzEdit();
             oSequenzeditor.FillGridMaster();
             MasterGrid.RowValidating += MasterGrid_RowValidating;
+
+            if (Comschnitstelle != null)
+            {               
+                if (rbAktiveMessung.Checked)
+                    DatenerfassungTab.DataSource = Comschnitstelle.Ausgabe_automatisch.TableMeasurements;
+                else
+                    DatenerfassungTab.DataSource = Comschnitstelle.Ausgabe_manuel.TableMeasurements;
+
+                DatenerfassungTab.Refresh();
+                DatenerfassungTab.PerformLayout();
+                
+            }
         }
 
         private void btnUebertragen_Click(object sender, EventArgs e)
@@ -572,17 +589,17 @@ namespace PharMS_Steuerung
                 }
                 if (oSequenz.iSpeicherplatz.ToString() != "-999")
                 {
-                    lstCommands.Add("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);         
+                    lstCommands.Add("Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
                     Console.WriteLine("Incoming Data gesendet:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf);
                     stlLog.Add("Incoming Data gesendet:" + "Y" + oSequenz.iSpeicherplatz.ToString() + ablauf + "    " + System.DateTime.Now.ToString());
-                }                
+                }
             }
 
             BackgroundWorker BackgroundWorkerSendSequenz = new BackgroundWorker();
             stlLog.Add("Start BackgroundWorkerSendSequenz" + "    " + System.DateTime.Now.ToString());
             BackgroundWorkerSendSequenz.RunWorkerCompleted += BackgroundWorkerSendSequenz_RunWorkerCompleted;
             BackgroundWorkerSendSequenz.DoWork += BackgroundWorkerCommands_DoWork;
-            BackgroundWorkerSendSequenz.RunWorkerAsync(new HelpClass(1, lstCommands.ToArray()));           
+            BackgroundWorkerSendSequenz.RunWorkerAsync(new HelpClass(1, lstCommands.ToArray()));
         }
 
         public bool Messungen_Tabelle(int MessungNR, string Bezeichnung)
@@ -758,22 +775,23 @@ namespace PharMS_Steuerung
         {
             txtboxTemperatur.ReadOnly = true;
             if (rbTemperierungEin.Checked)
-            {   
+            {
                 txtboxTemperatur.ReadOnly = false;
                 string Temp = txtboxTemperatur.Text.ToString();
-               if (Temp.IndexOf(",")!= null){
-                   Temp=Temp.Replace(",", ".");
+                if (Temp.IndexOf(",") != null)
+                {
+                    Temp = Temp.Replace(",", ".");
 
-               };
-               Comschnitstelle.SendToCOM("T"+Temp);
-               System.Threading.Thread.Sleep(500);
-               Comschnitstelle.SendToCOM("o1");
+                };
+                Comschnitstelle.SendToCOM("T" + Temp, true);
+                System.Threading.Thread.Sleep(500);
+                Comschnitstelle.SendToCOM("o1", true);
 
 
 
             }
 
-            
+
         }
 
         private void btnNeueMessung_Click(object sender, EventArgs e)
@@ -835,12 +853,12 @@ namespace PharMS_Steuerung
         {
             if (Comschnitstelle.bereit)
             {
-                Comschnitstelle.SendToCOM(Sequenz.ElektrodenTest());
+                Comschnitstelle.SendToCOM(Sequenz.ElektrodenTest(), true);
                 Console.WriteLine("Incoming Data gesendet:" + Sequenz.ElektrodenTest());
                 stlLog.Add("Incoming Data gesendet:" + Sequenz.ElektrodenTest() + "    " + System.DateTime.Now.ToString());
                 MessageBox.Show("Zuleitung 7 zu Ventil 2 in Testlösung führen!");
                 rbManuelleMessung.Checked = true;
-                Comschnitstelle.SendToCOM("X20");
+                Comschnitstelle.SendToCOM("X20", true);
                 Console.WriteLine("X20");
                 stlLog.Add("X20");
                 tabControl1.SelectedTab = tabPage2;
@@ -853,11 +871,11 @@ namespace PharMS_Steuerung
             if (Comschnitstelle.bereit)
             {
                 tabControl1.SelectedTab = tabPage1;
-                Comschnitstelle.SendToCOM(Sequenz.LeitungenSpuelen(true));
+                Comschnitstelle.SendToCOM(Sequenz.LeitungenSpuelen(true), true);
                 Console.WriteLine("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(true));
                 stlLog.Add("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(true) + "    " + System.DateTime.Now.ToString());
 
-                Comschnitstelle.SendToCOM(Sequenz.LeitungenSpuelen(false));
+                Comschnitstelle.SendToCOM(Sequenz.LeitungenSpuelen(false), true);
                 Console.WriteLine("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(false));
                 stlLog.Add("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(false) + "    " + System.DateTime.Now.ToString());
                 MessageBox.Show("Schritt 1: Desinfektion \n 1. Inkubationsgefäße gegen Blindgefäße austauschen! \n 2. Zuleitungen 1, 2, 3, 6, 7 zu Ventil 2 in separates Abfallgefäß führen! \n 3. Puffergefäß gegen Desinfektionsmittelgefäß austauschen!");
@@ -875,19 +893,14 @@ namespace PharMS_Steuerung
 
         private void btnReg_Click(object sender, EventArgs e)
         {
-            int i = 0;
-            List<String> lstReg = new List<string>();
-            lstReg.Add("U-500");
-            lstReg.Add("W0,30");
-            lstReg.Add("U000");
-
             if (Comschnitstelle.bereit)
             {
+                Comschnitstelle.SendToCOM(Sequenz.ElektrodenReg(), true);
                 BackgroundWorker BackgroundWorkerReg = new BackgroundWorker();
                 stlLog.Add("Start BackgroundWorkerReg" + "    " + System.DateTime.Now.ToString());
                 BackgroundWorkerReg.DoWork += BackgroundWorkerCommands_DoWork;
                 BackgroundWorkerReg.RunWorkerCompleted += BackgroundWorkerReg_RunWorkerCompleted;
-                BackgroundWorkerReg.RunWorkerAsync(new HelpClass(1, lstReg.ToArray()));
+                BackgroundWorkerReg.RunWorkerAsync(new HelpClass(1, "X20","W0,01"));
                 tabControl1.SelectedTab = tabPage1;
             }
             else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
@@ -929,7 +942,7 @@ namespace PharMS_Steuerung
             if (rbPumpeMesszelleAus.Checked)
             {
                 rbPumpeMesszelleEin.Checked = false;
-                Comschnitstelle.SendToCOM("p1,1");
+                Comschnitstelle.SendToCOM("p1,1", true);
             }
         }
 
@@ -938,7 +951,7 @@ namespace PharMS_Steuerung
             if (rbPumpeMesszelleEin.Checked)
             {
                 rbPumpeMesszelleAus.Checked = false;
-                Comschnitstelle.SendToCOM("p1,0");
+                Comschnitstelle.SendToCOM("p1,0", true);
             }
         }
 
@@ -947,7 +960,7 @@ namespace PharMS_Steuerung
             if (rbPumpeAbfallEin.Checked)
             {
                 rbPumpeAbfallAus.Checked = false;
-                Comschnitstelle.SendToCOM("p2,1");
+                Comschnitstelle.SendToCOM("p2,1", true);
             }
         }
 
@@ -956,7 +969,7 @@ namespace PharMS_Steuerung
             if (rbPumpeAbfallEin.Checked)
             {
                 rbPumpeAbfallEin.Checked = false;
-                Comschnitstelle.SendToCOM("p2,0");
+                Comschnitstelle.SendToCOM("p2,0", true);
             }
         }
 
@@ -965,7 +978,7 @@ namespace PharMS_Steuerung
             if (rbTemperierungAus.Checked)
             {
                 rbTemperierungEin.Checked = false;
-                Comschnitstelle.SendToCOM("o0");
+                Comschnitstelle.SendToCOM("o0", true);
             }
         }
 

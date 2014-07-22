@@ -17,7 +17,11 @@ namespace PharMS_Steuerung.Funktionen
     class COM
     {// Create the serial port with basic settings
         public string Status;
+        private string sMakroEndeZeichen;
         private string[] empfangene_snr = new string[50];
+        private string sExpectedStatus;
+        public Datenerfassen Ausgabe_manuel = new Datenerfassen();
+        public Datenerfassen Ausgabe_automatisch = new Datenerfassen();
         public SerialPort port;
         public Form1 tempForm = new Form1();
         public bool bereit;
@@ -38,6 +42,7 @@ namespace PharMS_Steuerung.Funktionen
             tempForm = Ausgabefenster;
             CfgFile Config = new CfgFile("Config.ini");
             string ComPort = Config.getValue("COM", "Port", false);
+            sMakroEndeZeichen = Config.getValue("Steuerzeichen", "MakroEnde", false);
             System.Console.Out.WriteLine("Das ist Com Port  " + ComPort);
             port = new SerialPort(ComPort, 9600, Parity.None, 8, StopBits.One);
             Console.WriteLine("Incoming Data:");
@@ -55,113 +60,113 @@ namespace PharMS_Steuerung.Funktionen
             Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG(Status, tempForm);
             string steuerzeichen = Status.Substring(0, 1);
             string sMsg;
-            tempForm.stlLog.Add("Data received from device:  " + Status + "     " + System.DateTime.Now.ToString());
-
-            switch (steuerzeichen)
-            {
-                case "M":
-                    if (tempForm.rbManuelleMessung.Checked == true)
-                    {
-                        Funktionen.Datenerfassen Ausgabe_manuel = new Datenerfassen(Status, tempForm);
-                    }
-                    if (tempForm.rbAktiveMessung.Checked == true)
-                    {
-                        if (tmrMesswerteTimer == null)
+            tempForm.stlLog.Add("Data received from device:  " + Status + "   expected status: " + sExpectedStatus + "     " + System.DateTime.Now.ToString());
+            if (steuerzeichen == sExpectedStatus || steuerzeichen == "E" || steuerzeichen == sMakroEndeZeichen || steuerzeichen == "M")
+                switch (steuerzeichen)
+                {
+                    case "M":
+                        if (tempForm.rbManuelleMessung.Checked == true)
                         {
-                            tmrMesswerteTimer = new System.Timers.Timer();
-                            tmrMesswerteTimer.Enabled = false;
+                            Ausgabe_manuel.BuildSource(Status);
                         }
-                        if (tmrMesswerteTimer.Enabled == true)
+                        if (tempForm.rbAktiveMessung.Checked == true)
                         {
-                            Funktionen.Datenerfassen Ausgabe_automatisch = new Datenerfassen(Status, tempForm);
-                        }
-                        else
-                        {
-                            tmrMesswerteTimer = new System.Timers.Timer();
-                            iTickInterval = Convert.ToInt32(tempForm.numeric_Intervall.Value);
-                            tmrMesswerteTimer.Interval = iTickInterval * 1000;  //s zu ms
-                            tmrMesswerteTimer.Elapsed += new ElapsedEventHandler(Execute);
-                            ende = Convert.ToInt32(tempForm.numeric_Messdauer.Value);
-                            ende = ende * 60; /// iTickInterval;
-                            iTickAktuell = 0;
-                            tmrMesswerteTimer.Start();
-                        }
-
-                    }
-
-                    break;
-
-                case "Z":
-                    AbfrageStatus();
-                    break;
-
-                case "s":
-                    switch (Status)
-                    {
-                        case "s00":
-                            bereit = true;
-                            CountUndefinedStatus = 0;
-                            break;
-
-                        case "s20":
-                        
-                            bereit = true;
-                            CountUndefinedStatus = 0;
-                            break;
-                        case "s10":
-
-                            System.Threading.Thread.Sleep(5000);
-                            AbfrageStatus();
-                            break;
-
-                        case "s30":
-
-                            System.Threading.Thread.Sleep(5000);
-                            AbfrageStatus();
-                            break;
-
-                        case "s40":
-
-                            System.Threading.Thread.Sleep(5000);
-                            AbfrageStatus();
-                            break;
-                        default:
-                            System.Threading.Thread.Sleep(5000);
-                            if (CountUndefinedStatus != 250)
+                            if (tmrMesswerteTimer == null)
                             {
-                                CountUndefinedStatus++;
-                                AbfrageStatus();
+                                tmrMesswerteTimer = new System.Timers.Timer();
+                                tmrMesswerteTimer.Enabled = false;
                             }
-                            break;
-                    }
+                            if (tmrMesswerteTimer.Enabled == true)
+                            {
+                                Ausgabe_automatisch.BuildSource(Status);
+                            }
+                            else
+                            {
+                                tmrMesswerteTimer = new System.Timers.Timer();
+                                iTickInterval = Convert.ToInt32(tempForm.numeric_Intervall.Value);
+                                tmrMesswerteTimer.Interval = iTickInterval * 1000;  //s zu ms
+                                tmrMesswerteTimer.Elapsed += new ElapsedEventHandler(Execute);
+                                ende = Convert.ToInt32(tempForm.numeric_Messdauer.Value);
+                                ende = ende * 60; /// iTickInterval;
+                                iTickAktuell = 0;
+                                tmrMesswerteTimer.Start();
+                            }
+                        }
 
-                    break;
-                case "E":
-                    switch (Status)
-                    {
-                        case "E01":
-                            sMsg = "Unbekanntes Kommando! Überprüfen Sie bitte ihre Sequenz auf Fehler.";
-                            tempForm.Invoke(new Action(() => { MessageBox.Show(tempForm, sMsg); }));
-                            break;
-                        case "E02":
-                            sMsg = "Unzulässiges Element! Überprüfen Sie bitte ihre Sequenz auf Fehler.";
-                            tempForm.Invoke(new Action(() => { MessageBox.Show(tempForm, sMsg); }));
-                            break;
-                        case "E03":
-                            sMsg = "Unzulässiges Argument! Überprüfen Sie bitte ihre Sequenz auf Fehler.";
-                            tempForm.Invoke(new Action(() => { MessageBox.Show(tempForm, sMsg); }));
-                            break;
-                        default:
-                            sMsg = "Unbekannter Fehler!";
-                            tempForm.Invoke(new Action(() => { MessageBox.Show(tempForm, sMsg); }));
-                            break;
-                    }
-                    bereit = false;
-                    port.WriteLine("x");
-                    break;
+                        break;
 
-                default: break;
-            }
+                    case "Z":
+                        AbfrageStatus();
+                        break;
+
+                    case "s":
+                        switch (Status)
+                        {
+                            case "s00":
+                                bereit = true;
+                                CountUndefinedStatus = 0;
+                                break;
+
+                            case "s20":
+
+                                bereit = true;
+                                CountUndefinedStatus = 0;
+                                break;
+                            case "s10":
+
+                                System.Threading.Thread.Sleep(5000);
+                                AbfrageStatus();
+                                break;
+
+                            case "s30":
+
+                                System.Threading.Thread.Sleep(5000);
+                                AbfrageStatus();
+                                break;
+
+                            case "s40":
+
+                                System.Threading.Thread.Sleep(5000);
+                                AbfrageStatus();
+                                break;
+                            default:
+                                System.Threading.Thread.Sleep(30000);
+                                if (CountUndefinedStatus != 5)
+                                {
+                                    CountUndefinedStatus++;
+                                    AbfrageStatus();
+                                }
+                                break;
+                        }
+
+                        break;
+                    case "E":
+                        switch (Status)
+                        {
+                            case "E01":
+                                sMsg = "Unbekanntes Kommando! Überprüfen Sie bitte ihre Sequenz auf Fehler.";
+                                tempForm.Invoke(new Action(() => { MessageBox.Show(tempForm, sMsg); }));
+                                break;
+                            case "E02":
+                                sMsg = "Unzulässiges Element! Überprüfen Sie bitte ihre Sequenz auf Fehler.";
+                                tempForm.Invoke(new Action(() => { MessageBox.Show(tempForm, sMsg); }));
+                                break;
+                            case "E03":
+                                sMsg = "Unzulässiges Argument! Überprüfen Sie bitte ihre Sequenz auf Fehler.";
+                                tempForm.Invoke(new Action(() => { MessageBox.Show(tempForm, sMsg); }));
+                                break;
+                            default:
+                                sMsg = "Unbekannter Fehler!";
+                                tempForm.Invoke(new Action(() => { MessageBox.Show(tempForm, sMsg); }));
+                                break;
+                        }
+                        bereit = false;
+                        port.WriteLine("x");
+                        sExpectedStatus = ("Z");
+                        break;
+
+                    default: break;
+                }
 
             //   Console.WriteLine("Eingelesen von Com 3" + eingabe + "/" + steuerzeichen);
         }
@@ -170,9 +175,10 @@ namespace PharMS_Steuerung.Funktionen
         {
             if (iTickAktuell == ende)
             {
-                Funktionen.Datenerfassen test = new Funktionen.Datenerfassen("---------,---------", tempForm);
+                //  Funktionen.Datenerfassen test = new Funktionen.Datenerfassen("---------,---------", tempForm);
                 //Live chart cler und in Datenfeld aufnehmen
-
+               // tempForm.DatenerfassungTab.Refresh();
+               // tempForm.DatenerfassungTab.PerformLayout(); Threadübergreifender zugriff : fehler
                 LiveChart ChartAusgabe = new LiveChart();
                 ChartAusgabe.erfassen("0", "0", tempForm, true, true);
                 iTickAktuell = iTickAktuell + iTickInterval;
@@ -180,12 +186,15 @@ namespace PharMS_Steuerung.Funktionen
                 //                tmrMesswerteTimer.Enabled = false;
                 //                tmrMesswerteTimer.Dispose();
                 tmrMesswerteTimer.Close();
+                port.WriteLine("s");
+                sExpectedStatus = "s";
             }
             else
             {
                 //  Console.WriteLine("teste" + iTickInterval + ":" + ende);
                 // Restarts the timer and increments the counter.
                 port.WriteLine("M");
+                sExpectedStatus = "M";
                 iTickAktuell = iTickAktuell + iTickInterval;
             }
 
@@ -196,7 +205,7 @@ namespace PharMS_Steuerung.Funktionen
         /// </summary>
         /// <param name="Caption">String</param>
 
-        public bool SendToCOM(String Caption)
+        public bool SendToCOM(String Caption, bool bForce)
         {
             if (!port.IsOpen)
             {
@@ -204,11 +213,12 @@ namespace PharMS_Steuerung.Funktionen
                 return false;
 
             }
-            if (bereit == true)
+            if (bereit == true || bForce == true)
             {
                 tempForm.stlLog.Add("Gesendet : " + Caption + "    " + System.DateTime.Now.ToString());
                 Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : " + Caption, tempForm);
                 port.WriteLine(Caption);
+                sExpectedStatus = "Z";
 
                 bereit = false;
                 return true;
@@ -232,6 +242,7 @@ namespace PharMS_Steuerung.Funktionen
             Thread.Sleep(3000); //um zu verhindern dass das Gerät mit Abfragen zugespamt wird (führt sonst zu fehlern)
             // Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : s", tempForm);
             port.WriteLine("s");
+            sExpectedStatus = "s";
         }
 
         public void NotStop()
@@ -239,12 +250,13 @@ namespace PharMS_Steuerung.Funktionen
             if (!port.IsOpen) return;
             Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : s", tempForm);
             port.WriteLine("x");
+            sExpectedStatus = ("Z");
         }
+
 
 
         public void Execute_Commands(int repeat, params string[] Commands)
         {
-
             for (int j = 0; j < repeat; j++)
             {
                 for (int i = 0; i < Commands.Count(); i++)
@@ -253,16 +265,13 @@ namespace PharMS_Steuerung.Funktionen
                     do
                     {
                         if (tempForm.Abbruch == true) return;
-                        Lauf = SendToCOM(Commands[i]);
-                        Console.WriteLine("Line: " + Commands[i]);
-                        System.Threading.Thread.Sleep(1000);
+                        Lauf = SendToCOM(Commands[i], false);
+                        if (Lauf == true) Console.WriteLine("Line: " + Commands[i]);
+                        if (Lauf == true) System.Threading.Thread.Sleep(1000);
 
                     } while (Lauf == false);
-
                 }
             }
-
-            //tempForm.Invoke(new Action(() => { MessageBox.Show(tempForm, "Die Sequenz wurde abgearbeitet!"); }));
         }
 
         public void Execute_Ablauf()
@@ -276,21 +285,17 @@ namespace PharMS_Steuerung.Funktionen
                     do
                     {
                         if (tempForm.Abbruch == true) return;
-                        Lauf = SendToCOM("X" + tempForm.lstMaster[i]);
-                        Console.WriteLine("Line: " + i + ";" + tempForm.lstMaster.Count + ";" + "X" + tempForm.lstMaster[i]);
-                        tempForm.stlLog.Add("Line: " + i + ";" + tempForm.lstMaster.Count + ";" + "X" + tempForm.lstMaster[i]);
+                        Lauf = SendToCOM("X" + tempForm.lstMaster[i], false);
+                        if (Lauf == true) Console.WriteLine("Line: " + i + ";" + tempForm.lstMaster.Count + ";" + "X" + tempForm.lstMaster[i]);
+                        if (Lauf == true) tempForm.stlLog.Add("Line: " + i + ";" + tempForm.lstMaster.Count + ";" + "X" + tempForm.lstMaster[i]);
                         System.Threading.Thread.Sleep(1000);
 
-
                     } while (Lauf == false);
-
                 }
                 //change_progressBar(z, Durchläufe, progressBar1);
             }
             tempForm.stlLog.Add("Completed threadAblaufStart" + "    " + System.DateTime.Now.ToString());
         }
-
-
     }
 }
 

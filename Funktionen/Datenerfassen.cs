@@ -16,8 +16,8 @@ namespace PharMS_Steuerung.Funktionen
     class Datenerfassen
     {
 
-        public DateTime Time = DateTime.Now;
-        public DataGrid tet = new DataGrid();       
+       // public DateTime Time = DateTime.Now;
+        public DataGrid tet = new DataGrid();
         public DataTable TableMeasurements = new DataTable();
         string Sensor1;
         string Sensor2;
@@ -28,13 +28,14 @@ namespace PharMS_Steuerung.Funktionen
         /// <param name="Daten">String </param>
         /// <param name="Ausgabefenster">Form1 </param>
         /// 
-        public Datenerfassen(String Daten, Form1 Ausgabefenster)
+        public Datenerfassen()
         {
             TableMeasurements.Columns.Add("Time", typeof(DateTime));
+            TableMeasurements.Columns.Add("Sec", typeof(int));
             TableMeasurements.Columns.Add("Sensor1", typeof(Double));
             TableMeasurements.Columns.Add("Sensor2", typeof(Double));
 
-           /* bool Datei_vorhanden = false;
+            /*bool Datei_vorhanden = false;
 
 
             string[] words = Daten.Split(',');
@@ -93,20 +94,16 @@ namespace PharMS_Steuerung.Funktionen
         }
 
         public void BuildSource(String Daten)
-        {            
-            string[] words = Daten.Split(';');
-            //foreach (string word in words)
+        {
+            string[] words = Daten.Split(',');
+            string Sensor1a = words[0].Substring(1, words[0].Length - 1);
+            Sensor1a = Sensor1a.Replace(".", ",");
+            string Sensor2b = words[1].Substring(1, words[1].Length - 1);
+            Sensor2b = Sensor2b.Replace(".", ",");
 
-           string Sensor1a = words[1].Replace(".",",");
-           string Sensor2b = words[2].Replace(".", ",");
-           TableMeasurements.Rows.Add(Time, Convert.ToDouble(Sensor1a), Convert.ToDouble(Sensor2b));
+            TableMeasurements.Rows.Add(DateTime.Now, Convert.ToDouble(Sensor1a), Convert.ToDouble(Sensor2b));
 
-            // string Zeit = string.Format("{0:d/M/yyyy HH:mm:ss}", Time);
-            //string Zeit = words[0];
-
-
-            
         }
     }
-    
+
 }

@@ -65,9 +65,6 @@
             this.Man_Messung = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.DatenerfassungTab = new System.Windows.Forms.DataGridView();
-            this.Zeit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Spannung1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Spannung2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabMasterablauf = new System.Windows.Forms.TabPage();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.AblaufStart = new System.Windows.Forms.Button();
@@ -148,6 +145,10 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.colDateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sensor1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sensor2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -410,35 +411,14 @@
             // 
             this.DatenerfassungTab.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DatenerfassungTab.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Zeit,
-            this.Spannung1,
-            this.Spannung2});
+            this.colDateTime,
+            this.colTime,
+            this.Sensor1,
+            this.Sensor2});
             this.DatenerfassungTab.Location = new System.Drawing.Point(9, 18);
             this.DatenerfassungTab.Name = "DatenerfassungTab";
             this.DatenerfassungTab.Size = new System.Drawing.Size(405, 522);
             this.DatenerfassungTab.TabIndex = 0;
-            // 
-            // Zeit
-            // 
-            this.Zeit.DataPropertyName = "Time";
-            this.Zeit.FillWeight = 120F;
-            this.Zeit.HeaderText = "Zeit";
-            this.Zeit.Name = "Zeit";
-            this.Zeit.Width = 120;
-            // 
-            // Spannung1
-            // 
-            this.Spannung1.DataPropertyName = "Sensor1";
-            this.Spannung1.HeaderText = "Sensor 1 [ nA ]";
-            this.Spannung1.Name = "Spannung1";
-            this.Spannung1.Width = 120;
-            // 
-            // Spannung2
-            // 
-            this.Spannung2.DataPropertyName = "Sensor2";
-            this.Spannung2.HeaderText = "Sensor 2 [ nA ]";
-            this.Spannung2.Name = "Spannung2";
-            this.Spannung2.Width = 120;
             // 
             // tabMasterablauf
             // 
@@ -1371,6 +1351,35 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "Bezeichnung Inkubationsgefäß 1:";
             // 
+            // colDateTime
+            // 
+            this.colDateTime.DataPropertyName = "Time";
+            this.colDateTime.FillWeight = 120F;
+            this.colDateTime.HeaderText = "Zeit";
+            this.colDateTime.Name = "colDateTime";
+            this.colDateTime.Width = 140;
+            // 
+            // colTime
+            // 
+            this.colTime.DataPropertyName = "Sec";
+            this.colTime.HeaderText = "Sec";
+            this.colTime.Name = "colTime";
+            this.colTime.Visible = false;
+            this.colTime.Width = 40;
+            // 
+            // Sensor1
+            // 
+            this.Sensor1.DataPropertyName = "Sensor1";
+            this.Sensor1.HeaderText = "Sensor 1 [ nA ]";
+            this.Sensor1.Name = "Sensor1";
+            // 
+            // Sensor2
+            // 
+            this.Sensor2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Sensor2.DataPropertyName = "Sensor2";
+            this.Sensor2.HeaderText = "Sensor 2 [ nA ]";
+            this.Sensor2.Name = "Sensor2";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1537,15 +1546,16 @@
         private System.Windows.Forms.DataGridViewImageColumn colDelete;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIndex;
         private System.Windows.Forms.DataVisualization.Charting.Chart chtMessung;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Zeit;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Spannung1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Spannung2;
         private System.Windows.Forms.Label label8;
         public System.Windows.Forms.NumericUpDown numSpuelen;
         private System.Windows.Forms.Label label7;
         public System.Windows.Forms.NumericUpDown numDesinfektion;
         private System.Windows.Forms.TextBox txtProbe4;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDateTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Sensor1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Sensor2;
 
 
     }
