@@ -98,10 +98,10 @@ namespace PharMS_Steuerung.Funktionen
             string[] words = Daten.Split(',');
             string Sensor1a = words[0].Substring(1, words[0].Length - 1);
             Sensor1a = Sensor1a.Replace(".", ",");
-            string Sensor2b = words[1].Substring(1, words[1].Length - 1);
+            string Sensor2b = words[1].Substring(0, words[1].Length);
             Sensor2b = Sensor2b.Replace(".", ",");
 
-            TableMeasurements.Rows.Add(DateTime.Now, Convert.ToDouble(Sensor1a), Convert.ToDouble(Sensor2b));
+            TableMeasurements.Rows.Add(DateTime.Now,DateTime.Now.Second, Convert.ToDouble(Sensor1a), Convert.ToDouble(Sensor2b));
 
         }
     }
