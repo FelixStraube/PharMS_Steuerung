@@ -101,7 +101,57 @@ namespace PharMS_Steuerung.Funktionen
             string Sensor2b = words[1].Substring(0, words[1].Length);
             Sensor2b = Sensor2b.Replace(".", ",");
 
-            TableMeasurements.Rows.Add(DateTime.Now,DateTime.Now.Second, Convert.ToDouble(Sensor1a), Convert.ToDouble(Sensor2b));
+            TableMeasurements.Rows.Add(DateTime.Now, DateTime.Now.Second, Convert.ToDouble(Sensor1a), Convert.ToDouble(Sensor2b));
+
+        }
+        public void SicherungMessdaten_txt(String Daten)
+        {
+            bool Datei_vorhanden = false;
+            DateTime Time = DateTime.Now;
+            string Zeit = string.Format("{0:d/M/yyyy HH:mm:ss}", Time);
+            
+            string[] words = Daten.Split(',');
+            string Sensor1a = words[0].Substring(1, words[0].Length - 1);
+            Sensor1a = Sensor1a.Replace(".", ",");
+            string Sensor2b = words[1].Substring(0, words[1].Length);
+            Sensor2b = Sensor2b.Replace(".", ",");
+           
+            
+            
+            String BaseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string Filename = "Daten Vom " + string.Format("{0:d/M/yyyy}", Time) + ".txt";
+            List<string> dirs = new List<string>(Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory + "Temp\\", "*.txt"));
+            foreach (var test in dirs)
+            {
+                FileInfo x = new FileInfo(test);
+                if (x.Name == Filename)
+                {
+
+                    Datei_vorhanden = true;
+                }
+            }
+            if (Datei_vorhanden == false)
+            {
+                System.IO.File.Create(AppDomain.CurrentDomain.BaseDirectory + "Temp\\" + Filename);
+
+                Datei_vorhanden = true;
+
+            }
+
+
+            if (Datei_vorhanden == true)
+            {
+
+                try { file = new System.IO.StreamWriter(BaseDirectory + "Temp\\" + Filename, true); }
+                catch { return; };
+                {
+
+                    file.WriteLine(Zeit + ";" + Sensor1a + ";" + Sensor2b);
+                    file.Close();
+
+                }
+            }
+            
 
         }
     }

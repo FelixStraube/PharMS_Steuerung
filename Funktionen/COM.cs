@@ -65,9 +65,26 @@ namespace PharMS_Steuerung.Funktionen
                 switch (steuerzeichen)
                 {
                     case "M":
+                      
+                        // Alternatives erfassen der Messwert in Data grid 
+                        //start
+                        DateTime Time = DateTime.Now;
+                       string Zeit = string.Format("{0:d/M/yyyy HH:mm:ss}", Time);
+                       string[] words = Status.Split(',');
+                       string Sensor1a = words[0].Substring(1, words[0].Length - 1);
+                              Sensor1a = Sensor1a.Replace(".", ",");
+                       string Sensor2b = words[1].Substring(0, words[1].Length);
+                               Sensor2b = Sensor2b.Replace(".", ",");
+                               tempForm.DatenerfassungTab_Hinzu(Zeit, Sensor1a, Sensor2b);
+                    
+                        //Ende
                         if (tempForm.rbManuelleMessung.Checked == true)
                         {
                             Ausgabe_manuel.BuildSource(Status);
+                            Ausgabe_manuel.SicherungMessdaten_txt(Status);// Sicherung in Temp Ordner
+                            
+                            
+                        
                         }
                         if (tempForm.rbAktiveMessung.Checked == true)
                         {
@@ -75,10 +92,14 @@ namespace PharMS_Steuerung.Funktionen
                             {
                                 tmrMesswerteTimer = new System.Timers.Timer();
                                 tmrMesswerteTimer.Enabled = false;
+                                System.Threading.Thread.Sleep(500); // Wenn erstmalig ein Messignal Auftritt und timer noch nicht aktiv ist wurde kein Messwert erfasst
+                                port.WriteLine("M");                // darum erneutes senden von M 2ter Durchlauf
+
                             }
                             if (tmrMesswerteTimer.Enabled == true)
                             {
                                 Ausgabe_automatisch.BuildSource(Status);
+                                Ausgabe_automatisch.SicherungMessdaten_txt(Status); // Sicherung in Temp Ordner
                             }
                             else
                             {
@@ -96,7 +117,11 @@ namespace PharMS_Steuerung.Funktionen
                         break;
 
                     case "Z":
-                        AbfrageStatus();
+                        CountUndefinedStatus = 0;   // Counter null da sonst bei langen Sequenzen kein abfragen status nach 5 min möglich währe
+                        if (Status == sMakroEndeZeichen)
+                        
+                            { AbfrageStatus(); } //AbfrageStatus erfolgt nur nach sequenzende ev. später Z für vollständig übertragenes Kommando ... erweitern 
+                        
                         break;
 
                     case "s":

@@ -48,7 +48,7 @@ namespace PharMS_Steuerung
         public Form1()
         {
             InitializeComponent();
-
+            
         }
 
 
@@ -116,15 +116,15 @@ namespace PharMS_Steuerung
         }
 
         public bool DatenerfassungTab_Hinzu(string Time, string Daten, string Daten2)
-        {
+        { 
             if (this.InvokeRequired)
             {
                 return (bool)this.Invoke((Func<string, string, string, bool>)DatenerfassungTab_Hinzu, Time, Daten, Daten2);
             }
             DataGridViewRow row = (DataGridViewRow)DatenerfassungTab.Rows[0].Clone();
             row.Cells[0].Value = Time;
-            row.Cells[1].Value = Daten;
-            row.Cells[2].Value = Daten2;
+            row.Cells[2].Value = Convert.ToDouble(Daten);
+            row.Cells[3].Value = Convert.ToDouble(Daten2);
             DatenerfassungTab.Rows.Add(row);
             return true;
         }
@@ -553,7 +553,7 @@ namespace PharMS_Steuerung
             oSequenzeditor.FillGridMaster();
             MasterGrid.RowValidating += MasterGrid_RowValidating;
 
-            if (Comschnitstelle != null)
+           /* if (Comschnitstelle != null)
             {               
                 if (rbAktiveMessung.Checked)
                     DatenerfassungTab.DataSource = Comschnitstelle.Ausgabe_automatisch.TableMeasurements;
@@ -561,9 +561,10 @@ namespace PharMS_Steuerung
                     DatenerfassungTab.DataSource = Comschnitstelle.Ausgabe_manuel.TableMeasurements;
 
                 DatenerfassungTab.Refresh();
-                DatenerfassungTab.PerformLayout();
+                DatenerfassungTab.PerformLayout(); 
                 
-            }
+            }*/
+            // Kein Treatsicher zugriff wenn scroll Bar erscheint :-= Fehler Alternativ => DatenerfassungTab_Hinzu im Com 
         }
 
         private void btnUebertragen_Click(object sender, EventArgs e)

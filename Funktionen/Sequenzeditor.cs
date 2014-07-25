@@ -42,6 +42,7 @@ namespace PharMS_Steuerung.Funktionen
             dictSequenzBefehleWithOneChar.Add("u", "Abfrage der Potentiostatspannung [mV]");
             dictSequenzBefehleWithOneChar.Add("y", "Potenziostat ein/aus");
             dictSequenzBefehleWithOneChar.Add("d", "Begaser ein/aus");
+            dictSequenzBefehleWithOneChar.Add("o", "Thermostat ein/aus");
             //--------------------------------------------------------------------------
             dictSequenzBefehleWithTwoChar.Add("DV", "Dosiererventil n = 1,2 Ventilpositionen  1- Richtung Wasserflasche, 2 – 8 Portventil"); //Messkammer leeren und spülen verwendet Dv ?
             dictSequenzBefehleWithTwoChar.Add("DS", "Geschwindigkeit mit 1 - Vmax, 40 - Vmin");
@@ -77,12 +78,13 @@ namespace PharMS_Steuerung.Funktionen
             lstCommands.Add("U");
             lstCommands.Add("u");
             lstCommands.Add("y");
+            lstCommands.Add("d");
+            lstCommands.Add("o");
             lstCommands.Add("DV");
             lstCommands.Add("DS");
             lstCommands.Add("DP");
             lstCommands.Add("DD");
             lstCommands.Add("DA");
-            lstCommands.Add("dn");
             lstCommands.Add("dw");
             lstCommands.Add("on");
             lstCommands.Add("DI");
