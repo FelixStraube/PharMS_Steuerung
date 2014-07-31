@@ -25,6 +25,7 @@ namespace PharMS_Steuerung.Funktionen
         public SerialPort port;
         public Form1 tempForm = new Form1();
         public bool bereit;
+        public static bool Sequenzen_uebertragen_aktiv =false;
         int CountUndefinedStatus = 0;
         public System.Timers.Timer tmrMesswerteTimer;
         /// <summary>
@@ -61,7 +62,7 @@ namespace PharMS_Steuerung.Funktionen
             string steuerzeichen = Status.Substring(0, 1);
             string sMsg;
             tempForm.stlLog.Add("Data received from device:  " + Status + "   expected status: " + sExpectedStatus + "     " + System.DateTime.Now.ToString());
-            if (steuerzeichen == sExpectedStatus || steuerzeichen == "E" || steuerzeichen == sMakroEndeZeichen || steuerzeichen == "M")
+            if (steuerzeichen == sExpectedStatus || steuerzeichen == "E" || Status == sMakroEndeZeichen || steuerzeichen == "M" || steuerzeichen == "Z")
                 switch (steuerzeichen)
                 {
                     case "M":
@@ -118,6 +119,12 @@ namespace PharMS_Steuerung.Funktionen
 
                     case "Z":
                         CountUndefinedStatus = 0;   // Counter null da sonst bei langen Sequenzen kein abfragen status nach 5 min möglich währe
+                       // AbfrageStatus();
+                        if (Sequenzen_uebertragen_aktiv == true && Status != sMakroEndeZeichen)
+                        {
+                                                                  System.Threading.Thread.Sleep(500);
+                                                                  bereit = true; 
+                                                                 } // bei sequenzübertragung wird ohne stautsabfrage fortegesetzt
                         if (Status == sMakroEndeZeichen)
                         
                             { AbfrageStatus(); } //AbfrageStatus erfolgt nur nach sequenzende ev. später Z für vollständig übertragenes Kommando ... erweitern 
@@ -198,7 +205,7 @@ namespace PharMS_Steuerung.Funktionen
 
         private void Execute(Object myObject, EventArgs myEventArgs)
         {
-            if (iTickAktuell == ende)
+            if (iTickAktuell >= ende)
             {
                 //  Funktionen.Datenerfassen test = new Funktionen.Datenerfassen("---------,---------", tempForm);
                 //Live chart cler und in Datenfeld aufnehmen
@@ -211,8 +218,8 @@ namespace PharMS_Steuerung.Funktionen
                 //                tmrMesswerteTimer.Enabled = false;
                 //                tmrMesswerteTimer.Dispose();
                 tmrMesswerteTimer.Close();
-                port.WriteLine("s");
-                sExpectedStatus = "s";
+             //   port.WriteLine("s");  // Stausabfrage bei Messung unnötig
+             //   sExpectedStatus = "s";
             }
             else
             {
