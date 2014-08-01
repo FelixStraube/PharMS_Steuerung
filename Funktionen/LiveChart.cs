@@ -12,8 +12,8 @@ namespace PharMS_Steuerung.Funktionen
     class LiveChart
     {
         public DataSet RealGraph = new DataSet("RealTime_Graph");
-        public DataRow workRow;
-        public DataTable Messungen;
+     //   public DataRow workRow;
+      //  public DataTable Messungen;
         static List<Array> Speicherliste = new List<Array>();
         static List<decimal> templist1 = new List<decimal>();
         static List<decimal> templist2 = new List<decimal>();

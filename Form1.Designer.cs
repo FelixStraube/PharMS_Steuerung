@@ -1108,7 +1108,7 @@
             this.groupBox4.Size = new System.Drawing.Size(166, 105);
             this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Pumpe der Abfallbehandlungs";
+            this.groupBox4.Text = "Pumpe Abfallbehandlungs";
             // 
             // rbPumpeAbfallAus
             // 
@@ -1144,7 +1144,7 @@
             this.groupBox3.Size = new System.Drawing.Size(137, 105);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Pumpe der Messzelle";
+            this.groupBox3.Text = "Pumpe Messzelle";
             // 
             // rbPumpeMesszelleAus
             // 
@@ -1308,7 +1308,7 @@
             this.chtMessung.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chtMessung.Legends.Add(legend1);
-            this.chtMessung.Location = new System.Drawing.Point(54, 127);
+            this.chtMessung.Location = new System.Drawing.Point(53, 160);
             this.chtMessung.Name = "chtMessung";
             series1.BorderWidth = 4;
             series1.ChartArea = "ChartArea1";

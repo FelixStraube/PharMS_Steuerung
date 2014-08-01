@@ -21,7 +21,7 @@ namespace PharMS_Steuerung
         static COM Comschnitstelle;
         string ablauf;
         public bool Connection;
-        public string Name;
+        //public string Name;
         public int Durchläufe;
         public bool Abbruch;
         public int Prozessstand;
@@ -482,7 +482,7 @@ namespace PharMS_Steuerung
                 {
                     AblaufListeVorAuswahl = SequenzenGrid.Rows[icurrentMouseOverRow].Cells[0].Value.ToString();
                     if (SequenzenGrid.Rows[icurrentMouseOverRow].Cells[1].Value != null)
-                        if (SequenzenGrid.Rows[icurrentMouseOverRow].Cells[1].Value.ToString() != "" && SequenzenGrid.Rows[icurrentMouseOverRow].Cells[1].Value.ToString() != "     ")
+                        if (SequenzenGrid.Rows[icurrentMouseOverRow].Cells[1].Value.ToString() != "" && SequenzenGrid.Rows[icurrentMouseOverRow].Cells[1].Value.ToString() != "       ")
                         {
                             m.MenuItems.Add(new MenuItem("Starten"));
                             m.MenuItems[1].Click += mnItemStarten_Click;
@@ -544,7 +544,7 @@ namespace PharMS_Steuerung
                     if (Key == oSequenz.ObjectKey)
                     {
                         oSequenz.sName = SequenzenGrid.Rows[i].Cells[0].Value.ToString();
-                        if (SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "" || SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "     ") oSequenz.iSpeicherplatz = -999;
+                        if (SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "" || SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "       ") oSequenz.iSpeicherplatz = -999;
                         else oSequenz.iSpeicherplatz = Convert.ToInt32(SequenzenGrid.Rows[i].Cells[1].Value.ToString()); //bei Übertragen Click wird der Speicherplatz auch nochmal gespeichert
                         break;
                     }
@@ -569,7 +569,7 @@ namespace PharMS_Steuerung
                 DatenerfassungTab.PerformLayout(); 
                 
             }*/
-            // Kein Treatsicher zugriff wenn scroll Bar erscheint :-= Fehler Alternativ => DatenerfassungTab_Hinzu im Com 
+            // Kein Treatsicher Zugriff wenn scroll_Bar erscheint :-= Fehler Alternativ => DatenerfassungTab_Hinzu im Com 
         }
 
         private void btnUebertragen_Click(object sender, EventArgs e)
@@ -580,7 +580,7 @@ namespace PharMS_Steuerung
                 foreach (Sequenz oSequenz in lstSequenz)
                 {
                     if (Convert.ToInt32(SequenzenGrid.Rows[i].Cells[3].Value) == oSequenz.ObjectKey)
-                        oSequenz.iSpeicherplatz = (SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "" || SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "     ") ? -999 : Convert.ToInt32(SequenzenGrid.Rows[i].Cells[1].Value);
+                        oSequenz.iSpeicherplatz = (SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "" || SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "       ") ? -999 : Convert.ToInt32(SequenzenGrid.Rows[i].Cells[1].Value);
                 }
             }
 
@@ -729,23 +729,34 @@ namespace PharMS_Steuerung
         private void SequenzenGrid_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {   int Sequenzahler = 0;
             if (e.ColumnIndex == 1)
-              
                
+                
+                for (int i = 0; i < SequenzenGrid.Rows.Count - 1; i++)
+                {
+                    foreach (Sequenz oSequenz in lstSequenz)
+                    {
+                        if (Convert.ToInt32(SequenzenGrid.Rows[i].Cells[3].Value) == oSequenz.ObjectKey)
+                            oSequenz.iSpeicherplatz = (SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "" || SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "       ") ? -999 : Convert.ToInt32(SequenzenGrid.Rows[i].Cells[1].Value);
+                    }
+                }
+               
+            
             foreach (Sequenz oSequenz in lstSequenz)
             {
-                Sequenzahler++;
-                 
-                
-                
-                if (oSequenz.iSpeicherplatz.ToString() == (sender as DataGridView).CurrentCell.EditedFormattedValue.ToString() && (sender as DataGridView).CurrentCell.EditedFormattedValue.ToString() != "     ")
+                Sequenzahler=(sender as DataGridView).CurrentCell.ColumnIndex;
+                string test = oSequenz.ObjectKey.ToString();
+
+
+                if (oSequenz.iSpeicherplatz.ToString() == (sender as DataGridView).CurrentCell.EditedFormattedValue.ToString() && (sender as DataGridView).CurrentCell.EditedFormattedValue.ToString() != "       ")
                     {
                         MessageBox.Show("Speicherplatz bereits vergeben!");
                         e.Cancel = true;
                     }
 
-    /*            if (oSequenz.iSpeicherplatz.ToString() == "     ")        // Speicherplatz zurücksetzen 
-                {
-                 lstSequenz[Sequenzahler-1].iSpeicherplatz= -999; }    */
+                if (oSequenz.ObjectKey.ToString() == Sequenzahler.ToString() && (sender as DataGridView).CurrentCell.EditedFormattedValue.ToString() == "       ") 
+                            {
+                                lstSequenz[Sequenzahler].iSpeicherplatz = -999;
+                            }   
             
             }
         }

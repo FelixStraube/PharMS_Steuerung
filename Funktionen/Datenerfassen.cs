@@ -19,8 +19,8 @@ namespace PharMS_Steuerung.Funktionen
        // public DateTime Time = DateTime.Now;
         public DataGrid tet = new DataGrid();
         public DataTable TableMeasurements = new DataTable();
-        string Sensor1;
-        string Sensor2;
+        //string Sensor1;
+        //string Sensor2;
         private System.IO.StreamWriter file;
         /// <summary>
         /// Schreibt String in Tabelle(Tab 2) und csv Datei 
