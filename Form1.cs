@@ -461,6 +461,10 @@ namespace PharMS_Steuerung
             if (e.ColumnIndex == 2)
             {
                 int i = e.RowIndex;
+                
+                lstSequenz[i].iSpeicherplatz = -999;
+                
+                
                 lstSequenz.RemoveAt(i);
 
                 oSequenzeditor.FillGridSequenz();
@@ -727,10 +731,12 @@ namespace PharMS_Steuerung
         }
 
         private void SequenzenGrid_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
-        {   int Sequenzahler = 0;
+        {
+            int Sequenzahler = 0;
             if (e.ColumnIndex == 1)
-               
-                
+            {
+
+
                 for (int i = 0; i < SequenzenGrid.Rows.Count - 1; i++)
                 {
                     foreach (Sequenz oSequenz in lstSequenz)
@@ -739,25 +745,28 @@ namespace PharMS_Steuerung
                             oSequenz.iSpeicherplatz = (SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "" || SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "       ") ? -999 : Convert.ToInt32(SequenzenGrid.Rows[i].Cells[1].Value);
                     }
                 }
-               
-            
-            foreach (Sequenz oSequenz in lstSequenz)
-            {
-                Sequenzahler=(sender as DataGridView).CurrentCell.ColumnIndex;
-                string test = oSequenz.ObjectKey.ToString();
 
 
-                if (oSequenz.iSpeicherplatz.ToString() == (sender as DataGridView).CurrentCell.EditedFormattedValue.ToString() && (sender as DataGridView).CurrentCell.EditedFormattedValue.ToString() != "       ")
+                foreach (Sequenz oSequenz in lstSequenz)
+                {
+                    Sequenzahler = (sender as DataGridView).CurrentCell.RowIndex;
+                    string test = oSequenz.ObjectKey.ToString();
+
+                    if (oSequenz.ObjectKey.ToString() != Sequenzahler.ToString()) { 
+                    if (oSequenz.iSpeicherplatz.ToString() == (sender as DataGridView).CurrentCell.EditedFormattedValue.ToString() && (sender as DataGridView).CurrentCell.EditedFormattedValue.ToString() != "       "  )
                     {
-                        MessageBox.Show("Speicherplatz bereits vergeben!");
-                        e.Cancel = true;
+                        
+                            MessageBox.Show("Speicherplatz bereits vergeben!");
+                            e.Cancel = true;
+                    
+                    }
+}
+                    if (oSequenz.ObjectKey.ToString() == Sequenzahler.ToString() && (sender as DataGridView).CurrentCell.EditedFormattedValue.ToString() == "       ")
+                    {
+                        lstSequenz[Sequenzahler].iSpeicherplatz = -999;
                     }
 
-                if (oSequenz.ObjectKey.ToString() == Sequenzahler.ToString() && (sender as DataGridView).CurrentCell.EditedFormattedValue.ToString() == "       ") 
-                            {
-                                lstSequenz[Sequenzahler].iSpeicherplatz = -999;
-                            }   
-            
+                }
             }
         }
 
@@ -909,7 +918,7 @@ namespace PharMS_Steuerung
                 Comschnitstelle.SendToCOM(Sequenz.LeitungenSpuelen(false), true);
                 Console.WriteLine("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(false));
                 stlLog.Add("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(false) + "    " + System.DateTime.Now.ToString());
-                
+                System.Threading.Thread.Sleep(2000);
 
                 BackgroundWorker BackgroundWorkerDesinfect = new BackgroundWorker();
                 stlLog.Add("Start BackgroundWorkerDesinfect" + "    " + System.DateTime.Now.ToString());
@@ -968,7 +977,7 @@ namespace PharMS_Steuerung
         }
         private void BackgroundWorkerCommands_DoWork(object sender, DoWorkEventArgs e)
         {    
-            Comschnitstelle.Execute_Commands(((HelpClass)e.Argument).iRepeat, ((HelpClass)e.Argument).arrCommands);
+         //   Comschnitstelle.Execute_Commands(((HelpClass)e.Argument).iRepeat, ((HelpClass)e.Argument).arrCommands);
         }
 
         private void rbPumpeMesszelleAus_CheckedChanged(object sender, EventArgs e)
