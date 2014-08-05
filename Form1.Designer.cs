@@ -34,10 +34,6 @@
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.Verzeichnisauswahl = new System.Windows.Forms.FolderBrowserDialog();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -142,13 +138,13 @@
             this.tabProben = new System.Windows.Forms.TabPage();
             this.txtProbe4 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.chtMessung = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.txtProbe3 = new System.Windows.Forms.TextBox();
             this.txtProbe2 = new System.Windows.Forms.TextBox();
             this.txtProbe1 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.btnChart = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -178,7 +174,6 @@
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabProben.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chtMessung)).BeginInit();
             this.SuspendLayout();
             // 
             // fileSystemWatcher1
@@ -343,6 +338,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnChart);
             this.tabPage2.Controls.Add(this.lbMessmethode);
             this.tabPage2.Controls.Add(this.btnNeueMessung);
             this.tabPage2.Controls.Add(this.Messung_Stopp);
@@ -1268,7 +1264,6 @@
             // 
             this.tabProben.Controls.Add(this.txtProbe4);
             this.tabProben.Controls.Add(this.label9);
-            this.tabProben.Controls.Add(this.chtMessung);
             this.tabProben.Controls.Add(this.txtProbe3);
             this.tabProben.Controls.Add(this.txtProbe2);
             this.tabProben.Controls.Add(this.txtProbe1);
@@ -1299,35 +1294,6 @@
             this.label9.Size = new System.Drawing.Size(166, 13);
             this.label9.TabIndex = 7;
             this.label9.Text = "Bezeichnung Inkubationsgefäß 3:";
-            // 
-            // chtMessung
-            // 
-            chartArea1.AxisX.IsLabelAutoFit = false;
-            chartArea1.AxisX.LabelStyle.Angle = 90;
-            chartArea1.Name = "ChartArea1";
-            this.chtMessung.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chtMessung.Legends.Add(legend1);
-            this.chtMessung.Location = new System.Drawing.Point(53, 160);
-            this.chtMessung.Name = "chtMessung";
-            series1.BorderWidth = 4;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(1)), true);
-            series1.Legend = "Legend1";
-            series1.Name = "Sensor1";
-            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            series2.BorderWidth = 4;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.Name = "Sensor2";
-            this.chtMessung.Series.Add(series1);
-            this.chtMessung.Series.Add(series2);
-            this.chtMessung.Size = new System.Drawing.Size(464, 300);
-            this.chtMessung.TabIndex = 6;
-            this.chtMessung.Text = "chart1";
             // 
             // txtProbe3
             // 
@@ -1379,6 +1345,16 @@
             this.label3.Size = new System.Drawing.Size(166, 13);
             this.label3.TabIndex = 0;
             this.label3.Text = "Bezeichnung Inkubationsgefäß 1:";
+            // 
+            // btnChart
+            // 
+            this.btnChart.Location = new System.Drawing.Point(434, 226);
+            this.btnChart.Name = "btnChart";
+            this.btnChart.Size = new System.Drawing.Size(75, 23);
+            this.btnChart.TabIndex = 11;
+            this.btnChart.Text = "Chart";
+            this.btnChart.UseVisualStyleBackColor = true;
+            this.btnChart.Click += new System.EventHandler(this.btnChart_Click);
             // 
             // Form1
             // 
@@ -1433,7 +1409,6 @@
             this.tabControl1.ResumeLayout(false);
             this.tabProben.ResumeLayout(false);
             this.tabProben.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chtMessung)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1545,7 +1520,6 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn colSpeicherplatz;
         private System.Windows.Forms.DataGridViewImageColumn colDelete;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIndex;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chtMessung;
         private System.Windows.Forms.Label label8;
         public System.Windows.Forms.NumericUpDown numSpuelen;
         private System.Windows.Forms.Label label7;
@@ -1556,6 +1530,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sensor1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sensor2;
+        private System.Windows.Forms.Button btnChart;
 
 
     }
