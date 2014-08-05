@@ -11,9 +11,11 @@ namespace PharMS_Steuerung
 {
     public partial class ChartForm : Form
     {
-        public ChartForm()
+        Form1 _Form1;
+        public ChartForm(Form1 MainForm)
         {
             InitializeComponent();
+            _Form1 = MainForm;
         }
     }
 }

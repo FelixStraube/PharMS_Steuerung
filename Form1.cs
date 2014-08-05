@@ -1018,7 +1018,7 @@ namespace PharMS_Steuerung
 
         private void btnChart_Click(object sender, EventArgs e)
         {
-            ChartForm _Chart = new ChartForm();
+            ChartForm _Chart = new ChartForm(this);
             _Chart.Show();
         }
 
