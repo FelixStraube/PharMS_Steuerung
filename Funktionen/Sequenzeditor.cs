@@ -13,45 +13,45 @@ namespace PharMS_Steuerung.Funktionen
 {//Für alle DataGrids
     public class Sequenzeditor
     {
-        private Dictionary<string, string> dictSequenzBefehleWithOneChar;
-        private Dictionary<string, string> dictSequenzBefehleWithTwoChar;
+        public Dictionary<string, string> dictSequenzBefehle;
+
         public List<string> lstCommands;
         private Form1 MainForm;
 
         public Sequenzeditor(Form1 MainForm)
         {
-            dictSequenzBefehleWithOneChar = new Dictionary<string, string>();
-            dictSequenzBefehleWithTwoChar = new Dictionary<string, string>();
+            dictSequenzBefehle = new Dictionary<string, string>();
+
             lstCommands = new List<string>();
             this.MainForm = MainForm;
 
-            dictSequenzBefehleWithOneChar.Add("X", "Makro  starten mit Sequenznr. ");
-            dictSequenzBefehleWithOneChar.Add("x", "Makro  abbrechen mit Sequenznr. ");
-            dictSequenzBefehleWithOneChar.Add("W", "Wartezeit in Minuten und Sekunden festlegen");
-            dictSequenzBefehleWithOneChar.Add("w", "Wartezeit in Minuten und Sekunden abfragen");
-            dictSequenzBefehleWithOneChar.Add("v", "Multiportventil n mit Ventilposition m n,m");
-            dictSequenzBefehleWithOneChar.Add("p", "Pumpe Messkreislauf n ein/aus  n,1/0");
-            dictSequenzBefehleWithOneChar.Add("f", "Abfrage Füllstandssensor Abfall leer/voll");
-            dictSequenzBefehleWithOneChar.Add("A", "Thermostat kalibrieren");
-            dictSequenzBefehleWithOneChar.Add("a", "Temperaturabfrage thermische Abfallbehandlung");
-            dictSequenzBefehleWithOneChar.Add("T", "Thermostattemperatur einstellen mit -  nn.n - Solltemperatur");
-            dictSequenzBefehleWithOneChar.Add("t", "Thermostattemperatur abfragen");
-            dictSequenzBefehleWithOneChar.Add("M", "Abfrage aktuelle Sensorstrom [nA]");
-            dictSequenzBefehleWithOneChar.Add("G", "Einstellung Verstärkung, Gain 1, 2, 4  Standard ist 2");
-            dictSequenzBefehleWithOneChar.Add("U", "Einstelllung der Potentiostatspannung [mV]");
-            dictSequenzBefehleWithOneChar.Add("u", "Abfrage der Potentiostatspannung [mV]");
-            dictSequenzBefehleWithOneChar.Add("y", "Potenziostat ein/aus");
-            dictSequenzBefehleWithOneChar.Add("d", "Begaser ein/aus");
-            dictSequenzBefehleWithOneChar.Add("o", "Thermostat ein/aus");
+            dictSequenzBefehle.Add("X", "Makro  starten mit Sequenznr. ");
+            dictSequenzBefehle.Add("x", "Makro  abbrechen mit Sequenznr. ");
+            dictSequenzBefehle.Add("W", "Wartezeit in Minuten und Sekunden festlegen");
+            dictSequenzBefehle.Add("w", "Wartezeit in Minuten und Sekunden abfragen");
+            dictSequenzBefehle.Add("v", "Multiportventil n mit Ventilposition m n,m");
+            dictSequenzBefehle.Add("p", "Pumpe Messkreislauf n ein/aus  n,1/0");
+            dictSequenzBefehle.Add("f", "Abfrage Füllstandssensor Abfall leer/voll");
+            dictSequenzBefehle.Add("A", "Thermostat kalibrieren");
+            dictSequenzBefehle.Add("a", "Temperaturabfrage thermische Abfallbehandlung");
+            dictSequenzBefehle.Add("T", "Thermostattemperatur einstellen mit -  nn.n - Solltemperatur");
+            dictSequenzBefehle.Add("t", "Thermostattemperatur abfragen");
+            dictSequenzBefehle.Add("M", "Abfrage aktuelle Sensorstrom [nA]");
+            dictSequenzBefehle.Add("G", "Einstellung Verstärkung, Gain 1, 2, 4  Standard ist 2");
+            dictSequenzBefehle.Add("U", "Einstelllung der Potentiostatspannung [mV]");
+            dictSequenzBefehle.Add("u", "Abfrage der Potentiostatspannung [mV]");
+            dictSequenzBefehle.Add("y", "Potenziostat ein/aus");
+            dictSequenzBefehle.Add("d", "Begaser ein/aus");
+            dictSequenzBefehle.Add("o", "Thermostat ein/aus");
             //--------------------------------------------------------------------------
-            dictSequenzBefehleWithTwoChar.Add("DV", "Dosiererventil n = 1,2 Ventilpositionen  1- Richtung Wasserflasche, 2 – 8 Portventil"); //Messkammer leeren und spülen verwendet Dv ?
-            dictSequenzBefehleWithTwoChar.Add("DS", "Geschwindigkeit mit 1 - Vmax, 40 - Vmin");
-            dictSequenzBefehleWithTwoChar.Add("DP", "Ansaugmenge (µl)");
-            dictSequenzBefehleWithTwoChar.Add("DD", "Ausstossmenge (µl)");
-            dictSequenzBefehleWithTwoChar.Add("DA", "Absolutposition (0…500)");           
-            dictSequenzBefehleWithTwoChar.Add("on", "Thermostat ein/aus");
-            dictSequenzBefehleWithTwoChar.Add("dw", "Begasungsdosierer"); // TODO  Parameter fallen aus den Konzept, seperate Lösung notwendig
-            dictSequenzBefehleWithTwoChar.Add("DI", "Was ist das??");
+            dictSequenzBefehle.Add("DV", "Dosiererventil n = 1,2 Ventilpositionen  1- Richtung Wasserflasche, 2 – 8 Portventil"); //Messkammer leeren und spülen verwendet Dv ?
+            dictSequenzBefehle.Add("DS", "Geschwindigkeit mit 1 - Vmax, 40 - Vmin");
+            dictSequenzBefehle.Add("DP", "Ansaugmenge (µl)");
+            dictSequenzBefehle.Add("DD", "Ausstossmenge (µl)");
+            dictSequenzBefehle.Add("DA", "Absolutposition (0…500)");
+            dictSequenzBefehle.Add("on", "Thermostat ein/aus");
+            dictSequenzBefehle.Add("dw", "Begasungsdosierer"); // TODO  Parameter fallen aus den Konzept, seperate Lösung notwendig
+            dictSequenzBefehle.Add("DI", "Was ist das??");
 
             /* dwOS2A48000IS20A0\n  Z\n    - Kommandostring für Begasungsdosierer
                dw -  Kommando zur Stringeingabe
@@ -88,135 +88,97 @@ namespace PharMS_Steuerung.Funktionen
             lstCommands.Add("dw");
             lstCommands.Add("on");
             lstCommands.Add("DI");
-
-            DataGridViewComboBoxColumn colBefehl = (DataGridViewComboBoxColumn)MainForm.SequenzeditorGrid.Columns["colBefehl"];
-            foreach (string sCom in lstCommands)
-            {
-                colBefehl.Items.Add(sCom);
-            }
         }
 
         public void FillGridSequenzEdit()
         {
-            Sequenz oSequenz = GetSelectedSequenz();
-            if (oSequenz == null) return;
-            if (oSequenz.bIsTemplate)
+            MainForm.SequenzeditorGrid.Columns.Clear();
+            DataView dvSequenzEdit = new DataView(MainForm.DBMain.dsPharms.Tables["SequenzEdit"]);
+            if (MainForm.AblaufListe.SelectedItem != null)
             {
-                MainForm.btnSaveOneSequenz.Enabled = true;
-                MainForm.lblNewName.Visible = true;
-                MainForm.txtNewName.Visible = true;
+                int ID = Convert.ToInt32(MainForm.AblaufListe.SelectedValue);
+                dvSequenzEdit.RowFilter = "S_ID =" + ID.ToString();
+                dvSequenzEdit.Sort = "Reihenfolge";
+
+                DataGridViewTextBoxColumn colErklaerung = new DataGridViewTextBoxColumn();
+                colErklaerung.Name = "Erklärung";
+                colErklaerung.HeaderText = "Erklärung";
+
+                DataGridViewComboBoxColumn ComboBoxColumn = new DataGridViewComboBoxColumn();
+                ComboBoxColumn.Name = "Befehl";
+                ComboBoxColumn.HeaderText = "Befehl";
+                ComboBoxColumn.DataPropertyName = "Befehl";
+                ComboBoxColumn.ValueType = typeof(String);
+                ComboBoxColumn.DataSource = lstCommands;
+
+                MainForm.SequenzeditorGrid.Columns.Add(colErklaerung);
+                MainForm.SequenzeditorGrid.Columns.Add(ComboBoxColumn);
+                MainForm.SequenzeditorGrid.AutoGenerateColumns = true;
+                MainForm.SequenzeditorGrid.DataSource = dvSequenzEdit;
+                MainForm.SequenzeditorGrid.Columns["ID"].Visible = false;
+                MainForm.SequenzeditorGrid.Columns["Vorlage"].Visible = false;
+                MainForm.SequenzeditorGrid.Columns["S_ID"].Visible = false;
+               // MainForm.SequenzeditorGrid.Columns["Reihenfolge"].Visible = false;
+                MainForm.SequenzeditorGrid.Columns["S_ID"].CellTemplate.Value = MainForm.AblaufListe.SelectedItem.ToString();
+                MainForm.SequenzeditorGrid.Columns["Reihenfolge"].CellTemplate.Value = MainForm.SequenzeditorGrid.RowCount;
+                MainForm.SequenzeditorGrid.Columns["Parameter"].HeaderText = "Parameter";
+
+
+                MainForm.SequenzeditorGrid.Columns["Erklärung"].DisplayIndex = 3;
+
+                MainForm.SequenzeditorGrid.Columns["Erklärung"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
-            else
-            {
-                MainForm.btnSaveOneSequenz.Enabled = false;
-                MainForm.lblNewName.Visible = false;
-                MainForm.txtNewName.Visible = false;
-            }
 
-            string sOut = "";
-            int i = 0;
-          
-
-            MainForm.SequenzeditorGrid.Rows.Clear();
-
-
-            foreach (string line in oSequenz.stlSequenz)
-            {
-                if (line == "") continue;
-
-                MainForm.SequenzeditorGrid.Rows.Add();
-                DataGridViewComboBoxCell cbCell = (DataGridViewComboBoxCell)MainForm.SequenzeditorGrid.Rows[i].Cells[0];
-                sOut = "";
-
-                if (line.Length != 1) dictSequenzBefehleWithTwoChar.TryGetValue(line.Substring(0, 2), out sOut);
-                else sOut = null;
-
-                if (sOut == null)
-                {
-                    dictSequenzBefehleWithOneChar.TryGetValue(line.Substring(0, 1), out sOut);
-                    cbCell.Value = line.Substring(0, 1);
-                    MainForm.SequenzeditorGrid.Rows[i].Cells[1].Value = line.Substring(1);
-                }
-                else
-                {
-                    cbCell.Value = line.Substring(0, 2);
-                    MainForm.SequenzeditorGrid.Rows[i].Cells[1].Value = line.Substring(2);
-                }
-
-                if (MainForm.SequenzeditorGrid.Rows[i].Cells[1].Value.ToString() != "*")
-                {
-                    MainForm.SequenzeditorGrid.Rows[i].Cells[1].ReadOnly = true;
-                    MainForm.SequenzeditorGrid.Rows[i].Cells[1].Style.BackColor = Color.Gray;
-                }
-                else
-                {
-                    MainForm.SequenzeditorGrid.Rows[i].Cells[1].Style.BackColor = Color.RosyBrown;
-                }
-
-                MainForm.SequenzeditorGrid.Rows[i].Cells[2].Value = sOut;
-
-                i++;
-            }
         }
 
-        public void FillGridSequenz()
+        public void LoadGridSequenz()
         {
-            int i = 0;
-            MainForm.SequenzenGrid.Rows.Clear();           
+            String[] cmbWerte = new String[] { " ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18" };
+            DataGridViewComboBoxColumn ComboBoxColumn = new DataGridViewComboBoxColumn();
+            ComboBoxColumn.Name = "Speicherplatz";
+            ComboBoxColumn.HeaderText = "Speicherplatz";
+            ComboBoxColumn.DataPropertyName = "Speicherplatz";
+            ComboBoxColumn.ValueType = typeof(String);
+            ComboBoxColumn.DataSource = cmbWerte;
 
-            foreach (Sequenz oSequenz in MainForm.lstSequenz)
-            {
-                if (oSequenz.bIsTemplate) continue;
-                MainForm.SequenzenGrid.Rows.Add();
-                MainForm.SequenzenGrid.Rows[i].Cells[0].Value = oSequenz.sName;
-                MainForm.SequenzenGrid.Rows[i].Cells[1].Value = (oSequenz.iSpeicherplatz == -999) ? "" : oSequenz.iSpeicherplatz.ToString();
-                MainForm.SequenzenGrid.Rows[i].Cells[3].Value = oSequenz.ObjectKey;
 
-                i++;
-            }
+            MainForm.SequenzenGrid.Columns.Add(ComboBoxColumn);
+            MainForm.SequenzenGrid.AutoGenerateColumns = true;
+            MainForm.SequenzenGrid.DataSource = MainForm.DBMain.dsPharms.Tables["Sequenzen"];
+            MainForm.SequenzenGrid.Columns["ID"].Visible = false;
+            MainForm.SequenzenGrid.Columns["Name"].HeaderText = "Sequenz";
+            MainForm.SequenzenGrid.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
         public void FillGridMaster()
         {
-            int i = 0;
+            String[] cmbWerte = new String[] { " ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18" };
+            DataGridViewComboBoxColumn ComboBoxColumn1 = new DataGridViewComboBoxColumn();
+            ComboBoxColumn1.Name = "Speicherplatz";
+            ComboBoxColumn1.HeaderText = "Speicherplatz";
+            ComboBoxColumn1.DataPropertyName = "Speicherplatz";
+            ComboBoxColumn1.ValueType = typeof(String);            
+            ComboBoxColumn1.DataSource = cmbWerte;
 
-            MainForm.MasterGrid.Rows.Clear();
-            (MainForm.MasterGrid.Columns[1] as DataGridViewComboBoxColumn).Items.Clear();
-            (MainForm.MasterGrid.Columns[2] as DataGridViewComboBoxColumn).Items.Clear();
+            DataGridViewComboBoxColumn ComboBoxColumn2 = new DataGridViewComboBoxColumn();
+            ComboBoxColumn2.Name = "Sequenz";
+            ComboBoxColumn2.HeaderText = "Sequenz";
+            ComboBoxColumn2.DataPropertyName = "S_ID";
+            ComboBoxColumn2.ValueType = typeof(int);
+            ComboBoxColumn2.DisplayMember = "Name";
+            ComboBoxColumn2.ValueMember = "ID";
+            ComboBoxColumn2.DataSource = MainForm.DBMain.dsPharms.Tables["Sequenzen"];
 
-            foreach (Sequenz oSequenz in MainForm.lstSequenz)
-            {
-                if (oSequenz.iSpeicherplatz != -999) (MainForm.MasterGrid.Columns[1] as DataGridViewComboBoxColumn).Items.Add(oSequenz.iSpeicherplatz.ToString());
-                if (oSequenz.iSpeicherplatz != -999) (MainForm.MasterGrid.Columns[2] as DataGridViewComboBoxColumn).Items.Add(oSequenz.sName);
-            }
+            MainForm.MasterGrid.Columns.Add(ComboBoxColumn2);
+            MainForm.MasterGrid.Columns.Add(ComboBoxColumn1);
+            MainForm.MasterGrid.AutoGenerateColumns = true;
+            MainForm.MasterGrid.DataSource = MainForm.DBMain.dsPharms.Tables["Masterablauf"];
+            MainForm.MasterGrid.Columns["ID"].Visible = false;
+            MainForm.MasterGrid.Columns["Name"].Visible = false;
+           // MainForm.MasterGrid.Columns["Reihenfolge"].Visible = false;
 
-            foreach (int iMaster in MainForm.lstMaster)
-            {
-                MainForm.MasterGrid.Rows.Add();
-
-                MainForm.MasterGrid.Rows[i].Cells[1].Value = iMaster.ToString();
-                MainForm.MasterGrid.Rows[i].Cells[0].Value = (i == 0) ? 1 : Convert.ToInt32(MainForm.MasterGrid.Rows[i - 1].Cells[0].Value) + 1;
-
-                foreach (Sequenz oSequenz in MainForm.lstSequenz)
-                {
-                    if (oSequenz.iSpeicherplatz == Convert.ToInt32(MainForm.MasterGrid.Rows[i].Cells[1].Value))
-                        MainForm.MasterGrid.Rows[i].Cells[2].Value = oSequenz.sName;
-                }
-                i++;
-            }
-
-        }
-
-        public Sequenz GetSelectedSequenz()
-        {
-            foreach (Sequenz oSequenz in MainForm.lstSequenz)
-            {
-                if (MainForm.AblaufListe.SelectedItem == null) continue;
-                if (MainForm.AblaufListe.SelectedItem.ToString() == oSequenz.sName) return oSequenz;
-            }
-            return null;
+            MainForm.MasterGrid.Columns["Sequenz"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;          
 
         }
-
     }
 }

@@ -28,12 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.Verzeichnisauswahl = new System.Windows.Forms.FolderBrowserDialog();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -42,12 +40,10 @@
             this.mnItemDatenbankÖffnen = new System.Windows.Forms.ToolStripMenuItem();
             this.mnItemSpeichern = new System.Windows.Forms.ToolStripMenuItem();
             this.mnItemSpeichernUnter = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnItemImport = new System.Windows.Forms.ToolStripMenuItem();
             this.mnItemBeenden = new System.Windows.Forms.ToolStripMenuItem();
             this.hilfeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDatabaseDialog = new System.Windows.Forms.OpenFileDialog();
             this.NewDBDialog = new System.Windows.Forms.SaveFileDialog();
-            this.tmCheckCOM = new System.Windows.Forms.Timer(this.components);
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.Live_Chart_anzeigen = new System.Windows.Forms.Button();
             this.LiveGrid = new System.Windows.Forms.DataGridView();
@@ -55,6 +51,7 @@
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LiveChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnChart = new System.Windows.Forms.Button();
             this.lbMessmethode = new System.Windows.Forms.Label();
             this.btnNeueMessung = new System.Windows.Forms.Button();
             this.Messung_Stopp = new System.Windows.Forms.Button();
@@ -70,9 +67,6 @@
             this.AblaufStart = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.MasterGrid = new System.Windows.Forms.DataGridView();
-            this.colOrder = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSpeicherplatzMaster = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colNameMaster = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tabSequenzedit = new System.Windows.Forms.TabPage();
             this.txtNewName = new System.Windows.Forms.TextBox();
@@ -82,16 +76,9 @@
             this.AblaufListe = new System.Windows.Forms.ComboBox();
             this.chkFilter = new System.Windows.Forms.CheckBox();
             this.SequenzeditorGrid = new System.Windows.Forms.DataGridView();
-            this.colBefehl = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colParametereingabe = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colHelp = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabSequenzList = new System.Windows.Forms.TabPage();
             this.btnUebertragen = new System.Windows.Forms.Button();
             this.SequenzenGrid = new System.Windows.Forms.DataGridView();
-            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSpeicherplatz = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colDelete = new System.Windows.Forms.DataGridViewImageColumn();
-            this.colIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -144,7 +131,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.btnChart = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -199,7 +185,6 @@
             this.mnItemDatenbankÖffnen,
             this.mnItemSpeichern,
             this.mnItemSpeichernUnter,
-            this.mnItemImport,
             this.mnItemBeenden});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(46, 20);
@@ -208,42 +193,35 @@
             // mnItemNeu
             // 
             this.mnItemNeu.Name = "mnItemNeu";
-            this.mnItemNeu.Size = new System.Drawing.Size(183, 22);
+            this.mnItemNeu.Size = new System.Drawing.Size(169, 22);
             this.mnItemNeu.Text = "Neu";
             this.mnItemNeu.Click += new System.EventHandler(this.neuToolStripMenuItem_Click);
             // 
             // mnItemDatenbankÖffnen
             // 
             this.mnItemDatenbankÖffnen.Name = "mnItemDatenbankÖffnen";
-            this.mnItemDatenbankÖffnen.Size = new System.Drawing.Size(183, 22);
+            this.mnItemDatenbankÖffnen.Size = new System.Drawing.Size(169, 22);
             this.mnItemDatenbankÖffnen.Text = "Datenbank öffnen";
             this.mnItemDatenbankÖffnen.Click += new System.EventHandler(this.datenbankÖffnenToolStripMenuItem_Click);
             // 
             // mnItemSpeichern
             // 
             this.mnItemSpeichern.Name = "mnItemSpeichern";
-            this.mnItemSpeichern.Size = new System.Drawing.Size(183, 22);
+            this.mnItemSpeichern.Size = new System.Drawing.Size(169, 22);
             this.mnItemSpeichern.Text = "Speichern";
             this.mnItemSpeichern.Click += new System.EventHandler(this.speichernToolStripMenuItem_Click);
             // 
             // mnItemSpeichernUnter
             // 
             this.mnItemSpeichernUnter.Name = "mnItemSpeichernUnter";
-            this.mnItemSpeichernUnter.Size = new System.Drawing.Size(183, 22);
+            this.mnItemSpeichernUnter.Size = new System.Drawing.Size(169, 22);
             this.mnItemSpeichernUnter.Text = "Speichern unter...";
             this.mnItemSpeichernUnter.Click += new System.EventHandler(this.mnItemSpeichernUnter_Click);
-            // 
-            // mnItemImport
-            // 
-            this.mnItemImport.Name = "mnItemImport";
-            this.mnItemImport.Size = new System.Drawing.Size(183, 22);
-            this.mnItemImport.Text = "Sequenz importieren";
-            this.mnItemImport.Click += new System.EventHandler(this.ImportStripMenuItem2_Click);
             // 
             // mnItemBeenden
             // 
             this.mnItemBeenden.Name = "mnItemBeenden";
-            this.mnItemBeenden.Size = new System.Drawing.Size(183, 22);
+            this.mnItemBeenden.Size = new System.Drawing.Size(169, 22);
             this.mnItemBeenden.Text = "Beenden";
             this.mnItemBeenden.Click += new System.EventHandler(this.beendenToolStripMenuItem_Click);
             // 
@@ -255,12 +233,7 @@
             // 
             // openDatabaseDialog
             // 
-            this.openDatabaseDialog.Filter = "Pharms (*.pharms)|*.pharms|Textdateien|*.txt";
-            // 
-            // tmCheckCOM
-            // 
-            this.tmCheckCOM.Interval = 10000;
-            this.tmCheckCOM.Tick += new System.EventHandler(this.tmCheckCOM_Tick);
+            this.openDatabaseDialog.Filter = "DB3 (*.db3)|*.db3";
             // 
             // tabPage4
             // 
@@ -310,28 +283,28 @@
             // 
             // LiveChart
             // 
-            chartArea2.AxisX.Title = " Time [s]";
-            chartArea2.AxisY.Title = "Signal [nA]";
-            chartArea2.Name = "ChartArea1";
-            this.LiveChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.LiveChart.Legends.Add(legend2);
+            chartArea6.AxisX.Title = " Time [s]";
+            chartArea6.AxisY.Title = "Signal [nA]";
+            chartArea6.Name = "ChartArea1";
+            this.LiveChart.ChartAreas.Add(chartArea6);
+            legend6.Name = "Legend1";
+            this.LiveChart.Legends.Add(legend6);
             this.LiveChart.Location = new System.Drawing.Point(31, 32);
             this.LiveChart.Name = "LiveChart";
             this.LiveChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-            series3.BorderWidth = 5;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Legend = "Legend1";
-            series3.MarkerColor = System.Drawing.Color.White;
-            series3.Name = "Sensor 1";
-            series4.BorderWidth = 5;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Legend = "Legend1";
-            series4.Name = "Sensor 2";
-            this.LiveChart.Series.Add(series3);
-            this.LiveChart.Series.Add(series4);
+            series11.BorderWidth = 5;
+            series11.ChartArea = "ChartArea1";
+            series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series11.Legend = "Legend1";
+            series11.MarkerColor = System.Drawing.Color.White;
+            series11.Name = "Sensor 1";
+            series12.BorderWidth = 5;
+            series12.ChartArea = "ChartArea1";
+            series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series12.Legend = "Legend1";
+            series12.Name = "Sensor 2";
+            this.LiveChart.Series.Add(series11);
+            this.LiveChart.Series.Add(series12);
             this.LiveChart.Size = new System.Drawing.Size(466, 289);
             this.LiveChart.TabIndex = 0;
             this.LiveChart.Text = "chart1";
@@ -352,6 +325,16 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Messdaten";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // btnChart
+            // 
+            this.btnChart.Location = new System.Drawing.Point(434, 226);
+            this.btnChart.Name = "btnChart";
+            this.btnChart.Size = new System.Drawing.Size(75, 23);
+            this.btnChart.TabIndex = 11;
+            this.btnChart.Text = "Chart";
+            this.btnChart.UseVisualStyleBackColor = true;
+            this.btnChart.Click += new System.EventHandler(this.btnChart_Click);
             // 
             // lbMessmethode
             // 
@@ -490,39 +473,13 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.MasterGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.MasterGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colOrder,
-            this.colSpeicherplatzMaster,
-            this.colNameMaster});
             this.MasterGrid.Location = new System.Drawing.Point(0, 50);
             this.MasterGrid.Name = "MasterGrid";
             this.MasterGrid.Size = new System.Drawing.Size(582, 512);
             this.MasterGrid.TabIndex = 1;
-            this.MasterGrid.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.MasterGrid_DataError);
+            this.MasterGrid.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.MasterGrid_CellValidated);
+            this.MasterGrid.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.MasterGrid_DefaultValuesNeeded);
             this.MasterGrid.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.MasterGrid_UserDeletedRow);
-            // 
-            // colOrder
-            // 
-            this.colOrder.Frozen = true;
-            this.colOrder.HeaderText = "";
-            this.colOrder.Name = "colOrder";
-            this.colOrder.ReadOnly = true;
-            this.colOrder.Width = 20;
-            // 
-            // colSpeicherplatzMaster
-            // 
-            this.colSpeicherplatzMaster.Frozen = true;
-            this.colSpeicherplatzMaster.HeaderText = "Speicherplatz";
-            this.colSpeicherplatzMaster.Name = "colSpeicherplatzMaster";
-            this.colSpeicherplatzMaster.Width = 60;
-            // 
-            // colNameMaster
-            // 
-            this.colNameMaster.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colNameMaster.HeaderText = "Sequenz";
-            this.colNameMaster.Name = "colNameMaster";
-            this.colNameMaster.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colNameMaster.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // progressBar1
             // 
@@ -610,38 +567,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SequenzeditorGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.SequenzeditorGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colBefehl,
-            this.colParametereingabe,
-            this.colHelp});
             this.SequenzeditorGrid.Location = new System.Drawing.Point(0, 51);
             this.SequenzeditorGrid.Name = "SequenzeditorGrid";
             this.SequenzeditorGrid.Size = new System.Drawing.Size(582, 456);
             this.SequenzeditorGrid.TabIndex = 0;
-            // 
-            // colBefehl
-            // 
-            this.colBefehl.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colBefehl.Frozen = true;
-            this.colBefehl.HeaderText = "Befehl";
-            this.colBefehl.Name = "colBefehl";
-            this.colBefehl.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colBefehl.Width = 60;
-            // 
-            // colParametereingabe
-            // 
-            this.colParametereingabe.Frozen = true;
-            this.colParametereingabe.HeaderText = "Parametereingabe";
-            this.colParametereingabe.Name = "colParametereingabe";
-            this.colParametereingabe.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colHelp
-            // 
-            this.colHelp.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colHelp.HeaderText = "Erklärung";
-            this.colHelp.Name = "colHelp";
-            this.colHelp.ReadOnly = true;
-            this.colHelp.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.SequenzeditorGrid.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.SequenzeditorGrid_CellValidated);
+            this.SequenzeditorGrid.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.SequenzeditorGrid_DefaultValuesNeeded);
             // 
             // tabSequenzList
             // 
@@ -669,11 +600,6 @@
             this.SequenzenGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SequenzenGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.SequenzenGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colName,
-            this.colSpeicherplatz,
-            this.colDelete,
-            this.colIndex});
             this.SequenzenGrid.Location = new System.Drawing.Point(1, 3);
             this.SequenzenGrid.Name = "SequenzenGrid";
             this.SequenzenGrid.Size = new System.Drawing.Size(581, 500);
@@ -681,48 +607,6 @@
             this.SequenzenGrid.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.SequenzenGrid_CellMouseClick);
             this.SequenzenGrid.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.SequenzenGrid_CellValidating);
             this.SequenzenGrid.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SequenzenGrid_MouseClick);
-            // 
-            // colName
-            // 
-            this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colName.HeaderText = "Sequenz";
-            this.colName.Name = "colName";
-            // 
-            // colSpeicherplatz
-            // 
-            this.colSpeicherplatz.HeaderText = "Speicherplatz";
-            this.colSpeicherplatz.Items.AddRange(new object[] {
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "       "});
-            this.colSpeicherplatz.Name = "colSpeicherplatz";
-            // 
-            // colDelete
-            // 
-            this.colDelete.HeaderText = "Löschen";
-            this.colDelete.Image = ((System.Drawing.Image)(resources.GetObject("colDelete.Image")));
-            this.colDelete.Name = "colDelete";
-            this.colDelete.Width = 60;
-            // 
-            // colIndex
-            // 
-            this.colIndex.HeaderText = "Index";
-            this.colIndex.Name = "colIndex";
-            this.colIndex.Visible = false;
             // 
             // tabPage1
             // 
@@ -1346,16 +1230,6 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "Bezeichnung Inkubationsgefäß 1:";
             // 
-            // btnChart
-            // 
-            this.btnChart.Location = new System.Drawing.Point(434, 226);
-            this.btnChart.Name = "btnChart";
-            this.btnChart.Size = new System.Drawing.Size(75, 23);
-            this.btnChart.TabIndex = 11;
-            this.btnChart.Text = "Chart";
-            this.btnChart.UseVisualStyleBackColor = true;
-            this.btnChart.Click += new System.EventHandler(this.btnChart_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1430,9 +1304,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnItemBeenden;
         private System.Windows.Forms.ToolStripMenuItem hilfeToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openDatabaseDialog;
-        private System.Windows.Forms.ToolStripMenuItem mnItemImport;
         private System.Windows.Forms.SaveFileDialog NewDBDialog;
-        private System.Windows.Forms.Timer tmCheckCOM;
         public System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabDeviceParameter;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -1476,25 +1348,17 @@
         private System.Windows.Forms.Button btnUebertragen;
         public System.Windows.Forms.DataGridView SequenzenGrid;
         private System.Windows.Forms.TabPage tabSequenzedit;
-        public System.Windows.Forms.TextBox txtNewName;
-        public System.Windows.Forms.Label lblNewName;
         public System.Windows.Forms.Button btnSaveOneSequenz;
         private System.Windows.Forms.Label label2;
         public System.Windows.Forms.ComboBox AblaufListe;
         private System.Windows.Forms.CheckBox chkFilter;
         public System.Windows.Forms.DataGridView SequenzeditorGrid;
-        private System.Windows.Forms.DataGridViewComboBoxColumn colBefehl;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colParametereingabe;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colHelp;
         private System.Windows.Forms.TabPage tabMasterablauf;
         public System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Button AblaufStart;
         private System.Windows.Forms.Label label5;
         public System.Windows.Forms.DataGridView MasterGrid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colOrder;
-        private System.Windows.Forms.DataGridViewComboBoxColumn colSpeicherplatzMaster;
-        private System.Windows.Forms.DataGridViewComboBoxColumn colNameMaster;
         public System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Button Messung_Stopp;
         private System.Windows.Forms.Button Man_Messung;
@@ -1516,10 +1380,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colName;
-        private System.Windows.Forms.DataGridViewComboBoxColumn colSpeicherplatz;
-        private System.Windows.Forms.DataGridViewImageColumn colDelete;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colIndex;
         private System.Windows.Forms.Label label8;
         public System.Windows.Forms.NumericUpDown numSpuelen;
         private System.Windows.Forms.Label label7;
@@ -1531,6 +1391,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Sensor1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sensor2;
         private System.Windows.Forms.Button btnChart;
+        public System.Windows.Forms.TextBox txtNewName;
+        public System.Windows.Forms.Label lblNewName;
 
 
     }
