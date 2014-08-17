@@ -5,7 +5,10 @@ using System.Text;
 using System.Data.SQLite;
 using System.IO;
 using System.Data;
+using System.Data.SQLite.Linq;
+using System.Data.SqlClient;
 using System.Windows.Forms;
+
 
 
 namespace PharMS_Steuerung.Funktionen
@@ -17,7 +20,7 @@ namespace PharMS_Steuerung.Funktionen
         private SQLiteConnection conn;
         private SQLiteDataAdapter daMasterablauf, daSequenzen, daMesswerte, daSequenzenBefehle;
         private DataTable dtMasterablauf, dtSequenzen, dtMesswerte, dtSequenzenBefehle;
-        private SQLiteCommandBuilder cmdbMasterablauf,cmdbMesswerte,cmdbSequenzen, cmdbSequenzenBefehle;
+        private SQLiteCommandBuilder cmdbMasterablauf, cmdbMesswerte, cmdbSequenzen, cmdbSequenzenBefehle;
         private SQLiteCommand cmdMasterablauf, cmdMesswerte, cmdSequenzen, cmdSequenzenBefehle;
 
         public SQLMain(String sFileName)
@@ -44,7 +47,7 @@ namespace PharMS_Steuerung.Funktionen
             dtSequenzenBefehle = new DataTable();
             dtSequenzenBefehle.TableName = "SequenzEdit";
 
-            
+
             daMasterablauf = new SQLiteDataAdapter();
             daMesswerte = new SQLiteDataAdapter();
             daSequenzen = new SQLiteDataAdapter();
@@ -131,11 +134,74 @@ namespace PharMS_Steuerung.Funktionen
             cmd.Dispose();
             conn.Close();
         }
+
+        public List<int> GetAllSequenzID()
+        {
+            List<int> IDs = new List<int>();
+            DataTableReader dtr;
+            dtr = dsPharms.Tables["Sequenzen"].CreateDataReader();
+
+            while (dtr.Read())
+            {
+                IDs.Add((int)dtr["ID"]);
+            }
+            dtr.Close();
+            return IDs;
+        }
+
+        public List<int> GetAllSequenzIDWithMemory()
+        {
+            List<int> IDs = new List<int>();
+            DataTableReader dtr;
+            dtr = dsPharms.Tables["Sequenzen"].CreateDataReader();
+
+            while (dtr.Read())
+            {
+                if (dtr["Speicherplatz"].ToString() != "")
+                    IDs.Add(Convert.ToInt32(dtr["ID"]));
+            }
+            dtr.Close();
+            return IDs;
+        }
+        public string GetSequenzByID(int S_ID)
+        {
+            string sSequenz = "";
+
+            var query = from a in dsPharms.Tables["Sequenzen"].AsEnumerable()
+                        join b in dsPharms.Tables["SequenzEdit"].AsEnumerable()
+                            on a.Field<Int64>("ID") equals
+                                b.Field<Int64>("S_ID")
+                        where b.Field<Int64>("S_ID") == S_ID
+                        select new
+                        {
+                            S_ID = b.Field<Int64>("S_ID"),
+                            Reihenfolge = b.Field<Int64>("Reihenfolge"),
+                            Befehl = b.Field<string>("Befehl"),
+                            Parameter = b.Field<string>("Parameter"),
+                            Speicherplatz = a.Field<string>("Speicherplatz")
+                        };
+
+            int i = 0;
+            foreach (var q in query)
+            {
+                if (i == 0)
+                    sSequenz = "Y" + q.Speicherplatz.ToString() + ";";
+                sSequenz = sSequenz + q.Befehl + q.Parameter + ";";
+                i++;
+            }
+            return sSequenz;
+
+
+
+
+
+        }
+
         public void Save()
-        {            
-            daSequenzen.Update(dsPharms, "Sequenzen");           
-            daSequenzenBefehle.Update(dsPharms, "SequenzEdit");            
-            daMasterablauf.Update(dsPharms, "Masterablauf");            
+        {
+            daSequenzen.Update(dsPharms, "Sequenzen");
+            daSequenzenBefehle.Update(dsPharms, "SequenzEdit");
+            daMasterablauf.Update(dsPharms, "Masterablauf");
             daMesswerte.Update(dsPharms, "Messwerte");
             // dtSequenzen.AcceptChanges();
         }

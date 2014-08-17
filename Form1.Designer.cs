@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.Verzeichnisauswahl = new System.Windows.Forms.FolderBrowserDialog();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -283,28 +283,28 @@
             // 
             // LiveChart
             // 
-            chartArea6.AxisX.Title = " Time [s]";
-            chartArea6.AxisY.Title = "Signal [nA]";
-            chartArea6.Name = "ChartArea1";
-            this.LiveChart.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.LiveChart.Legends.Add(legend6);
+            chartArea2.AxisX.Title = " Time [s]";
+            chartArea2.AxisY.Title = "Signal [nA]";
+            chartArea2.Name = "ChartArea1";
+            this.LiveChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.LiveChart.Legends.Add(legend2);
             this.LiveChart.Location = new System.Drawing.Point(31, 32);
             this.LiveChart.Name = "LiveChart";
             this.LiveChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-            series11.BorderWidth = 5;
-            series11.ChartArea = "ChartArea1";
-            series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series11.Legend = "Legend1";
-            series11.MarkerColor = System.Drawing.Color.White;
-            series11.Name = "Sensor 1";
-            series12.BorderWidth = 5;
-            series12.ChartArea = "ChartArea1";
-            series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series12.Legend = "Legend1";
-            series12.Name = "Sensor 2";
-            this.LiveChart.Series.Add(series11);
-            this.LiveChart.Series.Add(series12);
+            series3.BorderWidth = 5;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Legend = "Legend1";
+            series3.MarkerColor = System.Drawing.Color.White;
+            series3.Name = "Sensor 1";
+            series4.BorderWidth = 5;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Legend = "Legend1";
+            series4.Name = "Sensor 2";
+            this.LiveChart.Series.Add(series3);
+            this.LiveChart.Series.Add(series4);
             this.LiveChart.Size = new System.Drawing.Size(466, 289);
             this.LiveChart.TabIndex = 0;
             this.LiveChart.Text = "chart1";
@@ -479,7 +479,6 @@
             this.MasterGrid.TabIndex = 1;
             this.MasterGrid.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.MasterGrid_CellValidated);
             this.MasterGrid.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.MasterGrid_DefaultValuesNeeded);
-            this.MasterGrid.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.MasterGrid_UserDeletedRow);
             // 
             // progressBar1
             // 

@@ -118,7 +118,7 @@ namespace PharMS_Steuerung.Funktionen
                 MainForm.SequenzeditorGrid.Columns["ID"].Visible = false;
                 MainForm.SequenzeditorGrid.Columns["Vorlage"].Visible = false;
                 MainForm.SequenzeditorGrid.Columns["S_ID"].Visible = false;
-               // MainForm.SequenzeditorGrid.Columns["Reihenfolge"].Visible = false;
+                // MainForm.SequenzeditorGrid.Columns["Reihenfolge"].Visible = false;
                 MainForm.SequenzeditorGrid.Columns["S_ID"].CellTemplate.Value = MainForm.AblaufListe.SelectedItem.ToString();
                 MainForm.SequenzeditorGrid.Columns["Reihenfolge"].CellTemplate.Value = MainForm.SequenzeditorGrid.RowCount;
                 MainForm.SequenzeditorGrid.Columns["Parameter"].HeaderText = "Parameter";
@@ -127,6 +127,7 @@ namespace PharMS_Steuerung.Funktionen
                 MainForm.SequenzeditorGrid.Columns["Erklärung"].DisplayIndex = 3;
 
                 MainForm.SequenzeditorGrid.Columns["Erklärung"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+               
             }
 
         }
@@ -157,7 +158,7 @@ namespace PharMS_Steuerung.Funktionen
             ComboBoxColumn1.Name = "Speicherplatz";
             ComboBoxColumn1.HeaderText = "Speicherplatz";
             ComboBoxColumn1.DataPropertyName = "Speicherplatz";
-            ComboBoxColumn1.ValueType = typeof(String);            
+            ComboBoxColumn1.ValueType = typeof(String);
             ComboBoxColumn1.DataSource = cmbWerte;
 
             DataGridViewComboBoxColumn ComboBoxColumn2 = new DataGridViewComboBoxColumn();
@@ -175,9 +176,9 @@ namespace PharMS_Steuerung.Funktionen
             MainForm.MasterGrid.DataSource = MainForm.DBMain.dsPharms.Tables["Masterablauf"];
             MainForm.MasterGrid.Columns["ID"].Visible = false;
             MainForm.MasterGrid.Columns["Name"].Visible = false;
-           // MainForm.MasterGrid.Columns["Reihenfolge"].Visible = false;
+            // MainForm.MasterGrid.Columns["Reihenfolge"].Visible = false;
 
-            MainForm.MasterGrid.Columns["Sequenz"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;          
+            MainForm.MasterGrid.Columns["Sequenz"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
         }
     }
