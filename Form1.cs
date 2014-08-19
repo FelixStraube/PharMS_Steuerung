@@ -20,7 +20,7 @@ namespace PharMS_Steuerung
     {
         static COM Comschnitstelle;
         string ablauf;
-        public bool Connection;       
+        public bool Connection;
         public int Durchläufe;
         public bool Abbruch;
         public int Prozessstand;
@@ -270,75 +270,9 @@ namespace PharMS_Steuerung
             }
         }
 
-        private void datenbankÖffnenToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (openDatabaseDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                DBMain = new SQLMain(openDatabaseDialog.FileName);
-                oSequenzeditor.LoadGridSequenz();
-                oSequenzeditor.FillGridMaster();
-                tabControl1.Visible = true;
-            }
-
-            AblaufListe.DisplayMember = "Name";
-            AblaufListe.ValueMember = "ID";
-            AblaufListe.DataSource = DBMain.dsPharms.Tables["Sequenzen"];
 
 
-            mnItemSpeichern.Enabled = true;
-            mnItemSpeichernUnter.Enabled = true;
-        }
 
-        private void beendenToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void speichernToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DBMain.Save();
-
-        }
-
-
-        private void btnSaveOneSequenz_Click(object sender, EventArgs e)
-        {
-            /* if (txtNewName.TextLength == 0)
-             {
-                 MessageBox.Show("Bitte geben Sie einen Namen für die neue Sequenz an");
-                 return;
-             }
-
-             lstSequenz.Add(new Sequenz());
-             lstSequenz[lstSequenz.Count - 1].ObjectKey = maxObjectKey++;
-             lstSequenz[lstSequenz.Count - 1].sDBName = sDBName;
-             lstSequenz[lstSequenz.Count - 1].sName = txtNewName.Text;
-             AblaufListe.Items.Add(lstSequenz[lstSequenz.Count - 1].sName);
-
-             for (int i = 0; i < SequenzeditorGrid.RowCount - 1; i++)
-             {
-                 lstSequenz[lstSequenz.Count - 1].stlSequenz.Add(SequenzeditorGrid.Rows[i].Cells[0].Value.ToString() + SequenzeditorGrid.Rows[i].Cells[1].Value.ToString());
-             }
-             oSequenzeditor.FillGridSequenz();
-             oSequenzeditor.FillGridSequenzEdit();*/
-        }
-
-
-        private void SequenzenGrid_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            /* if (e.ColumnIndex == 2)
-             {
-                 int i = e.RowIndex;
-
-                 lstSequenz[i].iSpeicherplatz = -999;
-
-
-                 lstSequenz.RemoveAt(i);
-
-                 oSequenzeditor.FillGridSequenz();
-             }*/
-
-        }
         private void SequenzenGrid_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -353,12 +287,12 @@ namespace PharMS_Steuerung
                 if (icurrentMouseOverRow >= 0)
                 {
                     //AblaufListeVorAuswahl = SequenzenGrid.Rows[icurrentMouseOverRow].Cells[0].Value.ToString();
-                    if (SequenzenGrid.Rows[icurrentMouseOverRow].Cells[1].Value != null)
-                        if (SequenzenGrid.Rows[icurrentMouseOverRow].Cells[1].Value.ToString() != "" && SequenzenGrid.Rows[icurrentMouseOverRow].Cells[1].Value.ToString() != "       ")
+                    if (SequenzenGrid.Rows[icurrentMouseOverRow].Cells["Speicherplatz"].Value != null)
+                        if (SequenzenGrid.Rows[icurrentMouseOverRow].Cells["Speicherplatz"].Value.ToString() != "" && SequenzenGrid.Rows[icurrentMouseOverRow].Cells["Speicherplatz"].Value.ToString() != "       ")
                         {
                             m.MenuItems.Add(new MenuItem("Starten"));
                             m.MenuItems[1].Click += mnItemStarten_Click;
-                            iSpeicherplatzForMNItem = Convert.ToInt32(SequenzenGrid.Rows[icurrentMouseOverRow].Cells[1].Value.ToString());
+                            iSpeicherplatzForMNItem = Convert.ToInt32(SequenzenGrid.Rows[icurrentMouseOverRow].Cells["Speicherplatz"].Value.ToString());
                         }
                     m.Show(SequenzenGrid, new Point(e.X, e.Y));
                 }
@@ -386,10 +320,68 @@ namespace PharMS_Steuerung
             if (NewDBDialog.ShowDialog() == DialogResult.OK)
             {
                 DBMain = new SQLMain(NewDBDialog.FileName);
+
+                oSequenzeditor.LoadGridSequenz();
+                oSequenzeditor.FillGridMaster();
+
+
+                AblaufListe.DisplayMember = "Name";
+                AblaufListe.ValueMember = "ID";
+                AblaufListe.DataSource = DBMain.dsPharms.Tables["Sequenzen"];
+
+                mnItemSpeichern.Enabled = true;
+                mnItemSpeichernUnter.Enabled = true;
+                tabControl1.Visible = true;
             }
-            mnItemSpeichern.Enabled = true;
-            mnItemSpeichernUnter.Enabled = true;
-            tabControl1.Visible = true;
+
+        }
+
+
+        private void mnItemSpeichernUnter_Click(object sender, EventArgs e)
+        {
+            NewDBDialog.Filter = "DB3 (*.db3)|*.db3";
+            NewDBDialog.FilterIndex = 2;
+            NewDBDialog.RestoreDirectory = true;
+
+            if (NewDBDialog.ShowDialog() == DialogResult.OK)
+            {
+               SQLMain DBMainCopy = new SQLMain(NewDBDialog.FileName);
+           
+
+            }
+
+        }
+
+        private void datenbankÖffnenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openDatabaseDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                DBMain = new SQLMain(openDatabaseDialog.FileName);
+                oSequenzeditor.LoadGridSequenz();
+                oSequenzeditor.FillGridMaster();
+                tabControl1.Visible = true;
+
+                AblaufListe.DisplayMember = "Name";
+                AblaufListe.ValueMember = "ID";
+                AblaufListe.DataSource = DBMain.dsPharms.Tables["Sequenzen"];
+
+
+                mnItemSpeichern.Enabled = true;
+                mnItemSpeichernUnter.Enabled = true;
+            }
+
+
+        }
+
+        private void beendenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void speichernToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DBMain.Save();
+
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -437,15 +429,15 @@ namespace PharMS_Steuerung
             List<String> lstCommands = new List<string>();
             List<int> IDs;
             IDs = DBMain.GetAllSequenzIDWithMemory();
-     
-            foreach  (int ID in IDs)
+
+            foreach (int ID in IDs)
             {
-               
+
                 lstCommands.Add(DBMain.GetSequenzByID(ID));
                 Console.WriteLine(DBMain.GetSequenzByID(ID));
                 stlLog.Add(DBMain.GetSequenzByID(ID));
-            }         
-            
+            }
+
             COM.Sequenzen_uebertragen_aktiv = true;
             BackgroundWorker BackgroundWorkerSendSequenz = new BackgroundWorker();
 
@@ -670,19 +662,6 @@ namespace PharMS_Steuerung
             }
         }
 
-        private void mnItemSpeichernUnter_Click(object sender, EventArgs e)
-        {
-            NewDBDialog.Filter = "DB3 (*.db3)|*.db3";
-            NewDBDialog.FilterIndex = 2;
-            NewDBDialog.RestoreDirectory = true;
-
-            if (NewDBDialog.ShowDialog() == DialogResult.OK)
-            {
-                //sDBName = Path.GetFileNameWithoutExtension(NewDBDialog.FileName);
-
-            }
-
-        }
 
         private void btnElektrodenTest_Click(object sender, EventArgs e)
         {

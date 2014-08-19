@@ -119,7 +119,7 @@ namespace PharMS_Steuerung.Funktionen
                 MainForm.SequenzeditorGrid.Columns["Vorlage"].Visible = false;
                 MainForm.SequenzeditorGrid.Columns["S_ID"].Visible = false;
                 // MainForm.SequenzeditorGrid.Columns["Reihenfolge"].Visible = false;
-                MainForm.SequenzeditorGrid.Columns["S_ID"].CellTemplate.Value = MainForm.AblaufListe.SelectedItem.ToString();
+                MainForm.SequenzeditorGrid.Columns["S_ID"].CellTemplate.Value = ID.ToString();
                 MainForm.SequenzeditorGrid.Columns["Reihenfolge"].CellTemplate.Value = MainForm.SequenzeditorGrid.RowCount;
                 MainForm.SequenzeditorGrid.Columns["Parameter"].HeaderText = "Parameter";
 

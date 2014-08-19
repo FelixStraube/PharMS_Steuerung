@@ -109,7 +109,7 @@ namespace PharMS_Steuerung.Funktionen
             cmd.CommandText = "CREATE TABLE IF NOT EXISTS Sequenzen_Befehle ( " +
                "ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
                "Befehl VARCHAR(20) NOT NULL," +
-               "Parameter VARCHAR(20) NOT NULL," +
+               "Parameter VARCHAR(20)," +
                "S_ID INTEGER NOT NULL," +
                "Reihenfolge INTEGER NOT NULL," +
                "Vorlage BOOL);";
@@ -134,6 +134,21 @@ namespace PharMS_Steuerung.Funktionen
             cmd.Dispose();
             conn.Close();
         }
+
+        public List<String> GetMasterablauf()
+        {
+            List<String> Speicherplatz = new List<String>();
+            DataTableReader dtr;
+            dtr = dsPharms.Tables["Masterablauf"].CreateDataReader();
+
+            while (dtr.Read())
+            {
+                Speicherplatz.Add(dtr["Speicherplatz"].ToString());
+            }
+            dtr.Close();
+            return Speicherplatz;
+        }
+
 
         public List<int> GetAllSequenzID()
         {
@@ -190,11 +205,15 @@ namespace PharMS_Steuerung.Funktionen
                 i++;
             }
             return sSequenz;
+        }
 
-
-
-
-
+        public void SetMeasurements(String MW1, String MW2)
+        {
+            DataRow row;
+            row = dsPharms.Tables["Messwerte"].NewRow();
+            row["MW1"] = Convert.ToDouble(MW1);
+            row["MW2"] = Convert.ToDouble(MW2);
+            dsPharms.Tables["Messwerte"].Rows.Add(row);
         }
 
         public void Save()

@@ -69,9 +69,6 @@
             this.MasterGrid = new System.Windows.Forms.DataGridView();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tabSequenzedit = new System.Windows.Forms.TabPage();
-            this.txtNewName = new System.Windows.Forms.TextBox();
-            this.lblNewName = new System.Windows.Forms.Label();
-            this.btnSaveOneSequenz = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.AblaufListe = new System.Windows.Forms.ComboBox();
             this.chkFilter = new System.Windows.Forms.CheckBox();
@@ -469,9 +466,9 @@
             // 
             // MasterGrid
             // 
-            this.MasterGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.MasterGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.MasterGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.MasterGrid.Location = new System.Drawing.Point(0, 50);
             this.MasterGrid.Name = "MasterGrid";
@@ -490,9 +487,6 @@
             // 
             // tabSequenzedit
             // 
-            this.tabSequenzedit.Controls.Add(this.txtNewName);
-            this.tabSequenzedit.Controls.Add(this.lblNewName);
-            this.tabSequenzedit.Controls.Add(this.btnSaveOneSequenz);
             this.tabSequenzedit.Controls.Add(this.label2);
             this.tabSequenzedit.Controls.Add(this.AblaufListe);
             this.tabSequenzedit.Controls.Add(this.chkFilter);
@@ -503,34 +497,6 @@
             this.tabSequenzedit.TabIndex = 3;
             this.tabSequenzedit.Text = "Sequenzeditor";
             this.tabSequenzedit.UseVisualStyleBackColor = true;
-            // 
-            // txtNewName
-            // 
-            this.txtNewName.Location = new System.Drawing.Point(142, 519);
-            this.txtNewName.Name = "txtNewName";
-            this.txtNewName.Size = new System.Drawing.Size(151, 20);
-            this.txtNewName.TabIndex = 14;
-            this.txtNewName.Visible = false;
-            // 
-            // lblNewName
-            // 
-            this.lblNewName.AutoSize = true;
-            this.lblNewName.Location = new System.Drawing.Point(5, 519);
-            this.lblNewName.Name = "lblNewName";
-            this.lblNewName.Size = new System.Drawing.Size(134, 13);
-            this.lblNewName.TabIndex = 13;
-            this.lblNewName.Text = "Name der neuen Sequenz:";
-            this.lblNewName.Visible = false;
-            // 
-            // btnSaveOneSequenz
-            // 
-            this.btnSaveOneSequenz.Location = new System.Drawing.Point(17, 544);
-            this.btnSaveOneSequenz.Name = "btnSaveOneSequenz";
-            this.btnSaveOneSequenz.Size = new System.Drawing.Size(75, 23);
-            this.btnSaveOneSequenz.TabIndex = 3;
-            this.btnSaveOneSequenz.Text = "Speichern";
-            this.btnSaveOneSequenz.UseVisualStyleBackColor = true;
-            this.btnSaveOneSequenz.Click += new System.EventHandler(this.btnSaveOneSequenz_Click);
             // 
             // label2
             // 
@@ -562,13 +528,13 @@
             // 
             // SequenzeditorGrid
             // 
-            this.SequenzeditorGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SequenzeditorGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.SequenzeditorGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.SequenzeditorGrid.Location = new System.Drawing.Point(0, 51);
             this.SequenzeditorGrid.Name = "SequenzeditorGrid";
-            this.SequenzeditorGrid.Size = new System.Drawing.Size(582, 456);
+            this.SequenzeditorGrid.Size = new System.Drawing.Size(582, 520);
             this.SequenzeditorGrid.TabIndex = 0;
             this.SequenzeditorGrid.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.SequenzeditorGrid_CellValidated);
             this.SequenzeditorGrid.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.SequenzeditorGrid_DefaultValuesNeeded);
@@ -596,14 +562,13 @@
             // 
             // SequenzenGrid
             // 
-            this.SequenzenGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SequenzenGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.SequenzenGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.SequenzenGrid.Location = new System.Drawing.Point(1, 3);
             this.SequenzenGrid.Name = "SequenzenGrid";
             this.SequenzenGrid.Size = new System.Drawing.Size(581, 500);
             this.SequenzenGrid.TabIndex = 0;
-            this.SequenzenGrid.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.SequenzenGrid_CellMouseClick);
             this.SequenzenGrid.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.SequenzenGrid_CellValidating);
             this.SequenzenGrid.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SequenzenGrid_MouseClick);
             // 
@@ -1125,9 +1090,9 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabDeviceParameter);
             this.tabControl1.Controls.Add(this.tabProben);
             this.tabControl1.Controls.Add(this.tabPage1);
@@ -1347,7 +1312,6 @@
         private System.Windows.Forms.Button btnUebertragen;
         public System.Windows.Forms.DataGridView SequenzenGrid;
         private System.Windows.Forms.TabPage tabSequenzedit;
-        public System.Windows.Forms.Button btnSaveOneSequenz;
         private System.Windows.Forms.Label label2;
         public System.Windows.Forms.ComboBox AblaufListe;
         private System.Windows.Forms.CheckBox chkFilter;
@@ -1390,8 +1354,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Sensor1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sensor2;
         private System.Windows.Forms.Button btnChart;
-        public System.Windows.Forms.TextBox txtNewName;
-        public System.Windows.Forms.Label lblNewName;
 
 
     }

@@ -102,7 +102,6 @@
     <Compile Include="Funktionen\LiveChart.cs" />
     <Compile Include="Funktionen\Sequenz.cs" />
     <Compile Include="Funktionen\Sequenzeditor.cs" />
-    <Compile Include="Funktionen\Datenerfassen.cs" />
     <Compile Include="Funktionen\Exporting.cs" />
     <Compile Include="Funktionen\SQLMain.cs" />
     <Compile Include="Program.cs" />

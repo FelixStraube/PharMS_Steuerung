@@ -20,12 +20,11 @@ namespace PharMS_Steuerung.Funktionen
         private string sMakroEndeZeichen;
         private string[] empfangene_snr = new string[50];
         private string sExpectedStatus;
-        public Datenerfassen Ausgabe_manuel = new Datenerfassen();
-        public Datenerfassen Ausgabe_automatisch = new Datenerfassen();
+      
         public SerialPort port;
         public Form1 tempForm = new Form1();
         public bool bereit;
-        public static bool Sequenzen_uebertragen_aktiv =false;
+        public static bool Sequenzen_uebertragen_aktiv = false;
         int CountUndefinedStatus = 0;
         public System.Timers.Timer tmrMesswerteTimer;
         /// <summary>
@@ -66,26 +65,25 @@ namespace PharMS_Steuerung.Funktionen
                 switch (steuerzeichen)
                 {
                     case "M":
-                      
+
                         // Alternatives erfassen der Messwert in Data grid 
                         //start
-                        DateTime Time = DateTime.Now;
-                       string Zeit = string.Format("{0:d/M/yyyy HH:mm:ss}", Time);
-                       string[] words = Status.Split(',');
-                       string Sensor1a = words[0].Substring(1, words[0].Length - 1);
-                              Sensor1a = Sensor1a.Replace(".", ",");
-                       string Sensor2b = words[1].Substring(0, words[1].Length);
-                               Sensor2b = Sensor2b.Replace(".", ",");
-                               tempForm.DatenerfassungTab_Hinzu(Zeit, Sensor1a, Sensor2b);
-                    
+
+
+                        string[] words = Status.Split(',');
+                        string Sensor1a = words[0].Substring(1, words[0].Length - 1);
+                        Sensor1a = Sensor1a.Replace(".", ",");
+                        string Sensor2b = words[1].Substring(0, words[1].Length);
+                        Sensor2b = Sensor2b.Replace(".", ",");
+                        tempForm.DBMain.SetMeasurements(Sensor1a, Sensor2b);
+
                         //Ende
                         if (tempForm.rbManuelleMessung.Checked == true)
                         {
-                            Ausgabe_manuel.BuildSource(Status);
-                            Ausgabe_manuel.SicherungMessdaten_txt(Status);// Sicherung in Temp Ordner
-                            
-                            
-                        
+                           //Manuell
+
+
+
                         }
                         if (tempForm.rbAktiveMessung.Checked == true)
                         {
@@ -99,8 +97,7 @@ namespace PharMS_Steuerung.Funktionen
                             }
                             if (tmrMesswerteTimer.Enabled == true)
                             {
-                                Ausgabe_automatisch.BuildSource(Status);
-                                Ausgabe_automatisch.SicherungMessdaten_txt(Status); // Sicherung in Temp Ordner
+                                //Automatisch
                             }
                             else
                             {
@@ -119,16 +116,16 @@ namespace PharMS_Steuerung.Funktionen
 
                     case "Z":
                         CountUndefinedStatus = 0;   // Counter null da sonst bei langen Sequenzen kein abfragen status nach 5 min möglich währe
-                       // AbfrageStatus();
+                        // AbfrageStatus();
                         if (Sequenzen_uebertragen_aktiv == true && Status != sMakroEndeZeichen)
                         {
-                                                                  System.Threading.Thread.Sleep(500);
-                                                                  bereit = true; 
-                                                                 } // bei sequenzübertragung wird ohne stautsabfrage fortegesetzt
+                            System.Threading.Thread.Sleep(500);
+                            bereit = true;
+                        } // bei sequenzübertragung wird ohne stautsabfrage fortegesetzt
                         if (Status == sMakroEndeZeichen)
-                        
-                            { AbfrageStatus(); } //AbfrageStatus erfolgt nur nach sequenzende ev. später Z für vollständig übertragenes Kommando ... erweitern 
-                        
+
+                        { AbfrageStatus(); } //AbfrageStatus erfolgt nur nach sequenzende ev. später Z für vollständig übertragenes Kommando ... erweitern 
+
                         break;
 
                     case "s":
@@ -209,8 +206,8 @@ namespace PharMS_Steuerung.Funktionen
             {
                 //  Funktionen.Datenerfassen test = new Funktionen.Datenerfassen("---------,---------", tempForm);
                 //Live chart cler und in Datenfeld aufnehmen
-               // tempForm.DatenerfassungTab.Refresh();
-               // tempForm.DatenerfassungTab.PerformLayout(); Threadübergreifender zugriff : fehler
+                // tempForm.DatenerfassungTab.Refresh();
+                // tempForm.DatenerfassungTab.PerformLayout(); Threadübergreifender zugriff : fehler
                 LiveChart ChartAusgabe = new LiveChart();
                 ChartAusgabe.erfassen("0", "0", tempForm, true, true);
                 iTickAktuell = iTickAktuell + iTickInterval;
@@ -218,8 +215,8 @@ namespace PharMS_Steuerung.Funktionen
                 //                tmrMesswerteTimer.Enabled = false;
                 //                tmrMesswerteTimer.Dispose();
                 tmrMesswerteTimer.Close();
-             //   port.WriteLine("s");  // Stausabfrage bei Messung unnötig
-             //   sExpectedStatus = "s";
+                //   port.WriteLine("s");  // Stausabfrage bei Messung unnötig
+                //   sExpectedStatus = "s";
             }
             else
             {
@@ -308,18 +305,20 @@ namespace PharMS_Steuerung.Funktionen
 
         public void Execute_Ablauf()
         {
+            List<string> lstMaster = tempForm.DBMain.GetMasterablauf();
+
             // change_progressBar(-1, 0, progressBar1);
             for (int z = 0; z < tempForm.Durchläufe; z++)
             {
-                for (int i = 0; i < tempForm.lstMaster.Count; i++) // warum hast du davor mit 1 angefangen und warum befindet sich die Methode überhaupt in der MainForm?
+                for (int i = 0; i < lstMaster.Count; i++) // warum hast du davor mit 1 angefangen und warum befindet sich die Methode überhaupt in der MainForm?
                 {
                     Boolean Lauf = true;
                     do
                     {
                         if (tempForm.Abbruch == true) return;
-                        Lauf = SendToCOM("X" + tempForm.lstMaster[i], false);
-                        if (Lauf == true) Console.WriteLine("Line: " + i + ";" + tempForm.lstMaster.Count + ";" + "X" + tempForm.lstMaster[i]);
-                        if (Lauf == true) tempForm.stlLog.Add("Line: " + i + ";" + tempForm.lstMaster.Count + ";" + "X" + tempForm.lstMaster[i]);
+                        Lauf = SendToCOM("X" + lstMaster[i], false);
+                        if (Lauf == true) Console.WriteLine("Line: " + i + ";" + lstMaster.Count + ";" + "X" + lstMaster[i]);
+                        if (Lauf == true) tempForm.stlLog.Add("Line: " + i + ";" + lstMaster.Count + ";" + "X" + lstMaster[i]);
                         System.Threading.Thread.Sleep(1000);
 
                     } while (Lauf == false);
