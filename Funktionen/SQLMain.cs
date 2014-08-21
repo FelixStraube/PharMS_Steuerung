@@ -201,7 +201,9 @@ namespace PharMS_Steuerung.Funktionen
             {
                 if (i == 0)
                     sSequenz = "Y" + q.Speicherplatz.ToString() + ";";
-                sSequenz = sSequenz + q.Befehl + q.Parameter + ";";
+
+                if (query.Count() == i + 1) sSequenz = sSequenz + q.Befehl + q.Parameter;
+                else sSequenz = sSequenz + q.Befehl + q.Parameter + ";";
                 i++;
             }
             return sSequenz;
@@ -213,6 +215,7 @@ namespace PharMS_Steuerung.Funktionen
             row = dsPharms.Tables["Messwerte"].NewRow();
             row["MW1"] = Convert.ToDouble(MW1);
             row["MW2"] = Convert.ToDouble(MW2);
+            row["Datum"] = DateTime.Now;
             dsPharms.Tables["Messwerte"].Rows.Add(row);
         }
 

@@ -640,7 +640,7 @@ namespace PharMS_Steuerung
             }
             else
             {
-                DatenerfassungTab.Rows.Clear();
+                DBMain.dsPharms.Tables["Messwerte"].Clear();
             }
         }
 

@@ -20,10 +20,10 @@ namespace PharMS_Steuerung.Funktionen
         private string sMakroEndeZeichen;
         private string[] empfangene_snr = new string[50];
         private string sExpectedStatus;
-      
+
         public SerialPort port;
         public Form1 tempForm = new Form1();
-        public bool bereit;
+        public bool bereit = true;
         public static bool Sequenzen_uebertragen_aktiv = false;
         int CountUndefinedStatus = 0;
         public System.Timers.Timer tmrMesswerteTimer;
@@ -80,7 +80,7 @@ namespace PharMS_Steuerung.Funktionen
                         //Ende
                         if (tempForm.rbManuelleMessung.Checked == true)
                         {
-                           //Manuell
+                            //Manuell
 
 
 
@@ -117,15 +117,19 @@ namespace PharMS_Steuerung.Funktionen
                     case "Z":
                         CountUndefinedStatus = 0;   // Counter null da sonst bei langen Sequenzen kein abfragen status nach 5 min möglich währe
                         // AbfrageStatus();
-                        if (Sequenzen_uebertragen_aktiv == true && Status != sMakroEndeZeichen)
+
+                        if (sExpectedStatus == sMakroEndeZeichen && Status == sMakroEndeZeichen)
+                        {
+                            System.Threading.Thread.Sleep(500);
+                            bereit = true;
+                        }
+
+                        if (Sequenzen_uebertragen_aktiv == false && sExpectedStatus != sMakroEndeZeichen)
                         {
                             System.Threading.Thread.Sleep(500);
                             bereit = true;
                         } // bei sequenzübertragung wird ohne stautsabfrage fortegesetzt
-                        if (Status == sMakroEndeZeichen)
-
-                        { AbfrageStatus(); } //AbfrageStatus erfolgt nur nach sequenzende ev. später Z für vollständig übertragenes Kommando ... erweitern 
-
+                       
                         break;
 
                     case "s":
@@ -242,23 +246,29 @@ namespace PharMS_Steuerung.Funktionen
                 return false;
 
             }
-            if (bereit == true || bForce == true)
-            {
-                tempForm.stlLog.Add("Gesendet : " + Caption + "    " + System.DateTime.Now.ToString());
-                Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : " + Caption, tempForm);
-                port.WriteLine(Caption);
-                sExpectedStatus = "Z";
+            if (Caption != ""){
+                if (bereit == true || bForce == true)
+                {
+                    tempForm.stlLog.Add("Gesendet : " + Caption + "    " + System.DateTime.Now.ToString());
+                    Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : " + Caption, tempForm);
+                    port.WriteLine(Caption);
+                    if (Caption[0] == 'X')
+                        sExpectedStatus = sMakroEndeZeichen;
+                    else
+                        sExpectedStatus = "Z";
 
-                bereit = false;
-                return true;
+                    bereit = false;
+                    return true;
+                }
+                else
+                    /* if (bCheckStatus)
+                     {
+                         Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : s", tempForm);
+                         AbfrageStatus();
+                     }*/
+                    return false;
             }
-            else
-                /* if (bCheckStatus)
-                 {
-                     Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : s", tempForm);
-                     AbfrageStatus();
-                 }*/
-                return false;
+            else return false;
         }
         public void COMDisconnect()
         {
