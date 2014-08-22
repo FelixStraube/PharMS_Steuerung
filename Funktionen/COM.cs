@@ -33,7 +33,7 @@ namespace PharMS_Steuerung.Funktionen
         /// static System.Windows.Forms.Timer Zeitsteuerung = new System.Windows.Forms.Timer();
         /// Timer 
         private int iTickInterval, iTickAktuell;
-        static int ende;
+        public static int ende;
 
 
 
@@ -205,30 +205,31 @@ namespace PharMS_Steuerung.Funktionen
         }
 
         private void Execute(Object myObject, EventArgs myEventArgs)
-        {
-            if (iTickAktuell >= ende)
-            {
-                //  Funktionen.Datenerfassen test = new Funktionen.Datenerfassen("---------,---------", tempForm);
-                //Live chart cler und in Datenfeld aufnehmen
-                // tempForm.DatenerfassungTab.Refresh();
-                // tempForm.DatenerfassungTab.PerformLayout(); Threadübergreifender zugriff : fehler
-                LiveChart ChartAusgabe = new LiveChart();
-                ChartAusgabe.erfassen("0", "0", tempForm, true, true);
-                iTickAktuell = iTickAktuell + iTickInterval;
-                tmrMesswerteTimer.Stop();
-                //                tmrMesswerteTimer.Enabled = false;
-                //                tmrMesswerteTimer.Dispose();
-                tmrMesswerteTimer.Close();
-                //   port.WriteLine("s");  // Stausabfrage bei Messung unnötig
-                //   sExpectedStatus = "s";
-            }
-            else
+        {tmrMesswerteTimer.Stop();
+            if (iTickAktuell <= ende && ende !=0 )
             {
                 //  Console.WriteLine("teste" + iTickInterval + ":" + ende);
                 // Restarts the timer and increments the counter.
                 port.WriteLine("M");
                 sExpectedStatus = "M";
                 iTickAktuell = iTickAktuell + iTickInterval;
+                tmrMesswerteTimer.Enabled = true;
+            }
+            else
+            {//  Funktionen.Datenerfassen test = new Funktionen.Datenerfassen("---------,---------", tempForm);
+                //Live chart cler und in Datenfeld aufnehmen
+                // tempForm.DatenerfassungTab.Refresh();
+                // tempForm.DatenerfassungTab.PerformLayout(); Threadübergreifender zugriff : fehler
+                LiveChart ChartAusgabe = new LiveChart();
+            //    ChartAusgabe.erfassen("0", "0", tempForm, true, true);
+                iTickAktuell = iTickAktuell + iTickInterval;
+                
+                //                tmrMesswerteTimer.Enabled = false;
+                //                tmrMesswerteTimer.Dispose();
+                tmrMesswerteTimer.Close();
+                //   port.WriteLine("s");  // Stausabfrage bei Messung unnötig
+                //   sExpectedStatus = "s";
+                
             }
 
         }

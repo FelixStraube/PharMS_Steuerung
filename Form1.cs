@@ -24,7 +24,7 @@ namespace PharMS_Steuerung
         public int Durchläufe;
         public bool Abbruch;
         public int Prozessstand;
-        static int ende;
+        public static int ende;
         public bool SchleifenStopp = false;
         private int i = 1;
         static System.Windows.Forms.Timer Zeitsteuerung = new System.Windows.Forms.Timer();
@@ -191,6 +191,7 @@ namespace PharMS_Steuerung
 
         private void Man_Messung_Click(object sender, EventArgs e)
         {
+            rbManuelleMessung.Checked = true;
             Comschnitstelle.SendToCOM("p1,1", true);
             System.Threading.Thread.Sleep(500);
             Comschnitstelle.SendToCOM("U" + numericZellspannung.Value, true);
@@ -211,7 +212,7 @@ namespace PharMS_Steuerung
             Zeitsteuerung.Stop();
             // Displays a message box asking whether to continue running the timer.
 
-            if (alarmCounter <= ende)
+            if (alarmCounter <= ende && ende != 0)
             {
                 Console.WriteLine("teste" + alarmCounter + ":" + ende);
                 // Restarts the timer and increments the counter.
@@ -233,7 +234,11 @@ namespace PharMS_Steuerung
         }
 
         private void Messung_Stopp_Click(object sender, EventArgs e)
-        {
+        { 
+            if (Comschnitstelle.tmrMesswerteTimer.Enabled==true)
+                    {
+                        Comschnitstelle.tmrMesswerteTimer.Stop();
+                    }
             Comschnitstelle.SendToCOM("U0", true);
             System.Threading.Thread.Sleep(500);
             Comschnitstelle.SendToCOM("p1,0", true);
@@ -610,12 +615,11 @@ namespace PharMS_Steuerung
             File.WriteAllLines("LogCOM.txt", stlLog);
         }
 
-        private void rbTemperierungEin_CheckedChanged(object sender, EventArgs e)
+        private void btnTemperierungEin(object sender, EventArgs e)
         {
-            txtboxTemperatur.ReadOnly = true;
-            if (rbTemperierungEin.Checked)
-            {
-                txtboxTemperatur.ReadOnly = false;
+          
+            
+             
                 string Temp = txtboxTemperatur.Text.ToString();
                 if (Temp.IndexOf(",") != null)
                 {
@@ -626,7 +630,7 @@ namespace PharMS_Steuerung
                 System.Threading.Thread.Sleep(500);
                 Comschnitstelle.SendToCOM("o1", true);
 
-            }
+            
 
 
         }
@@ -673,7 +677,7 @@ namespace PharMS_Steuerung
                 MessageBox.Show("Zuleitung 7 zu Ventil 2 in Testlösung führen !");
                 MessageBox.Show("Messdauer 1 min mit 5s taktung !");
                 numeric_Intervall.Value = 5;
-                numeric_Messdauer.Value = 10;
+                numeric_Messdauer.Value = 1;
                 Comschnitstelle.SendToCOM("X20", true);
                 Console.WriteLine("X20");
                 stlLog.Add("X20");
@@ -686,7 +690,7 @@ namespace PharMS_Steuerung
         {
             if (Comschnitstelle.bereit)
             {
-                tabControl1.SelectedTab = tabPage1;
+                tabControl1.SelectedTab = tabGKommunikation;
                 Comschnitstelle.SendToCOM(Sequenz.LeitungenSpuelen(true), true);
                 Console.WriteLine("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(true));
                 stlLog.Add("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(true) + "    " + System.DateTime.Now.ToString());
@@ -718,7 +722,7 @@ namespace PharMS_Steuerung
                 BackgroundWorkerReg.RunWorkerCompleted += BackgroundWorkerReg_RunWorkerCompleted;
                 BackgroundWorkerReg.RunWorkerAsync(new HelpClass(1, "X20", "W0,01"));
                 BackgroundWorkerReg.Dispose();
-                tabControl1.SelectedTab = tabPage1;
+                tabControl1.SelectedTab = tabGKommunikation;
             }
             else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
         }
@@ -757,49 +761,33 @@ namespace PharMS_Steuerung
             Comschnitstelle.Execute_Commands(((HelpClass)e.Argument).iRepeat, ((HelpClass)e.Argument).arrCommands);
         }
 
-        private void rbPumpeMesszelleAus_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbPumpeMesszelleAus.Checked)
-            {
-                rbPumpeMesszelleEin.Checked = false;
-                Comschnitstelle.SendToCOM("p1,0", true);
-            }
+        private void btnPumpeMesszelleAus(object sender, EventArgs e)
+        {                
+                Comschnitstelle.SendToCOM("p1,0", true);          
         }
 
-        private void rbPumpeMesszelleEin_CheckedChanged(object sender, EventArgs e)
+        private void btnPumpeMesszelleEin(object sender, EventArgs e)
         {
-            if (rbPumpeMesszelleEin.Checked)
-            {
-                rbPumpeMesszelleAus.Checked = false;
-                Comschnitstelle.SendToCOM("p1,1", true);
-            }
+            
+                Comschnitstelle.SendToCOM("p1,1", true);            
         }
 
-        private void rbPumpeAbfallEin_CheckedChanged(object sender, EventArgs e)
+        private void btnPumpeAbfallEin(object sender, EventArgs e)
         {
-            if (rbPumpeAbfallEin.Checked)
-            {
-                rbPumpeAbfallAus.Checked = false;
-                Comschnitstelle.SendToCOM("p2,1", true);
-            }
+            
+                Comschnitstelle.SendToCOM("p2,1", true);            
         }
 
-        private void rbPumpeAbfallAus_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbPumpeAbfallAus.Checked)
-            {
-                rbPumpeAbfallEin.Checked = false;
-                Comschnitstelle.SendToCOM("p2,0", true);
-            }
+        private void btnPumpeAbfallAus(object sender, EventArgs e)
+        {           
+               
+                Comschnitstelle.SendToCOM("p2,0", true);           
         }
 
-        private void rbTemperierungAus_CheckedChanged(object sender, EventArgs e)
+        private void btnTemperierungAus(object sender, EventArgs e)
         {
-            if (rbTemperierungAus.Checked)
-            {
-                rbTemperierungEin.Checked = false;
-                Comschnitstelle.SendToCOM("o0", true);
-            }
+                         
+                Comschnitstelle.SendToCOM("o0", true);           
         }
 
         private void btnChart_Click(object sender, EventArgs e)
@@ -849,6 +837,8 @@ namespace PharMS_Steuerung
             }
         }
 
-
+        
+    
+     
     }
 }

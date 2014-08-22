@@ -190,19 +190,19 @@ namespace PharMS_Steuerung.Funktionen
             lstSequenz1.Add("v1,5;");
             lstSequenz1.Add("DP2500;");
             lstSequenz1.Add("v1,8;");
-            lstSequenz1.Add("DAO;");
+            lstSequenz1.Add("DA0;");
             lstSequenz1.Add("v1,4;");
             lstSequenz1.Add("DP2500;");
             lstSequenz1.Add("v1,8;");
-            lstSequenz1.Add("DAO;");
+            lstSequenz1.Add("DA0;");
             lstSequenz1.Add("v1,3;");
             lstSequenz1.Add("DP2500;");
             lstSequenz1.Add("v1,8;");
-            lstSequenz1.Add("DAO;");
+            lstSequenz1.Add("DA0;");
             lstSequenz1.Add("v1,2;");
             lstSequenz1.Add("DP2500;");
             lstSequenz1.Add("v1,8;");
-            lstSequenz1.Add("DAO;");
+            lstSequenz1.Add("DA0;");
             lstSequenz1.Add("v1,1;");
             lstSequenz1.Add("DP2500;");
             lstSequenz1.Add("v1,8;");
@@ -211,7 +211,7 @@ namespace PharMS_Steuerung.Funktionen
             lstSequenz1.Add("v1,1;");
             lstSequenz1.Add("DP500;");
             lstSequenz1.Add("v1,8;");
-            lstSequenz1.Add("DAO");
+            lstSequenz1.Add("DA0");
 
             #endregion
 

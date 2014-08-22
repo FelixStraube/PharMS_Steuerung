@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.Verzeichnisauswahl = new System.Windows.Forms.FolderBrowserDialog();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -44,12 +44,6 @@
             this.hilfeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDatabaseDialog = new System.Windows.Forms.OpenFileDialog();
             this.NewDBDialog = new System.Windows.Forms.SaveFileDialog();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.Live_Chart_anzeigen = new System.Windows.Forms.Button();
-            this.LiveGrid = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LiveChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.btnChart = new System.Windows.Forms.Button();
             this.lbMessmethode = new System.Windows.Forms.Label();
@@ -76,7 +70,7 @@
             this.tabSequenzList = new System.Windows.Forms.TabPage();
             this.btnUebertragen = new System.Windows.Forms.Button();
             this.SequenzenGrid = new System.Windows.Forms.DataGridView();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabGKommunikation = new System.Windows.Forms.TabPage();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.Console_Senden = new System.Windows.Forms.Button();
@@ -101,16 +95,16 @@
             this.rbManuelleMessung = new System.Windows.Forms.RadioButton();
             this.rbAktiveMessung = new System.Windows.Forms.RadioButton();
             this.grbTemperierung = new System.Windows.Forms.GroupBox();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.txtboxTemperatur = new System.Windows.Forms.TextBox();
-            this.rbTemperierungAus = new System.Windows.Forms.RadioButton();
             this.lbTemperatur = new System.Windows.Forms.Label();
-            this.rbTemperierungEin = new System.Windows.Forms.RadioButton();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.rbPumpeAbfallAus = new System.Windows.Forms.RadioButton();
-            this.rbPumpeAbfallEin = new System.Windows.Forms.RadioButton();
+            this.Button_Pumpe_Abfall_AUS = new System.Windows.Forms.Button();
+            this.Button_Pumpe_Abfall_EIN = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.rbPumpeMesszelleAus = new System.Windows.Forms.RadioButton();
-            this.rbPumpeMesszelleEin = new System.Windows.Forms.RadioButton();
+            this.Button_Pumpe_MZ_AUS = new System.Windows.Forms.Button();
+            this.Button_Pumpe_MZ_EIN = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button3 = new System.Windows.Forms.Button();
             this.NOTSTOPP = new System.Windows.Forms.Button();
@@ -128,11 +122,14 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.Live_Chart_anzeigen = new System.Windows.Forms.Button();
+            this.LiveGrid = new System.Windows.Forms.DataGridView();
+            this.LiveChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.LiveGrid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.LiveChart)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DatenerfassungTab)).BeginInit();
             this.tabMasterablauf.SuspendLayout();
@@ -142,7 +139,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.SequenzeditorGrid)).BeginInit();
             this.tabSequenzList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SequenzenGrid)).BeginInit();
-            this.tabPage1.SuspendLayout();
+            this.tabGKommunikation.SuspendLayout();
             this.tabDeviceParameter.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numSpuelen)).BeginInit();
@@ -157,6 +154,9 @@
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabProben.SuspendLayout();
+            this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.LiveGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LiveChart)).BeginInit();
             this.SuspendLayout();
             // 
             // fileSystemWatcher1
@@ -171,7 +171,7 @@
             this.hilfeToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(604, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(655, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -232,80 +232,6 @@
             // 
             this.openDatabaseDialog.Filter = "DB3 (*.db3)|*.db3";
             // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.Live_Chart_anzeigen);
-            this.tabPage4.Controls.Add(this.LiveGrid);
-            this.tabPage4.Controls.Add(this.LiveChart);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(582, 574);
-            this.tabPage4.TabIndex = 5;
-            this.tabPage4.Text = "Live Chart";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // Live_Chart_anzeigen
-            // 
-            this.Live_Chart_anzeigen.Location = new System.Drawing.Point(70, 518);
-            this.Live_Chart_anzeigen.Name = "Live_Chart_anzeigen";
-            this.Live_Chart_anzeigen.Size = new System.Drawing.Size(75, 23);
-            this.Live_Chart_anzeigen.TabIndex = 2;
-            this.Live_Chart_anzeigen.Text = "Live Chart";
-            this.Live_Chart_anzeigen.UseVisualStyleBackColor = true;
-            this.Live_Chart_anzeigen.Visible = false;
-            this.Live_Chart_anzeigen.Click += new System.EventHandler(this.LiveChart_klick);
-            // 
-            // LiveGrid
-            // 
-            this.LiveGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.LiveGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2});
-            this.LiveGrid.Location = new System.Drawing.Point(70, 344);
-            this.LiveGrid.Name = "LiveGrid";
-            this.LiveGrid.Size = new System.Drawing.Size(328, 150);
-            this.LiveGrid.TabIndex = 1;
-            this.LiveGrid.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.LiveGrid_RowHeaderMouseDoubleClick);
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Nr.:";
-            this.Column1.Name = "Column1";
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Bezeichnung";
-            this.Column2.Name = "Column2";
-            // 
-            // LiveChart
-            // 
-            chartArea2.AxisX.Title = " Time [s]";
-            chartArea2.AxisY.Title = "Signal [nA]";
-            chartArea2.Name = "ChartArea1";
-            this.LiveChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.LiveChart.Legends.Add(legend2);
-            this.LiveChart.Location = new System.Drawing.Point(31, 32);
-            this.LiveChart.Name = "LiveChart";
-            this.LiveChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-            series3.BorderWidth = 5;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Legend = "Legend1";
-            series3.MarkerColor = System.Drawing.Color.White;
-            series3.Name = "Sensor 1";
-            series4.BorderWidth = 5;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Legend = "Legend1";
-            series4.Name = "Sensor 2";
-            this.LiveChart.Series.Add(series3);
-            this.LiveChart.Series.Add(series4);
-            this.LiveChart.Size = new System.Drawing.Size(466, 289);
-            this.LiveChart.TabIndex = 0;
-            this.LiveChart.Text = "chart1";
-            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.btnChart);
@@ -318,7 +244,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(582, 574);
+            this.tabPage2.Size = new System.Drawing.Size(633, 574);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Messdaten";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -433,7 +359,7 @@
             this.tabMasterablauf.Controls.Add(this.MasterGrid);
             this.tabMasterablauf.Location = new System.Drawing.Point(4, 22);
             this.tabMasterablauf.Name = "tabMasterablauf";
-            this.tabMasterablauf.Size = new System.Drawing.Size(582, 574);
+            this.tabMasterablauf.Size = new System.Drawing.Size(633, 574);
             this.tabMasterablauf.TabIndex = 5;
             this.tabMasterablauf.Text = "Masterablauf";
             this.tabMasterablauf.UseVisualStyleBackColor = true;
@@ -466,13 +392,13 @@
             // 
             // MasterGrid
             // 
-            this.MasterGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.MasterGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.MasterGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.MasterGrid.Location = new System.Drawing.Point(0, 50);
             this.MasterGrid.Name = "MasterGrid";
-            this.MasterGrid.Size = new System.Drawing.Size(582, 512);
+            this.MasterGrid.Size = new System.Drawing.Size(633, 512);
             this.MasterGrid.TabIndex = 1;
             this.MasterGrid.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.MasterGrid_CellValidated);
             this.MasterGrid.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.MasterGrid_DefaultValuesNeeded);
@@ -482,7 +408,7 @@
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar1.Location = new System.Drawing.Point(11, 624);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(590, 15);
+            this.progressBar1.Size = new System.Drawing.Size(641, 15);
             this.progressBar1.TabIndex = 33;
             // 
             // tabSequenzedit
@@ -493,7 +419,7 @@
             this.tabSequenzedit.Controls.Add(this.SequenzeditorGrid);
             this.tabSequenzedit.Location = new System.Drawing.Point(4, 22);
             this.tabSequenzedit.Name = "tabSequenzedit";
-            this.tabSequenzedit.Size = new System.Drawing.Size(582, 574);
+            this.tabSequenzedit.Size = new System.Drawing.Size(633, 574);
             this.tabSequenzedit.TabIndex = 3;
             this.tabSequenzedit.Text = "Sequenzeditor";
             this.tabSequenzedit.UseVisualStyleBackColor = true;
@@ -528,13 +454,13 @@
             // 
             // SequenzeditorGrid
             // 
-            this.SequenzeditorGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.SequenzeditorGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.SequenzeditorGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.SequenzeditorGrid.Location = new System.Drawing.Point(0, 51);
             this.SequenzeditorGrid.Name = "SequenzeditorGrid";
-            this.SequenzeditorGrid.Size = new System.Drawing.Size(582, 520);
+            this.SequenzeditorGrid.Size = new System.Drawing.Size(633, 520);
             this.SequenzeditorGrid.TabIndex = 0;
             this.SequenzeditorGrid.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.SequenzeditorGrid_CellValidated);
             this.SequenzeditorGrid.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.SequenzeditorGrid_DefaultValuesNeeded);
@@ -545,7 +471,7 @@
             this.tabSequenzList.Controls.Add(this.SequenzenGrid);
             this.tabSequenzList.Location = new System.Drawing.Point(4, 22);
             this.tabSequenzList.Name = "tabSequenzList";
-            this.tabSequenzList.Size = new System.Drawing.Size(582, 574);
+            this.tabSequenzList.Size = new System.Drawing.Size(633, 574);
             this.tabSequenzList.TabIndex = 4;
             this.tabSequenzList.Text = "Sequenzen";
             this.tabSequenzList.UseVisualStyleBackColor = true;
@@ -562,30 +488,30 @@
             // 
             // SequenzenGrid
             // 
-            this.SequenzenGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.SequenzenGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.SequenzenGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.SequenzenGrid.Location = new System.Drawing.Point(1, 3);
             this.SequenzenGrid.Name = "SequenzenGrid";
-            this.SequenzenGrid.Size = new System.Drawing.Size(581, 500);
+            this.SequenzenGrid.Size = new System.Drawing.Size(632, 500);
             this.SequenzenGrid.TabIndex = 0;
             this.SequenzenGrid.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.SequenzenGrid_CellValidating);
             this.SequenzenGrid.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SequenzenGrid_MouseClick);
             // 
-            // tabPage1
+            // tabGKommunikation
             // 
-            this.tabPage1.BackColor = System.Drawing.Color.White;
-            this.tabPage1.Controls.Add(this.label16);
-            this.tabPage1.Controls.Add(this.label15);
-            this.tabPage1.Controls.Add(this.Console_Senden);
-            this.tabPage1.Controls.Add(this.Console_Eingabe);
-            this.tabPage1.Controls.Add(this.Console_Ausgabe);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(582, 574);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Gerätesteuerung";
+            this.tabGKommunikation.BackColor = System.Drawing.Color.White;
+            this.tabGKommunikation.Controls.Add(this.label16);
+            this.tabGKommunikation.Controls.Add(this.label15);
+            this.tabGKommunikation.Controls.Add(this.Console_Senden);
+            this.tabGKommunikation.Controls.Add(this.Console_Eingabe);
+            this.tabGKommunikation.Controls.Add(this.Console_Ausgabe);
+            this.tabGKommunikation.Location = new System.Drawing.Point(4, 22);
+            this.tabGKommunikation.Name = "tabGKommunikation";
+            this.tabGKommunikation.Padding = new System.Windows.Forms.Padding(3);
+            this.tabGKommunikation.Size = new System.Drawing.Size(633, 574);
+            this.tabGKommunikation.TabIndex = 0;
+            this.tabGKommunikation.Text = "Gerätekommunikation";
             // 
             // label16
             // 
@@ -638,7 +564,7 @@
             this.tabDeviceParameter.Location = new System.Drawing.Point(4, 22);
             this.tabDeviceParameter.Name = "tabDeviceParameter";
             this.tabDeviceParameter.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDeviceParameter.Size = new System.Drawing.Size(582, 574);
+            this.tabDeviceParameter.Size = new System.Drawing.Size(633, 574);
             this.tabDeviceParameter.TabIndex = 6;
             this.tabDeviceParameter.Text = "Geräteparameter";
             this.tabDeviceParameter.UseVisualStyleBackColor = true;
@@ -889,10 +815,10 @@
             // 
             // grbTemperierung
             // 
+            this.grbTemperierung.Controls.Add(this.button4);
+            this.grbTemperierung.Controls.Add(this.button1);
             this.grbTemperierung.Controls.Add(this.txtboxTemperatur);
-            this.grbTemperierung.Controls.Add(this.rbTemperierungAus);
             this.grbTemperierung.Controls.Add(this.lbTemperatur);
-            this.grbTemperierung.Controls.Add(this.rbTemperierungEin);
             this.grbTemperierung.Location = new System.Drawing.Point(323, 37);
             this.grbTemperierung.Name = "grbTemperierung";
             this.grbTemperierung.Size = new System.Drawing.Size(196, 105);
@@ -900,53 +826,47 @@
             this.grbTemperierung.TabStop = false;
             this.grbTemperierung.Text = "Temperierung";
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(104, 33);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(70, 25);
+            this.button4.TabIndex = 6;
+            this.button4.Text = "Aus";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.btnTemperierungAus);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(13, 34);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(70, 25);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "Ein";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.btnTemperierungEin);
+            // 
             // txtboxTemperatur
             // 
-            this.txtboxTemperatur.Location = new System.Drawing.Point(104, 45);
+            this.txtboxTemperatur.Location = new System.Drawing.Point(104, 70);
             this.txtboxTemperatur.Name = "txtboxTemperatur";
-            this.txtboxTemperatur.ReadOnly = true;
             this.txtboxTemperatur.Size = new System.Drawing.Size(70, 20);
             this.txtboxTemperatur.TabIndex = 4;
             this.txtboxTemperatur.Text = "37";
             // 
-            // rbTemperierungAus
-            // 
-            this.rbTemperierungAus.AutoSize = true;
-            this.rbTemperierungAus.Location = new System.Drawing.Point(13, 67);
-            this.rbTemperierungAus.Name = "rbTemperierungAus";
-            this.rbTemperierungAus.Size = new System.Drawing.Size(43, 17);
-            this.rbTemperierungAus.TabIndex = 1;
-            this.rbTemperierungAus.TabStop = true;
-            this.rbTemperierungAus.Text = "Aus";
-            this.rbTemperierungAus.UseVisualStyleBackColor = true;
-            this.rbTemperierungAus.CheckedChanged += new System.EventHandler(this.rbTemperierungAus_CheckedChanged);
-            // 
             // lbTemperatur
             // 
             this.lbTemperatur.AutoSize = true;
-            this.lbTemperatur.Location = new System.Drawing.Point(10, 47);
+            this.lbTemperatur.Location = new System.Drawing.Point(10, 77);
             this.lbTemperatur.Name = "lbTemperatur";
             this.lbTemperatur.Size = new System.Drawing.Size(89, 13);
             this.lbTemperatur.TabIndex = 3;
             this.lbTemperatur.Text = "Temperatur in °C:";
             // 
-            // rbTemperierungEin
-            // 
-            this.rbTemperierungEin.AutoSize = true;
-            this.rbTemperierungEin.Checked = true;
-            this.rbTemperierungEin.Location = new System.Drawing.Point(13, 22);
-            this.rbTemperierungEin.Name = "rbTemperierungEin";
-            this.rbTemperierungEin.Size = new System.Drawing.Size(40, 17);
-            this.rbTemperierungEin.TabIndex = 0;
-            this.rbTemperierungEin.TabStop = true;
-            this.rbTemperierungEin.Text = "Ein";
-            this.rbTemperierungEin.UseVisualStyleBackColor = true;
-            this.rbTemperierungEin.CheckedChanged += new System.EventHandler(this.rbTemperierungEin_CheckedChanged);
-            // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.rbPumpeAbfallAus);
-            this.groupBox4.Controls.Add(this.rbPumpeAbfallEin);
+            this.groupBox4.Controls.Add(this.Button_Pumpe_Abfall_AUS);
+            this.groupBox4.Controls.Add(this.Button_Pumpe_Abfall_EIN);
             this.groupBox4.Location = new System.Drawing.Point(151, 37);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(166, 105);
@@ -954,35 +874,30 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Pumpe Abfallbehandlungs";
             // 
-            // rbPumpeAbfallAus
+            // Button_Pumpe_Abfall_AUS
             // 
-            this.rbPumpeAbfallAus.AutoSize = true;
-            this.rbPumpeAbfallAus.Checked = true;
-            this.rbPumpeAbfallAus.Location = new System.Drawing.Point(15, 67);
-            this.rbPumpeAbfallAus.Name = "rbPumpeAbfallAus";
-            this.rbPumpeAbfallAus.Size = new System.Drawing.Size(43, 17);
-            this.rbPumpeAbfallAus.TabIndex = 1;
-            this.rbPumpeAbfallAus.TabStop = true;
-            this.rbPumpeAbfallAus.Text = "Aus";
-            this.rbPumpeAbfallAus.UseVisualStyleBackColor = true;
-            this.rbPumpeAbfallAus.CheckedChanged += new System.EventHandler(this.rbPumpeAbfallAus_CheckedChanged);
+            this.Button_Pumpe_Abfall_AUS.Location = new System.Drawing.Point(25, 65);
+            this.Button_Pumpe_Abfall_AUS.Name = "Button_Pumpe_Abfall_AUS";
+            this.Button_Pumpe_Abfall_AUS.Size = new System.Drawing.Size(100, 25);
+            this.Button_Pumpe_Abfall_AUS.TabIndex = 3;
+            this.Button_Pumpe_Abfall_AUS.Text = "Aus";
+            this.Button_Pumpe_Abfall_AUS.UseVisualStyleBackColor = true;
+            this.Button_Pumpe_Abfall_AUS.Click += new System.EventHandler(this.btnPumpeAbfallAus);
             // 
-            // rbPumpeAbfallEin
+            // Button_Pumpe_Abfall_EIN
             // 
-            this.rbPumpeAbfallEin.AutoSize = true;
-            this.rbPumpeAbfallEin.Location = new System.Drawing.Point(15, 22);
-            this.rbPumpeAbfallEin.Name = "rbPumpeAbfallEin";
-            this.rbPumpeAbfallEin.Size = new System.Drawing.Size(40, 17);
-            this.rbPumpeAbfallEin.TabIndex = 0;
-            this.rbPumpeAbfallEin.TabStop = true;
-            this.rbPumpeAbfallEin.Text = "Ein";
-            this.rbPumpeAbfallEin.UseVisualStyleBackColor = true;
-            this.rbPumpeAbfallEin.CheckedChanged += new System.EventHandler(this.rbPumpeAbfallEin_CheckedChanged);
+            this.Button_Pumpe_Abfall_EIN.Location = new System.Drawing.Point(25, 33);
+            this.Button_Pumpe_Abfall_EIN.Name = "Button_Pumpe_Abfall_EIN";
+            this.Button_Pumpe_Abfall_EIN.Size = new System.Drawing.Size(100, 25);
+            this.Button_Pumpe_Abfall_EIN.TabIndex = 2;
+            this.Button_Pumpe_Abfall_EIN.Text = "Ein";
+            this.Button_Pumpe_Abfall_EIN.UseVisualStyleBackColor = true;
+            this.Button_Pumpe_Abfall_EIN.Click += new System.EventHandler(this.btnPumpeAbfallEin);
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.rbPumpeMesszelleAus);
-            this.groupBox3.Controls.Add(this.rbPumpeMesszelleEin);
+            this.groupBox3.Controls.Add(this.Button_Pumpe_MZ_AUS);
+            this.groupBox3.Controls.Add(this.Button_Pumpe_MZ_EIN);
             this.groupBox3.Location = new System.Drawing.Point(7, 37);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(137, 105);
@@ -990,29 +905,25 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Pumpe Messzelle";
             // 
-            // rbPumpeMesszelleAus
+            // Button_Pumpe_MZ_AUS
             // 
-            this.rbPumpeMesszelleAus.AutoSize = true;
-            this.rbPumpeMesszelleAus.Checked = true;
-            this.rbPumpeMesszelleAus.Location = new System.Drawing.Point(15, 67);
-            this.rbPumpeMesszelleAus.Name = "rbPumpeMesszelleAus";
-            this.rbPumpeMesszelleAus.Size = new System.Drawing.Size(43, 17);
-            this.rbPumpeMesszelleAus.TabIndex = 1;
-            this.rbPumpeMesszelleAus.TabStop = true;
-            this.rbPumpeMesszelleAus.Text = "Aus";
-            this.rbPumpeMesszelleAus.UseVisualStyleBackColor = true;
-            this.rbPumpeMesszelleAus.CheckedChanged += new System.EventHandler(this.rbPumpeMesszelleAus_CheckedChanged);
+            this.Button_Pumpe_MZ_AUS.Location = new System.Drawing.Point(16, 65);
+            this.Button_Pumpe_MZ_AUS.Name = "Button_Pumpe_MZ_AUS";
+            this.Button_Pumpe_MZ_AUS.Size = new System.Drawing.Size(100, 25);
+            this.Button_Pumpe_MZ_AUS.TabIndex = 1;
+            this.Button_Pumpe_MZ_AUS.Text = "Aus";
+            this.Button_Pumpe_MZ_AUS.UseVisualStyleBackColor = true;
+            this.Button_Pumpe_MZ_AUS.Click += new System.EventHandler(this.btnPumpeMesszelleAus);
             // 
-            // rbPumpeMesszelleEin
+            // Button_Pumpe_MZ_EIN
             // 
-            this.rbPumpeMesszelleEin.AutoSize = true;
-            this.rbPumpeMesszelleEin.Location = new System.Drawing.Point(15, 22);
-            this.rbPumpeMesszelleEin.Name = "rbPumpeMesszelleEin";
-            this.rbPumpeMesszelleEin.Size = new System.Drawing.Size(40, 17);
-            this.rbPumpeMesszelleEin.TabIndex = 0;
-            this.rbPumpeMesszelleEin.Text = "Ein";
-            this.rbPumpeMesszelleEin.UseVisualStyleBackColor = true;
-            this.rbPumpeMesszelleEin.CheckedChanged += new System.EventHandler(this.rbPumpeMesszelleEin_CheckedChanged);
+            this.Button_Pumpe_MZ_EIN.Location = new System.Drawing.Point(15, 34);
+            this.Button_Pumpe_MZ_EIN.Name = "Button_Pumpe_MZ_EIN";
+            this.Button_Pumpe_MZ_EIN.Size = new System.Drawing.Size(100, 25);
+            this.Button_Pumpe_MZ_EIN.TabIndex = 0;
+            this.Button_Pumpe_MZ_EIN.Text = "Ein";
+            this.Button_Pumpe_MZ_EIN.UseVisualStyleBackColor = true;
+            this.Button_Pumpe_MZ_EIN.Click += new System.EventHandler(this.btnPumpeMesszelleEin);
             // 
             // groupBox1
             // 
@@ -1090,12 +1001,12 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabDeviceParameter);
             this.tabControl1.Controls.Add(this.tabProben);
-            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabGKommunikation);
             this.tabControl1.Controls.Add(this.tabSequenzList);
             this.tabControl1.Controls.Add(this.tabSequenzedit);
             this.tabControl1.Controls.Add(this.tabMasterablauf);
@@ -1104,7 +1015,7 @@
             this.tabControl1.Location = new System.Drawing.Point(7, 23);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(590, 600);
+            this.tabControl1.Size = new System.Drawing.Size(641, 600);
             this.tabControl1.TabIndex = 3;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -1121,7 +1032,7 @@
             this.tabProben.Location = new System.Drawing.Point(4, 22);
             this.tabProben.Name = "tabProben";
             this.tabProben.Padding = new System.Windows.Forms.Padding(3);
-            this.tabProben.Size = new System.Drawing.Size(582, 574);
+            this.tabProben.Size = new System.Drawing.Size(633, 574);
             this.tabProben.TabIndex = 7;
             this.tabProben.Text = "Proben";
             this.tabProben.UseVisualStyleBackColor = true;
@@ -1194,11 +1105,81 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "Bezeichnung Inkubationsgefäß 1:";
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.Live_Chart_anzeigen);
+            this.tabPage4.Controls.Add(this.LiveGrid);
+            this.tabPage4.Controls.Add(this.LiveChart);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(633, 574);
+            this.tabPage4.TabIndex = 5;
+            this.tabPage4.Text = "Live Chart";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // Live_Chart_anzeigen
+            // 
+            this.Live_Chart_anzeigen.Location = new System.Drawing.Point(70, 518);
+            this.Live_Chart_anzeigen.Name = "Live_Chart_anzeigen";
+            this.Live_Chart_anzeigen.Size = new System.Drawing.Size(75, 23);
+            this.Live_Chart_anzeigen.TabIndex = 2;
+            this.Live_Chart_anzeigen.Text = "Live Chart";
+            this.Live_Chart_anzeigen.UseVisualStyleBackColor = true;
+            this.Live_Chart_anzeigen.Visible = false;
+            this.Live_Chart_anzeigen.Click += new System.EventHandler(this.LiveChart_klick);
+            // 
+            // LiveGrid
+            // 
+            this.LiveGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.LiveGrid.Location = new System.Drawing.Point(70, 344);
+            this.LiveGrid.Name = "LiveGrid";
+            this.LiveGrid.Size = new System.Drawing.Size(328, 150);
+            this.LiveGrid.TabIndex = 1;
+            this.LiveGrid.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.LiveGrid_RowHeaderMouseDoubleClick);
+            // 
+            // LiveChart
+            // 
+            chartArea3.AxisX.Title = " Time [s]";
+            chartArea3.AxisY.Title = "Signal [nA]";
+            chartArea3.Name = "ChartArea1";
+            this.LiveChart.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.LiveChart.Legends.Add(legend3);
+            this.LiveChart.Location = new System.Drawing.Point(31, 32);
+            this.LiveChart.Name = "LiveChart";
+            this.LiveChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
+            series5.BorderWidth = 5;
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series5.Legend = "Legend1";
+            series5.MarkerColor = System.Drawing.Color.White;
+            series5.Name = "Sensor 1";
+            series6.BorderWidth = 5;
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series6.Legend = "Legend1";
+            series6.Name = "Sensor 2";
+            this.LiveChart.Series.Add(series5);
+            this.LiveChart.Series.Add(series6);
+            this.LiveChart.Size = new System.Drawing.Size(466, 289);
+            this.LiveChart.TabIndex = 0;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Bezeichnung";
+            this.Column2.Name = "Column2";
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Nr.:";
+            this.Column1.Name = "Column1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(604, 641);
+            this.ClientSize = new System.Drawing.Size(655, 641);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
@@ -1209,9 +1190,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.LiveGrid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.LiveChart)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DatenerfassungTab)).EndInit();
@@ -1224,8 +1202,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.SequenzeditorGrid)).EndInit();
             this.tabSequenzList.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SequenzenGrid)).EndInit();
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.tabGKommunikation.ResumeLayout(false);
+            this.tabGKommunikation.PerformLayout();
             this.tabDeviceParameter.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -1239,14 +1217,15 @@
             this.grbTemperierung.ResumeLayout(false);
             this.grbTemperierung.PerformLayout();
             this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabProben.ResumeLayout(false);
             this.tabProben.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.LiveGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LiveChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1286,15 +1265,9 @@
         public System.Windows.Forms.RadioButton rbAktiveMessung;
         private System.Windows.Forms.GroupBox grbTemperierung;
         private System.Windows.Forms.TextBox txtboxTemperatur;
-        private System.Windows.Forms.RadioButton rbTemperierungAus;
         private System.Windows.Forms.Label lbTemperatur;
-        private System.Windows.Forms.RadioButton rbTemperierungEin;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.RadioButton rbPumpeAbfallAus;
-        private System.Windows.Forms.RadioButton rbPumpeAbfallEin;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.RadioButton rbPumpeMesszelleAus;
-        private System.Windows.Forms.RadioButton rbPumpeMesszelleEin;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button NOTSTOPP;
@@ -1302,7 +1275,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button Disconnect;
         private System.Windows.Forms.Button Connect;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabGKommunikation;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button Console_Senden;
@@ -1327,12 +1300,6 @@
         private System.Windows.Forms.Button Man_Messung;
         private System.Windows.Forms.Button button2;
         public System.Windows.Forms.DataGridView DatenerfassungTab;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.Button Live_Chart_anzeigen;
-        public System.Windows.Forms.DataGridView LiveGrid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        public System.Windows.Forms.DataVisualization.Charting.Chart LiveChart;
         private System.Windows.Forms.TabPage tabProben;
         private System.Windows.Forms.Button btnNeueMessung;
         private System.Windows.Forms.Label lbMessmethode;
@@ -1354,6 +1321,18 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Sensor1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sensor2;
         private System.Windows.Forms.Button btnChart;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button Button_Pumpe_Abfall_AUS;
+        private System.Windows.Forms.Button Button_Pumpe_Abfall_EIN;
+        private System.Windows.Forms.Button Button_Pumpe_MZ_AUS;
+        private System.Windows.Forms.Button Button_Pumpe_MZ_EIN;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Button Live_Chart_anzeigen;
+        public System.Windows.Forms.DataGridView LiveGrid;
+        public System.Windows.Forms.DataVisualization.Charting.Chart LiveChart;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
 
 
     }
