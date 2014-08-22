@@ -153,6 +153,7 @@ namespace PharMS_Steuerung.Funktionen
         {
             var TextFile = File.ReadAllLines(sFileName);
             string sOut;
+            int ID;
             List<string> lstSequenz = new List<string>(TextFile);
             DataRow row;
             for (int i = 0; i < lstSequenz.Count(); i++)
@@ -161,6 +162,7 @@ namespace PharMS_Steuerung.Funktionen
                 {
                     row = dsPharms.Tables["Sequenzen"].NewRow();
                     row["Name"] = lstSequenz[i];
+                    row["ID"] = dsPharms.Tables["Sequenzen"].Rows.Count+1;
                     dsPharms.Tables["Sequenzen"].Rows.Add(row);
                 }
                 else
@@ -173,20 +175,22 @@ namespace PharMS_Steuerung.Funktionen
                         row["Parameter"] = "";
                         continue;
                     }
-                   if( Sequenzeditor.dictSequenzBefehle.TryGetValue(lstSequenz[i].Substring(0,2), out sOut))
-                   {
-                       row["Befehl"] = lstSequenz[i].Substring(0,2);
-                       row["Parameter"] = lstSequenz[i].Remove(0, 2);
-                   }else
-                   {
-                       if (Sequenzeditor.dictSequenzBefehle.TryGetValue(lstSequenz[i].Substring(0, 1), out sOut))
-                       {
-                           row["Befehl"] = lstSequenz[i].Substring(0, 1);
-                           row["Parameter"] = lstSequenz[i].Remove(0, 1);
-                       }
+                    if (Sequenzeditor.dictSequenzBefehle.TryGetValue(lstSequenz[i].Substring(0, 2), out sOut))
+                    {
+                        row["Befehl"] = lstSequenz[i].Substring(0, 2);
+                        row["Parameter"] = lstSequenz[i].Remove(0, 2);
+                    }
+                    else
+                    {
+                        if (Sequenzeditor.dictSequenzBefehle.TryGetValue(lstSequenz[i].Substring(0, 1), out sOut))
+                        {
+                            row["Befehl"] = lstSequenz[i].Substring(0, 1);
+                            row["Parameter"] = lstSequenz[i].Remove(0, 1);
+                        }
 
-                   }
-                    row["S_ID"] = dsPharms.Tables["Sequenzen"].Rows[dsPharms.Tables["Sequenzen"].Rows.Count-1].ItemArray[0];
+                    }
+                    ID = Convert.ToInt32(dsPharms.Tables["Sequenzen"].Rows[dsPharms.Tables["Sequenzen"].Rows.Count - 1].ItemArray[0]);
+                    row["S_ID"] = ID;
                     row["Reihenfolge"] = i;
                     dsPharms.Tables["SequenzEdit"].Rows.Add(row);
 
@@ -269,6 +273,12 @@ namespace PharMS_Steuerung.Funktionen
             daSequenzen.Update(dsPharms, "Sequenzen");
             daSequenzenBefehle.Update(dsPharms, "SequenzEdit");
             daMasterablauf.Update(dsPharms, "Masterablauf");
+            daMesswerte.Update(dsPharms, "Messwerte");
+            // dtSequenzen.AcceptChanges();
+        }
+        public void SaveMeasurements()
+        {
+           
             daMesswerte.Update(dsPharms, "Messwerte");
             // dtSequenzen.AcceptChanges();
         }
