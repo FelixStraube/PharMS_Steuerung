@@ -13,7 +13,7 @@ namespace PharMS_Steuerung.Funktionen
 {//Für alle DataGrids
     public class Sequenzeditor
     {
-        public Dictionary<string, string> dictSequenzBefehle;
+        static public Dictionary<string, string> dictSequenzBefehle;
 
         public List<string> lstCommands;
         private Form1 MainForm;

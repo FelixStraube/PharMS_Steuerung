@@ -118,7 +118,7 @@ namespace PharMS_Steuerung.Funktionen
                         CountUndefinedStatus = 0;   // Counter null da sonst bei langen Sequenzen kein abfragen status nach 5 min möglich währe
                         // AbfrageStatus();
 
-                        if (sExpectedStatus == sMakroEndeZeichen && Status == sMakroEndeZeichen)
+                        if (sExpectedStatus == sMakroEndeZeichen || Status == sMakroEndeZeichen)
                         {
                             System.Threading.Thread.Sleep(500);
                             bereit = true;

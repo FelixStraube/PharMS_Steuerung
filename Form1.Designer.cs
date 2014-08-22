@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.Verzeichnisauswahl = new System.Windows.Forms.FolderBrowserDialog();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -834,7 +834,7 @@
             this.groupBox4.Size = new System.Drawing.Size(166, 105);
             this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Pumpe Abfallbehandlungs";
+            this.groupBox4.Text = "Pumpe Abfallbehandlung";
             // 
             // Button_Pumpe_Abfall_AUS
             // 
@@ -1102,28 +1102,28 @@
             // 
             // LiveChart
             // 
-            chartArea3.AxisX.Title = " Time [s]";
-            chartArea3.AxisY.Title = "Signal [nA]";
-            chartArea3.Name = "ChartArea1";
-            this.LiveChart.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.LiveChart.Legends.Add(legend3);
+            chartArea1.AxisX.Title = " Time [s]";
+            chartArea1.AxisY.Title = "Signal [nA]";
+            chartArea1.Name = "ChartArea1";
+            this.LiveChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.LiveChart.Legends.Add(legend1);
             this.LiveChart.Location = new System.Drawing.Point(31, 32);
             this.LiveChart.Name = "LiveChart";
             this.LiveChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-            series5.BorderWidth = 5;
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series5.Legend = "Legend1";
-            series5.MarkerColor = System.Drawing.Color.White;
-            series5.Name = "Sensor 1";
-            series6.BorderWidth = 5;
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series6.Legend = "Legend1";
-            series6.Name = "Sensor 2";
-            this.LiveChart.Series.Add(series5);
-            this.LiveChart.Series.Add(series6);
+            series1.BorderWidth = 5;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.MarkerColor = System.Drawing.Color.White;
+            series1.Name = "Sensor 1";
+            series2.BorderWidth = 5;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Legend = "Legend1";
+            series2.Name = "Sensor 2";
+            this.LiveChart.Series.Add(series1);
+            this.LiveChart.Series.Add(series2);
             this.LiveChart.Size = new System.Drawing.Size(466, 289);
             this.LiveChart.TabIndex = 0;
             // 

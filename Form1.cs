@@ -235,7 +235,7 @@ namespace PharMS_Steuerung
 
         private void Messung_Stopp_Click(object sender, EventArgs e)
         { 
-            if (Comschnitstelle.tmrMesswerteTimer.Enabled==true)
+            if (Comschnitstelle.tmrMesswerteTimer != null)
                     {
                         Comschnitstelle.tmrMesswerteTimer.Stop();
                     }
@@ -244,6 +244,7 @@ namespace PharMS_Steuerung
             Comschnitstelle.SendToCOM("p1,0", true);
             ende = 0;
             SchleifenStopp = true;
+            rbAktiveMessung.Checked = true;
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
@@ -269,7 +270,7 @@ namespace PharMS_Steuerung
             {
                 if (Row.Cells["Befehl"].Value != null)
                 {
-                    oSequenzeditor.dictSequenzBefehle.TryGetValue(Row.Cells["Befehl"].Value.ToString(), out value);
+                    Sequenzeditor.dictSequenzBefehle.TryGetValue(Row.Cells["Befehl"].Value.ToString(), out value);
                     Row.Cells["Erklärung"].Value = value;
                 }
             }
@@ -433,6 +434,7 @@ namespace PharMS_Steuerung
 
         private void btnUebertragen_Click(object sender, EventArgs e)
         {
+            Abbruch = false;
             List<String> lstCommands = new List<string>();
             List<int> IDs;
             IDs = DBMain.GetAllSequenzIDWithMemory();
@@ -839,7 +841,7 @@ namespace PharMS_Steuerung
             string value = "";
             if (SequenzeditorGrid.Columns["Befehl"] != null && SequenzeditorGrid.Columns["Erklärung"] != null)
             {
-                oSequenzeditor.dictSequenzBefehle.TryGetValue(SequenzeditorGrid.Rows[e.RowIndex].Cells["Befehl"].Value.ToString(), out value);
+                Sequenzeditor.dictSequenzBefehle.TryGetValue(SequenzeditorGrid.Rows[e.RowIndex].Cells["Befehl"].Value.ToString(), out value);
                 SequenzeditorGrid.Rows[e.RowIndex].Cells["Erklärung"].Value = value;
             }
         }
