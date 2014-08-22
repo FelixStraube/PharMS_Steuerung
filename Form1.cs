@@ -328,7 +328,7 @@ namespace PharMS_Steuerung
 
                 oSequenzeditor.LoadGridSequenz();
                 oSequenzeditor.FillGridMaster();
-
+                oSequenzeditor.FillGridMeasurements();
 
                 AblaufListe.DisplayMember = "Name";
                 AblaufListe.ValueMember = "ID";
@@ -364,6 +364,8 @@ namespace PharMS_Steuerung
                 DBMain = new SQLMain(openDatabaseDialog.FileName);
                 oSequenzeditor.LoadGridSequenz();
                 oSequenzeditor.FillGridMaster();
+                oSequenzeditor.FillGridMeasurements();
+
                 tabControl1.Visible = true;
 
                 AblaufListe.DisplayMember = "Name";
@@ -644,7 +646,12 @@ namespace PharMS_Steuerung
             }
             else
             {
-                DBMain.dsPharms.Tables["Messwerte"].Clear();
+                for (int i = 0; i < DBMain.dsPharms.Tables["Messwerte"].Rows.Count; i++)
+                {
+                    DBMain.dsPharms.Tables["Messwerte"].Rows[i].Delete();
+                    DBMain.SaveMeasurements();
+                }
+                
             }
         }
 

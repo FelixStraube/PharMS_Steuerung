@@ -181,5 +181,17 @@ namespace PharMS_Steuerung.Funktionen
             MainForm.MasterGrid.Columns["Sequenz"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
         }
+
+        public void FillGridMeasurements()
+        {
+            MainForm.DatenerfassungTab.DataSource = MainForm.DBMain.dsPharms.Tables["Messwerte"];
+            MainForm.DatenerfassungTab.Columns["ID"].Visible = false;
+            MainForm.DatenerfassungTab.Columns["Datum"].HeaderText = "Datum";
+            MainForm.DatenerfassungTab.Columns["MW1"].HeaderText = "Sensor 1[nA]";
+            MainForm.DatenerfassungTab.Columns["MW2"].HeaderText = "Sensor 2[nA]";
+            MainForm.DatenerfassungTab.Columns["MW2"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+        }
     }
+
 }

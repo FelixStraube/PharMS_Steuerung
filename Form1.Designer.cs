@@ -52,10 +52,6 @@
             this.Man_Messung = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.DatenerfassungTab = new System.Windows.Forms.DataGridView();
-            this.colDateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sensor1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sensor2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabMasterablauf = new System.Windows.Forms.TabPage();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.AblaufStart = new System.Windows.Forms.Button();
@@ -312,44 +308,10 @@
             // DatenerfassungTab
             // 
             this.DatenerfassungTab.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DatenerfassungTab.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colDateTime,
-            this.colTime,
-            this.Sensor1,
-            this.Sensor2});
             this.DatenerfassungTab.Location = new System.Drawing.Point(9, 18);
             this.DatenerfassungTab.Name = "DatenerfassungTab";
             this.DatenerfassungTab.Size = new System.Drawing.Size(416, 522);
             this.DatenerfassungTab.TabIndex = 0;
-            // 
-            // colDateTime
-            // 
-            this.colDateTime.DataPropertyName = "Time";
-            this.colDateTime.FillWeight = 120F;
-            this.colDateTime.HeaderText = "Zeit";
-            this.colDateTime.Name = "colDateTime";
-            this.colDateTime.Width = 140;
-            // 
-            // colTime
-            // 
-            this.colTime.DataPropertyName = "Sec";
-            this.colTime.HeaderText = "Sec";
-            this.colTime.Name = "colTime";
-            this.colTime.Visible = false;
-            this.colTime.Width = 40;
-            // 
-            // Sensor1
-            // 
-            this.Sensor1.DataPropertyName = "Sensor1";
-            this.Sensor1.HeaderText = "Sensor 1 [ nA ]";
-            this.Sensor1.Name = "Sensor1";
-            // 
-            // Sensor2
-            // 
-            this.Sensor2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Sensor2.DataPropertyName = "Sensor2";
-            this.Sensor2.HeaderText = "Sensor 2 [ nA ]";
-            this.Sensor2.Name = "Sensor2";
             // 
             // tabMasterablauf
             // 
@@ -1316,10 +1278,6 @@
         public System.Windows.Forms.NumericUpDown numDesinfektion;
         private System.Windows.Forms.TextBox txtProbe4;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDateTime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colTime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Sensor1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Sensor2;
         private System.Windows.Forms.Button btnChart;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button1;
