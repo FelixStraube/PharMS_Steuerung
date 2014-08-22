@@ -149,7 +149,52 @@ namespace PharMS_Steuerung.Funktionen
             return Speicherplatz;
         }
 
+        public void ImportSequenz(string sFileName)
+        {
+            var TextFile = File.ReadAllLines(sFileName);
+            string sOut;
+            List<string> lstSequenz = new List<string>(TextFile);
+            DataRow row;
+            for (int i = 0; i < lstSequenz.Count(); i++)
+            {
+                if (i == 0)
+                {
+                    row = dsPharms.Tables["Sequenzen"].NewRow();
+                    row["Name"] = lstSequenz[i];
+                    dsPharms.Tables["Sequenzen"].Rows.Add(row);
+                }
+                else
+                {
+                    row = dsPharms.Tables["SequenzEdit"].NewRow();
 
+                    if (lstSequenz[i] == "M")
+                    {
+                        row["Befehl"] = lstSequenz[i];
+                        row["Parameter"] = "";
+                        continue;
+                    }
+                   if( Sequenzeditor.dictSequenzBefehle.TryGetValue(lstSequenz[i].Substring(0,2), out sOut))
+                   {
+                       row["Befehl"] = lstSequenz[i].Substring(0,2);
+                       row["Parameter"] = lstSequenz[i].Remove(0, 2);
+                   }else
+                   {
+                       if (Sequenzeditor.dictSequenzBefehle.TryGetValue(lstSequenz[i].Substring(0, 1), out sOut))
+                       {
+                           row["Befehl"] = lstSequenz[i].Substring(0, 1);
+                           row["Parameter"] = lstSequenz[i].Remove(0, 1);
+                       }
+
+                   }
+                    row["S_ID"] = dsPharms.Tables["Sequenzen"].Rows[dsPharms.Tables["Sequenzen"].Rows.Count-1].ItemArray[0];
+                    row["Reihenfolge"] = i;
+                    dsPharms.Tables["SequenzEdit"].Rows.Add(row);
+
+                }
+            }
+
+
+        }
         public List<int> GetAllSequenzID()
         {
             List<int> IDs = new List<int>();

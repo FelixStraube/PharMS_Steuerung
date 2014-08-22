@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.Verzeichnisauswahl = new System.Windows.Forms.FolderBrowserDialog();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -40,6 +40,7 @@
             this.mnItemDatenbankÖffnen = new System.Windows.Forms.ToolStripMenuItem();
             this.mnItemSpeichern = new System.Windows.Forms.ToolStripMenuItem();
             this.mnItemSpeichernUnter = new System.Windows.Forms.ToolStripMenuItem();
+            this.sequenzImportierenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnItemBeenden = new System.Windows.Forms.ToolStripMenuItem();
             this.hilfeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDatabaseDialog = new System.Windows.Forms.OpenFileDialog();
@@ -182,6 +183,7 @@
             this.mnItemDatenbankÖffnen,
             this.mnItemSpeichern,
             this.mnItemSpeichernUnter,
+            this.sequenzImportierenToolStripMenuItem,
             this.mnItemBeenden});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(46, 20);
@@ -190,35 +192,42 @@
             // mnItemNeu
             // 
             this.mnItemNeu.Name = "mnItemNeu";
-            this.mnItemNeu.Size = new System.Drawing.Size(169, 22);
+            this.mnItemNeu.Size = new System.Drawing.Size(183, 22);
             this.mnItemNeu.Text = "Neu";
             this.mnItemNeu.Click += new System.EventHandler(this.neuToolStripMenuItem_Click);
             // 
             // mnItemDatenbankÖffnen
             // 
             this.mnItemDatenbankÖffnen.Name = "mnItemDatenbankÖffnen";
-            this.mnItemDatenbankÖffnen.Size = new System.Drawing.Size(169, 22);
+            this.mnItemDatenbankÖffnen.Size = new System.Drawing.Size(183, 22);
             this.mnItemDatenbankÖffnen.Text = "Datenbank öffnen";
             this.mnItemDatenbankÖffnen.Click += new System.EventHandler(this.datenbankÖffnenToolStripMenuItem_Click);
             // 
             // mnItemSpeichern
             // 
             this.mnItemSpeichern.Name = "mnItemSpeichern";
-            this.mnItemSpeichern.Size = new System.Drawing.Size(169, 22);
+            this.mnItemSpeichern.Size = new System.Drawing.Size(183, 22);
             this.mnItemSpeichern.Text = "Speichern";
             this.mnItemSpeichern.Click += new System.EventHandler(this.speichernToolStripMenuItem_Click);
             // 
             // mnItemSpeichernUnter
             // 
             this.mnItemSpeichernUnter.Name = "mnItemSpeichernUnter";
-            this.mnItemSpeichernUnter.Size = new System.Drawing.Size(169, 22);
+            this.mnItemSpeichernUnter.Size = new System.Drawing.Size(183, 22);
             this.mnItemSpeichernUnter.Text = "Speichern unter...";
             this.mnItemSpeichernUnter.Click += new System.EventHandler(this.mnItemSpeichernUnter_Click);
+            // 
+            // sequenzImportierenToolStripMenuItem
+            // 
+            this.sequenzImportierenToolStripMenuItem.Name = "sequenzImportierenToolStripMenuItem";
+            this.sequenzImportierenToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.sequenzImportierenToolStripMenuItem.Text = "Sequenz importieren";
+            this.sequenzImportierenToolStripMenuItem.Click += new System.EventHandler(this.sequenzImportierenToolStripMenuItem_Click);
             // 
             // mnItemBeenden
             // 
             this.mnItemBeenden.Name = "mnItemBeenden";
-            this.mnItemBeenden.Size = new System.Drawing.Size(169, 22);
+            this.mnItemBeenden.Size = new System.Drawing.Size(183, 22);
             this.mnItemBeenden.Text = "Beenden";
             this.mnItemBeenden.Click += new System.EventHandler(this.beendenToolStripMenuItem_Click);
             // 
@@ -230,7 +239,7 @@
             // 
             // openDatabaseDialog
             // 
-            this.openDatabaseDialog.Filter = "DB3 (*.db3)|*.db3";
+            this.openDatabaseDialog.Filter = "DB3 (*.db3)|*.db3|Text (*.txt)|*.txt";
             // 
             // tabPage4
             // 
@@ -280,28 +289,28 @@
             // 
             // LiveChart
             // 
-            chartArea2.AxisX.Title = " Time [s]";
-            chartArea2.AxisY.Title = "Signal [nA]";
-            chartArea2.Name = "ChartArea1";
-            this.LiveChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.LiveChart.Legends.Add(legend2);
+            chartArea1.AxisX.Title = " Time [s]";
+            chartArea1.AxisY.Title = "Signal [nA]";
+            chartArea1.Name = "ChartArea1";
+            this.LiveChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.LiveChart.Legends.Add(legend1);
             this.LiveChart.Location = new System.Drawing.Point(31, 32);
             this.LiveChart.Name = "LiveChart";
             this.LiveChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-            series3.BorderWidth = 5;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Legend = "Legend1";
-            series3.MarkerColor = System.Drawing.Color.White;
-            series3.Name = "Sensor 1";
-            series4.BorderWidth = 5;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Legend = "Legend1";
-            series4.Name = "Sensor 2";
-            this.LiveChart.Series.Add(series3);
-            this.LiveChart.Series.Add(series4);
+            series1.BorderWidth = 5;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.MarkerColor = System.Drawing.Color.White;
+            series1.Name = "Sensor 1";
+            series2.BorderWidth = 5;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Legend = "Legend1";
+            series2.Name = "Sensor 2";
+            this.LiveChart.Series.Add(series1);
+            this.LiveChart.Series.Add(series2);
             this.LiveChart.Size = new System.Drawing.Size(466, 289);
             this.LiveChart.TabIndex = 0;
             this.LiveChart.Text = "chart1";
@@ -466,9 +475,9 @@
             // 
             // MasterGrid
             // 
-            this.MasterGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.MasterGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.MasterGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.MasterGrid.Location = new System.Drawing.Point(0, 50);
             this.MasterGrid.Name = "MasterGrid";
@@ -528,9 +537,9 @@
             // 
             // SequenzeditorGrid
             // 
-            this.SequenzeditorGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.SequenzeditorGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.SequenzeditorGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.SequenzeditorGrid.Location = new System.Drawing.Point(0, 51);
             this.SequenzeditorGrid.Name = "SequenzeditorGrid";
@@ -562,8 +571,8 @@
             // 
             // SequenzenGrid
             // 
-            this.SequenzenGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.SequenzenGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.SequenzenGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.SequenzenGrid.Location = new System.Drawing.Point(1, 3);
             this.SequenzenGrid.Name = "SequenzenGrid";
@@ -1090,9 +1099,9 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabDeviceParameter);
             this.tabControl1.Controls.Add(this.tabProben);
             this.tabControl1.Controls.Add(this.tabPage1);
@@ -1354,6 +1363,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Sensor1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sensor2;
         private System.Windows.Forms.Button btnChart;
+        private System.Windows.Forms.ToolStripMenuItem sequenzImportierenToolStripMenuItem;
 
 
     }

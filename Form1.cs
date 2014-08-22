@@ -264,7 +264,7 @@ namespace PharMS_Steuerung
             {
                 if (Row.Cells["Befehl"].Value != null)
                 {
-                    oSequenzeditor.dictSequenzBefehle.TryGetValue(Row.Cells["Befehl"].Value.ToString(), out value);
+                    Sequenzeditor.dictSequenzBefehle.TryGetValue(Row.Cells["Befehl"].Value.ToString(), out value);
                     Row.Cells["Erklärung"].Value = value;
                 }
             }
@@ -369,8 +369,14 @@ namespace PharMS_Steuerung
                 mnItemSpeichern.Enabled = true;
                 mnItemSpeichernUnter.Enabled = true;
             }
+        }
 
-
+        private void sequenzImportierenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openDatabaseDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                DBMain.ImportSequenz(openDatabaseDialog.FileName);                
+            }
         }
 
         private void beendenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -693,6 +699,7 @@ namespace PharMS_Steuerung
                 MessageBox.Show("Schritt 1: Desinfektion \n 1. Inkubationsgefäße gegen Blindgefäße austauschen! \n 2. Zuleitungen 1, 2, 3, 6, 7 zu Ventil 2 in separates Abfallgefäß führen! \n 3. Puffergefäß gegen Desinfektionsmittelgefäß austauschen!");
                 System.Threading.Thread.Sleep(2000);
                 Comschnitstelle.SendToCOM(Sequenz.LeitungenSpuelen(false), true);
+       
                 Console.WriteLine("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(false));
                 stlLog.Add("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(false) + "    " + System.DateTime.Now.ToString());
                 System.Threading.Thread.Sleep(2000);
@@ -844,10 +851,12 @@ namespace PharMS_Steuerung
             string value = "";
             if (SequenzeditorGrid.Columns["Befehl"] != null && SequenzeditorGrid.Columns["Erklärung"] != null)
             {
-                oSequenzeditor.dictSequenzBefehle.TryGetValue(SequenzeditorGrid.Rows[e.RowIndex].Cells["Befehl"].Value.ToString(), out value);
+                Sequenzeditor.dictSequenzBefehle.TryGetValue(SequenzeditorGrid.Rows[e.RowIndex].Cells["Befehl"].Value.ToString(), out value);
                 SequenzeditorGrid.Rows[e.RowIndex].Cells["Erklärung"].Value = value;
             }
         }
+
+        
 
 
     }
