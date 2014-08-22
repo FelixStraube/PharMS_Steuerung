@@ -124,7 +124,7 @@ namespace PharMS_Steuerung.Funktionen
                             bereit = true;
                         }
 
-                        if (Sequenzen_uebertragen_aktiv == false && sExpectedStatus != sMakroEndeZeichen)
+                        if (Sequenzen_uebertragen_aktiv == true && sExpectedStatus =="Z")
                         {
                             System.Threading.Thread.Sleep(500);
                             bereit = true;
