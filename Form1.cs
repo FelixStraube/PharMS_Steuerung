@@ -20,6 +20,7 @@ namespace PharMS_Steuerung
     {
         static COM Comschnitstelle;
         string ablauf;
+        string AblaufListeVorAuswahl;
         public bool Connection;
         public int Durchläufe;
         public bool Abbruch;
@@ -47,33 +48,6 @@ namespace PharMS_Steuerung
             InitializeComponent();
 
         }
-
-
-        /*  private void Uebertragen_Click(object sender, EventArgs e)
-          {
-
-              string Name = AblaufListe.SelectedItem.ToString();
-
-              CfgFile test = new CfgFile(Name);
-              List<String> lines = new List<string>();
-              lines = test.Ausgabe(Name);
-
-              //  Console.WriteLine("Incoming Data:" + lines[0]);
-              int count = lines.Count;
-              ablauf = "";
-              for (int i = 1; i < count; i++)
-              {
-                  if (lines[i] == "") { }
-                  else ablauf = ablauf + ";" + lines[i];
-
-              }
-
-              // Console.WriteLine("Incoming Data:" + "Y" + cmbSpeicherplatz.SelectedItem.ToString() + ablauf);
-
-              //Comschnitstelle.COMSender("Y" + cmbSpeicherplatz.SelectedItem.ToString() + ablauf);
-
-          }*/
-
         private void Connect_Click(object sender, EventArgs e)
         {
             Comschnitstelle = new COM(this);
@@ -177,7 +151,8 @@ namespace PharMS_Steuerung
             mnItemSpeichernUnter.Enabled = false;
 
             oSequenzeditor = new Sequenzeditor(this);
-
+            this.Width = 580;
+            this.Height = 680;
             tabControl1.Visible = false;
 
         }
@@ -191,7 +166,10 @@ namespace PharMS_Steuerung
 
         private void Man_Messung_Click(object sender, EventArgs e)
         {
-            rbManuelleMessung.Checked = true;
+
+            if (!Comschnitstelle.bereit) MessageBox.Show("Manuelle Messung im laufenden Gerätebetrieb nicht möglich!");
+            else Comschnitstelle.SendToCOM("M", true);
+            /*rbManuelleMessung.Checked = true;
             Comschnitstelle.SendToCOM("p1,1", true);
             System.Threading.Thread.Sleep(500);
             Comschnitstelle.SendToCOM("U" + numericZellspannung.Value, true);
@@ -203,7 +181,7 @@ namespace PharMS_Steuerung
             i = i + 1;
             alarmCounter = 1;
             Zeitsteuerung.Interval = n * 1000;
-            Zeitsteuerung.Start();
+            Zeitsteuerung.Start();*/
         }
 
         private void TimerEventProcessor(Object myObject, EventArgs myEventArgs)
@@ -234,28 +212,20 @@ namespace PharMS_Steuerung
         }
 
         private void Messung_Stopp_Click(object sender, EventArgs e)
-        { 
+        {
             if (Comschnitstelle.tmrMesswerteTimer != null)
-                    {
-                        Comschnitstelle.tmrMesswerteTimer.Stop();
-                    }
-            Comschnitstelle.SendToCOM("U0", true);
-            System.Threading.Thread.Sleep(500);
-            Comschnitstelle.SendToCOM("p1,0", true);
-            ende = 0;
-            SchleifenStopp = true;
-            rbAktiveMessung.Checked = true;
+            {
+                Comschnitstelle.tmrMesswerteTimer.Stop();
+            }
+            /* Comschnitstelle.SendToCOM("U0", true);
+             System.Threading.Thread.Sleep(500);
+             Comschnitstelle.SendToCOM("p1,0", true);
+             ende = 0;
+             SchleifenStopp = true;
+             rbAktiveMessung.Checked = true;*/
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbAktiveMessung.Checked == true) { rbManuelleMessung.Checked = false; }
-        }
 
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbManuelleMessung.Checked == true) { rbAktiveMessung.Checked = false; }
-        }
 
         private void Initialisierung_Click(object sender, EventArgs e)
         {
@@ -292,7 +262,7 @@ namespace PharMS_Steuerung
 
                 if (icurrentMouseOverRow >= 0)
                 {
-                    //AblaufListeVorAuswahl = SequenzenGrid.Rows[icurrentMouseOverRow].Cells[0].Value.ToString();
+                    AblaufListeVorAuswahl = SequenzenGrid.Rows[icurrentMouseOverRow].Cells[0].Value.ToString();
                     if (SequenzenGrid.Rows[icurrentMouseOverRow].Cells["Speicherplatz"].Value != null)
                         if (SequenzenGrid.Rows[icurrentMouseOverRow].Cells["Speicherplatz"].Value.ToString() != "" && SequenzenGrid.Rows[icurrentMouseOverRow].Cells["Speicherplatz"].Value.ToString() != "       ")
                         {
@@ -314,6 +284,7 @@ namespace PharMS_Steuerung
         void mnItemEditieren_Click(object sender, EventArgs e)
         {
             tabControl1.SelectedTab = tabSequenzedit;
+           AblaufListe.SelectedValue = AblaufListeVorAuswahl;
         }
 
         private void neuToolStripMenuItem_Click(object sender, EventArgs e)
@@ -328,7 +299,9 @@ namespace PharMS_Steuerung
                 DBMain = new SQLMain(NewDBDialog.FileName);
 
                 oSequenzeditor.LoadGridSequenz();
+
                 oSequenzeditor.FillGridMaster();
+
                 oSequenzeditor.FillGridMeasurements();
 
                 AblaufListe.DisplayMember = "Name";
@@ -351,8 +324,8 @@ namespace PharMS_Steuerung
 
             if (NewDBDialog.ShowDialog() == DialogResult.OK)
             {
-               SQLMain DBMainCopy = new SQLMain(NewDBDialog.FileName);
-           
+                SQLMain DBMainCopy = new SQLMain(NewDBDialog.FileName);
+
 
             }
 
@@ -364,7 +337,9 @@ namespace PharMS_Steuerung
             {
                 DBMain = new SQLMain(openDatabaseDialog.FileName);
                 oSequenzeditor.LoadGridSequenz();
+
                 oSequenzeditor.FillGridMaster();
+
                 oSequenzeditor.FillGridMeasurements();
 
                 tabControl1.Visible = true;
@@ -377,60 +352,18 @@ namespace PharMS_Steuerung
                 mnItemSpeichern.Enabled = true;
                 mnItemSpeichernUnter.Enabled = true;
             }
-
-
         }
 
         private void beendenToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        {        
             Close();
         }
 
         private void speichernToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DBMain.Save();
-
         }
 
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            /* int Key;
-             AblaufListe.Items.Clear();
-             foreach (Sequenz oSequenz in lstSequenz)
-             {
-                 for (int i = 0; i < SequenzenGrid.RowCount - 1; i++)
-                 {
-                     Key = Convert.ToInt32(SequenzenGrid.Rows[i].Cells[3].Value.ToString());
-                     if (Key == oSequenz.ObjectKey)
-                     {
-                         oSequenz.sName = SequenzenGrid.Rows[i].Cells[0].Value.ToString();
-                         if (SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "" || SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "       ") oSequenz.iSpeicherplatz = -999;
-                         else oSequenz.iSpeicherplatz = Convert.ToInt32(SequenzenGrid.Rows[i].Cells[1].Value.ToString()); //bei Übertragen Click wird der Speicherplatz auch nochmal gespeichert
-                         break;
-                     }
-                 }
-                 AblaufListe.Items.Add(oSequenz.sName);
-             }
-
-             AblaufListe.SelectedItem = AblaufListeVorAuswahl;
-             MasterGrid.RowValidating -= MasterGrid_RowValidating;
-             oSequenzeditor.FillGridSequenzEdit();
-             oSequenzeditor.FillGridMaster();
-             MasterGrid.RowValidating += MasterGrid_RowValidating;*/
-
-            /* if (Comschnitstelle != null)
-             {               
-                 if (rbAktiveMessung.Checked)
-                     DatenerfassungTab.DataSource = Comschnitstelle.Ausgabe_automatisch.TableMeasurements;
-                 else
-                     DatenerfassungTab.DataSource = Comschnitstelle.Ausgabe_manuel.TableMeasurements;
-
-                 DatenerfassungTab.Refresh();
-                 DatenerfassungTab.PerformLayout(); 
-                
-             }*/
-            // Kein Treatsicher Zugriff wenn scroll_Bar erscheint :-= Fehler Alternativ => DatenerfassungTab_Hinzu im Com 
-        }
 
         private void btnUebertragen_Click(object sender, EventArgs e)
         {
@@ -455,188 +388,32 @@ namespace PharMS_Steuerung
             BackgroundWorkerSendSequenz.DoWork += BackgroundWorkerCommands_DoWork;
             BackgroundWorkerSendSequenz.RunWorkerAsync(new HelpClass(1, lstCommands.ToArray()));
             BackgroundWorkerSendSequenz.Dispose();
-
-        }
-
-        public bool Messungen_Tabelle(int MessungNR, string Bezeichnung)
-        {
-            if (this.InvokeRequired)
-            {
-                return (bool)this.Invoke((Func<int, string, bool>)Messungen_Tabelle, MessungNR, Bezeichnung);
-            }
-            DataGridViewRow row = (DataGridViewRow)LiveGrid.Rows[0].Clone();
-            row.Cells[0].Value = MessungNR;
-            row.Cells[1].Value = Bezeichnung;
-
-            LiveGrid.Rows.Add(row);
-            return true;
-        }
-
-
-        public bool Live_Chart_add(int x, decimal Sen1, decimal Sen2, bool clear)
-        {
-            if (this.InvokeRequired)
-            {
-                return (bool)this.Invoke((Func<int, decimal, decimal, bool, bool>)Live_Chart_add, x, Sen1, Sen2, clear);
-            }
-
-            if (clear == true)
-            {
-                foreach (var series in LiveChart.Series)
-                {
-                    series.Points.Clear();
-                }
-            }
-            LiveChart.Series[0].Points.AddXY(x, Sen1);
-            LiveChart.Series[1].Points.AddXY(x, Sen2);
-            LiveChart.Update();
-
-            return true;
-        }
-
-        private void LiveChart_klick(object sender, EventArgs e)
-        {
-            LiveChart Ausgabe = new LiveChart();
-            Live_Cahrtausgabe = true;
-            Live_Chart_anzeigen.Visible = false;
-            Live_Chart_add(0, 0, 0, true);
-
-            /*Ausgabe.erfassen("0", "0", this, true, true);
-
-
-
-            //Ausgabe zu Graphen
-
-            Random z = new Random();
-            for (int r = 0; r < 100; r++)
-            {
-                int x = z.Next(100);
-                string s1 = x.ToString();
-                x = z.Next(100);
-                string s2 = x.ToString();
-
-                Ausgabe.erfassen(s1, s2, this, false, true);
-            }
-            System.Threading.Thread.Sleep(5000);*/
-
-
-        }
-
-
-        private void LiveGrid_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            LiveChart Ausgabe = new LiveChart();
-            Live_Cahrtausgabe = false;
-            Live_Chart_anzeigen.Visible = true;
-            int selectedrowindex = LiveGrid.SelectedCells[0].RowIndex;
-            DataGridViewRow selectedRow = LiveGrid.Rows[selectedrowindex];
-            string a = Convert.ToString(selectedRow.Index.ToString());
-            // Ausgabe.erfassen(a, "0", this, true,false);
-
-            Ausgabe.ausgabeSpeicher(a, this);
-
-        }
-
-        public void MasterGrid_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
-        {
-            bool bMatch = false;
-            /* foreach (Sequenz oSequenz in lstSequenz)
-             {
-                 if (oSequenz.iSpeicherplatz == Convert.ToInt32(MasterGrid.Rows[e.RowIndex].Cells[1].Value))
-                 {
-                     MasterGrid.Rows[e.RowIndex].Cells[2].Value = oSequenz.sName;
-                     bMatch = true;
-                 }
-                 else
-                     if (oSequenz.sName == Convert.ToString(MasterGrid.Rows[e.RowIndex].Cells[2].Value))
-                     {
-                         MasterGrid.Rows[e.RowIndex].Cells[1].Value = oSequenz.iSpeicherplatz.ToString();
-                         bMatch = true;
-                     }
-             }
-
-             if (e.RowIndex >= lstMaster.Count && bMatch)
-                 lstMaster.Add(Convert.ToInt32(MasterGrid.Rows[e.RowIndex].Cells[1].Value));
-
-             if (bMatch) MasterGrid.Rows[e.RowIndex].Cells[0].Value = (e.RowIndex == 0) ? 1 : Convert.ToInt32(MasterGrid.Rows[e.RowIndex - 1].Cells[0].Value) + 1;
-             */
-        }
-
-        /*  private void MasterGrid_DataError(object sender, DataGridViewDataErrorEventArgs e)
-         {
-
-            if (e.Exception != null)
-             {
-                 MessageBox.Show("Masterablauf inkonsistent, der Masterablauf wird verworfen!");
-                 lstMaster.Clear();
-                 oSequenzeditor.FillGridMaster();
-             }
-         }*/
-
-        private void SequenzenGrid_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
-        {
-            /*  int Sequenzahler = 0;
-              if (e.ColumnIndex == 1)
-              {
-
-
-                  for (int i = 0; i < SequenzenGrid.Rows.Count - 1; i++)
-                  {
-                      foreach (Sequenz oSequenz in lstSequenz)
-                      {
-                          if (Convert.ToInt32(SequenzenGrid.Rows[i].Cells[3].Value) == oSequenz.ObjectKey)
-                              oSequenz.iSpeicherplatz = (SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "" || SequenzenGrid.Rows[i].Cells[1].Value.ToString() == "       ") ? -999 : Convert.ToInt32(SequenzenGrid.Rows[i].Cells[1].Value);
-                      }
-                  }
-
-
-                  foreach (Sequenz oSequenz in lstSequenz)
-                  {
-                      Sequenzahler = (sender as DataGridView).CurrentCell.RowIndex;
-                      string test = oSequenz.ObjectKey.ToString();
-
-                      if (oSequenz.ObjectKey.ToString() != Sequenzahler.ToString())
-                      {
-                          if (oSequenz.iSpeicherplatz.ToString() == (sender as DataGridView).CurrentCell.EditedFormattedValue.ToString() && (sender as DataGridView).CurrentCell.EditedFormattedValue.ToString() != "       ")
-                          {
-
-                              MessageBox.Show("Speicherplatz bereits vergeben!");
-                              e.Cancel = true;
-
-                          }
-                      }
-                      if (oSequenz.ObjectKey.ToString() == Sequenzahler.ToString() && (sender as DataGridView).CurrentCell.EditedFormattedValue.ToString() == "       ")
-                      {
-                          lstSequenz[Sequenzahler].iSpeicherplatz = -999;
-                      }
-
-                  }
-              }*/
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
+            var result = MessageBox.Show("Möchten Sie Ihre Änderungen speichern?", "Speichern", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+                DBMain.Save();
+
             File.WriteAllLines("LogCOM.txt", stlLog);
         }
 
         private void btnTemperierungEin(object sender, EventArgs e)
         {
-          
-            
-             
-                string Temp = txtboxTemperatur.Text.ToString();
-                if (Temp.IndexOf(",") != null)
-                {
-                    Temp = Temp.Replace(",", ".");
-
-                };
-                Comschnitstelle.SendToCOM("T" + Temp, true);
-                System.Threading.Thread.Sleep(500);
-                Comschnitstelle.SendToCOM("o1", true);
-
-            
 
 
+
+            string Temp = txtboxTemperatur.Text.ToString();
+            if (Temp.IndexOf(",") != null)
+            {
+                Temp = Temp.Replace(",", ".");
+
+            };
+            Comschnitstelle.SendToCOM("T" + Temp, true);
+            System.Threading.Thread.Sleep(500);
+            Comschnitstelle.SendToCOM("o1", true);
         }
 
         private void btnNeueMessung_Click(object sender, EventArgs e)
@@ -653,27 +430,11 @@ namespace PharMS_Steuerung
                     DBMain.dsPharms.Tables["Messwerte"].Rows[i].Delete();
                     DBMain.SaveMeasurements();
                 }
-                
+
             }
         }
 
-        private void rbAktiveMessung_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!Comschnitstelle.bereit) MessageBox.Show("Manuelle Messung im laufenden Gerätebetrieb nicht möglich!");
-            else
-            {
-                if (rbAktiveMessung.Checked)
-                {
-                    lbMessmethode.Text = "aktive Messung";
-                    btnNeueMessung.Enabled = false;
-                }
-                if (rbManuelleMessung.Checked)
-                {
-                    lbMessmethode.Text = "manuelle Messung";
-                    btnNeueMessung.Enabled = true;
-                }
-            }
-        }
+       
 
 
         private void btnElektrodenTest_Click(object sender, EventArgs e)
@@ -771,32 +532,32 @@ namespace PharMS_Steuerung
         }
 
         private void btnPumpeMesszelleAus(object sender, EventArgs e)
-        {                
-                Comschnitstelle.SendToCOM("p1,0", true);          
+        {
+            Comschnitstelle.SendToCOM("p1,0", true);
         }
 
         private void btnPumpeMesszelleEin(object sender, EventArgs e)
         {
-            
-                Comschnitstelle.SendToCOM("p1,1", true);            
+
+            Comschnitstelle.SendToCOM("p1,1", true);
         }
 
         private void btnPumpeAbfallEin(object sender, EventArgs e)
         {
-            
-                Comschnitstelle.SendToCOM("p2,1", true);            
+
+            Comschnitstelle.SendToCOM("p2,1", true);
         }
 
         private void btnPumpeAbfallAus(object sender, EventArgs e)
-        {           
-               
-                Comschnitstelle.SendToCOM("p2,0", true);           
+        {
+
+            Comschnitstelle.SendToCOM("p2,0", true);
         }
 
         private void btnTemperierungAus(object sender, EventArgs e)
         {
-                         
-                Comschnitstelle.SendToCOM("o0", true);           
+
+            Comschnitstelle.SendToCOM("o0", true);
         }
 
         private void btnChart_Click(object sender, EventArgs e)
@@ -810,6 +571,34 @@ namespace PharMS_Steuerung
             e.Row.Cells["S_ID"].Value = Convert.ToInt32(AblaufListe.SelectedValue);
             e.Row.Cells["Reihenfolge"].Value = SequenzeditorGrid.RowCount; ;
         }
+
+
+        private void MasterGrid_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
+        {
+            e.Row.Cells["Reihenfolge"].Value = MasterGrid.RowCount;
+            e.Row.Cells["Sequenz"].Value = 1;
+        }
+
+        private void MasterGrid_CellValidated(object sender, DataGridViewCellEventArgs e)
+        {
+            if (MasterGrid.Rows[e.RowIndex].Cells["Name"].Value != null)
+                MasterGrid.Rows[e.RowIndex].Cells["Name"].Value = "Dummy";
+
+            if ((MasterGrid.Rows[e.RowIndex].Cells["Sequenz"] as DataGridViewComboBoxCell).Value.ToString() != "")
+                MasterGrid.Rows[e.RowIndex].Cells["Speicherplatz"].Value = DBMain.GetSequenzMemoryByID(Convert.ToInt32((MasterGrid.Rows[e.RowIndex].Cells["Sequenz"] as DataGridViewComboBoxCell).Value));
+
+        }
+
+        private void SequenzeditorGrid_CellValidated(object sender, DataGridViewCellEventArgs e)
+        {
+            string value = "";
+            if (SequenzeditorGrid.Columns["Befehl"] != null && SequenzeditorGrid.Columns["Erklärung"] != null)
+            {
+                Sequenzeditor.dictSequenzBefehle.TryGetValue(SequenzeditorGrid.Rows[e.RowIndex].Cells["Befehl"].Value.ToString(), out value);
+                SequenzeditorGrid.Rows[e.RowIndex].Cells["Erklärung"].Value = value;
+            }
+        }
+
         public class HelpClass
         {
             public int iRepeat;
@@ -823,31 +612,17 @@ namespace PharMS_Steuerung
             }
         }
 
-        private void MasterGrid_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
+        private void MasterGrid_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-            e.Row.Cells["Reihenfolge"].Value = MasterGrid.RowCount; ;
-        }
-
-        private void MasterGrid_CellValidated(object sender, DataGridViewCellEventArgs e)
-        {
-            if (MasterGrid.Rows[e.RowIndex].Cells["Name"].Value != null) MasterGrid.Rows[e.RowIndex].Cells["Name"].Value = ((DataGridViewComboBoxCell)MasterGrid.Rows[e.RowIndex].Cells["Sequenz"]).FormattedValue;
-
-        }
-
-
-
-        private void SequenzeditorGrid_CellValidated(object sender, DataGridViewCellEventArgs e)
-        {
-            string value = "";
-            if (SequenzeditorGrid.Columns["Befehl"] != null && SequenzeditorGrid.Columns["Erklärung"] != null)
+            if (e.Exception != null)
             {
-                Sequenzeditor.dictSequenzBefehle.TryGetValue(SequenzeditorGrid.Rows[e.RowIndex].Cells["Befehl"].Value.ToString(), out value);
-                SequenzeditorGrid.Rows[e.RowIndex].Cells["Erklärung"].Value = value;
+                MessageBox.Show("Masterablauf inkonsistent, der Masterablauf wird verworfen!");
+
+                oSequenzeditor.FillGridMaster();
             }
+
         }
 
-        
-    
-     
+
     }
 }

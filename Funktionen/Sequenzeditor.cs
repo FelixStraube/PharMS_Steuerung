@@ -134,7 +134,7 @@ namespace PharMS_Steuerung.Funktionen
 
         public void LoadGridSequenz()
         {
-            String[] cmbWerte = new String[] { " ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18" };
+            String[] cmbWerte = new String[] { " ", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18" };
             DataGridViewComboBoxColumn ComboBoxColumn = new DataGridViewComboBoxColumn();
             ComboBoxColumn.Name = "Speicherplatz";
             ComboBoxColumn.HeaderText = "Speicherplatz";
@@ -153,14 +153,7 @@ namespace PharMS_Steuerung.Funktionen
 
         public void FillGridMaster()
         {
-            String[] cmbWerte = new String[] { " ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18" };
-            DataGridViewComboBoxColumn ComboBoxColumn1 = new DataGridViewComboBoxColumn();
-            ComboBoxColumn1.Name = "Speicherplatz";
-            ComboBoxColumn1.HeaderText = "Speicherplatz";
-            ComboBoxColumn1.DataPropertyName = "Speicherplatz";
-            ComboBoxColumn1.ValueType = typeof(String);
-            ComboBoxColumn1.DataSource = cmbWerte;
-
+        
             DataGridViewComboBoxColumn ComboBoxColumn2 = new DataGridViewComboBoxColumn();
             ComboBoxColumn2.Name = "Sequenz";
             ComboBoxColumn2.HeaderText = "Sequenz";
@@ -168,17 +161,20 @@ namespace PharMS_Steuerung.Funktionen
             ComboBoxColumn2.ValueType = typeof(int);
             ComboBoxColumn2.DisplayMember = "Name";
             ComboBoxColumn2.ValueMember = "ID";
-            ComboBoxColumn2.DataSource = MainForm.DBMain.dsPharms.Tables["Sequenzen"];
+            ComboBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ComboBoxColumn2.DataSource = MainForm.DBMain.dsPharms.Tables["Sequenzen"]; 
+            //(ComboBoxColumn2.DataSource as DataTable).Select("Speicherplatz <> NUll OR Speicherplatz <> ' '");
+
+           
 
             MainForm.MasterGrid.Columns.Add(ComboBoxColumn2);
-            MainForm.MasterGrid.Columns.Add(ComboBoxColumn1);
+
             MainForm.MasterGrid.AutoGenerateColumns = true;
             MainForm.MasterGrid.DataSource = MainForm.DBMain.dsPharms.Tables["Masterablauf"];
             MainForm.MasterGrid.Columns["ID"].Visible = false;
+            MainForm.MasterGrid.Columns["Speicherplatz"].ReadOnly = true;
             MainForm.MasterGrid.Columns["Name"].Visible = false;
             // MainForm.MasterGrid.Columns["Reihenfolge"].Visible = false;
-
-            MainForm.MasterGrid.Columns["Sequenz"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
         }
 
@@ -186,6 +182,7 @@ namespace PharMS_Steuerung.Funktionen
         {
             MainForm.DatenerfassungTab.DataSource = MainForm.DBMain.dsPharms.Tables["Messwerte"];
             MainForm.DatenerfassungTab.Columns["ID"].Visible = false;
+            MainForm.DatenerfassungTab.Columns["MZ_ID"].Visible = false;
             MainForm.DatenerfassungTab.Columns["Datum"].HeaderText = "Datum";
             MainForm.DatenerfassungTab.Columns["MW1"].HeaderText = "Sensor 1[nA]";
             MainForm.DatenerfassungTab.Columns["MW2"].HeaderText = "Sensor 2[nA]";

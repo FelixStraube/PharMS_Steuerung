@@ -18,10 +18,10 @@ namespace PharMS_Steuerung.Funktionen
         public string sDBPath;
         public DataSet dsPharms;
         private SQLiteConnection conn;
-        private SQLiteDataAdapter daMasterablauf, daSequenzen, daMesswerte, daSequenzenBefehle;
-        private DataTable dtMasterablauf, dtSequenzen, dtMesswerte, dtSequenzenBefehle;
-        private SQLiteCommandBuilder cmdbMasterablauf, cmdbMesswerte, cmdbSequenzen, cmdbSequenzenBefehle;
-        private SQLiteCommand cmdMasterablauf, cmdMesswerte, cmdSequenzen, cmdSequenzenBefehle;
+        private SQLiteDataAdapter daMasterablauf, daSequenzen, daMesswerte, daSequenzenBefehle, daMesszyklus;
+        private DataTable dtMasterablauf, dtSequenzen, dtMesswerte, dtSequenzenBefehle, dtMesszyklus;
+        private SQLiteCommandBuilder cmdbMasterablauf, cmdbMesswerte, cmdbSequenzen, cmdbSequenzenBefehle, cmdbMesszyklus;
+        private SQLiteCommand cmdMasterablauf, cmdMesswerte, cmdSequenzen, cmdSequenzenBefehle, cmdMesszyklus;
 
         public SQLMain(String sFileName)
         {
@@ -46,22 +46,26 @@ namespace PharMS_Steuerung.Funktionen
             dtMesswerte.TableName = "Messwerte";
             dtSequenzenBefehle = new DataTable();
             dtSequenzenBefehle.TableName = "SequenzEdit";
-
+            dtMesszyklus = new DataTable();
+            dtMesszyklus.TableName = "Messzyklus";           
 
             daMasterablauf = new SQLiteDataAdapter();
             daMesswerte = new SQLiteDataAdapter();
             daSequenzen = new SQLiteDataAdapter();
             daSequenzenBefehle = new SQLiteDataAdapter();
+            daMesszyklus = new SQLiteDataAdapter();
 
             daMasterablauf.MissingSchemaAction = MissingSchemaAction.AddWithKey;
             daMesswerte.MissingSchemaAction = MissingSchemaAction.AddWithKey;
             daSequenzen.MissingSchemaAction = MissingSchemaAction.AddWithKey;
             daSequenzenBefehle.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+            daMesszyklus.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
             cmdbMasterablauf = new SQLiteCommandBuilder(daMasterablauf);
             cmdbMesswerte = new SQLiteCommandBuilder(daMesswerte);
             cmdbSequenzen = new SQLiteCommandBuilder(daSequenzen);
             cmdbSequenzenBefehle = new SQLiteCommandBuilder(daSequenzenBefehle);
+            cmdbMesszyklus = new SQLiteCommandBuilder(daMesszyklus);
 
             cmdSequenzenBefehle = new SQLiteCommand();
             cmdSequenzenBefehle.Connection = conn;
@@ -87,11 +91,18 @@ namespace PharMS_Steuerung.Funktionen
             daSequenzen.SelectCommand = cmdSequenzen;
             daSequenzen.Fill(dtSequenzen);
 
+            cmdMesszyklus = new SQLiteCommand();
+            cmdMesszyklus.Connection = conn;
+            cmdMesszyklus.CommandText = "Select * From Messzyklus";
+            daMesszyklus.SelectCommand = cmdMesszyklus;
+            daMesszyklus.Fill(dtMesszyklus);
+            dtMesszyklus.Columns["ID"].AutoIncrementSeed = 1;
+            
             dsPharms.Tables.Add(dtSequenzen);
             dsPharms.Tables.Add(dtMesswerte);
             dsPharms.Tables.Add(dtMasterablauf);
             dsPharms.Tables.Add(dtSequenzenBefehle);
-
+            dsPharms.Tables.Add(dtMesszyklus);
         }
 
         private void CreateTables()
@@ -127,10 +138,18 @@ namespace PharMS_Steuerung.Funktionen
 
             cmd.CommandText = "CREATE TABLE IF NOT EXISTS Messwerte ( " +
                "ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
+               "MZ_ID INTEGER NOT NULL," +
                "MW1 DOUBLE NOT NULL," +
                "MW2 DOUBLE NOT NULL," +
                "Datum DATETIME);";
             cmd.ExecuteNonQuery();
+
+            cmd.CommandText = "CREATE TABLE IF NOT EXISTS Messzyklus ( " +
+             "ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
+             "Name VARCHAR(100) NOT NULL," +
+             "Datum DATETIME);";
+            cmd.ExecuteNonQuery();
+
             cmd.Dispose();
             conn.Close();
         }
@@ -143,7 +162,8 @@ namespace PharMS_Steuerung.Funktionen
 
             while (dtr.Read())
             {
-                Speicherplatz.Add(dtr["Speicherplatz"].ToString());
+                if (dtr["Speicherplatz"].ToString() != " ")
+                    Speicherplatz.Add(dtr["Speicherplatz"].ToString());
             }
             dtr.Close();
             return Speicherplatz;
@@ -162,7 +182,7 @@ namespace PharMS_Steuerung.Funktionen
                 {
                     row = dsPharms.Tables["Sequenzen"].NewRow();
                     row["Name"] = lstSequenz[i];
-                    row["ID"] = dsPharms.Tables["Sequenzen"].Rows.Count+1;
+                    row["ID"] = dsPharms.Tables["Sequenzen"].Rows.Count + 1;
                     dsPharms.Tables["Sequenzen"].Rows.Add(row);
                 }
                 else
@@ -221,7 +241,7 @@ namespace PharMS_Steuerung.Funktionen
 
             while (dtr.Read())
             {
-                if (dtr["Speicherplatz"].ToString() != "")
+                if (dtr["Speicherplatz"].ToString() != " ")
                     IDs.Add(Convert.ToInt32(dtr["ID"]));
             }
             dtr.Close();
@@ -258,14 +278,45 @@ namespace PharMS_Steuerung.Funktionen
             return sSequenz;
         }
 
-        public void SetMeasurements(String MW1, String MW2)
+        public string GetSequenzMemoryByID(int ID)
+        {
+            string sSequenz = "";
+
+            var query = from a in dsPharms.Tables["Sequenzen"].AsEnumerable()
+
+                        where a.Field<Int64>("ID") == ID
+                        select new
+                        {
+                            Speicherplatz = a.Field<string>("Speicherplatz")
+                        };
+
+            foreach (var q in query)
+            {
+                sSequenz = (q.Speicherplatz == null) ? " " : q.Speicherplatz.ToString();
+            }
+            return sSequenz;
+        }
+
+        public void SetMeasurements(String MW1, String MW2, String MZ_ID)
         {
             DataRow row;
             row = dsPharms.Tables["Messwerte"].NewRow();
             row["MW1"] = Convert.ToDouble(MW1);
             row["MW2"] = Convert.ToDouble(MW2);
+            row["MZ_ID"] = Convert.ToInt32(MZ_ID);
             row["Datum"] = DateTime.Now;
             dsPharms.Tables["Messwerte"].Rows.Add(row);
+        }
+
+        public string CreateZyklus()
+        {
+            DataRow row;
+            row = dsPharms.Tables["Messzyklus"].NewRow();            
+            row["Name"] = "Zyklus " + (dsPharms.Tables["Messzyklus"].Rows.Count + 1).ToString();
+            row["Datum"] = DateTime.Now;
+            dsPharms.Tables["Messzyklus"].Rows.Add(row);
+
+            return dsPharms.Tables["Messzyklus"].Rows[dsPharms.Tables["Messzyklus"].Rows.Count-1].ItemArray[0].ToString();
         }
 
         public void Save()
@@ -273,13 +324,16 @@ namespace PharMS_Steuerung.Funktionen
             daSequenzen.Update(dsPharms, "Sequenzen");
             daSequenzenBefehle.Update(dsPharms, "SequenzEdit");
             daMasterablauf.Update(dsPharms, "Masterablauf");
+            daMesszyklus.Update(dsPharms, "Messzyklus");
             daMesswerte.Update(dsPharms, "Messwerte");
+
             // dtSequenzen.AcceptChanges();
         }
         public void SaveMeasurements()
         {
-           
+            daMesszyklus.Update(dsPharms, "Messzyklus");
             daMesswerte.Update(dsPharms, "Messwerte");
+   
             // dtSequenzen.AcceptChanges();
         }
     }

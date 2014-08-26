@@ -28,10 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.Verzeichnisauswahl = new System.Windows.Forms.FolderBrowserDialog();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -46,7 +42,6 @@
             this.NewDBDialog = new System.Windows.Forms.SaveFileDialog();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.btnChart = new System.Windows.Forms.Button();
-            this.lbMessmethode = new System.Windows.Forms.Label();
             this.btnNeueMessung = new System.Windows.Forms.Button();
             this.Messung_Stopp = new System.Windows.Forms.Button();
             this.Man_Messung = new System.Windows.Forms.Button();
@@ -88,8 +83,6 @@
             this.numeric_Intervall = new System.Windows.Forms.NumericUpDown();
             this.numericZellspannung = new System.Windows.Forms.NumericUpDown();
             this.label11 = new System.Windows.Forms.Label();
-            this.rbManuelleMessung = new System.Windows.Forms.RadioButton();
-            this.rbAktiveMessung = new System.Windows.Forms.RadioButton();
             this.grbTemperierung = new System.Windows.Forms.GroupBox();
             this.button4 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -109,19 +102,6 @@
             this.Disconnect = new System.Windows.Forms.Button();
             this.Connect = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabProben = new System.Windows.Forms.TabPage();
-            this.txtProbe4 = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.txtProbe3 = new System.Windows.Forms.TextBox();
-            this.txtProbe2 = new System.Windows.Forms.TextBox();
-            this.txtProbe1 = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.Live_Chart_anzeigen = new System.Windows.Forms.Button();
-            this.LiveGrid = new System.Windows.Forms.DataGridView();
-            this.LiveChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
@@ -149,10 +129,6 @@
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tabProben.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.LiveGrid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.LiveChart)).BeginInit();
             this.SuspendLayout();
             // 
             // fileSystemWatcher1
@@ -167,7 +143,8 @@
             this.hilfeToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(655, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
+            this.menuStrip1.Size = new System.Drawing.Size(907, 25);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -180,7 +157,7 @@
             this.mnItemSpeichernUnter,
             this.mnItemBeenden});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(46, 20);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(46, 19);
             this.toolStripMenuItem1.Text = "Datei";
             // 
             // mnItemNeu
@@ -209,6 +186,7 @@
             this.mnItemSpeichernUnter.Name = "mnItemSpeichernUnter";
             this.mnItemSpeichernUnter.Size = new System.Drawing.Size(169, 22);
             this.mnItemSpeichernUnter.Text = "Speichern unter...";
+            this.mnItemSpeichernUnter.Visible = false;
             this.mnItemSpeichernUnter.Click += new System.EventHandler(this.mnItemSpeichernUnter_Click);
             // 
             // mnItemBeenden
@@ -221,7 +199,7 @@
             // hilfeToolStripMenuItem
             // 
             this.hilfeToolStripMenuItem.Name = "hilfeToolStripMenuItem";
-            this.hilfeToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.hilfeToolStripMenuItem.Size = new System.Drawing.Size(44, 19);
             this.hilfeToolStripMenuItem.Text = "Hilfe";
             // 
             // openDatabaseDialog
@@ -231,45 +209,38 @@
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.btnChart);
-            this.tabPage2.Controls.Add(this.lbMessmethode);
             this.tabPage2.Controls.Add(this.btnNeueMessung);
             this.tabPage2.Controls.Add(this.Messung_Stopp);
             this.tabPage2.Controls.Add(this.Man_Messung);
             this.tabPage2.Controls.Add(this.button2);
             this.tabPage2.Controls.Add(this.DatenerfassungTab);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 29);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(633, 574);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabPage2.Size = new System.Drawing.Size(879, 886);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Messdaten";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // btnChart
             // 
-            this.btnChart.Location = new System.Drawing.Point(434, 226);
+            this.btnChart.Location = new System.Drawing.Point(651, 348);
+            this.btnChart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnChart.Name = "btnChart";
-            this.btnChart.Size = new System.Drawing.Size(75, 23);
+            this.btnChart.Size = new System.Drawing.Size(112, 35);
             this.btnChart.TabIndex = 11;
             this.btnChart.Text = "Chart";
             this.btnChart.UseVisualStyleBackColor = true;
             this.btnChart.Click += new System.EventHandler(this.btnChart_Click);
             // 
-            // lbMessmethode
-            // 
-            this.lbMessmethode.AutoSize = true;
-            this.lbMessmethode.Location = new System.Drawing.Point(431, 18);
-            this.lbMessmethode.Name = "lbMessmethode";
-            this.lbMessmethode.Size = new System.Drawing.Size(82, 13);
-            this.lbMessmethode.TabIndex = 10;
-            this.lbMessmethode.Text = "aktive Messung";
-            // 
             // btnNeueMessung
             // 
             this.btnNeueMessung.Enabled = false;
-            this.btnNeueMessung.Location = new System.Drawing.Point(434, 104);
+            this.btnNeueMessung.Location = new System.Drawing.Point(651, 160);
+            this.btnNeueMessung.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnNeueMessung.Name = "btnNeueMessung";
-            this.btnNeueMessung.Size = new System.Drawing.Size(96, 23);
+            this.btnNeueMessung.Size = new System.Drawing.Size(144, 35);
             this.btnNeueMessung.TabIndex = 9;
             this.btnNeueMessung.Text = "Neue Messung";
             this.btnNeueMessung.UseVisualStyleBackColor = true;
@@ -277,9 +248,10 @@
             // 
             // Messung_Stopp
             // 
-            this.Messung_Stopp.Location = new System.Drawing.Point(434, 182);
+            this.Messung_Stopp.Location = new System.Drawing.Point(651, 280);
+            this.Messung_Stopp.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Messung_Stopp.Name = "Messung_Stopp";
-            this.Messung_Stopp.Size = new System.Drawing.Size(75, 23);
+            this.Messung_Stopp.Size = new System.Drawing.Size(112, 35);
             this.Messung_Stopp.TabIndex = 8;
             this.Messung_Stopp.Text = "Stopp";
             this.Messung_Stopp.UseVisualStyleBackColor = true;
@@ -287,9 +259,10 @@
             // 
             // Man_Messung
             // 
-            this.Man_Messung.Location = new System.Drawing.Point(434, 142);
+            this.Man_Messung.Location = new System.Drawing.Point(651, 218);
+            this.Man_Messung.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Man_Messung.Name = "Man_Messung";
-            this.Man_Messung.Size = new System.Drawing.Size(75, 23);
+            this.Man_Messung.Size = new System.Drawing.Size(112, 35);
             this.Man_Messung.TabIndex = 7;
             this.Man_Messung.Text = "Start";
             this.Man_Messung.UseVisualStyleBackColor = true;
@@ -297,9 +270,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(434, 64);
+            this.button2.Location = new System.Drawing.Point(651, 98);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(117, 23);
+            this.button2.Size = new System.Drawing.Size(176, 35);
             this.button2.TabIndex = 5;
             this.button2.Text = "Export nach Excel";
             this.button2.UseVisualStyleBackColor = true;
@@ -308,9 +282,10 @@
             // DatenerfassungTab
             // 
             this.DatenerfassungTab.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DatenerfassungTab.Location = new System.Drawing.Point(9, 18);
+            this.DatenerfassungTab.Location = new System.Drawing.Point(14, 28);
+            this.DatenerfassungTab.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.DatenerfassungTab.Name = "DatenerfassungTab";
-            this.DatenerfassungTab.Size = new System.Drawing.Size(416, 522);
+            this.DatenerfassungTab.Size = new System.Drawing.Size(624, 803);
             this.DatenerfassungTab.TabIndex = 0;
             // 
             // tabMasterablauf
@@ -319,25 +294,28 @@
             this.tabMasterablauf.Controls.Add(this.AblaufStart);
             this.tabMasterablauf.Controls.Add(this.label5);
             this.tabMasterablauf.Controls.Add(this.MasterGrid);
-            this.tabMasterablauf.Location = new System.Drawing.Point(4, 22);
+            this.tabMasterablauf.Location = new System.Drawing.Point(4, 29);
+            this.tabMasterablauf.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabMasterablauf.Name = "tabMasterablauf";
-            this.tabMasterablauf.Size = new System.Drawing.Size(633, 574);
+            this.tabMasterablauf.Size = new System.Drawing.Size(879, 886);
             this.tabMasterablauf.TabIndex = 5;
             this.tabMasterablauf.Text = "Masterablauf";
             this.tabMasterablauf.UseVisualStyleBackColor = true;
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(257, 24);
+            this.numericUpDown1.Location = new System.Drawing.Point(30, 32);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(40, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(60, 26);
             this.numericUpDown1.TabIndex = 31;
             // 
             // AblaufStart
             // 
-            this.AblaufStart.Location = new System.Drawing.Point(393, 24);
+            this.AblaufStart.Location = new System.Drawing.Point(234, 32);
+            this.AblaufStart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.AblaufStart.Name = "AblaufStart";
-            this.AblaufStart.Size = new System.Drawing.Size(75, 23);
+            this.AblaufStart.Size = new System.Drawing.Size(112, 35);
             this.AblaufStart.TabIndex = 30;
             this.AblaufStart.Text = "Start";
             this.AblaufStart.UseVisualStyleBackColor = true;
@@ -346,9 +324,10 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(254, 8);
+            this.label5.Location = new System.Drawing.Point(25, 7);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(59, 13);
+            this.label5.Size = new System.Drawing.Size(87, 20);
             this.label5.TabIndex = 32;
             this.label5.Text = "Durchläufe\r\n";
             // 
@@ -358,19 +337,22 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.MasterGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.MasterGrid.Location = new System.Drawing.Point(0, 50);
+            this.MasterGrid.Location = new System.Drawing.Point(0, 77);
+            this.MasterGrid.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MasterGrid.Name = "MasterGrid";
-            this.MasterGrid.Size = new System.Drawing.Size(633, 512);
+            this.MasterGrid.Size = new System.Drawing.Size(652, 666);
             this.MasterGrid.TabIndex = 1;
             this.MasterGrid.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.MasterGrid_CellValidated);
+            this.MasterGrid.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.MasterGrid_DataError);
             this.MasterGrid.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.MasterGrid_DefaultValuesNeeded);
             // 
             // progressBar1
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(11, 624);
+            this.progressBar1.Location = new System.Drawing.Point(16, 958);
+            this.progressBar1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(641, 15);
+            this.progressBar1.Size = new System.Drawing.Size(887, 23);
             this.progressBar1.TabIndex = 33;
             // 
             // tabSequenzedit
@@ -379,9 +361,10 @@
             this.tabSequenzedit.Controls.Add(this.AblaufListe);
             this.tabSequenzedit.Controls.Add(this.chkFilter);
             this.tabSequenzedit.Controls.Add(this.SequenzeditorGrid);
-            this.tabSequenzedit.Location = new System.Drawing.Point(4, 22);
+            this.tabSequenzedit.Location = new System.Drawing.Point(4, 29);
+            this.tabSequenzedit.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabSequenzedit.Name = "tabSequenzedit";
-            this.tabSequenzedit.Size = new System.Drawing.Size(633, 574);
+            this.tabSequenzedit.Size = new System.Drawing.Size(879, 886);
             this.tabSequenzedit.TabIndex = 3;
             this.tabSequenzedit.Text = "Sequenzeditor";
             this.tabSequenzedit.UseVisualStyleBackColor = true;
@@ -389,30 +372,34 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 8);
+            this.label2.Location = new System.Drawing.Point(8, 12);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(49, 13);
+            this.label2.Size = new System.Drawing.Size(73, 20);
             this.label2.TabIndex = 12;
             this.label2.Text = "Sequenz";
             // 
             // AblaufListe
             // 
             this.AblaufListe.FormattingEnabled = true;
-            this.AblaufListe.Location = new System.Drawing.Point(6, 24);
+            this.AblaufListe.Location = new System.Drawing.Point(9, 37);
+            this.AblaufListe.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.AblaufListe.Name = "AblaufListe";
-            this.AblaufListe.Size = new System.Drawing.Size(174, 21);
+            this.AblaufListe.Size = new System.Drawing.Size(259, 28);
             this.AblaufListe.TabIndex = 2;
             this.AblaufListe.SelectedValueChanged += new System.EventHandler(this.AblaufListe_SelectedValueChanged);
             // 
             // chkFilter
             // 
             this.chkFilter.AutoSize = true;
-            this.chkFilter.Location = new System.Drawing.Point(270, 24);
+            this.chkFilter.Location = new System.Drawing.Point(405, 37);
+            this.chkFilter.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chkFilter.Name = "chkFilter";
-            this.chkFilter.Size = new System.Drawing.Size(176, 17);
+            this.chkFilter.Size = new System.Drawing.Size(253, 24);
             this.chkFilter.TabIndex = 1;
             this.chkFilter.Text = "Filtern nach Eingabemöglichkeit";
             this.chkFilter.UseVisualStyleBackColor = true;
+            this.chkFilter.Visible = false;
             // 
             // SequenzeditorGrid
             // 
@@ -420,9 +407,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SequenzeditorGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.SequenzeditorGrid.Location = new System.Drawing.Point(0, 51);
+            this.SequenzeditorGrid.Location = new System.Drawing.Point(0, 78);
+            this.SequenzeditorGrid.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.SequenzeditorGrid.Name = "SequenzeditorGrid";
-            this.SequenzeditorGrid.Size = new System.Drawing.Size(633, 520);
+            this.SequenzeditorGrid.Size = new System.Drawing.Size(652, 678);
             this.SequenzeditorGrid.TabIndex = 0;
             this.SequenzeditorGrid.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.SequenzeditorGrid_CellValidated);
             this.SequenzeditorGrid.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.SequenzeditorGrid_DefaultValuesNeeded);
@@ -431,18 +419,20 @@
             // 
             this.tabSequenzList.Controls.Add(this.btnUebertragen);
             this.tabSequenzList.Controls.Add(this.SequenzenGrid);
-            this.tabSequenzList.Location = new System.Drawing.Point(4, 22);
+            this.tabSequenzList.Location = new System.Drawing.Point(4, 29);
+            this.tabSequenzList.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabSequenzList.Name = "tabSequenzList";
-            this.tabSequenzList.Size = new System.Drawing.Size(633, 574);
+            this.tabSequenzList.Size = new System.Drawing.Size(879, 886);
             this.tabSequenzList.TabIndex = 4;
             this.tabSequenzList.Text = "Sequenzen";
             this.tabSequenzList.UseVisualStyleBackColor = true;
             // 
             // btnUebertragen
             // 
-            this.btnUebertragen.Location = new System.Drawing.Point(18, 529);
+            this.btnUebertragen.Location = new System.Drawing.Point(27, 814);
+            this.btnUebertragen.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnUebertragen.Name = "btnUebertragen";
-            this.btnUebertragen.Size = new System.Drawing.Size(75, 23);
+            this.btnUebertragen.Size = new System.Drawing.Size(112, 35);
             this.btnUebertragen.TabIndex = 1;
             this.btnUebertragen.Text = "Übertragen";
             this.btnUebertragen.UseVisualStyleBackColor = true;
@@ -453,11 +443,11 @@
             this.SequenzenGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SequenzenGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.SequenzenGrid.Location = new System.Drawing.Point(1, 3);
+            this.SequenzenGrid.Location = new System.Drawing.Point(2, 5);
+            this.SequenzenGrid.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.SequenzenGrid.Name = "SequenzenGrid";
-            this.SequenzenGrid.Size = new System.Drawing.Size(632, 500);
+            this.SequenzenGrid.Size = new System.Drawing.Size(650, 769);
             this.SequenzenGrid.TabIndex = 0;
-            this.SequenzenGrid.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.SequenzenGrid_CellValidating);
             this.SequenzenGrid.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SequenzenGrid_MouseClick);
             // 
             // tabGKommunikation
@@ -468,36 +458,40 @@
             this.tabGKommunikation.Controls.Add(this.Console_Senden);
             this.tabGKommunikation.Controls.Add(this.Console_Eingabe);
             this.tabGKommunikation.Controls.Add(this.Console_Ausgabe);
-            this.tabGKommunikation.Location = new System.Drawing.Point(4, 22);
+            this.tabGKommunikation.Location = new System.Drawing.Point(4, 29);
+            this.tabGKommunikation.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabGKommunikation.Name = "tabGKommunikation";
-            this.tabGKommunikation.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGKommunikation.Size = new System.Drawing.Size(633, 574);
+            this.tabGKommunikation.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabGKommunikation.Size = new System.Drawing.Size(879, 886);
             this.tabGKommunikation.TabIndex = 0;
             this.tabGKommunikation.Text = "Gerätekommunikation";
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(29, 11);
+            this.label16.Location = new System.Drawing.Point(44, 17);
+            this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(49, 13);
+            this.label16.Size = new System.Drawing.Size(73, 20);
             this.label16.TabIndex = 38;
             this.label16.Text = "Ausgabe";
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(32, 228);
+            this.label15.Location = new System.Drawing.Point(48, 351);
+            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(46, 13);
+            this.label15.Size = new System.Drawing.Size(68, 20);
             this.label15.TabIndex = 37;
             this.label15.Text = "Eingabe";
             // 
             // Console_Senden
             // 
-            this.Console_Senden.Location = new System.Drawing.Point(35, 284);
+            this.Console_Senden.Location = new System.Drawing.Point(52, 437);
+            this.Console_Senden.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Console_Senden.Name = "Console_Senden";
-            this.Console_Senden.Size = new System.Drawing.Size(75, 23);
+            this.Console_Senden.Size = new System.Drawing.Size(112, 35);
             this.Console_Senden.TabIndex = 36;
             this.Console_Senden.Text = "Senden";
             this.Console_Senden.UseVisualStyleBackColor = true;
@@ -505,28 +499,31 @@
             // 
             // Console_Eingabe
             // 
-            this.Console_Eingabe.Location = new System.Drawing.Point(32, 244);
+            this.Console_Eingabe.Location = new System.Drawing.Point(48, 375);
+            this.Console_Eingabe.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Console_Eingabe.Name = "Console_Eingabe";
-            this.Console_Eingabe.Size = new System.Drawing.Size(369, 20);
+            this.Console_Eingabe.Size = new System.Drawing.Size(552, 26);
             this.Console_Eingabe.TabIndex = 35;
             // 
             // Console_Ausgabe
             // 
-            this.Console_Ausgabe.Location = new System.Drawing.Point(32, 27);
+            this.Console_Ausgabe.Location = new System.Drawing.Point(48, 42);
+            this.Console_Ausgabe.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Console_Ausgabe.Multiline = true;
             this.Console_Ausgabe.Name = "Console_Ausgabe";
             this.Console_Ausgabe.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.Console_Ausgabe.Size = new System.Drawing.Size(440, 198);
+            this.Console_Ausgabe.Size = new System.Drawing.Size(658, 302);
             this.Console_Ausgabe.TabIndex = 34;
             // 
             // tabDeviceParameter
             // 
             this.tabDeviceParameter.Controls.Add(this.groupBox2);
             this.tabDeviceParameter.Controls.Add(this.groupBox1);
-            this.tabDeviceParameter.Location = new System.Drawing.Point(4, 22);
+            this.tabDeviceParameter.Location = new System.Drawing.Point(4, 29);
+            this.tabDeviceParameter.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabDeviceParameter.Name = "tabDeviceParameter";
-            this.tabDeviceParameter.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDeviceParameter.Size = new System.Drawing.Size(633, 574);
+            this.tabDeviceParameter.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabDeviceParameter.Size = new System.Drawing.Size(879, 886);
             this.tabDeviceParameter.TabIndex = 6;
             this.tabDeviceParameter.Text = "Geräteparameter";
             this.tabDeviceParameter.UseVisualStyleBackColor = true;
@@ -544,9 +541,11 @@
             this.groupBox2.Controls.Add(this.grbTemperierung);
             this.groupBox2.Controls.Add(this.groupBox4);
             this.groupBox2.Controls.Add(this.groupBox3);
-            this.groupBox2.Location = new System.Drawing.Point(21, 171);
+            this.groupBox2.Location = new System.Drawing.Point(32, 263);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(540, 396);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox2.Size = new System.Drawing.Size(810, 609);
             this.groupBox2.TabIndex = 41;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Geräteparameter";
@@ -554,15 +553,17 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(380, 347);
+            this.label8.Location = new System.Drawing.Point(570, 534);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(111, 13);
+            this.label8.Size = new System.Drawing.Size(165, 20);
             this.label8.TabIndex = 27;
             this.label8.Text = "Anzahl der Spülzyklen";
             // 
             // numSpuelen
             // 
-            this.numSpuelen.Location = new System.Drawing.Point(383, 363);
+            this.numSpuelen.Location = new System.Drawing.Point(574, 558);
+            this.numSpuelen.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numSpuelen.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -574,7 +575,7 @@
             0,
             0});
             this.numSpuelen.Name = "numSpuelen";
-            this.numSpuelen.Size = new System.Drawing.Size(49, 20);
+            this.numSpuelen.Size = new System.Drawing.Size(74, 26);
             this.numSpuelen.TabIndex = 26;
             this.numSpuelen.Value = new decimal(new int[] {
             1,
@@ -585,18 +586,20 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(224, 347);
+            this.label7.Location = new System.Drawing.Point(336, 534);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(154, 13);
+            this.label7.Size = new System.Drawing.Size(230, 20);
             this.label7.TabIndex = 25;
             this.label7.Text = "Anzahl der Desinfektionszyklen";
             // 
             // btnLeitungDes
             // 
             this.btnLeitungDes.Enabled = false;
-            this.btnLeitungDes.Location = new System.Drawing.Point(11, 360);
+            this.btnLeitungDes.Location = new System.Drawing.Point(16, 554);
+            this.btnLeitungDes.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnLeitungDes.Name = "btnLeitungDes";
-            this.btnLeitungDes.Size = new System.Drawing.Size(178, 23);
+            this.btnLeitungDes.Size = new System.Drawing.Size(267, 35);
             this.btnLeitungDes.TabIndex = 6;
             this.btnLeitungDes.Text = "Leitungen desinfizieren und spülen";
             this.btnLeitungDes.UseVisualStyleBackColor = true;
@@ -604,7 +607,8 @@
             // 
             // numDesinfektion
             // 
-            this.numDesinfektion.Location = new System.Drawing.Point(227, 363);
+            this.numDesinfektion.Location = new System.Drawing.Point(340, 558);
+            this.numDesinfektion.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numDesinfektion.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -616,7 +620,7 @@
             0,
             0});
             this.numDesinfektion.Name = "numDesinfektion";
-            this.numDesinfektion.Size = new System.Drawing.Size(49, 20);
+            this.numDesinfektion.Size = new System.Drawing.Size(74, 26);
             this.numDesinfektion.TabIndex = 24;
             this.numDesinfektion.Value = new decimal(new int[] {
             1,
@@ -627,9 +631,10 @@
             // btnElektrodenTest
             // 
             this.btnElektrodenTest.Enabled = false;
-            this.btnElektrodenTest.Location = new System.Drawing.Point(11, 330);
+            this.btnElektrodenTest.Location = new System.Drawing.Point(16, 508);
+            this.btnElektrodenTest.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnElektrodenTest.Name = "btnElektrodenTest";
-            this.btnElektrodenTest.Size = new System.Drawing.Size(97, 23);
+            this.btnElektrodenTest.Size = new System.Drawing.Size(146, 35);
             this.btnElektrodenTest.TabIndex = 5;
             this.btnElektrodenTest.Text = "Elektrodentest";
             this.btnElektrodenTest.UseVisualStyleBackColor = true;
@@ -638,9 +643,10 @@
             // btnReg
             // 
             this.btnReg.Enabled = false;
-            this.btnReg.Location = new System.Drawing.Point(11, 299);
+            this.btnReg.Location = new System.Drawing.Point(16, 460);
+            this.btnReg.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnReg.Name = "btnReg";
-            this.btnReg.Size = new System.Drawing.Size(141, 23);
+            this.btnReg.Size = new System.Drawing.Size(212, 35);
             this.btnReg.TabIndex = 4;
             this.btnReg.Text = "Elektroden regenerieren";
             this.btnReg.UseVisualStyleBackColor = true;
@@ -654,11 +660,11 @@
             this.groupBox5.Controls.Add(this.numeric_Intervall);
             this.groupBox5.Controls.Add(this.numericZellspannung);
             this.groupBox5.Controls.Add(this.label11);
-            this.groupBox5.Controls.Add(this.rbManuelleMessung);
-            this.groupBox5.Controls.Add(this.rbAktiveMessung);
-            this.groupBox5.Location = new System.Drawing.Point(11, 160);
+            this.groupBox5.Location = new System.Drawing.Point(16, 246);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(508, 132);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox5.Size = new System.Drawing.Size(762, 203);
             this.groupBox5.TabIndex = 3;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Messung";
@@ -666,22 +672,24 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(261, 67);
+            this.label13.Location = new System.Drawing.Point(19, 112);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(83, 13);
+            this.label13.Size = new System.Drawing.Size(121, 20);
             this.label13.TabIndex = 23;
             this.label13.Text = "Messdauer /min";
             // 
             // numeric_Messdauer
             // 
-            this.numeric_Messdauer.Location = new System.Drawing.Point(261, 87);
+            this.numeric_Messdauer.Location = new System.Drawing.Point(19, 143);
+            this.numeric_Messdauer.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numeric_Messdauer.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
             this.numeric_Messdauer.Name = "numeric_Messdauer";
-            this.numeric_Messdauer.Size = new System.Drawing.Size(120, 20);
+            this.numeric_Messdauer.Size = new System.Drawing.Size(180, 26);
             this.numeric_Messdauer.TabIndex = 22;
             this.numeric_Messdauer.Value = new decimal(new int[] {
             5,
@@ -692,15 +700,17 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(258, 19);
+            this.label12.Location = new System.Drawing.Point(14, 38);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(57, 13);
+            this.label12.Size = new System.Drawing.Size(80, 20);
             this.label12.TabIndex = 21;
             this.label12.Text = "Intervall /s";
             // 
             // numeric_Intervall
             // 
-            this.numeric_Intervall.Location = new System.Drawing.Point(261, 35);
+            this.numeric_Intervall.Location = new System.Drawing.Point(19, 63);
+            this.numeric_Intervall.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numeric_Intervall.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -712,7 +722,7 @@
             0,
             0});
             this.numeric_Intervall.Name = "numeric_Intervall";
-            this.numeric_Intervall.Size = new System.Drawing.Size(120, 20);
+            this.numeric_Intervall.Size = new System.Drawing.Size(180, 26);
             this.numeric_Intervall.TabIndex = 20;
             this.numeric_Intervall.Value = new decimal(new int[] {
             1,
@@ -722,7 +732,8 @@
             // 
             // numericZellspannung
             // 
-            this.numericZellspannung.Location = new System.Drawing.Point(152, 35);
+            this.numericZellspannung.Location = new System.Drawing.Point(250, 63);
+            this.numericZellspannung.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numericZellspannung.Maximum = new decimal(new int[] {
             500,
             0,
@@ -734,7 +745,7 @@
             0,
             -2147483648});
             this.numericZellspannung.Name = "numericZellspannung";
-            this.numericZellspannung.Size = new System.Drawing.Size(94, 20);
+            this.numericZellspannung.Size = new System.Drawing.Size(141, 26);
             this.numericZellspannung.TabIndex = 19;
             this.numericZellspannung.Value = new decimal(new int[] {
             300,
@@ -745,35 +756,12 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(152, 19);
+            this.label11.Location = new System.Drawing.Point(250, 38);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(94, 13);
+            this.label11.Size = new System.Drawing.Size(137, 20);
             this.label11.TabIndex = 18;
             this.label11.Text = "Zellspannung /mV";
-            // 
-            // rbManuelleMessung
-            // 
-            this.rbManuelleMessung.AutoSize = true;
-            this.rbManuelleMessung.Location = new System.Drawing.Point(11, 47);
-            this.rbManuelleMessung.Name = "rbManuelleMessung";
-            this.rbManuelleMessung.Size = new System.Drawing.Size(114, 17);
-            this.rbManuelleMessung.TabIndex = 17;
-            this.rbManuelleMessung.Text = "Manuelle Messung";
-            this.rbManuelleMessung.UseVisualStyleBackColor = true;
-            this.rbManuelleMessung.CheckedChanged += new System.EventHandler(this.rbAktiveMessung_CheckedChanged);
-            // 
-            // rbAktiveMessung
-            // 
-            this.rbAktiveMessung.AutoSize = true;
-            this.rbAktiveMessung.Checked = true;
-            this.rbAktiveMessung.Location = new System.Drawing.Point(11, 23);
-            this.rbAktiveMessung.Name = "rbAktiveMessung";
-            this.rbAktiveMessung.Size = new System.Drawing.Size(101, 17);
-            this.rbAktiveMessung.TabIndex = 16;
-            this.rbAktiveMessung.TabStop = true;
-            this.rbAktiveMessung.Text = "Aktive Messung";
-            this.rbAktiveMessung.UseVisualStyleBackColor = true;
-            this.rbAktiveMessung.CheckedChanged += new System.EventHandler(this.rbAktiveMessung_CheckedChanged);
             // 
             // grbTemperierung
             // 
@@ -781,18 +769,21 @@
             this.grbTemperierung.Controls.Add(this.button1);
             this.grbTemperierung.Controls.Add(this.txtboxTemperatur);
             this.grbTemperierung.Controls.Add(this.lbTemperatur);
-            this.grbTemperierung.Location = new System.Drawing.Point(323, 37);
+            this.grbTemperierung.Location = new System.Drawing.Point(484, 57);
+            this.grbTemperierung.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.grbTemperierung.Name = "grbTemperierung";
-            this.grbTemperierung.Size = new System.Drawing.Size(196, 105);
+            this.grbTemperierung.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.grbTemperierung.Size = new System.Drawing.Size(294, 162);
             this.grbTemperierung.TabIndex = 2;
             this.grbTemperierung.TabStop = false;
             this.grbTemperierung.Text = "Temperierung";
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(104, 33);
+            this.button4.Location = new System.Drawing.Point(156, 51);
+            this.button4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(70, 25);
+            this.button4.Size = new System.Drawing.Size(105, 38);
             this.button4.TabIndex = 6;
             this.button4.Text = "Aus";
             this.button4.UseVisualStyleBackColor = true;
@@ -800,9 +791,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(13, 34);
+            this.button1.Location = new System.Drawing.Point(20, 52);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(70, 25);
+            this.button1.Size = new System.Drawing.Size(105, 38);
             this.button1.TabIndex = 5;
             this.button1.Text = "Ein";
             this.button1.UseVisualStyleBackColor = true;
@@ -810,18 +802,20 @@
             // 
             // txtboxTemperatur
             // 
-            this.txtboxTemperatur.Location = new System.Drawing.Point(104, 70);
+            this.txtboxTemperatur.Location = new System.Drawing.Point(156, 108);
+            this.txtboxTemperatur.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtboxTemperatur.Name = "txtboxTemperatur";
-            this.txtboxTemperatur.Size = new System.Drawing.Size(70, 20);
+            this.txtboxTemperatur.Size = new System.Drawing.Size(103, 26);
             this.txtboxTemperatur.TabIndex = 4;
             this.txtboxTemperatur.Text = "37";
             // 
             // lbTemperatur
             // 
             this.lbTemperatur.AutoSize = true;
-            this.lbTemperatur.Location = new System.Drawing.Point(10, 77);
+            this.lbTemperatur.Location = new System.Drawing.Point(15, 118);
+            this.lbTemperatur.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbTemperatur.Name = "lbTemperatur";
-            this.lbTemperatur.Size = new System.Drawing.Size(89, 13);
+            this.lbTemperatur.Size = new System.Drawing.Size(131, 20);
             this.lbTemperatur.TabIndex = 3;
             this.lbTemperatur.Text = "Temperatur in °C:";
             // 
@@ -829,18 +823,21 @@
             // 
             this.groupBox4.Controls.Add(this.Button_Pumpe_Abfall_AUS);
             this.groupBox4.Controls.Add(this.Button_Pumpe_Abfall_EIN);
-            this.groupBox4.Location = new System.Drawing.Point(151, 37);
+            this.groupBox4.Location = new System.Drawing.Point(226, 57);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(166, 105);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox4.Size = new System.Drawing.Size(249, 162);
             this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Pumpe Abfallbehandlung";
             // 
             // Button_Pumpe_Abfall_AUS
             // 
-            this.Button_Pumpe_Abfall_AUS.Location = new System.Drawing.Point(25, 65);
+            this.Button_Pumpe_Abfall_AUS.Location = new System.Drawing.Point(38, 100);
+            this.Button_Pumpe_Abfall_AUS.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Button_Pumpe_Abfall_AUS.Name = "Button_Pumpe_Abfall_AUS";
-            this.Button_Pumpe_Abfall_AUS.Size = new System.Drawing.Size(100, 25);
+            this.Button_Pumpe_Abfall_AUS.Size = new System.Drawing.Size(150, 38);
             this.Button_Pumpe_Abfall_AUS.TabIndex = 3;
             this.Button_Pumpe_Abfall_AUS.Text = "Aus";
             this.Button_Pumpe_Abfall_AUS.UseVisualStyleBackColor = true;
@@ -848,9 +845,10 @@
             // 
             // Button_Pumpe_Abfall_EIN
             // 
-            this.Button_Pumpe_Abfall_EIN.Location = new System.Drawing.Point(25, 33);
+            this.Button_Pumpe_Abfall_EIN.Location = new System.Drawing.Point(38, 51);
+            this.Button_Pumpe_Abfall_EIN.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Button_Pumpe_Abfall_EIN.Name = "Button_Pumpe_Abfall_EIN";
-            this.Button_Pumpe_Abfall_EIN.Size = new System.Drawing.Size(100, 25);
+            this.Button_Pumpe_Abfall_EIN.Size = new System.Drawing.Size(150, 38);
             this.Button_Pumpe_Abfall_EIN.TabIndex = 2;
             this.Button_Pumpe_Abfall_EIN.Text = "Ein";
             this.Button_Pumpe_Abfall_EIN.UseVisualStyleBackColor = true;
@@ -860,18 +858,21 @@
             // 
             this.groupBox3.Controls.Add(this.Button_Pumpe_MZ_AUS);
             this.groupBox3.Controls.Add(this.Button_Pumpe_MZ_EIN);
-            this.groupBox3.Location = new System.Drawing.Point(7, 37);
+            this.groupBox3.Location = new System.Drawing.Point(10, 57);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(137, 105);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox3.Size = new System.Drawing.Size(206, 162);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Pumpe Messzelle";
             // 
             // Button_Pumpe_MZ_AUS
             // 
-            this.Button_Pumpe_MZ_AUS.Location = new System.Drawing.Point(16, 65);
+            this.Button_Pumpe_MZ_AUS.Location = new System.Drawing.Point(24, 100);
+            this.Button_Pumpe_MZ_AUS.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Button_Pumpe_MZ_AUS.Name = "Button_Pumpe_MZ_AUS";
-            this.Button_Pumpe_MZ_AUS.Size = new System.Drawing.Size(100, 25);
+            this.Button_Pumpe_MZ_AUS.Size = new System.Drawing.Size(150, 38);
             this.Button_Pumpe_MZ_AUS.TabIndex = 1;
             this.Button_Pumpe_MZ_AUS.Text = "Aus";
             this.Button_Pumpe_MZ_AUS.UseVisualStyleBackColor = true;
@@ -879,9 +880,10 @@
             // 
             // Button_Pumpe_MZ_EIN
             // 
-            this.Button_Pumpe_MZ_EIN.Location = new System.Drawing.Point(15, 34);
+            this.Button_Pumpe_MZ_EIN.Location = new System.Drawing.Point(22, 52);
+            this.Button_Pumpe_MZ_EIN.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Button_Pumpe_MZ_EIN.Name = "Button_Pumpe_MZ_EIN";
-            this.Button_Pumpe_MZ_EIN.Size = new System.Drawing.Size(100, 25);
+            this.Button_Pumpe_MZ_EIN.Size = new System.Drawing.Size(150, 38);
             this.Button_Pumpe_MZ_EIN.TabIndex = 0;
             this.Button_Pumpe_MZ_EIN.Text = "Ein";
             this.Button_Pumpe_MZ_EIN.UseVisualStyleBackColor = true;
@@ -895,17 +897,20 @@
             this.groupBox1.Controls.Add(this.panel1);
             this.groupBox1.Controls.Add(this.Disconnect);
             this.groupBox1.Controls.Add(this.Connect);
-            this.groupBox1.Location = new System.Drawing.Point(21, 15);
+            this.groupBox1.Location = new System.Drawing.Point(32, 23);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(540, 137);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox1.Size = new System.Drawing.Size(810, 211);
             this.groupBox1.TabIndex = 40;
             this.groupBox1.TabStop = false;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(215, 57);
+            this.button3.Location = new System.Drawing.Point(322, 88);
+            this.button3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.Size = new System.Drawing.Size(112, 35);
             this.button3.TabIndex = 39;
             this.button3.Text = "Initialisieren";
             this.button3.UseVisualStyleBackColor = true;
@@ -916,9 +921,10 @@
             this.NOTSTOPP.BackColor = System.Drawing.Color.Red;
             this.NOTSTOPP.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.NOTSTOPP.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NOTSTOPP.Location = new System.Drawing.Point(369, 38);
+            this.NOTSTOPP.Location = new System.Drawing.Point(554, 58);
+            this.NOTSTOPP.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.NOTSTOPP.Name = "NOTSTOPP";
-            this.NOTSTOPP.Size = new System.Drawing.Size(128, 57);
+            this.NOTSTOPP.Size = new System.Drawing.Size(192, 88);
             this.NOTSTOPP.TabIndex = 38;
             this.NOTSTOPP.Text = "STOPP";
             this.NOTSTOPP.UseVisualStyleBackColor = false;
@@ -927,25 +933,28 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(46, 33);
+            this.label1.Location = new System.Drawing.Point(69, 51);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(43, 13);
+            this.label1.Size = new System.Drawing.Size(64, 20);
             this.label1.TabIndex = 37;
             this.label1.Text = "Status :";
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Orange;
-            this.panel1.Location = new System.Drawing.Point(11, 52);
+            this.panel1.Location = new System.Drawing.Point(16, 80);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(127, 43);
+            this.panel1.Size = new System.Drawing.Size(190, 66);
             this.panel1.TabIndex = 36;
             // 
             // Disconnect
             // 
-            this.Disconnect.Location = new System.Drawing.Point(215, 89);
+            this.Disconnect.Location = new System.Drawing.Point(322, 137);
+            this.Disconnect.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Disconnect.Name = "Disconnect";
-            this.Disconnect.Size = new System.Drawing.Size(75, 23);
+            this.Disconnect.Size = new System.Drawing.Size(112, 35);
             this.Disconnect.TabIndex = 35;
             this.Disconnect.Text = "Disconnect";
             this.Disconnect.UseVisualStyleBackColor = true;
@@ -953,9 +962,10 @@
             // 
             // Connect
             // 
-            this.Connect.Location = new System.Drawing.Point(215, 23);
+            this.Connect.Location = new System.Drawing.Point(322, 35);
+            this.Connect.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Connect.Name = "Connect";
-            this.Connect.Size = new System.Drawing.Size(75, 23);
+            this.Connect.Size = new System.Drawing.Size(112, 35);
             this.Connect.TabIndex = 34;
             this.Connect.Text = "Connect";
             this.Connect.UseVisualStyleBackColor = true;
@@ -967,165 +977,17 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabDeviceParameter);
-            this.tabControl1.Controls.Add(this.tabProben);
             this.tabControl1.Controls.Add(this.tabGKommunikation);
             this.tabControl1.Controls.Add(this.tabSequenzList);
             this.tabControl1.Controls.Add(this.tabSequenzedit);
             this.tabControl1.Controls.Add(this.tabMasterablauf);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Location = new System.Drawing.Point(7, 23);
+            this.tabControl1.Location = new System.Drawing.Point(10, 35);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(641, 600);
+            this.tabControl1.Size = new System.Drawing.Size(887, 919);
             this.tabControl1.TabIndex = 3;
-            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
-            // 
-            // tabProben
-            // 
-            this.tabProben.Controls.Add(this.txtProbe4);
-            this.tabProben.Controls.Add(this.label9);
-            this.tabProben.Controls.Add(this.txtProbe3);
-            this.tabProben.Controls.Add(this.txtProbe2);
-            this.tabProben.Controls.Add(this.txtProbe1);
-            this.tabProben.Controls.Add(this.label6);
-            this.tabProben.Controls.Add(this.label4);
-            this.tabProben.Controls.Add(this.label3);
-            this.tabProben.Location = new System.Drawing.Point(4, 22);
-            this.tabProben.Name = "tabProben";
-            this.tabProben.Padding = new System.Windows.Forms.Padding(3);
-            this.tabProben.Size = new System.Drawing.Size(633, 574);
-            this.tabProben.TabIndex = 7;
-            this.tabProben.Text = "Proben";
-            this.tabProben.UseVisualStyleBackColor = true;
-            // 
-            // txtProbe4
-            // 
-            this.txtProbe4.Location = new System.Drawing.Point(191, 101);
-            this.txtProbe4.Name = "txtProbe4";
-            this.txtProbe4.Size = new System.Drawing.Size(127, 20);
-            this.txtProbe4.TabIndex = 8;
-            this.txtProbe4.Text = "Probe 4";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(19, 104);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(166, 13);
-            this.label9.TabIndex = 7;
-            this.label9.Text = "Bezeichnung Inkubationsgefäß 3:";
-            // 
-            // txtProbe3
-            // 
-            this.txtProbe3.Location = new System.Drawing.Point(191, 73);
-            this.txtProbe3.Name = "txtProbe3";
-            this.txtProbe3.Size = new System.Drawing.Size(127, 20);
-            this.txtProbe3.TabIndex = 5;
-            this.txtProbe3.Text = "Probe 3";
-            // 
-            // txtProbe2
-            // 
-            this.txtProbe2.Location = new System.Drawing.Point(191, 47);
-            this.txtProbe2.Name = "txtProbe2";
-            this.txtProbe2.Size = new System.Drawing.Size(127, 20);
-            this.txtProbe2.TabIndex = 4;
-            this.txtProbe2.Text = "Probe 2";
-            // 
-            // txtProbe1
-            // 
-            this.txtProbe1.Location = new System.Drawing.Point(191, 21);
-            this.txtProbe1.Name = "txtProbe1";
-            this.txtProbe1.Size = new System.Drawing.Size(127, 20);
-            this.txtProbe1.TabIndex = 3;
-            this.txtProbe1.Text = "Probe 1";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(19, 76);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(166, 13);
-            this.label6.TabIndex = 2;
-            this.label6.Text = "Bezeichnung Inkubationsgefäß 3:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(19, 50);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(166, 13);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "Bezeichnung Inkubationsgefäß 2:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(19, 24);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(166, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Bezeichnung Inkubationsgefäß 1:";
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.Live_Chart_anzeigen);
-            this.tabPage4.Controls.Add(this.LiveGrid);
-            this.tabPage4.Controls.Add(this.LiveChart);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(633, 574);
-            this.tabPage4.TabIndex = 5;
-            this.tabPage4.Text = "Live Chart";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // Live_Chart_anzeigen
-            // 
-            this.Live_Chart_anzeigen.Location = new System.Drawing.Point(70, 518);
-            this.Live_Chart_anzeigen.Name = "Live_Chart_anzeigen";
-            this.Live_Chart_anzeigen.Size = new System.Drawing.Size(75, 23);
-            this.Live_Chart_anzeigen.TabIndex = 2;
-            this.Live_Chart_anzeigen.Text = "Live Chart";
-            this.Live_Chart_anzeigen.UseVisualStyleBackColor = true;
-            this.Live_Chart_anzeigen.Visible = false;
-            this.Live_Chart_anzeigen.Click += new System.EventHandler(this.LiveChart_klick);
-            // 
-            // LiveGrid
-            // 
-            this.LiveGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.LiveGrid.Location = new System.Drawing.Point(70, 344);
-            this.LiveGrid.Name = "LiveGrid";
-            this.LiveGrid.Size = new System.Drawing.Size(328, 150);
-            this.LiveGrid.TabIndex = 1;
-            this.LiveGrid.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.LiveGrid_RowHeaderMouseDoubleClick);
-            // 
-            // LiveChart
-            // 
-            chartArea1.AxisX.Title = " Time [s]";
-            chartArea1.AxisY.Title = "Signal [nA]";
-            chartArea1.Name = "ChartArea1";
-            this.LiveChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.LiveChart.Legends.Add(legend1);
-            this.LiveChart.Location = new System.Drawing.Point(31, 32);
-            this.LiveChart.Name = "LiveChart";
-            this.LiveChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-            series1.BorderWidth = 5;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend1";
-            series1.MarkerColor = System.Drawing.Color.White;
-            series1.Name = "Sensor 1";
-            series2.BorderWidth = 5;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.Name = "Sensor 2";
-            this.LiveChart.Series.Add(series1);
-            this.LiveChart.Series.Add(series2);
-            this.LiveChart.Size = new System.Drawing.Size(466, 289);
-            this.LiveChart.TabIndex = 0;
             // 
             // Column2
             // 
@@ -1139,12 +1001,13 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(655, 641);
+            this.ClientSize = new System.Drawing.Size(907, 729);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Form1";
             this.Text = "PharMS Controller";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
@@ -1153,7 +1016,6 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DatenerfassungTab)).EndInit();
             this.tabMasterablauf.ResumeLayout(false);
             this.tabMasterablauf.PerformLayout();
@@ -1183,11 +1045,6 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
-            this.tabProben.ResumeLayout(false);
-            this.tabProben.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.LiveGrid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.LiveChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1195,10 +1052,10 @@
 
         #endregion
 
-      //     private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
-      //    private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
-      //  private Microsoft.VisualBasic.PowerPacks.LineShape lineShape2;
-      //  private Microsoft.VisualBasic.PowerPacks.LineShape lineShape3;
+        //     private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
+        //    private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
+        //  private Microsoft.VisualBasic.PowerPacks.LineShape lineShape2;
+        //  private Microsoft.VisualBasic.PowerPacks.LineShape lineShape3;
         private System.Windows.Forms.FolderBrowserDialog Verzeichnisauswahl;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
         private System.Windows.Forms.MenuStrip menuStrip1;
@@ -1223,8 +1080,6 @@
         public System.Windows.Forms.NumericUpDown numeric_Intervall;
         private System.Windows.Forms.NumericUpDown numericZellspannung;
         private System.Windows.Forms.Label label11;
-        public System.Windows.Forms.RadioButton rbManuelleMessung;
-        public System.Windows.Forms.RadioButton rbAktiveMessung;
         private System.Windows.Forms.GroupBox grbTemperierung;
         private System.Windows.Forms.TextBox txtboxTemperatur;
         private System.Windows.Forms.Label lbTemperatur;
@@ -1262,22 +1117,12 @@
         private System.Windows.Forms.Button Man_Messung;
         private System.Windows.Forms.Button button2;
         public System.Windows.Forms.DataGridView DatenerfassungTab;
-        private System.Windows.Forms.TabPage tabProben;
         private System.Windows.Forms.Button btnNeueMessung;
-        private System.Windows.Forms.Label lbMessmethode;
         private System.Windows.Forms.ToolStripMenuItem mnItemSpeichernUnter;
-        private System.Windows.Forms.TextBox txtProbe3;
-        private System.Windows.Forms.TextBox txtProbe2;
-        private System.Windows.Forms.TextBox txtProbe1;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label8;
         public System.Windows.Forms.NumericUpDown numSpuelen;
         private System.Windows.Forms.Label label7;
         public System.Windows.Forms.NumericUpDown numDesinfektion;
-        private System.Windows.Forms.TextBox txtProbe4;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button btnChart;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button1;
@@ -1285,10 +1130,6 @@
         private System.Windows.Forms.Button Button_Pumpe_Abfall_EIN;
         private System.Windows.Forms.Button Button_Pumpe_MZ_AUS;
         private System.Windows.Forms.Button Button_Pumpe_MZ_EIN;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.Button Live_Chart_anzeigen;
-        public System.Windows.Forms.DataGridView LiveGrid;
-        public System.Windows.Forms.DataVisualization.Charting.Chart LiveChart;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
 

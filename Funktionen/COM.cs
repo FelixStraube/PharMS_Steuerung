@@ -20,7 +20,8 @@ namespace PharMS_Steuerung.Funktionen
         private string sMakroEndeZeichen;
         private string[] empfangene_snr = new string[50];
         private string sExpectedStatus;
-
+        private string sZyklus;
+        public bool bZyklusActive = false;
         public SerialPort port;
         public Form1 tempForm = new Form1();
         public bool bereit = true;
@@ -66,50 +67,37 @@ namespace PharMS_Steuerung.Funktionen
                 {
                     case "M":
 
-                        // Alternatives erfassen der Messwert in Data grid 
-                        //start
-
+                        if (!bZyklusActive)
+                        {
+                            sZyklus = tempForm.DBMain.CreateZyklus();
+                            SendToCOM("W" + tempForm.numeric_Messdauer.Value.ToString(), true);
+                        }
 
                         string[] words = Status.Split(',');
                         string Sensor1a = words[0].Substring(1, words[0].Length - 1);
                         Sensor1a = Sensor1a.Replace(".", ",");
                         string Sensor2b = words[1].Substring(0, words[1].Length);
                         Sensor2b = Sensor2b.Replace(".", ",");
-                        tempForm.DBMain.SetMeasurements(Sensor1a, Sensor2b);
+                        tempForm.DBMain.SetMeasurements(Sensor1a, Sensor2b, sZyklus);
 
-                        //Ende
-                        if (tempForm.rbManuelleMessung.Checked == true)
+
+
+                        if (tmrMesswerteTimer == null)
                         {
-                            //Manuell
-
-
+                            tmrMesswerteTimer = new System.Timers.Timer();
+                            tmrMesswerteTimer.Enabled = false;
 
                         }
-                        if (tempForm.rbAktiveMessung.Checked == true)
+                        if (tmrMesswerteTimer.Enabled == false)
                         {
-                            if (tmrMesswerteTimer == null)
-                            {
-                                tmrMesswerteTimer = new System.Timers.Timer();
-                                tmrMesswerteTimer.Enabled = false;
-                                System.Threading.Thread.Sleep(500); // Wenn erstmalig ein Messignal Auftritt und timer noch nicht aktiv ist wurde kein Messwert erfasst
-                                port.WriteLine("M");                // darum erneutes senden von M 2ter Durchlauf
-
-                            }
-                            if (tmrMesswerteTimer.Enabled == true)
-                            {
-                                //Automatisch
-                            }
-                            else
-                            {
-                                tmrMesswerteTimer = new System.Timers.Timer();
-                                iTickInterval = Convert.ToInt32(tempForm.numeric_Intervall.Value);
-                                tmrMesswerteTimer.Interval = iTickInterval * 1000;  //s zu ms
-                                tmrMesswerteTimer.Elapsed += new ElapsedEventHandler(Execute);
-                                ende = Convert.ToInt32(tempForm.numeric_Messdauer.Value);
-                                ende = ende * 60; /// iTickInterval;
-                                iTickAktuell = 0;
-                                tmrMesswerteTimer.Start();
-                            }
+                            tmrMesswerteTimer = new System.Timers.Timer();
+                            iTickInterval = Convert.ToInt32(tempForm.numeric_Intervall.Value);
+                            tmrMesswerteTimer.Interval = iTickInterval * 1000;  //s zu ms
+                            tmrMesswerteTimer.Elapsed += new ElapsedEventHandler(Execute);
+                            ende = Convert.ToInt32(tempForm.numeric_Messdauer.Value);
+                            ende = ende * 60; /// iTickInterval;
+                            iTickAktuell = 0;
+                            tmrMesswerteTimer.Start();
                         }
 
                         break;
@@ -124,12 +112,12 @@ namespace PharMS_Steuerung.Funktionen
                             bereit = true;
                         }
 
-                        if (Sequenzen_uebertragen_aktiv == true && sExpectedStatus =="Z")
+                        if (Sequenzen_uebertragen_aktiv == true && sExpectedStatus == "Z")
                         {
                             System.Threading.Thread.Sleep(500);
                             bereit = true;
                         } // bei sequenzübertragung wird ohne stautsabfrage fortegesetzt
-                       
+
                         break;
 
                     case "s":
@@ -205,31 +193,23 @@ namespace PharMS_Steuerung.Funktionen
         }
 
         private void Execute(Object myObject, EventArgs myEventArgs)
-        {tmrMesswerteTimer.Stop();
-            if (iTickAktuell <= ende && ende !=0 )
+        {
+            tmrMesswerteTimer.Stop();
+            if (iTickAktuell <= ende && ende != 0)
             {
-                //  Console.WriteLine("teste" + iTickInterval + ":" + ende);
                 // Restarts the timer and increments the counter.
+                bZyklusActive = true;
                 port.WriteLine("M");
                 sExpectedStatus = "M";
                 iTickAktuell = iTickAktuell + iTickInterval;
                 tmrMesswerteTimer.Enabled = true;
             }
             else
-            {//  Funktionen.Datenerfassen test = new Funktionen.Datenerfassen("---------,---------", tempForm);
-                //Live chart cler und in Datenfeld aufnehmen
-                // tempForm.DatenerfassungTab.Refresh();
-                // tempForm.DatenerfassungTab.PerformLayout(); Threadübergreifender zugriff : fehler
-                LiveChart ChartAusgabe = new LiveChart();
-            //    ChartAusgabe.erfassen("0", "0", tempForm, true, true);
+            {
                 iTickAktuell = iTickAktuell + iTickInterval;
-                
-                //                tmrMesswerteTimer.Enabled = false;
-                //                tmrMesswerteTimer.Dispose();
                 tmrMesswerteTimer.Close();
-                //   port.WriteLine("s");  // Stausabfrage bei Messung unnötig
-                //   sExpectedStatus = "s";
-                
+                bZyklusActive = false;
+                AbfrageStatus();
             }
 
         }
@@ -247,7 +227,8 @@ namespace PharMS_Steuerung.Funktionen
                 return false;
 
             }
-            if (Caption != ""){
+            if (Caption != "")
+            {
                 if (bereit == true || bForce == true)
                 {
                     tempForm.stlLog.Add("Gesendet : " + Caption + "    " + System.DateTime.Now.ToString());

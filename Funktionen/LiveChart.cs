@@ -25,7 +25,7 @@ namespace PharMS_Steuerung.Funktionen
         public void erfassen ( string Sensor1, string Sensor2, Form1 aktFenster ,bool clear,bool live)
         {    
             
-             x = x + 1;
+          /*   x = x + 1;
              decimal intSen1 = 0;
              decimal intSen2 = 0;
              string Ganzzahl="";
@@ -139,12 +139,12 @@ namespace PharMS_Steuerung.Funktionen
                 }
                
           
-            }
+            }*/
         
         }
         public void ausgabeSpeicher(string ListeNummer, Form1 aktFenster)
         {
-            int iListe = Convert.ToInt32(ListeNummer);
+            /*int iListe = Convert.ToInt32(ListeNummer);
             if (iListe >= 0)
             {
                 // RealGraph.Tables.Add(aktFenster.LiveGrid());
@@ -191,7 +191,7 @@ namespace PharMS_Steuerung.Funktionen
                  }
             }
                 
-
+            */
             
         }
         private Array listezuArray(List<decimal> sensor1, List<decimal> sensor2)
