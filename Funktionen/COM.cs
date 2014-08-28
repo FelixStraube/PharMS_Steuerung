@@ -112,7 +112,7 @@ namespace PharMS_Steuerung.Funktionen
                             bereit = true;
                         }
 
-                        if (/*Sequenzen_uebertragen_aktiv == true && */sExpectedStatus == "Z")
+                        if (Sequenzen_uebertragen_aktiv == true && sExpectedStatus == "Z")
                         {
                             System.Threading.Thread.Sleep(500);
                             bereit = true;
@@ -272,12 +272,7 @@ namespace PharMS_Steuerung.Funktionen
         {
             if (!port.IsOpen) return;
             Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : s", tempForm);
-           
             port.WriteLine("x");
-            sExpectedStatus = ("Z");
-            port.WriteLine("p1,0");
-            sExpectedStatus = ("Z");
-            port.WriteLine("d0");
             sExpectedStatus = ("Z");
         }
 

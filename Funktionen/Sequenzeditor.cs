@@ -127,7 +127,7 @@ namespace PharMS_Steuerung.Funktionen
                 MainForm.SequenzeditorGrid.Columns["Erklärung"].DisplayIndex = 3;
 
                 MainForm.SequenzeditorGrid.Columns["Erklärung"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-
+               
             }
 
         }
@@ -153,21 +153,21 @@ namespace PharMS_Steuerung.Funktionen
 
         public void FillGridMaster()
         {
+        
+            DataGridViewComboBoxColumn ComboBoxColumn2 = new DataGridViewComboBoxColumn();
+            ComboBoxColumn2.Name = "Sequenz";
+            ComboBoxColumn2.HeaderText = "Sequenz";
+            ComboBoxColumn2.DataPropertyName = "S_ID";
+            ComboBoxColumn2.ValueType = typeof(int);
+            ComboBoxColumn2.DisplayMember = "Name";
+            ComboBoxColumn2.ValueMember = "ID";
+            ComboBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ComboBoxColumn2.DataSource = MainForm.DBMain.dsPharms.Tables["Sequenzen"]; 
+            //(ComboBoxColumn2.DataSource as DataTable).Select("Speicherplatz <> NUll OR Speicherplatz <> ' '");
 
-            DataGridViewComboBoxColumn ComboBoxColumn2 = null;
-            if (ComboBoxColumn2 == null)
-            {
-                ComboBoxColumn2 = new DataGridViewComboBoxColumn();
-                ComboBoxColumn2.Name = "Sequenz";
-                ComboBoxColumn2.HeaderText = "Sequenz";
-                ComboBoxColumn2.DataPropertyName = "S_ID";
-                ComboBoxColumn2.ValueType = typeof(int);
-                ComboBoxColumn2.DisplayMember = "Name";
-                ComboBoxColumn2.ValueMember = "ID";
-                ComboBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                ComboBoxColumn2.DataSource = MainForm.DBMain.dsPharms.Tables["Sequenzen"];
-                MainForm.MasterGrid.Columns.Add(ComboBoxColumn2);
-            }
+           
+
+            MainForm.MasterGrid.Columns.Add(ComboBoxColumn2);
 
             MainForm.MasterGrid.AutoGenerateColumns = true;
             MainForm.MasterGrid.DataSource = MainForm.DBMain.dsPharms.Tables["Masterablauf"];
@@ -180,37 +180,13 @@ namespace PharMS_Steuerung.Funktionen
 
         public void FillGridMeasurements()
         {
-            if (MainForm.MesszyklusGrid.CurrentCell != null)
-            {
-                int SelectedRow = MainForm.MesszyklusGrid.CurrentCell.RowIndex;
-                string MZ_ID = MainForm.MesszyklusGrid.Rows[SelectedRow].Cells["ID"].Value.ToString();
-
-
-                DataView dvMesswerte = new DataView(MainForm.DBMain.dsPharms.Tables["Messwerte"]);
-
-                MainForm.DatenerfassungTab.DataSource = dvMesswerte;
-                dvMesswerte.RowFilter = "MZ_ID = " + MZ_ID;
-                dvMesswerte.Sort = "Datum";
-                MainForm.DatenerfassungTab.Columns["ID"].Visible = false;
-                MainForm.DatenerfassungTab.Columns["MZ_ID"].Visible = false;
-                MainForm.DatenerfassungTab.Columns["Datum"].HeaderText = "Datum";
-                MainForm.DatenerfassungTab.Columns["MW1"].HeaderText = "Sensor 1[nA]";
-                MainForm.DatenerfassungTab.Columns["MW2"].HeaderText = "Sensor 2[nA]";
-                MainForm.DatenerfassungTab.Columns["MW2"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            }
-        }
-
-        public void FillGridMesszyklus()
-        {
-            DataView dvMesszyklus = new DataView(MainForm.DBMain.dsPharms.Tables["Messzyklus"]);
-            MainForm.MesszyklusGrid.DataSource = dvMesszyklus;
-            dvMesszyklus.Sort = "Datum";
-            MainForm.MesszyklusGrid.Columns["ID"].Visible = false;
-            MainForm.MesszyklusGrid.Columns["Name"].HeaderText = "Messzyklus";
-            MainForm.MesszyklusGrid.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            MainForm.MesszyklusGrid.Columns["Datum"].HeaderText = "Datum";
-
-
+            MainForm.DatenerfassungTab.DataSource = MainForm.DBMain.dsPharms.Tables["Messwerte"];
+            MainForm.DatenerfassungTab.Columns["ID"].Visible = false;
+            MainForm.DatenerfassungTab.Columns["MZ_ID"].Visible = false;
+            MainForm.DatenerfassungTab.Columns["Datum"].HeaderText = "Datum";
+            MainForm.DatenerfassungTab.Columns["MW1"].HeaderText = "Sensor 1[nA]";
+            MainForm.DatenerfassungTab.Columns["MW2"].HeaderText = "Sensor 2[nA]";
+            MainForm.DatenerfassungTab.Columns["MW2"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
         }
     }

@@ -284,7 +284,7 @@ namespace PharMS_Steuerung
         void mnItemEditieren_Click(object sender, EventArgs e)
         {
             tabControl1.SelectedTab = tabSequenzedit;
-            AblaufListe.SelectedValue = AblaufListeVorAuswahl;
+           AblaufListe.SelectedValue = AblaufListeVorAuswahl;
         }
 
         private void neuToolStripMenuItem_Click(object sender, EventArgs e)
@@ -303,7 +303,6 @@ namespace PharMS_Steuerung
                 oSequenzeditor.FillGridMaster();
 
                 oSequenzeditor.FillGridMeasurements();
-                oSequenzeditor.FillGridMesszyklus();
 
                 AblaufListe.DisplayMember = "Name";
                 AblaufListe.ValueMember = "ID";
@@ -343,8 +342,6 @@ namespace PharMS_Steuerung
 
                 oSequenzeditor.FillGridMeasurements();
 
-                oSequenzeditor.FillGridMesszyklus();
-
                 tabControl1.Visible = true;
 
                 AblaufListe.DisplayMember = "Name";
@@ -358,7 +355,7 @@ namespace PharMS_Steuerung
         }
 
         private void beendenToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        {        
             Close();
         }
 
@@ -437,7 +434,7 @@ namespace PharMS_Steuerung
             }
         }
 
-
+       
 
 
         private void btnElektrodenTest_Click(object sender, EventArgs e)
@@ -581,7 +578,7 @@ namespace PharMS_Steuerung
         private void MasterGrid_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
         {
             e.Row.Cells["Reihenfolge"].Value = MasterGrid.RowCount;
-
+            e.Row.Cells["Sequenz"].Value = 1;
         }
 
         private void MasterGrid_CellValidated(object sender, DataGridViewCellEventArgs e)
@@ -621,22 +618,11 @@ namespace PharMS_Steuerung
         {
             if (e.Exception != null)
             {
-                if (e.Exception.Message == "Spalte 'S_ID' läßt nicht 'nulls' zu.")
-                {
-                    MasterGrid.Rows[e.RowIndex].Cells[1].Value = null;                    
-                }
-                else
-                {
-                    MessageBox.Show("Masterablauf inkonsistent, der Masterablauf wird verworfen!");
-                    oSequenzeditor.FillGridMaster();
-                }
+                MessageBox.Show("Masterablauf inkonsistent, der Masterablauf wird verworfen!");
+
+                oSequenzeditor.FillGridMaster();
             }
 
-        }
-
-        private void MesszyklusGrid_SelectionChanged(object sender, EventArgs e)
-        {
-            oSequenzeditor.FillGridMeasurements();
         }
 
 
