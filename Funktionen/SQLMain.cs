@@ -47,7 +47,7 @@ namespace PharMS_Steuerung.Funktionen
             dtSequenzenBefehle = new DataTable();
             dtSequenzenBefehle.TableName = "SequenzEdit";
             dtMesszyklus = new DataTable();
-            dtMesszyklus.TableName = "Messzyklus";           
+            dtMesszyklus.TableName = "Messzyklus";
 
             daMasterablauf = new SQLiteDataAdapter();
             daMesswerte = new SQLiteDataAdapter();
@@ -97,7 +97,7 @@ namespace PharMS_Steuerung.Funktionen
             daMesszyklus.SelectCommand = cmdMesszyklus;
             daMesszyklus.Fill(dtMesszyklus);
             dtMesszyklus.Columns["ID"].AutoIncrementSeed = 1;
-            
+
             dsPharms.Tables.Add(dtSequenzen);
             dsPharms.Tables.Add(dtMesswerte);
             dsPharms.Tables.Add(dtMasterablauf);
@@ -159,7 +159,7 @@ namespace PharMS_Steuerung.Funktionen
             List<String> Speicherplatz = new List<String>();
             DataTableReader dtr;
             dtr = dsPharms.Tables["Masterablauf"].CreateDataReader();
-            
+
             while (dtr.Read())
             {
                 if (dtr["Speicherplatz"].ToString() != " ")
@@ -265,7 +265,7 @@ namespace PharMS_Steuerung.Funktionen
                             Parameter = b.Field<string>("Parameter"),
                             Speicherplatz = a.Field<string>("Speicherplatz")
                         };
-           
+
             int i = 0;
             foreach (var q in query)
             {
@@ -277,6 +277,32 @@ namespace PharMS_Steuerung.Funktionen
                 i++;
             }
             return sSequenz;
+        }
+
+        public void DeleteSequenzEditByID(int ID)
+        {
+            DataRow[] foundRows;
+
+            foundRows = dsPharms.Tables["SequenzEdit"].Select("S_ID = " + ID.ToString());
+
+            foreach (DataRow Row in foundRows)
+            {
+                Row.Delete();
+            }
+
+        }
+
+        public void DeleteMeasurementByID(int ID)
+        {
+            DataRow[] foundRows;
+
+            foundRows = dsPharms.Tables["Messwerte"].Select("MZ_ID = " + ID.ToString());
+
+            foreach (DataRow Row in foundRows)
+            {
+                Row.Delete();
+            }
+
         }
 
         public string GetSequenzMemoryByID(int ID)
@@ -312,12 +338,12 @@ namespace PharMS_Steuerung.Funktionen
         public string CreateZyklus()
         {
             DataRow row;
-            row = dsPharms.Tables["Messzyklus"].NewRow();            
+            row = dsPharms.Tables["Messzyklus"].NewRow();
             row["Name"] = "Zyklus " + (dsPharms.Tables["Messzyklus"].Rows.Count + 1).ToString();
             row["Datum"] = DateTime.Now;
             dsPharms.Tables["Messzyklus"].Rows.Add(row);
 
-            return dsPharms.Tables["Messzyklus"].Rows[dsPharms.Tables["Messzyklus"].Rows.Count-1].ItemArray[0].ToString();
+            return dsPharms.Tables["Messzyklus"].Rows[dsPharms.Tables["Messzyklus"].Rows.Count - 1].ItemArray[0].ToString();
         }
 
         public void Save()
@@ -334,7 +360,7 @@ namespace PharMS_Steuerung.Funktionen
         {
             daMesszyklus.Update(dsPharms, "Messzyklus");
             daMesswerte.Update(dsPharms, "Messwerte");
-   
+
             // dtSequenzen.AcceptChanges();
         }
     }

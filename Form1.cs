@@ -103,7 +103,7 @@ namespace PharMS_Steuerung
 
         private void NOTSTOPP_Click(object sender, EventArgs e)
         {
-            change_progressBar(-1, 0, progressBar1);
+           // change_progressBar(-1, 0, progressBar1);
             Abbruch = true;
             Comschnitstelle.NotStop();
         }
@@ -168,7 +168,14 @@ namespace PharMS_Steuerung
         {
 
             if (!Comschnitstelle.bereit) MessageBox.Show("Manuelle Messung im laufenden Gerätebetrieb nicht möglich!");
-            else Comschnitstelle.SendToCOM("M", true);
+            else
+            {
+                Comschnitstelle.SendToCOM("p1.1", true);
+                System.Threading.Thread.Sleep(2000);
+                Comschnitstelle.SendToCOM("U" + numericZellspannung.Value, true);
+                System.Threading.Thread.Sleep(2000);
+                Comschnitstelle.SendToCOM("M", true);
+            }
             /*rbManuelleMessung.Checked = true;
             Comschnitstelle.SendToCOM("p1,1", true);
             System.Threading.Thread.Sleep(500);
@@ -213,9 +220,14 @@ namespace PharMS_Steuerung
 
         private void Messung_Stopp_Click(object sender, EventArgs e)
         {
+            Comschnitstelle.SendToCOM("p1,0", true);
+            System.Threading.Thread.Sleep(500);
+            Comschnitstelle.SendToCOM("U000", true);
             if (Comschnitstelle.tmrMesswerteTimer != null)
             {
                 Comschnitstelle.tmrMesswerteTimer.Stop();
+                Comschnitstelle.tmrMesswerteTimer.Dispose();
+                Comschnitstelle.bZyklusActive = false;
             }
             /* Comschnitstelle.SendToCOM("U0", true);
              System.Threading.Thread.Sleep(500);
@@ -405,9 +417,6 @@ namespace PharMS_Steuerung
 
         private void btnTemperierungEin(object sender, EventArgs e)
         {
-
-
-
             string Temp = txtboxTemperatur.Text.ToString();
             if (Temp.IndexOf(",") != null)
             {
@@ -437,9 +446,6 @@ namespace PharMS_Steuerung
             }
         }
 
-
-
-
         private void btnElektrodenTest_Click(object sender, EventArgs e)
         {
             if (Comschnitstelle.bereit)
@@ -447,14 +453,12 @@ namespace PharMS_Steuerung
                 Comschnitstelle.SendToCOM(Sequenz.ElektrodenTest(), true);
                 Console.WriteLine("Incoming Data gesendet:" + Sequenz.ElektrodenTest());
                 stlLog.Add("Incoming Data gesendet:" + Sequenz.ElektrodenTest() + "    " + System.DateTime.Now.ToString());
-                MessageBox.Show("Zuleitung 7 zu Ventil 2 in Testlösung führen !");
-                MessageBox.Show("Messdauer 1 min mit 5s taktung !");
-                numeric_Intervall.Value = 5;
-                numeric_Messdauer.Value = 1;
+                MessageBox.Show("Zuleitung 7 zu Ventil 2 in Testlösung führen !");//TODO evt abbrechen
+                System.Threading.Thread.Sleep(5000);
                 Comschnitstelle.SendToCOM("X20", true);
                 Console.WriteLine("X20");
                 stlLog.Add("X20");
-                tabControl1.SelectedTab = tabPage2;
+                //tabControl1.SelectedTab = tabPage2;
             }
             else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
         }
@@ -637,6 +641,16 @@ namespace PharMS_Steuerung
         private void MesszyklusGrid_SelectionChanged(object sender, EventArgs e)
         {
             oSequenzeditor.FillGridMeasurements();
+        }
+
+        private void SequenzenGrid_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            DBMain.DeleteSequenzEditByID(Convert.ToInt32(e.Row.Cells["ID"].Value));
+        }
+
+        private void MesszyklusGrid_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            DBMain.DeleteMeasurementByID(Convert.ToInt32(e.Row.Cells["ID"].Value));
         }
 
 

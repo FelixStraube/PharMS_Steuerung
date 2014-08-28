@@ -41,6 +41,7 @@
             this.openDatabaseDialog = new System.Windows.Forms.OpenFileDialog();
             this.NewDBDialog = new System.Windows.Forms.SaveFileDialog();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.MesszyklusGrid = new System.Windows.Forms.DataGridView();
             this.btnChart = new System.Windows.Forms.Button();
             this.btnNeueMessung = new System.Windows.Forms.Button();
             this.Messung_Stopp = new System.Windows.Forms.Button();
@@ -104,10 +105,10 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MesszyklusGrid = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MesszyklusGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DatenerfassungTab)).BeginInit();
             this.tabMasterablauf.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -130,7 +131,6 @@
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MesszyklusGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // fileSystemWatcher1
@@ -223,6 +223,16 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Messdaten";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // MesszyklusGrid
+            // 
+            this.MesszyklusGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.MesszyklusGrid.Location = new System.Drawing.Point(9, 353);
+            this.MesszyklusGrid.Name = "MesszyklusGrid";
+            this.MesszyklusGrid.Size = new System.Drawing.Size(432, 217);
+            this.MesszyklusGrid.TabIndex = 34;
+            this.MesszyklusGrid.SelectionChanged += new System.EventHandler(this.MesszyklusGrid_SelectionChanged);
+            this.MesszyklusGrid.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.MesszyklusGrid_UserDeletingRow);
             // 
             // btnChart
             // 
@@ -429,6 +439,7 @@
             this.SequenzenGrid.Name = "SequenzenGrid";
             this.SequenzenGrid.Size = new System.Drawing.Size(433, 500);
             this.SequenzenGrid.TabIndex = 0;
+            this.SequenzenGrid.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.SequenzenGrid_UserDeletingRow);
             this.SequenzenGrid.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SequenzenGrid_MouseClick);
             // 
             // tabGKommunikation
@@ -653,7 +664,7 @@
             this.numeric_Messdauer.Size = new System.Drawing.Size(120, 20);
             this.numeric_Messdauer.TabIndex = 22;
             this.numeric_Messdauer.Value = new decimal(new int[] {
-            5,
+            1,
             0,
             0,
             0});
@@ -684,7 +695,7 @@
             this.numeric_Intervall.Size = new System.Drawing.Size(120, 20);
             this.numeric_Intervall.TabIndex = 20;
             this.numeric_Intervall.Value = new decimal(new int[] {
-            1,
+            2,
             0,
             0,
             0});
@@ -933,15 +944,6 @@
             this.Column1.HeaderText = "Nr.:";
             this.Column1.Name = "Column1";
             // 
-            // MesszyklusGrid
-            // 
-            this.MesszyklusGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.MesszyklusGrid.Location = new System.Drawing.Point(9, 353);
-            this.MesszyklusGrid.Name = "MesszyklusGrid";
-            this.MesszyklusGrid.Size = new System.Drawing.Size(432, 217);
-            this.MesszyklusGrid.TabIndex = 34;
-            this.MesszyklusGrid.SelectionChanged += new System.EventHandler(this.MesszyklusGrid_SelectionChanged);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -958,6 +960,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.MesszyklusGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DatenerfassungTab)).EndInit();
             this.tabMasterablauf.ResumeLayout(false);
             this.tabMasterablauf.PerformLayout();
@@ -987,7 +990,6 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.MesszyklusGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

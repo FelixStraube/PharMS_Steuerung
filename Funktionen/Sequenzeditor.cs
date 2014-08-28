@@ -51,7 +51,7 @@ namespace PharMS_Steuerung.Funktionen
             dictSequenzBefehle.Add("DA", "Absolutposition (0…500)");
             dictSequenzBefehle.Add("on", "Thermostat ein/aus");
             dictSequenzBefehle.Add("dw", "Begasungsdosierer"); // TODO  Parameter fallen aus den Konzept, seperate Lösung notwendig
-            dictSequenzBefehle.Add("DI", "Was ist das??");
+            dictSequenzBefehle.Add("DI", "");
 
             /* dwOS2A48000IS20A0\n  Z\n    - Kommandostring für Begasungsdosierer
                dw -  Kommando zur Stringeingabe

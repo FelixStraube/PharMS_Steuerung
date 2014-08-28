@@ -275,10 +275,17 @@ namespace PharMS_Steuerung.Funktionen
            
             port.WriteLine("x");
             sExpectedStatus = ("Z");
-            port.WriteLine("p1,0");
+            Thread.Sleep(1000);
+            port.WriteLine("p1.0");
+            Thread.Sleep(1000);
             sExpectedStatus = ("Z");
             port.WriteLine("d0");
+            Thread.Sleep(1000);
             sExpectedStatus = ("Z");
+            port.WriteLine("U000");
+            Thread.Sleep(1000);
+            sExpectedStatus = ("Z");
+            bereit = true;
         }
 
 
