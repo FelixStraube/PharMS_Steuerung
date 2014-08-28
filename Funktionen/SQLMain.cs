@@ -159,7 +159,7 @@ namespace PharMS_Steuerung.Funktionen
             List<String> Speicherplatz = new List<String>();
             DataTableReader dtr;
             dtr = dsPharms.Tables["Masterablauf"].CreateDataReader();
-
+            
             while (dtr.Read())
             {
                 if (dtr["Speicherplatz"].ToString() != " ")
@@ -241,7 +241,7 @@ namespace PharMS_Steuerung.Funktionen
 
             while (dtr.Read())
             {
-                if (dtr["Speicherplatz"].ToString() != " ")
+                if (dtr["Speicherplatz"].ToString() != " " && dtr["Speicherplatz"].ToString() != "")
                     IDs.Add(Convert.ToInt32(dtr["ID"]));
             }
             dtr.Close();
@@ -256,6 +256,7 @@ namespace PharMS_Steuerung.Funktionen
                             on a.Field<Int64>("ID") equals
                                 b.Field<Int64>("S_ID")
                         where b.Field<Int64>("S_ID") == S_ID
+                        orderby b.Field<Int64>("Reihenfolge")
                         select new
                         {
                             S_ID = b.Field<Int64>("S_ID"),
@@ -264,7 +265,7 @@ namespace PharMS_Steuerung.Funktionen
                             Parameter = b.Field<string>("Parameter"),
                             Speicherplatz = a.Field<string>("Speicherplatz")
                         };
-
+           
             int i = 0;
             foreach (var q in query)
             {

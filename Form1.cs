@@ -151,8 +151,8 @@ namespace PharMS_Steuerung
             mnItemSpeichernUnter.Enabled = false;
 
             oSequenzeditor = new Sequenzeditor(this);
-            this.Width = 580;
-            this.Height = 680;
+            //this.Width = 580;
+            //this.Height = 680;
             tabControl1.Visible = false;
 
         }
@@ -460,6 +460,7 @@ namespace PharMS_Steuerung
         {
             if (Comschnitstelle.bereit)
             {
+                COM.Sequenzen_uebertragen_aktiv = true;
                 tabControl1.SelectedTab = tabGKommunikation;
                 Comschnitstelle.SendToCOM(Sequenz.LeitungenSpuelen(true), true);
                 Console.WriteLine("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(true));
@@ -471,6 +472,7 @@ namespace PharMS_Steuerung
                 stlLog.Add("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(false) + "    " + System.DateTime.Now.ToString());
                 System.Threading.Thread.Sleep(2000);
 
+                COM.Sequenzen_uebertragen_aktiv = false;
                 BackgroundWorker BackgroundWorkerDesinfect = new BackgroundWorker();
                 stlLog.Add("Start BackgroundWorkerDesinfect" + "    " + System.DateTime.Now.ToString());
                 BackgroundWorkerDesinfect.RunWorkerCompleted += BackgroundWorkerDesinfect_RunWorkerCompleted;

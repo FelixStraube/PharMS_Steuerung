@@ -70,7 +70,7 @@ namespace PharMS_Steuerung.Funktionen
                         if (!bZyklusActive)
                         {
                             sZyklus = tempForm.DBMain.CreateZyklus();
-                            SendToCOM("W" + tempForm.numeric_Messdauer.Value.ToString(), true);
+                            //SendToCOM("W" + tempForm.numeric_Messdauer.Value.ToString(), true); in der From ein Fehler ursache
                         }
 
                         string[] words = Status.Split(',');
@@ -106,7 +106,7 @@ namespace PharMS_Steuerung.Funktionen
                         CountUndefinedStatus = 0;   // Counter null da sonst bei langen Sequenzen kein abfragen status nach 5 min möglich währe
                         // AbfrageStatus();
 
-                        if (sExpectedStatus == sMakroEndeZeichen || Status == sMakroEndeZeichen)
+                        if (sExpectedStatus == sMakroEndeZeichen && Status == sMakroEndeZeichen)
                         {
                             System.Threading.Thread.Sleep(500);
                             bereit = true;
@@ -118,6 +118,8 @@ namespace PharMS_Steuerung.Funktionen
                             bereit = true;
                         } // bei sequenzübertragung wird ohne stautsabfrage fortegesetzt
 
+    
+                     
                         break;
 
                     case "s":
@@ -298,8 +300,7 @@ namespace PharMS_Steuerung.Funktionen
         public void Execute_Ablauf()
         {
             List<string> lstMaster = tempForm.DBMain.GetMasterablauf();
-
-            // change_progressBar(-1, 0, progressBar1);
+          
             for (int z = 0; z < tempForm.Durchläufe; z++)
             {
                 for (int i = 0; i < lstMaster.Count; i++) // warum hast du davor mit 1 angefangen und warum befindet sich die Methode überhaupt in der MainForm?
@@ -315,7 +316,7 @@ namespace PharMS_Steuerung.Funktionen
 
                     } while (Lauf == false);
                 }
-                //change_progressBar(z, Durchläufe, progressBar1);
+
             }
             tempForm.stlLog.Add("Completed threadAblaufStart" + "    " + System.DateTime.Now.ToString());
         }
