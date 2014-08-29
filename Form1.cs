@@ -225,9 +225,9 @@ namespace PharMS_Steuerung
             Comschnitstelle.SendToCOM("U000", true);
             if (Comschnitstelle.tmrMesswerteTimer != null)
             {
-                Comschnitstelle.tmrMesswerteTimer.Stop();
-                Comschnitstelle.tmrMesswerteTimer.Dispose();
+                Comschnitstelle.tmrMesswerteTimer.Stop();                
                 Comschnitstelle.bZyklusActive = false;
+                Comschnitstelle.bStopTimer = true;
             }
             /* Comschnitstelle.SendToCOM("U0", true);
              System.Threading.Thread.Sleep(500);
@@ -651,6 +651,14 @@ namespace PharMS_Steuerung
         private void MesszyklusGrid_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
             DBMain.DeleteMeasurementByID(Convert.ToInt32(e.Row.Cells["ID"].Value));
+        }
+
+        private void DatenerfassungTab_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            if (e.Exception != null)
+            {
+
+            }
         }
 
 

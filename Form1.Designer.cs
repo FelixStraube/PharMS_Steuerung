@@ -253,6 +253,7 @@
             this.btnNeueMessung.TabIndex = 9;
             this.btnNeueMessung.Text = "Neue Messung";
             this.btnNeueMessung.UseVisualStyleBackColor = true;
+            this.btnNeueMessung.Visible = false;
             this.btnNeueMessung.Click += new System.EventHandler(this.btnNeueMessung_Click);
             // 
             // Messung_Stopp
@@ -292,6 +293,7 @@
             this.DatenerfassungTab.Name = "DatenerfassungTab";
             this.DatenerfassungTab.Size = new System.Drawing.Size(432, 318);
             this.DatenerfassungTab.TabIndex = 0;
+            this.DatenerfassungTab.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DatenerfassungTab_DataError);
             // 
             // tabMasterablauf
             // 

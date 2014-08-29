@@ -21,6 +21,7 @@ namespace PharMS_Steuerung.Funktionen
         private string[] empfangene_snr = new string[50];
         private string sExpectedStatus;
         private string sZyklus;
+        public bool bStopTimer = false;
         public bool bZyklusActive = false;
         public SerialPort port;
         public Form1 tempForm = new Form1();
@@ -67,39 +68,42 @@ namespace PharMS_Steuerung.Funktionen
                 {
                     case "M":
 
-                        if (!bZyklusActive)
+                        if (!bStopTimer)
                         {
-                            sZyklus = tempForm.DBMain.CreateZyklus();
-                            //SendToCOM("W" + tempForm.numeric_Messdauer.Value.ToString(), true); in der From ein Fehler ursache
+                            if (!bZyklusActive)
+                            {
+                                sZyklus = tempForm.DBMain.CreateZyklus();
+                                tempForm.DBMain.SaveMeasurements();
+                            }
+
+                            string[] words = Status.Split(',');
+                            string Sensor1a = words[0].Substring(1, words[0].Length - 1);
+                            Sensor1a = Sensor1a.Replace(".", ",");
+                            string Sensor2b = words[1].Substring(0, words[1].Length);
+                            Sensor2b = Sensor2b.Replace(".", ",");
+                            tempForm.DBMain.SetMeasurements(Sensor1a, Sensor2b, sZyklus);
+
+
+
+                            if (tmrMesswerteTimer == null)
+                            {
+                                tmrMesswerteTimer = new System.Timers.Timer();
+                                tmrMesswerteTimer.Enabled = false;
+
+                            }
+                            if (tmrMesswerteTimer.Enabled == false)
+                            {
+                                tmrMesswerteTimer = new System.Timers.Timer();
+                                iTickInterval = Convert.ToInt32(tempForm.numeric_Intervall.Value);
+                                tmrMesswerteTimer.Interval = iTickInterval * 1000;  //s zu ms
+                                tmrMesswerteTimer.Elapsed += new ElapsedEventHandler(Execute);
+                                ende = Convert.ToInt32(tempForm.numeric_Messdauer.Value);
+                                ende = ende * 60; /// iTickInterval;
+                                iTickAktuell = 0;
+                                tmrMesswerteTimer.Start();
+                            }
                         }
-
-                        string[] words = Status.Split(',');
-                        string Sensor1a = words[0].Substring(1, words[0].Length - 1);
-                        Sensor1a = Sensor1a.Replace(".", ",");
-                        string Sensor2b = words[1].Substring(0, words[1].Length);
-                        Sensor2b = Sensor2b.Replace(".", ",");
-                        tempForm.DBMain.SetMeasurements(Sensor1a, Sensor2b, sZyklus);
-
-
-
-                        if (tmrMesswerteTimer == null)
-                        {
-                            tmrMesswerteTimer = new System.Timers.Timer();
-                            tmrMesswerteTimer.Enabled = false;
-
-                        }
-                        if (tmrMesswerteTimer.Enabled == false)
-                        {
-                            tmrMesswerteTimer = new System.Timers.Timer();
-                            iTickInterval = Convert.ToInt32(tempForm.numeric_Intervall.Value);
-                            tmrMesswerteTimer.Interval = iTickInterval * 1000;  //s zu ms
-                            tmrMesswerteTimer.Elapsed += new ElapsedEventHandler(Execute);
-                            ende = Convert.ToInt32(tempForm.numeric_Messdauer.Value);
-                            ende = ende * 60; /// iTickInterval;
-                            iTickAktuell = 0;
-                            tmrMesswerteTimer.Start();
-                        }
-
+                        else bStopTimer = false;
                         break;
 
                     case "Z":
@@ -118,8 +122,8 @@ namespace PharMS_Steuerung.Funktionen
                             bereit = true;
                         } // bei sequenzübertragung wird ohne stautsabfrage fortegesetzt
 
-    
-                     
+
+
                         break;
 
                     case "s":
@@ -272,7 +276,7 @@ namespace PharMS_Steuerung.Funktionen
         {
             if (!port.IsOpen) return;
             Funktionen.Consolen_LOG ausg = new Funktionen.Consolen_LOG("Gesendet : s", tempForm);
-           
+
             port.WriteLine("x");
             sExpectedStatus = ("Z");
             Thread.Sleep(1000);
@@ -312,7 +316,7 @@ namespace PharMS_Steuerung.Funktionen
         public void Execute_Ablauf()
         {
             List<string> lstMaster = tempForm.DBMain.GetMasterablauf();
-          
+
             for (int z = 0; z < tempForm.Durchläufe; z++)
             {
                 for (int i = 0; i < lstMaster.Count; i++) // warum hast du davor mit 1 angefangen und warum befindet sich die Methode überhaupt in der MainForm?
