@@ -571,7 +571,9 @@ namespace PharMS_Steuerung
 
         private void btnChart_Click(object sender, EventArgs e)
         {
-            ChartForm _Chart = new ChartForm(this);
+            int SelectedRow = MesszyklusGrid.CurrentCell.RowIndex;
+          
+            ChartForm _Chart = new ChartForm(this, SelectedRow);
             _Chart.Show();
         }
 

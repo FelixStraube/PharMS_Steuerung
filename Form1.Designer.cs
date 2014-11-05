@@ -242,7 +242,6 @@
             this.btnChart.TabIndex = 11;
             this.btnChart.Text = "Chart";
             this.btnChart.UseVisualStyleBackColor = true;
-            this.btnChart.Visible = false;
             this.btnChart.Click += new System.EventHandler(this.btnChart_Click);
             // 
             // btnNeueMessung
