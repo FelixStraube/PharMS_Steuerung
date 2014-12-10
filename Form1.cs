@@ -407,12 +407,7 @@ namespace PharMS_Steuerung
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            var result = MessageBox.Show("Möchten Sie Ihre Änderungen speichern?", "Speichern", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-                DBMain.Save();
-
-            File.WriteAllLines("LogCOM.txt", stlLog);
+           
         }
 
         private void btnTemperierungEin(object sender, EventArgs e)
@@ -661,6 +656,18 @@ namespace PharMS_Steuerung
             {
 
             }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+             var result = MessageBox.Show("Möchten Sie Ihre Änderungen speichern?", "Speichern", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            { DBMain.Save(); }
+            if (result == DialogResult.Cancel)
+            { e.Cancel = true; }
+
+            File.WriteAllLines("LogCOM.txt", stlLog);
         }
 
 

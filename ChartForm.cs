@@ -12,11 +12,11 @@ namespace PharMS_Steuerung
 {
     public partial class ChartForm : Form
     {
+         
         public DataSet TEMP; 
         public Form1 _Form1;
         public ChartForm(Form1 MainForm,int MZ_ID)
         {
-
             InitializeComponent();
             _Form1 = MainForm;
             trackBar1.Maximum = MainForm.MesszyklusGrid.RowCount-1;
@@ -47,17 +47,17 @@ namespace PharMS_Steuerung
             TEMP.Tables["Messwerte"].Columns.Add(Time);
 
 
-
+            DataColumn NormTime = new DataColumn("NormTime");
+            NormTime.DataType = System.Type.GetType("System.Double");
+            TEMP.Tables["Messwerte"].Columns.Add(NormTime);
 
 
             Werte_Graph(MainForm.DBMain.dsPharms.Tables["Messwerte"], Temp_MZ_ID);
-           
-            
-            
+             
             chart_Ausgabe.DataSource = TEMP.Tables["Messwerte"];
             
-            chart_Ausgabe.Width = 600;
-            chart_Ausgabe.Height = 350;
+            // chart_Ausgabe.Width = 600;
+            // chart_Ausgabe.Height = 350;
     
             //create serie...
             Series serie1 = new Series();
@@ -71,7 +71,7 @@ namespace PharMS_Steuerung
             serie1.ShadowColor = Color.FromArgb(128, 128, 128);
             serie1.ShadowOffset = 1;
             serie1.IsValueShownAsLabel = true;
-            serie1.XValueMember = "Time";
+            serie1.XValueMember = "NormTime";
             serie1.YValueMembers = "MW1";
             serie1.Font = new Font("Tahoma", 8.0f);
             serie1.BackSecondaryColor = Color.FromArgb(0, 102, 153);
@@ -89,41 +89,24 @@ namespace PharMS_Steuerung
             serie2.ShadowColor = Color.FromArgb(128, 128, 128);
             serie2.ShadowOffset = 1;
             serie2.IsValueShownAsLabel = true;
-            serie2.XValueMember = "Time";
+            serie2.XValueMember = "NormTime";
             serie2.YValueMembers = "MW2";
             serie2.Font = new Font("Tahoma", 8.0f);
             serie2.BackSecondaryColor = Color.FromArgb(0, 102, 153);
             serie2.LabelForeColor = Color.FromArgb(100, 100, 100);
             chart_Ausgabe.Series.Add(serie2);
-
-            
-
-           
-            
-            
-            
-            //create chartareas...
-            //ChartArea ca = new ChartArea();
-            //ca.Name = "ChartArea2";
-            //ca.BackColor = Color.White;
-            //ca.BorderColor = Color.FromArgb(26, 59, 105);
-            //ca.BorderWidth = 0;
-            //ca.BorderDashStyle = ChartDashStyle.Solid;
-            //ca.AxisX = new Axis();
-            //ca.AxisY = new Axis();
-            //ca.AxisX.LabelStyle.Format = "ss";
-            //chart_Ausgabe.ChartAreas.Add(ca);
-           
+        
             //  databind...
-            chart_Ausgabe.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "hh:mm";
+          //  chart_Ausgabe.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "hh:mm";
             ChartArea ca = chart_Ausgabe.ChartAreas["ChartArea1"];
             ca.AxisY.Maximum = Convert.ToDouble(numericUpDown_ymax.Value);
             ca.AxisY.Minimum = Convert.ToDouble(numericUpDown_ymin.Value);
             ca.AxisX.Title = "[Zeit]";
             ca.AxisY.Title = "[nA]";
-            ca.AxisX.IntervalType = DateTimeIntervalType.Minutes;
+            
+           // ca.AxisX.IntervalType = DateTimeIntervalType.Minutes;
 
-
+           // ca.AxisX.IntervalType = ;
             
             
             ca.CursorX.IsUserEnabled = true;
@@ -131,17 +114,13 @@ namespace PharMS_Steuerung
             
             ca.AxisX.ScaleView.Zoomable = true;
        //     ca.AxisX.Maximum =DateTime.Now.Second ;
-           
-            
-            
+                               
             chart_Ausgabe.DataBind();
-
-            
-            
 
         }
         void Werte_Graph(DataTable Tabelle, string ID)
         {
+            double NormierteZeit = 0;
 
             TEMP.Tables["Messwerte"].Clear();
             chart_Ausgabe.Titles.Clear();
@@ -163,46 +142,73 @@ namespace PharMS_Steuerung
                     //}
                 }
 
-
+              
                 int VorZyklus = 0;
                 int AktuZyklus = 0;
+                int Schleifenzähler = 0 ;
+                
+                double intervall= 0 ;
+                DateTime row_Time = DateTime.Today;
+                DateTime row_Vor_Time = DateTime.Today;
                 foreach (DataRow TEMP_Row in Tabelle.Rows)
                 {
+                    DataRow row;                
+                    
+            
+                    
                     if (TEMP_Row.RowState != DataRowState.Deleted)
-                    {
+                {               
+                        
+                        
                         AktuZyklus = Convert.ToInt16(TEMP_Row["MZ_ID"]);
-                        DateTime Test = DateTime.Today;
+                       
                         if (Convert.ToDouble(TEMP_Row["MZ_ID"]) == Convert.ToDouble(ID) + i)
                         {
-                            DataRow row;
+                            
                             row = TEMP.Tables["Messwerte"].NewRow();
+                           
                             row["MW1"] = Convert.ToDouble(TEMP_Row["MW1"]);
-                           // Console.WriteLine(row["MW1"]);
+                       //MIN Max Ausgabe
+                       //   Convert.ToDouble(lb_Min);
+                       //   if (Convert.ToDouble(lb_Min) > Convert.ToDouble(TEMP_Row["MW1"])) { lb_Min.Text = Convert.ToString(TEMP_Row["MW1"]); }
+                       //   if (Convert.ToDouble(lb_Max) < Convert.ToDouble(TEMP_Row["MW1"])) { lb_Max.Text = Convert.ToString(TEMP_Row["MW1"]); }
                             row["MW2"] = Convert.ToDouble(TEMP_Row["MW2"]);
-                           // Console.WriteLine(row["MW2"]);
+                       
                             row["MZ_ID"] = (TEMP_Row["MZ_ID"]);
-
-                            Test = Convert.ToDateTime(TEMP_Row["Datum"]);
-
+                                                  
                             row["Time"] = Convert.ToDateTime(TEMP_Row["Datum"]);
-                            //  Console.WriteLine(row["Time"]);
-                            TEMP.Tables["Messwerte"].Rows.Add(row);
+                            row_Time = Convert.ToDateTime(row["Time"]);                            
+                            
+                            
+                            // Messintervall bestimmen 
+                             if (Schleifenzähler == 1){
+                                 row_Time = Convert.ToDateTime(row["Time"]);
+                                 TimeSpan ts = row_Time - row_Vor_Time;
+                                 intervall = ts.Seconds;
+                                 }
+                             if (Schleifenzähler == 0)
+                             {
+                                 row_Vor_Time = Convert.ToDateTime(row["Time"]); 
+                             }
+                            //
+                             NormierteZeit = NormierteZeit + intervall;
+                             row["NormTime"] = NormierteZeit;
+                            
+                             TEMP.Tables["Messwerte"].Rows.Add(row); 
+                             Schleifenzähler = Schleifenzähler + 1;
                         }
 
                         // Messung Trennstriche
                         if (VorZyklus != AktuZyklus)
                         {
                             StripLine stripline = new StripLine();
-                            //    stripline.IntervalType = DateTimeIntervalType.Minutes;
-                            stripline.IntervalOffset = Test.ToOADate();
+                            //stripline.IntervalType = DateTimeIntervalType.Minutes;
+                            //stripline.IntervalOffset = row_Time.ToOADate();
+                            stripline.IntervalOffset = NormierteZeit;
                             stripline.Interval = 0;
-                            //    stripline.Interval = Convert.ToDouble( _Form1.numeric_Messdauer.Value);
+                          
                             stripline.StripWidth = 0.0;
-                            if (Convert.ToInt16(ID) < AktuZyklus)
-                            {
-                                //stripline.Text = "Messung";
-                                //stripline.Text = "Messung : " + " - " + (_Form1.MesszyklusGrid.Rows[Convert.ToInt16(ID)-1 ].Cells["Name"].Value.ToString()) +"     " ;
-                            }
+                           
                             stripline.Font = new Font(stripline.Font.FontFamily, 12F);
                             stripline.BorderColor = Color.Red;
 
@@ -210,42 +216,22 @@ namespace PharMS_Steuerung
 
                         }
                         //Temp Speicher
-
+                        
                         VorZyklus = AktuZyklus;
                         //VorZyklus = Convert.ToInt16(TEMP_Row["MZ_ID"]);
                     }
                     }
                 }
 
-                //Trennlinien zeichnen
-                //PointF start = new PointF();
-                //start.X = 1;
-                //start.Y = 1000;
-
-                //Point ende = new Point();
-                //start.X = 1;
-                //start.Y = -1000;
-
-
-                //chart_Ausgabe.CreateGraphics().DrawLine(new Pen(Color.Silver, 5),start,ende);
-
-
-
-
-
+                
                 chart_Ausgabe.Titles.Add(Text);
-
-
-
-
-
             
         }
     
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
-            
+            chart_Ausgabe.ChartAreas["ChartArea1"].AxisX.StripLines.Clear();
             Werte_Graph(_Form1.DBMain.dsPharms.Tables["Messwerte"], trackBar1.Value.ToString());
             chart_Ausgabe.DataBind();
         }
