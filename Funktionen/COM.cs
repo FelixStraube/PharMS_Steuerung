@@ -26,9 +26,11 @@ namespace PharMS_Steuerung.Funktionen
         public SerialPort port;
         public Form1 tempForm = new Form1();
         public bool bereit = true;
+        public bool bIgnoreNewMeasurements=false;
         public static bool Sequenzen_uebertragen_aktiv = false;
         int CountUndefinedStatus = 0;
         public System.Timers.Timer tmrMesswerteTimer;
+        public System.Timers.Timer tmrAfterAllMesswerte;
         /// <summary>
         /// Öffnet COM Port und aktiviert data Recieved
         /// </summary>
@@ -68,7 +70,7 @@ namespace PharMS_Steuerung.Funktionen
                 {
                     case "M":
 
-                        if (!bStopTimer)
+                        if (!bStopTimer && !bIgnoreNewMeasurements)
                         {
                             if (!bZyklusActive)
                             {
@@ -215,9 +217,29 @@ namespace PharMS_Steuerung.Funktionen
                 iTickAktuell = iTickAktuell + iTickInterval;
                 tmrMesswerteTimer.Close();
                 bZyklusActive = false;
+
+                if (!bIgnoreNewMeasurements)
+                {
+                    bIgnoreNewMeasurements = true;
+                    tmrAfterAllMesswerte = new System.Timers.Timer();
+                    tmrAfterAllMesswerte.Enabled = false;
+
+
+                    tmrAfterAllMesswerte.Interval = 100000;  // 10 ms
+                    tmrAfterAllMesswerte.Elapsed += new ElapsedEventHandler(tmrMesswerteTimerOnTick);
+
+                    tmrAfterAllMesswerte.Start(); //startet er direkt mit den ereignis oder erst nach 10 sek?
+                }
+
+
+
                 AbfrageStatus();
             }
 
+        }
+        private void tmrMesswerteTimerOnTick(Object myObject, EventArgs myEventArgs)
+        {
+            bIgnoreNewMeasurements = false;
         }
 
         /// <summary>
@@ -296,6 +318,10 @@ namespace PharMS_Steuerung.Funktionen
 
         public void Execute_Commands(int repeat, params string[] Commands)
         {
+          if( String.Join("", Commands.Select(p => p.ToString()).ToArray()).Length>512)
+          {
+              MessageBox.Show("Die Befehlsfolge ist größere als 512 Zeichen");
+          }
             for (int j = 0; j < repeat; j++)
             {
                 for (int i = 0; i < Commands.Count(); i++)

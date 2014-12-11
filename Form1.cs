@@ -229,12 +229,6 @@ namespace PharMS_Steuerung
                 Comschnitstelle.bZyklusActive = false;
                 Comschnitstelle.bStopTimer = true;
             }
-            /* Comschnitstelle.SendToCOM("U0", true);
-             System.Threading.Thread.Sleep(500);
-             Comschnitstelle.SendToCOM("p1,0", true);
-             ende = 0;
-             SchleifenStopp = true;
-             rbAktiveMessung.Checked = true;*/
         }
 
 
@@ -668,6 +662,15 @@ namespace PharMS_Steuerung
             { e.Cancel = true; }
 
             File.WriteAllLines("LogCOM.txt", stlLog);
+        }
+
+        private void btnLiveChart_Click(object sender, EventArgs e)
+        {
+
+            int SelectedRow = MesszyklusGrid.CurrentCell.RowIndex;
+
+            LiveChartForm _LiveChart = new LiveChartForm(this);
+            _LiveChart.Show();
         }
 
 

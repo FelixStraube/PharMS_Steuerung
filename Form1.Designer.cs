@@ -105,6 +105,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnLiveChart = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -209,6 +210,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnLiveChart);
             this.tabPage2.Controls.Add(this.MesszyklusGrid);
             this.tabPage2.Controls.Add(this.btnChart);
             this.tabPage2.Controls.Add(this.btnNeueMessung);
@@ -945,6 +947,16 @@
             this.Column1.HeaderText = "Nr.:";
             this.Column1.Name = "Column1";
             // 
+            // btnLiveChart
+            // 
+            this.btnLiveChart.Location = new System.Drawing.Point(447, 268);
+            this.btnLiveChart.Name = "btnLiveChart";
+            this.btnLiveChart.Size = new System.Drawing.Size(75, 23);
+            this.btnLiveChart.TabIndex = 35;
+            this.btnLiveChart.Text = "Live Chart";
+            this.btnLiveChart.UseVisualStyleBackColor = true;
+            this.btnLiveChart.Click += new System.EventHandler(this.btnLiveChart_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1080,6 +1092,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         public System.Windows.Forms.DataGridView MesszyklusGrid;
+        private System.Windows.Forms.Button btnLiveChart;
 
 
     }
