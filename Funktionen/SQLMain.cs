@@ -112,7 +112,7 @@ namespace PharMS_Steuerung.Funktionen
             SQLiteCommand cmd = conn.CreateCommand();
             cmd.CommandText = "CREATE TABLE IF NOT EXISTS Sequenzen ( " +
                 "ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
-                "Name VARCHAR(100) NOT NULL," +
+                "Name VARCHAR(256) NOT NULL," +
                 "Speicherplatz VARCHAR(2));";
 
             cmd.ExecuteNonQuery();
@@ -120,7 +120,7 @@ namespace PharMS_Steuerung.Funktionen
             cmd.CommandText = "CREATE TABLE IF NOT EXISTS Sequenzen_Befehle ( " +
                "ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
                "Befehl VARCHAR(20) NOT NULL," +
-               "Parameter VARCHAR(20)," +
+               "Parameter VARCHAR(256)," +
                "S_ID INTEGER NOT NULL," +
                "Reihenfolge INTEGER NOT NULL," +
                "Vorlage BOOL);";
@@ -129,7 +129,7 @@ namespace PharMS_Steuerung.Funktionen
 
             cmd.CommandText = "CREATE TABLE IF NOT EXISTS Masterablauf ( " +
                "ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
-               "Name VARCHAR(100) NOT NULL," +
+               "Name VARCHAR(256) NOT NULL," +
                "S_ID INTEGER NOT NULL," +
                "Reihenfolge INTEGER NOT NULL," +
                "Speicherplatz VARCHAR(2));";
@@ -146,7 +146,7 @@ namespace PharMS_Steuerung.Funktionen
 
             cmd.CommandText = "CREATE TABLE IF NOT EXISTS Messzyklus ( " +
              "ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
-             "Name VARCHAR(100) NOT NULL," +
+             "Name VARCHAR(256) NOT NULL," +
              "Datum DATETIME);";
             cmd.ExecuteNonQuery();
 

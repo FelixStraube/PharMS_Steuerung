@@ -105,6 +105,7 @@ namespace PharMS_Steuerung.Funktionen
                 colErklaerung.HeaderText = "Erklärung";
 
                 DataGridViewComboBoxColumn ComboBoxColumn = new DataGridViewComboBoxColumn();
+              
                 ComboBoxColumn.Name = "Befehl";
                 ComboBoxColumn.HeaderText = "Befehl";
                 ComboBoxColumn.DataPropertyName = "Befehl";
@@ -121,6 +122,9 @@ namespace PharMS_Steuerung.Funktionen
                 // MainForm.SequenzeditorGrid.Columns["Reihenfolge"].Visible = false;
                 MainForm.SequenzeditorGrid.Columns["S_ID"].CellTemplate.Value = ID.ToString();
                 MainForm.SequenzeditorGrid.Columns["Reihenfolge"].CellTemplate.Value = MainForm.SequenzeditorGrid.RowCount;
+                //Maximale länge der Einträge 256
+                ((DataGridViewTextBoxColumn)MainForm.SequenzeditorGrid.Columns["Parameter"]).MaxInputLength = 256;
+               
                 MainForm.SequenzeditorGrid.Columns["Parameter"].HeaderText = "Parameter";
 
 
