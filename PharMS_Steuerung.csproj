@@ -84,6 +84,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChartForm - Kopieren.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChartForm - Kopieren.Designer.cs">
+      <DependentUpon>ChartForm - Kopieren.cs</DependentUpon>
+    </Compile>
     <Compile Include="LiveChartForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,6 +118,10 @@
     <Compile Include="Funktionen\SQLMain.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ChartForm - Kopieren.resx">
+      <DependentUpon>ChartForm - Kopieren.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="LiveChartForm.resx">
       <DependentUpon>LiveChartForm.cs</DependentUpon>
       <SubType>Designer</SubType>

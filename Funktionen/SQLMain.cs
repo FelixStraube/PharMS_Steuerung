@@ -346,6 +346,20 @@ namespace PharMS_Steuerung.Funktionen
             return dsPharms.Tables["Messzyklus"].Rows[dsPharms.Tables["Messzyklus"].Rows.Count - 1].ItemArray[0].ToString();
         }
 
+        public List<int> GetAllZyklusID()
+        {
+            List<int> IDs = new List<int>();
+            DataTableReader dtr;
+            dtr = dsPharms.Tables["Messzyklus"].CreateDataReader();
+
+            while (dtr.Read())
+            {
+                IDs.Add(Convert.ToInt32(dtr["ID"]));
+            }
+            dtr.Close();
+            return IDs;
+        }
+
         public void Save()
         {
             daSequenzen.Update(dsPharms, "Sequenzen");

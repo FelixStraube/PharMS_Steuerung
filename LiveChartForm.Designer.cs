@@ -28,14 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.LiveChart_Ausgabe = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.numericUpDown_ymax = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown_ymin = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.Botton = new System.Windows.Forms.Panel();
             this.panelLeft = new System.Windows.Forms.Panel();
             this.panelright = new System.Windows.Forms.Panel();
@@ -43,94 +40,29 @@
             this.label5 = new System.Windows.Forms.Label();
             this.lb_Max = new System.Windows.Forms.Label();
             this.lb_Min = new System.Windows.Forms.Label();
+            this.tmrPaintChart = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.LiveChart_Ausgabe)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_ymax)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_ymin)).BeginInit();
-            this.panelLeft.SuspendLayout();
             this.panelright.SuspendLayout();
             this.SuspendLayout();
             // 
             // LiveChart_Ausgabe
             // 
-            chartArea2.CursorX.IsUserEnabled = true;
-            chartArea2.CursorX.IsUserSelectionEnabled = true;
-            chartArea2.Name = "ChartArea1";
-            this.LiveChart_Ausgabe.ChartAreas.Add(chartArea2);
+            chartArea1.CursorX.IsUserEnabled = true;
+            chartArea1.CursorX.IsUserSelectionEnabled = true;
+            chartArea1.Name = "ChartArea1";
+            this.LiveChart_Ausgabe.ChartAreas.Add(chartArea1);
             this.LiveChart_Ausgabe.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this.LiveChart_Ausgabe.Legends.Add(legend2);
+            legend1.Name = "Legend1";
+            this.LiveChart_Ausgabe.Legends.Add(legend1);
             this.LiveChart_Ausgabe.Location = new System.Drawing.Point(116, 0);
             this.LiveChart_Ausgabe.Margin = new System.Windows.Forms.Padding(3, 3, 3, 100);
             this.LiveChart_Ausgabe.Name = "LiveChart_Ausgabe";
             this.LiveChart_Ausgabe.Size = new System.Drawing.Size(661, 374);
             this.LiveChart_Ausgabe.TabIndex = 1;
             this.LiveChart_Ausgabe.Text = "chart1";
-            title2.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Right;
-            title2.Name = "Title1";
-            this.LiveChart_Ausgabe.Titles.Add(title2);
-            // 
-            // numericUpDown_ymax
-            // 
-            this.numericUpDown_ymax.Location = new System.Drawing.Point(27, 40);
-            this.numericUpDown_ymax.Maximum = new decimal(new int[] {
-            800,
-            0,
-            0,
-            0});
-            this.numericUpDown_ymax.Minimum = new decimal(new int[] {
-            800,
-            0,
-            0,
-            -2147483648});
-            this.numericUpDown_ymax.Name = "numericUpDown_ymax";
-            this.numericUpDown_ymax.Size = new System.Drawing.Size(75, 20);
-            this.numericUpDown_ymax.TabIndex = 4;
-            this.numericUpDown_ymax.Value = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
-          
-            // 
-            // numericUpDown_ymin
-            // 
-            this.numericUpDown_ymin.Location = new System.Drawing.Point(27, 99);
-            this.numericUpDown_ymin.Maximum = new decimal(new int[] {
-            800,
-            0,
-            0,
-            0});
-            this.numericUpDown_ymin.Minimum = new decimal(new int[] {
-            800,
-            0,
-            0,
-            -2147483648});
-            this.numericUpDown_ymin.Name = "numericUpDown_ymin";
-            this.numericUpDown_ymin.Size = new System.Drawing.Size(75, 20);
-            this.numericUpDown_ymin.TabIndex = 5;
-            this.numericUpDown_ymin.Value = new decimal(new int[] {
-            50,
-            0,
-            0,
-            -2147483648});
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(24, 21);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(37, 13);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Y-Max";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(24, 83);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(34, 13);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Y-Min";
+            title1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Right;
+            title1.Name = "Title1";
+            this.LiveChart_Ausgabe.Titles.Add(title1);
             // 
             // Botton
             // 
@@ -142,10 +74,6 @@
             // 
             // panelLeft
             // 
-            this.panelLeft.Controls.Add(this.numericUpDown_ymax);
-            this.panelLeft.Controls.Add(this.label3);
-            this.panelLeft.Controls.Add(this.label2);
-            this.panelLeft.Controls.Add(this.numericUpDown_ymin);
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelLeft.Location = new System.Drawing.Point(0, 0);
             this.panelLeft.Name = "panelLeft";
@@ -200,6 +128,11 @@
             this.lb_Min.TabIndex = 0;
             this.lb_Min.Text = "0";
             // 
+            // tmrPaintChart
+            // 
+            this.tmrPaintChart.Interval = 5000;
+            this.tmrPaintChart.Tick += new System.EventHandler(this.tmrPaintChart_Tick);
+            // 
             // LiveChartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -210,12 +143,9 @@
             this.Controls.Add(this.panelLeft);
             this.Controls.Add(this.Botton);
             this.Name = "LiveChartForm";
-            this.Text = "ChartForm";
+            this.Text = "Live Chart";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LiveChartForm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.LiveChart_Ausgabe)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_ymax)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_ymin)).EndInit();
-            this.panelLeft.ResumeLayout(false);
-            this.panelLeft.PerformLayout();
             this.panelright.ResumeLayout(false);
             this.panelright.PerformLayout();
             this.ResumeLayout(false);
@@ -225,10 +155,6 @@
         #endregion
 
         public System.Windows.Forms.DataVisualization.Charting.Chart LiveChart_Ausgabe;
-        private System.Windows.Forms.NumericUpDown numericUpDown_ymax;
-        private System.Windows.Forms.NumericUpDown numericUpDown_ymin;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel Botton;
         private System.Windows.Forms.Panel panelLeft;
         private System.Windows.Forms.Panel panelright;
@@ -236,5 +162,6 @@
         public System.Windows.Forms.Label lb_Min;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Timer tmrPaintChart;
     }
 }

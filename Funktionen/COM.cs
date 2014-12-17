@@ -23,6 +23,7 @@ namespace PharMS_Steuerung.Funktionen
         private string sZyklus;
         public bool bStopTimer = false;
         public bool bZyklusActive = false;
+        public bool bIsManuelleMessung = false;
         public SerialPort port;
         public Form1 tempForm = new Form1();
         public bool bereit = true;
@@ -70,9 +71,9 @@ namespace PharMS_Steuerung.Funktionen
                 {
                     case "M":
 
-                        if (!bStopTimer && !bIgnoreNewMeasurements)
+                        if (!bStopTimer && !bIgnoreNewMeasurements)  //false && false beim ersten Aufruf
                         {
-                            if (!bZyklusActive)
+                            if (!bZyklusActive) // false beim ersten Aufruf
                             {
                                 sZyklus = tempForm.DBMain.CreateZyklus();
                                 tempForm.DBMain.SaveMeasurements();
@@ -231,7 +232,14 @@ namespace PharMS_Steuerung.Funktionen
                     tmrAfterAllMesswerte.Start(); //startet er direkt mit den ereignis oder erst nach 10 sek?
                 }
 
+                if(bIsManuelleMessung)
+                {
+                    SendToCOM("p1,0", true);
+                    System.Threading.Thread.Sleep(500);
+                    SendToCOM("U000", true);
+                }
 
+                tempForm.DBMain.SaveMeasurements(); // speichern der Daten nach dem Ende eines Messzyklus
 
                 AbfrageStatus();
             }

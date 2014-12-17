@@ -18,16 +18,15 @@ namespace PharMS_Steuerung
 
     public partial class Form1 : Form
     {
-        static COM Comschnitstelle;
-        string ablauf;
+        static COM Comschnitstelle;        
         string AblaufListeVorAuswahl;
         public bool Connection;
         public int Durchläufe;
         public bool Abbruch;
         public int Prozessstand;
         public static int ende;
-        public bool SchleifenStopp = false;
-        private int i = 1;
+        public bool SchleifenStopp = false;       
+        private LiveChartForm _LiveChart;
         static System.Windows.Forms.Timer Zeitsteuerung = new System.Windows.Forms.Timer();
         static int alarmCounter = 1;
         static bool exitFlag = false;
@@ -175,6 +174,7 @@ namespace PharMS_Steuerung
                 Comschnitstelle.SendToCOM("U" + numericZellspannung.Value, true);
                 System.Threading.Thread.Sleep(2000);
                 Comschnitstelle.SendToCOM("M", true);
+                Comschnitstelle.bIsManuelleMessung = true;
             }
             /*rbManuelleMessung.Checked = true;
             Comschnitstelle.SendToCOM("p1,1", true);
@@ -220,15 +220,18 @@ namespace PharMS_Steuerung
 
         private void Messung_Stopp_Click(object sender, EventArgs e)
         {
+            
+            if (Comschnitstelle.tmrMesswerteTimer != null)
+            {
+                Comschnitstelle.bStopTimer = true;
+                Comschnitstelle.tmrMesswerteTimer.Stop();                
+                Comschnitstelle.bZyklusActive = false;
+                
+            }
             Comschnitstelle.SendToCOM("p1,0", true);
             System.Threading.Thread.Sleep(500);
             Comschnitstelle.SendToCOM("U000", true);
-            if (Comschnitstelle.tmrMesswerteTimer != null)
-            {
-                Comschnitstelle.tmrMesswerteTimer.Stop();                
-                Comschnitstelle.bZyklusActive = false;
-                Comschnitstelle.bStopTimer = true;
-            }
+            Comschnitstelle.bStopTimer = false;
         }
 
 
@@ -426,11 +429,12 @@ namespace PharMS_Steuerung
             }
             else
             {
+                
                 for (int i = 0; i < DBMain.dsPharms.Tables["Messwerte"].Rows.Count; i++)
                 {
-                    DBMain.dsPharms.Tables["Messwerte"].Rows[i].Delete();
-                    DBMain.SaveMeasurements();
+                    DBMain.dsPharms.Tables["Messwerte"].Rows[i].Delete();                  
                 }
+                DBMain.SaveMeasurements();
 
             }
         }
@@ -562,7 +566,7 @@ namespace PharMS_Steuerung
         {
             int SelectedRow = MesszyklusGrid.CurrentCell.RowIndex;
           
-            ChartForm _Chart = new ChartForm(this, SelectedRow);
+            ChartForm _Chart = new ChartForm(this);
             _Chart.Show();
         }
 
@@ -669,10 +673,10 @@ namespace PharMS_Steuerung
 
             int SelectedRow = MesszyklusGrid.CurrentCell.RowIndex;
 
-            LiveChartForm _LiveChart = new LiveChartForm(this);
+            _LiveChart = new LiveChartForm(this);
             _LiveChart.Show();
         }
-
+       
 
     }
 }

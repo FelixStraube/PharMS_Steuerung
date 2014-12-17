@@ -28,95 +28,49 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.chart_Ausgabe = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.numericUpDownChart = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
             this.numericUpDown_ymax = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown_ymin = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.Botton = new System.Windows.Forms.Panel();
             this.panelLeft = new System.Windows.Forms.Panel();
-            this.panelright = new System.Windows.Forms.Panel();
-            this.lb_Min = new System.Windows.Forms.Label();
-            this.lb_Max = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lb_Max = new System.Windows.Forms.Label();
+            this.lb_Min = new System.Windows.Forms.Label();
+            this.panelright = new System.Windows.Forms.Panel();
+            this.MesszyklusGridChart = new System.Windows.Forms.DataGridView();
+            this.colVisible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.btnUndoZoom = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chart_Ausgabe)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_ymax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_ymin)).BeginInit();
-            this.Botton.SuspendLayout();
             this.panelLeft.SuspendLayout();
             this.panelright.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MesszyklusGridChart)).BeginInit();
             this.SuspendLayout();
-            // 
-            // trackBar1
-            // 
-            this.trackBar1.Location = new System.Drawing.Point(144, 55);
-            this.trackBar1.Minimum = 1;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(454, 45);
-            this.trackBar1.TabIndex = 0;
-            this.trackBar1.Value = 1;
-            this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
             // 
             // chart_Ausgabe
             // 
-            chartArea2.CursorX.IsUserEnabled = true;
-            chartArea2.CursorX.IsUserSelectionEnabled = true;
-            chartArea2.Name = "ChartArea1";
-            this.chart_Ausgabe.ChartAreas.Add(chartArea2);
+            chartArea1.CursorX.IsUserEnabled = true;
+            chartArea1.CursorX.IsUserSelectionEnabled = true;
+            chartArea1.Name = "ChartArea1";
+            this.chart_Ausgabe.ChartAreas.Add(chartArea1);
             this.chart_Ausgabe.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this.chart_Ausgabe.Legends.Add(legend2);
+            legend1.Name = "Legend1";
+            this.chart_Ausgabe.Legends.Add(legend1);
             this.chart_Ausgabe.Location = new System.Drawing.Point(116, 0);
             this.chart_Ausgabe.Margin = new System.Windows.Forms.Padding(3, 3, 3, 100);
             this.chart_Ausgabe.Name = "chart_Ausgabe";
-            this.chart_Ausgabe.Size = new System.Drawing.Size(661, 374);
+            this.chart_Ausgabe.Size = new System.Drawing.Size(570, 486);
             this.chart_Ausgabe.TabIndex = 1;
             this.chart_Ausgabe.Text = "chart1";
-            title2.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Right;
-            title2.Name = "Title1";
-            this.chart_Ausgabe.Titles.Add(title2);
-            // 
-            // numericUpDownChart
-            // 
-            this.numericUpDownChart.Location = new System.Drawing.Point(652, 57);
-            this.numericUpDownChart.Maximum = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
-            this.numericUpDownChart.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownChart.Name = "numericUpDownChart";
-            this.numericUpDownChart.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDownChart.TabIndex = 2;
-            this.numericUpDownChart.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownChart.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(649, 23);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Anzahl derZyklen";
+            title1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Right;
+            title1.Name = "Title1";
+            this.chart_Ausgabe.Titles.Add(title1);
             // 
             // numericUpDown_ymax
             // 
@@ -139,7 +93,6 @@
             0,
             0,
             0});
-            this.numericUpDown_ymax.ValueChanged += new System.EventHandler(this.numericUpDown_ymax_ValueChanged);
             // 
             // numericUpDown_ymin
             // 
@@ -181,29 +134,13 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Y-Min";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(152, 23);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(46, 13);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "Timeline";
-            // 
-            // Botton
-            // 
-            this.Botton.Controls.Add(this.trackBar1);
-            this.Botton.Controls.Add(this.label4);
-            this.Botton.Controls.Add(this.numericUpDownChart);
-            this.Botton.Controls.Add(this.label1);
-            this.Botton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.Botton.Location = new System.Drawing.Point(0, 374);
-            this.Botton.Name = "Botton";
-            this.Botton.Size = new System.Drawing.Size(896, 112);
-            this.Botton.TabIndex = 9;
-            // 
             // panelLeft
             // 
+            this.panelLeft.Controls.Add(this.btnUndoZoom);
+            this.panelLeft.Controls.Add(this.label6);
+            this.panelLeft.Controls.Add(this.label5);
+            this.panelLeft.Controls.Add(this.lb_Max);
+            this.panelLeft.Controls.Add(this.lb_Min);
             this.panelLeft.Controls.Add(this.numericUpDown_ymax);
             this.panelLeft.Controls.Add(this.label3);
             this.panelLeft.Controls.Add(this.label2);
@@ -211,56 +148,82 @@
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelLeft.Location = new System.Drawing.Point(0, 0);
             this.panelLeft.Name = "panelLeft";
-            this.panelLeft.Size = new System.Drawing.Size(116, 374);
+            this.panelLeft.Size = new System.Drawing.Size(116, 486);
             this.panelLeft.TabIndex = 10;
-            // 
-            // panelright
-            // 
-            this.panelright.Controls.Add(this.label6);
-            this.panelright.Controls.Add(this.label5);
-            this.panelright.Controls.Add(this.lb_Max);
-            this.panelright.Controls.Add(this.lb_Min);
-            this.panelright.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelright.Location = new System.Drawing.Point(777, 0);
-            this.panelright.Name = "panelright";
-            this.panelright.Size = new System.Drawing.Size(119, 374);
-            this.panelright.TabIndex = 11;
-            // 
-            // lb_Min
-            // 
-            this.lb_Min.AutoSize = true;
-            this.lb_Min.Location = new System.Drawing.Point(60, 83);
-            this.lb_Min.Name = "lb_Min";
-            this.lb_Min.Size = new System.Drawing.Size(13, 13);
-            this.lb_Min.TabIndex = 0;
-            this.lb_Min.Text = "0";
-            // 
-            // lb_Max
-            // 
-            this.lb_Max.AutoSize = true;
-            this.lb_Max.Location = new System.Drawing.Point(60, 60);
-            this.lb_Max.Name = "lb_Max";
-            this.lb_Max.Size = new System.Drawing.Size(13, 13);
-            this.lb_Max.TabIndex = 1;
-            this.lb_Max.Text = "0";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 60);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(51, 13);
-            this.label5.TabIndex = 2;
-            this.label5.Text = "Maximum";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 83);
+            this.label6.Location = new System.Drawing.Point(24, 178);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(48, 13);
-            this.label6.TabIndex = 3;
+            this.label6.TabIndex = 11;
             this.label6.Text = "Minimum";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(24, 155);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(51, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Maximum";
+            // 
+            // lb_Max
+            // 
+            this.lb_Max.AutoSize = true;
+            this.lb_Max.Location = new System.Drawing.Point(81, 155);
+            this.lb_Max.Name = "lb_Max";
+            this.lb_Max.Size = new System.Drawing.Size(13, 13);
+            this.lb_Max.TabIndex = 9;
+            this.lb_Max.Text = "0";
+            // 
+            // lb_Min
+            // 
+            this.lb_Min.AutoSize = true;
+            this.lb_Min.Location = new System.Drawing.Point(81, 178);
+            this.lb_Min.Name = "lb_Min";
+            this.lb_Min.Size = new System.Drawing.Size(13, 13);
+            this.lb_Min.TabIndex = 8;
+            this.lb_Min.Text = "0";
+            // 
+            // panelright
+            // 
+            this.panelright.Controls.Add(this.MesszyklusGridChart);
+            this.panelright.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelright.Location = new System.Drawing.Point(686, 0);
+            this.panelright.Name = "panelright";
+            this.panelright.Size = new System.Drawing.Size(210, 486);
+            this.panelright.TabIndex = 11;
+            // 
+            // MesszyklusGridChart
+            // 
+            this.MesszyklusGridChart.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.MesszyklusGridChart.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colVisible});
+            this.MesszyklusGridChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MesszyklusGridChart.Location = new System.Drawing.Point(0, 0);
+            this.MesszyklusGridChart.Name = "MesszyklusGridChart";
+            this.MesszyklusGridChart.Size = new System.Drawing.Size(210, 486);
+            this.MesszyklusGridChart.TabIndex = 0;
+            this.MesszyklusGridChart.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.MesszyklusGridChart_CellValueChanged);
+            // 
+            // colVisible
+            // 
+            this.colVisible.FillWeight = 60F;
+            this.colVisible.HeaderText = "Anzeigen";
+            this.colVisible.Name = "colVisible";
+            this.colVisible.Width = 60;
+            // 
+            // btnUndoZoom
+            // 
+            this.btnUndoZoom.Location = new System.Drawing.Point(27, 222);
+            this.btnUndoZoom.Name = "btnUndoZoom";
+            this.btnUndoZoom.Size = new System.Drawing.Size(75, 23);
+            this.btnUndoZoom.TabIndex = 12;
+            this.btnUndoZoom.Text = "undo zoom";
+            this.btnUndoZoom.UseVisualStyleBackColor = true;
+            this.btnUndoZoom.Click += new System.EventHandler(this.btnUndoZoom_Click);
             // 
             // ChartForm
             // 
@@ -270,41 +233,34 @@
             this.Controls.Add(this.chart_Ausgabe);
             this.Controls.Add(this.panelright);
             this.Controls.Add(this.panelLeft);
-            this.Controls.Add(this.Botton);
             this.Name = "ChartForm";
             this.Text = "ChartForm";
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_Ausgabe)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_ymax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_ymin)).EndInit();
-            this.Botton.ResumeLayout(false);
-            this.Botton.PerformLayout();
             this.panelLeft.ResumeLayout(false);
             this.panelLeft.PerformLayout();
             this.panelright.ResumeLayout(false);
-            this.panelright.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MesszyklusGridChart)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TrackBar trackBar1;
         public System.Windows.Forms.DataVisualization.Charting.Chart chart_Ausgabe;
-        private System.Windows.Forms.NumericUpDown numericUpDownChart;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericUpDown_ymax;
         private System.Windows.Forms.NumericUpDown numericUpDown_ymin;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Panel Botton;
         private System.Windows.Forms.Panel panelLeft;
         private System.Windows.Forms.Panel panelright;
-        public System.Windows.Forms.Label lb_Max;
-        public System.Windows.Forms.Label lb_Min;
+        private System.Windows.Forms.DataGridView MesszyklusGridChart;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
+        public System.Windows.Forms.Label lb_Max;
+        public System.Windows.Forms.Label lb_Min;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colVisible;
+        private System.Windows.Forms.Button btnUndoZoom;
     }
 }

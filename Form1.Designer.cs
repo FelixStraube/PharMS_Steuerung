@@ -41,6 +41,7 @@
             this.openDatabaseDialog = new System.Windows.Forms.OpenFileDialog();
             this.NewDBDialog = new System.Windows.Forms.SaveFileDialog();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnLiveChart = new System.Windows.Forms.Button();
             this.MesszyklusGrid = new System.Windows.Forms.DataGridView();
             this.btnChart = new System.Windows.Forms.Button();
             this.btnNeueMessung = new System.Windows.Forms.Button();
@@ -105,7 +106,6 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnLiveChart = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -226,6 +226,16 @@
             this.tabPage2.Text = "Messdaten";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // btnLiveChart
+            // 
+            this.btnLiveChart.Location = new System.Drawing.Point(447, 268);
+            this.btnLiveChart.Name = "btnLiveChart";
+            this.btnLiveChart.Size = new System.Drawing.Size(75, 23);
+            this.btnLiveChart.TabIndex = 35;
+            this.btnLiveChart.Text = "Live Chart";
+            this.btnLiveChart.UseVisualStyleBackColor = true;
+            this.btnLiveChart.Click += new System.EventHandler(this.btnLiveChart_Click);
+            // 
             // MesszyklusGrid
             // 
             this.MesszyklusGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -295,6 +305,7 @@
             this.DatenerfassungTab.Size = new System.Drawing.Size(432, 318);
             this.DatenerfassungTab.TabIndex = 0;
             this.DatenerfassungTab.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DatenerfassungTab_DataError);
+           
             // 
             // tabMasterablauf
             // 
@@ -946,16 +957,6 @@
             // 
             this.Column1.HeaderText = "Nr.:";
             this.Column1.Name = "Column1";
-            // 
-            // btnLiveChart
-            // 
-            this.btnLiveChart.Location = new System.Drawing.Point(447, 268);
-            this.btnLiveChart.Name = "btnLiveChart";
-            this.btnLiveChart.Size = new System.Drawing.Size(75, 23);
-            this.btnLiveChart.TabIndex = 35;
-            this.btnLiveChart.Text = "Live Chart";
-            this.btnLiveChart.UseVisualStyleBackColor = true;
-            this.btnLiveChart.Click += new System.EventHandler(this.btnLiveChart_Click);
             // 
             // Form1
             // 
