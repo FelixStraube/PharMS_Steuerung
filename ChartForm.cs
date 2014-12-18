@@ -21,7 +21,8 @@ namespace PharMS_Steuerung
             _Form1 = MainForm;
 
             int RowCount = MainForm.DBMain.dsPharms.Tables["Messwerte"].Rows.Count;
-            string MZID = MainForm.DBMain.dsPharms.Tables["Messwerte"].Rows[RowCount - 1].ItemArray[4].ToString();
+            int colMZ_ID = MainForm.DBMain.dsPharms.Tables["Messwerte"].Columns["MZ_ID"].Ordinal;
+            string MZID = MainForm.DBMain.dsPharms.Tables["Messwerte"].Rows[RowCount - 1].ItemArray[colMZ_ID].ToString();//letzte zeile
             int[] MZ_ID = MainForm.DBMain.GetAllZyklusID().ToArray();
 
             DataView dvMesswerte = new DataView(MainForm.DBMain.dsPharms.Tables["Messwerte"]);

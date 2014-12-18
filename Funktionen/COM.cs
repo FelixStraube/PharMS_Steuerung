@@ -326,14 +326,15 @@ namespace PharMS_Steuerung.Funktionen
 
         public void Execute_Commands(int repeat, params string[] Commands)
         {
-          if( String.Join("", Commands.Select(p => p.ToString()).ToArray()).Length>512)
-          {
-              MessageBox.Show("Die Befehlsfolge ist größere als 512 Zeichen");
-          }
+ 
+          
             for (int j = 0; j < repeat; j++)
             {
                 for (int i = 0; i < Commands.Count(); i++)
                 {
+                    if (Commands[i].Length > 512)
+                        MessageBox.Show("Der Befehl ist größere als 512 Zeichen");
+
                     Boolean Lauf = true; //Pufferzeit mitschicken wenn der Befehl lange zum abarbeiten braucht und eine eventbehandlung stattfindet, wenn der Thread fertig ist
                     do
                     {
