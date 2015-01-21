@@ -29,7 +29,7 @@ namespace PharMS_Steuerung.Funktionen
                     {
                         swOut.Write(sTrenzeichen);
                     }
-                    if (i == 4) {
+                    if (i == 1) {
                         swOut.Write("Bezeichnung" + sTrenzeichen);
                     swOut.Write(gridIn.Columns[i].HeaderText);
                     }
@@ -59,10 +59,10 @@ namespace PharMS_Steuerung.Funktionen
                         //replace comma's with spaces
                        // value = value.Replace(',', ' ');
                         //replace embedded newlines with spaces
-                        if (i == 4)
+                        if (i == 1)
                         {
                             string Name;
-                            Name = DBaktuel.NameMesszyklus(Convert.ToInt16(dr.Cells[i].Value.ToString()));
+                            Name = DBaktuel.NameMesszyklus(Convert.ToInt32(dr.Cells[i].Value.ToString()));
                             swOut.Write(Name + sTrenzeichen);
                         }
                         value = value.Replace(Environment.NewLine, " ");
