@@ -377,6 +377,27 @@ namespace PharMS_Steuerung.Funktionen
 
             // dtSequenzen.AcceptChanges();
         }
+        public string NameMesszyklus(int ID) {
+            string Name = "";
+
+
+            var query = from a in dsPharms.Tables["Messzyklus"].AsEnumerable()
+
+                        where a.Field<Int64>("ID") == ID
+                        select new
+                        {
+                            Name = a.Field<string>("Name")
+                        };
+
+            foreach (var q in query)
+            {
+                Name = (q.Name == null) ? " " : q.Name.ToString();
+            }
+
+
+            return Name;
+        }
+
     }
 }
 

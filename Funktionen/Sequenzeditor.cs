@@ -91,7 +91,7 @@ namespace PharMS_Steuerung.Funktionen
         }
 
         public void FillGridSequenzEdit()
-        {
+        { 
             MainForm.SequenzeditorGrid.Columns.Clear();
             DataView dvSequenzEdit = new DataView(MainForm.DBMain.dsPharms.Tables["SequenzEdit"]);
             if (MainForm.AblaufListe.SelectedItem != null)

@@ -90,6 +90,7 @@
     <Compile Include="ChartForm - Kopieren.Designer.cs">
       <DependentUpon>ChartForm - Kopieren.cs</DependentUpon>
     </Compile>
+    <Compile Include="Funktionen\CSV_Export.cs" />
     <Compile Include="LiveChartForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -293,7 +293,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(117, 23);
             this.button2.TabIndex = 5;
-            this.button2.Text = "Export nach Excel";
+            this.button2.Text = "Export als *.csv";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -305,7 +305,6 @@
             this.DatenerfassungTab.Size = new System.Drawing.Size(432, 318);
             this.DatenerfassungTab.TabIndex = 0;
             this.DatenerfassungTab.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DatenerfassungTab_DataError);
-           
             // 
             // tabMasterablauf
             // 
@@ -1012,8 +1011,8 @@
 
         #endregion
 
-        //     private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
-        //    private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
+        //  private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
+        //  private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
         //  private Microsoft.VisualBasic.PowerPacks.LineShape lineShape2;
         //  private Microsoft.VisualBasic.PowerPacks.LineShape lineShape3;
         private System.Windows.Forms.FolderBrowserDialog Verzeichnisauswahl;

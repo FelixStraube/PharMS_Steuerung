@@ -240,8 +240,9 @@ namespace PharMS_Steuerung.Funktionen
                 }
 
                 tempForm.DBMain.SaveMeasurements(); // speichern der Daten nach dem Ende eines Messzyklus
-
-                AbfrageStatus();
+               
+                // Die Status Abfrage fürte zu Fehlern im Automatisierten Betrieb. Wenn Status Abfrage Nötig wieder Einschalten
+                // AbfrageStatus();
             }
 
         }

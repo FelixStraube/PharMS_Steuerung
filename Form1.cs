@@ -10,7 +10,7 @@ using System.IO;
 using System.Collections;
 using System.Threading;
 using PharMS_Steuerung.Funktionen;
-
+using System.Reflection;
 
 
 namespace PharMS_Steuerung
@@ -32,7 +32,7 @@ namespace PharMS_Steuerung
         static bool exitFlag = false;
         public Sequenzeditor oSequenzeditor;
         public List<string> stlLog = new List<string>();
-
+        public DataGridView Temp = new DataGridView();
         public int maxObjectKey;
 
         static bool Live_Cahrtausgabe = true;
@@ -74,14 +74,38 @@ namespace PharMS_Steuerung
 
         public void button2_Click(object sender, EventArgs e)
         {
+           
             SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "Excel Documents (*.xls)|*.xls";
-            sfd.FileName = "export.xls";
-            if (sfd.ShowDialog() == DialogResult.OK)
-            {
-                //ToCsV(dataGridView1, @"c:\export.xls");
-                Exporting Save = new Exporting(DatenerfassungTab, sfd.FileName); // Here dataGridview1 is your grid view name 
-            }
+           sfd.Filter = "CSV Documents (*.csv)|*.csv";
+           sfd.FileName = "export.csv";
+           if (sfd.ShowDialog() == DialogResult.OK)
+           {
+
+               DataView dvMesswerte = new DataView(DBMain.dsPharms.Tables["Messwerte"]);
+              
+               //Temp.DataSource = dvMesswerte;
+               DatenerfassungTab.DataSource = dvMesswerte;
+
+               
+               CSV_Export.toCSV(DatenerfassungTab, sfd.FileName,DBMain);
+               
+               
+
+           }
+
+           oSequenzeditor.FillGridMeasurements();
+
+            //SaveFileDialog sfd = new SaveFileDialog();
+            //sfd.Filter = "CSV Documents (*.csv)|*.csv";
+            //sfd.FileName = "export.csv";
+            //if (sfd.ShowDialog() == DialogResult.OK)
+            //{
+                
+
+            //    //ToCsV(dataGridView1, @"c:\export.xls");
+            //    //Exporting Save = new Exporting(DatenerfassungTab, sfd.FileName); // Here dataGridview1 is your grid view name 
+            //    CSV_Export Save = new CSV_Export(DatenerfassungTab, sfd.FileName); // Here dataGridview1 is your grid view name
+            //}
 
         }
 
@@ -134,13 +158,20 @@ namespace PharMS_Steuerung
 
         private void AblaufStart_Click(object sender, EventArgs e)
         {
-            Abbruch = false;
+            var result = MessageBox.Show("Wurde die Messdauer entsprechend des Ablaufes angepasst?", "Messparameter unter Geräteparameter anpassen", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            { Abbruch = false;
             Durchläufe = Convert.ToInt32(numericUpDown1.Value);
             if (MasterGrid.RowCount == 0) return;
 
             Thread threadAblaufStart = new Thread(new ThreadStart(Comschnitstelle.Execute_Ablauf));
             stlLog.Add("Start threadAblaufStart" + "    " + System.DateTime.Now.ToString());
-            threadAblaufStart.Start();
+            threadAblaufStart.Start(); 
+            }
+       
+           
+            
 
         }
 
