@@ -208,8 +208,7 @@ namespace PharMS_Steuerung.Funktionen
             {
                 // Restarts the timer and increments the counter.
                 bZyklusActive = true;
-                port.WriteLine("M");
-                sExpectedStatus = "M";
+                port.WriteLine("M");                
                 iTickAktuell = iTickAktuell + iTickInterval;
                 tmrMesswerteTimer.Enabled = true;
             }
@@ -251,10 +250,6 @@ namespace PharMS_Steuerung.Funktionen
             bIgnoreNewMeasurements = false;
         }
 
-        /// <summary>
-        /// Sendet einen String an geöffneten com port
-        /// </summary>
-        /// <param name="Caption">String</param>
 
         public bool SendToCOM(String Caption, bool bForce)
         {
