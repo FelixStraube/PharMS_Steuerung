@@ -681,6 +681,7 @@
             0,
             0,
             0});
+            this.numeric_Messdauer.ValueChanged += new System.EventHandler(this.numeric_Messdauer_ValueChanged);
             // 
             // label12
             // 
@@ -712,6 +713,7 @@
             0,
             0,
             0});
+            this.numeric_Intervall.ValueChanged += new System.EventHandler(this.numeric_Intervall_ValueChanged);
             // 
             // numericZellspannung
             // 
@@ -968,7 +970,6 @@
             this.Name = "Form1";
             this.Text = "PharMS Controller";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.menuStrip1.ResumeLayout(false);

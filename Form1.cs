@@ -18,27 +18,27 @@ namespace PharMS_Steuerung
 
     public partial class Form1 : Form
     {
-        static COM Comschnitstelle;        
+
         string AblaufListeVorAuswahl;
-        public bool Connection;
-        public int Durchläufe;
-        public bool Abbruch;
+
+
+
         public int Prozessstand;
         public static int ende;
-        public bool SchleifenStopp = false;       
+        public bool SchleifenStopp = false;
         private LiveChartForm _LiveChart;
-        static System.Windows.Forms.Timer Zeitsteuerung = new System.Windows.Forms.Timer();
+        //    static System.Windows.Forms.Timer Zeitsteuerung = new System.Windows.Forms.Timer();
         static int alarmCounter = 1;
         static bool exitFlag = false;
         public Sequenzeditor oSequenzeditor;
-        public List<string> stlLog = new List<string>();
+
         public DataGridView Temp = new DataGridView();
         public int maxObjectKey;
 
         static bool Live_Cahrtausgabe = true;
         private int iSpeicherplatzForMNItem = -999;
 
-
+        private Communicator oCommunicator;
         public SQLMain DBMain;
 
 
@@ -49,13 +49,10 @@ namespace PharMS_Steuerung
         }
         private void Connect_Click(object sender, EventArgs e)
         {
-            Comschnitstelle = new COM(this);
-            panel1.BackColor = System.Drawing.Color.Green;
-            Connection = true;
 
-
-            if (Comschnitstelle.bereit)
+            if (oCommunicator.ConnectToDevice())
             {
+                panel1.BackColor = System.Drawing.Color.Green;
                 btnElektrodenTest.Enabled = true;
                 btnLeitungDes.Enabled = true;
                 btnReg.Enabled = true;
@@ -64,49 +61,35 @@ namespace PharMS_Steuerung
 
         private void Disconnect_Click(object sender, EventArgs e)
         {
-            Comschnitstelle.COMDisconnect();
-            panel1.BackColor = System.Drawing.Color.Red;
-            Connection = false;
-            btnElektrodenTest.Enabled = false;
-            btnLeitungDes.Enabled = false;
-            btnReg.Enabled = false;
+
+            if (!oCommunicator.DisconnectDevice())
+            {
+                panel1.BackColor = System.Drawing.Color.Red;
+
+                btnElektrodenTest.Enabled = false;
+                btnLeitungDes.Enabled = false;
+                btnReg.Enabled = false;
+            }
         }
 
         public void button2_Click(object sender, EventArgs e)
         {
-           
+
             SaveFileDialog sfd = new SaveFileDialog();
-           sfd.Filter = "CSV Documents (*.csv)|*.csv";
-           sfd.FileName = "export.csv";
-           if (sfd.ShowDialog() == DialogResult.OK)
-           {
+            sfd.Filter = "CSV Documents (*.csv)|*.csv";
+            sfd.FileName = "export.csv";
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
 
-               DataView dvMesswerte = new DataView(DBMain.dsPharms.Tables["Messwerte"]);
-              
-               //Temp.DataSource = dvMesswerte;
-               DatenerfassungTab.DataSource = dvMesswerte;
+                DataView dvMesswerte = new DataView(DBMain.dsPharms.Tables["Messwerte"]);
 
-               
-               CSV_Export.toCSV(DatenerfassungTab, sfd.FileName,DBMain);
-               
-               
+                //Temp.DataSource = dvMesswerte;
+                DatenerfassungTab.DataSource = dvMesswerte;
 
-           }
+                CSV_Export.toCSV(DatenerfassungTab, sfd.FileName, DBMain);
+            }
 
-           oSequenzeditor.FillGridMeasurements();
-
-            //SaveFileDialog sfd = new SaveFileDialog();
-            //sfd.Filter = "CSV Documents (*.csv)|*.csv";
-            //sfd.FileName = "export.csv";
-            //if (sfd.ShowDialog() == DialogResult.OK)
-            //{
-                
-
-            //    //ToCsV(dataGridView1, @"c:\export.xls");
-            //    //Exporting Save = new Exporting(DatenerfassungTab, sfd.FileName); // Here dataGridview1 is your grid view name 
-            //    CSV_Export Save = new CSV_Export(DatenerfassungTab, sfd.FileName); // Here dataGridview1 is your grid view name
-            //}
-
+            oSequenzeditor.FillGridMeasurements();
         }
 
         public bool DatenerfassungTab_Hinzu(string Time, string Daten, string Daten2)
@@ -126,9 +109,7 @@ namespace PharMS_Steuerung
 
         private void NOTSTOPP_Click(object sender, EventArgs e)
         {
-           // change_progressBar(-1, 0, progressBar1);
-            Abbruch = true;
-            Comschnitstelle.NotStop();
+            oCommunicator.Stopp();
         }
 
         public bool change_Label(string Text, Label Textlabel)
@@ -158,20 +139,10 @@ namespace PharMS_Steuerung
 
         private void AblaufStart_Click(object sender, EventArgs e)
         {
-            var result = MessageBox.Show("Wurde die Messdauer entsprechend des Ablaufes angepasst?", "Messparameter unter Geräteparameter anpassen", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            { Abbruch = false;
-            Durchläufe = Convert.ToInt32(numericUpDown1.Value);
-            if (MasterGrid.RowCount == 0) return;
-
-            Thread threadAblaufStart = new Thread(new ThreadStart(Comschnitstelle.Execute_Ablauf));
-            stlLog.Add("Start threadAblaufStart" + "    " + System.DateTime.Now.ToString());
-            threadAblaufStart.Start(); 
-            }
-       
-           
-            
+            if (oCommunicator.IsWithMakro)
+                oCommunicator.StartMasterAblaufMitMakro(Convert.ToInt32(numericUpDown1.Value));
+            else
+                oCommunicator.StartMasterAblaufBefehlsweise(Convert.ToInt32(numericUpDown1.Value));
 
         }
 
@@ -189,87 +160,50 @@ namespace PharMS_Steuerung
 
         private void Console_Senden_Click(object sender, EventArgs e)
         {
-            Abbruch = false;
-            Comschnitstelle.SendToCOM(Console_Eingabe.Text, true);
-            Funktionen.Consolen_LOG Ausgabe = new Funktionen.Consolen_LOG(Console_Eingabe.Text, this);
+            oCommunicator.SendFromConsole(Console_Eingabe.Text);
         }
 
         private void Man_Messung_Click(object sender, EventArgs e)
         {
-
-            if (!Comschnitstelle.bereit) MessageBox.Show("Manuelle Messung im laufenden Gerätebetrieb nicht möglich!");
-            else
-            {
-                Comschnitstelle.SendToCOM("p1.1", true);
-                System.Threading.Thread.Sleep(2000);
-                Comschnitstelle.SendToCOM("U" + numericZellspannung.Value, true);
-                System.Threading.Thread.Sleep(2000);
-                Comschnitstelle.SendToCOM("M", true);
-                Comschnitstelle.bIsManuelleMessung = true;
-            }
-            /*rbManuelleMessung.Checked = true;
-            Comschnitstelle.SendToCOM("p1,1", true);
-            System.Threading.Thread.Sleep(500);
-            Comschnitstelle.SendToCOM("U" + numericZellspannung.Value, true);
-            int n = Convert.ToInt32(numeric_Intervall.Value);
-            ende = Convert.ToInt32(numeric_Messdauer.Value);
-            ende = ende * 60 / n;
-
-            if (i == 1) Zeitsteuerung.Tick += new EventHandler(TimerEventProcessor);
-            i = i + 1;
-            alarmCounter = 1;
-            Zeitsteuerung.Interval = n * 1000;
-            Zeitsteuerung.Start();*/
+            oCommunicator.StartManuelleMessung((int)numericZellspannung.Value);
         }
+        /*
+                private void TimerEventProcessor(Object myObject, EventArgs myEventArgs)
+                {
 
-        private void TimerEventProcessor(Object myObject, EventArgs myEventArgs)
-        {
+                    Zeitsteuerung.Stop();
+                    // Displays a message box asking whether to continue running the timer.
 
-            Zeitsteuerung.Stop();
-            // Displays a message box asking whether to continue running the timer.
-
-            if (alarmCounter <= ende && ende != 0)
-            {
-                Console.WriteLine("teste" + alarmCounter + ":" + ende);
-                // Restarts the timer and increments the counter.
-                Comschnitstelle.SendToCOM("M", true);
-                alarmCounter += 1;
-                Zeitsteuerung.Enabled = true;
-                DatenerfassungTab.Refresh();
-                DatenerfassungTab.PerformLayout();
-            }
-            else
-            {
-                //Datenerfassen test = new Datenerfassen("---------,---------", Comschnitstelle.tempForm);
-                // Stops the timer.
-                DatenerfassungTab.Refresh();
-                DatenerfassungTab.PerformLayout();
-                Exporting Save = new Exporting(DatenerfassungTab, Application.StartupPath + "Messdaten.txt");
-                exitFlag = true;
-            }
-        }
+                    if (alarmCounter <= ende && ende != 0)
+                    {
+                        Console.WriteLine("teste" + alarmCounter + ":" + ende);
+                        // Restarts the timer and increments the counter.
+                        Comschnitstelle.SendToCOM("M", true);
+                        alarmCounter += 1;
+                        Zeitsteuerung.Enabled = true;
+                        DatenerfassungTab.Refresh();
+                        DatenerfassungTab.PerformLayout();
+                    }
+                    else
+                    {
+                        //Datenerfassen test = new Datenerfassen("---------,---------", Comschnitstelle.tempForm);
+                        // Stops the timer.
+                        DatenerfassungTab.Refresh();
+                        DatenerfassungTab.PerformLayout();
+                        Exporting Save = new Exporting(DatenerfassungTab, Application.StartupPath + "Messdaten.txt");
+                        exitFlag = true;
+                    }
+                } */
 
         private void Messung_Stopp_Click(object sender, EventArgs e)
         {
-            
-            if (Comschnitstelle.tmrMesswerteTimer != null)
-            {
-                Comschnitstelle.bStopTimer = true;
-                Comschnitstelle.tmrMesswerteTimer.Stop();                
-                Comschnitstelle.bZyklusActive = false;
-                
-            }
-            Comschnitstelle.SendToCOM("p1,0", true);
-            System.Threading.Thread.Sleep(500);
-            Comschnitstelle.SendToCOM("U000", true);
-            Comschnitstelle.bStopTimer = false;
+            oCommunicator.StoppManuelleMessung();
         }
-
 
 
         private void Initialisierung_Click(object sender, EventArgs e)
         {
-            Comschnitstelle.SendToCOM("X01", true);
+            oCommunicator.SendToCOM("X01");
         }
 
         private void AblaufListe_SelectedValueChanged(object sender, EventArgs e)
@@ -285,9 +219,6 @@ namespace PharMS_Steuerung
                 }
             }
         }
-
-
-
 
         private void SequenzenGrid_MouseClick(object sender, MouseEventArgs e)
         {
@@ -319,7 +250,7 @@ namespace PharMS_Steuerung
 
         void mnItemStarten_Click(object sender, EventArgs e)
         {
-            Comschnitstelle.SendToCOM("X" + iSpeicherplatzForMNItem.ToString(), true);
+            oCommunicator.SendToCOM("X" + iSpeicherplatzForMNItem.ToString());
         }
         void mnItemEditieren_Click(object sender, EventArgs e)
         {
@@ -394,6 +325,12 @@ namespace PharMS_Steuerung
 
                 mnItemSpeichern.Enabled = true;
                 mnItemSpeichernUnter.Enabled = true;
+
+                Consolen_LOG ausg = new Funktionen.Consolen_LOG(this);
+                oCommunicator = new Communicator(DBMain, ausg);
+                oCommunicator.Messdauer = (int)numeric_Messdauer.Value;
+                oCommunicator.Messintervall = (int)numeric_Intervall.Value;
+
             }
         }
 
@@ -410,33 +347,10 @@ namespace PharMS_Steuerung
 
         private void btnUebertragen_Click(object sender, EventArgs e)
         {
-            Abbruch = false;
-            List<String> lstCommands = new List<string>();
-            List<int> IDs;
-            IDs = DBMain.GetAllSequenzIDWithMemory();
-
-            foreach (int ID in IDs)
-            {
-
-                lstCommands.Add(DBMain.GetSequenzByID(ID));
-                Console.WriteLine(DBMain.GetSequenzByID(ID));
-                stlLog.Add(DBMain.GetSequenzByID(ID));
-            }
-
-            COM.Sequenzen_uebertragen_aktiv = true;
-            BackgroundWorker BackgroundWorkerSendSequenz = new BackgroundWorker();
-
-            stlLog.Add("Start BackgroundWorkerSendSequenz" + "    " + System.DateTime.Now.ToString());
-            BackgroundWorkerSendSequenz.RunWorkerCompleted += BackgroundWorkerSendSequenz_RunWorkerCompleted;
-            BackgroundWorkerSendSequenz.DoWork += BackgroundWorkerCommands_DoWork;
-            BackgroundWorkerSendSequenz.RunWorkerAsync(new HelpClass(1, lstCommands.ToArray()));
-            BackgroundWorkerSendSequenz.Dispose();
+            oCommunicator.UebertragenMakros();
         }
 
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
-        {
-           
-        }
+
 
         private void btnTemperierungEin(object sender, EventArgs e)
         {
@@ -446,9 +360,9 @@ namespace PharMS_Steuerung
                 Temp = Temp.Replace(",", ".");
 
             };
-            Comschnitstelle.SendToCOM("T" + Temp, true);
+            oCommunicator.SendToCOM("T" + Temp);
             System.Threading.Thread.Sleep(500);
-            Comschnitstelle.SendToCOM("o1", true);
+            oCommunicator.SendToCOM("o1");
         }
 
         private void btnNeueMessung_Click(object sender, EventArgs e)
@@ -460,10 +374,10 @@ namespace PharMS_Steuerung
             }
             else
             {
-                
+
                 for (int i = 0; i < DBMain.dsPharms.Tables["Messwerte"].Rows.Count; i++)
                 {
-                    DBMain.dsPharms.Tables["Messwerte"].Rows[i].Delete();                  
+                    DBMain.dsPharms.Tables["Messwerte"].Rows[i].Delete();
                 }
                 DBMain.SaveMeasurements();
 
@@ -472,131 +386,54 @@ namespace PharMS_Steuerung
 
         private void btnElektrodenTest_Click(object sender, EventArgs e)
         {
-            if (Comschnitstelle.bereit)
-            {
-                Comschnitstelle.SendToCOM(Sequenz.ElektrodenTest(), true);
-                Console.WriteLine("Incoming Data gesendet:" + Sequenz.ElektrodenTest());
-                stlLog.Add("Incoming Data gesendet:" + Sequenz.ElektrodenTest() + "    " + System.DateTime.Now.ToString());
-                MessageBox.Show("Zuleitung 7 zu Ventil 2 in Testlösung führen !");//TODO evt abbrechen
-                System.Threading.Thread.Sleep(5000);
-                Comschnitstelle.SendToCOM("X20", true);
-                Console.WriteLine("X20");
-                stlLog.Add("X20");
-                //tabControl1.SelectedTab = tabPage2;
-            }
-            else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
+            oCommunicator.SendElektrodenTest();
         }
 
         private void btnLeitungDes_Click(object sender, EventArgs e)
         {
-            if (Comschnitstelle.bereit)
-            {
-                COM.Sequenzen_uebertragen_aktiv = true;
-                tabControl1.SelectedTab = tabGKommunikation;
-                Comschnitstelle.SendToCOM(Sequenz.LeitungenSpuelen(true), true);
-                Console.WriteLine("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(true));
-                stlLog.Add("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(true) + "    " + System.DateTime.Now.ToString());
-                MessageBox.Show("Schritt 1: Desinfektion \n 1. Inkubationsgefäße gegen Blindgefäße austauschen! \n 2. Zuleitungen 1, 2, 3, 6, 7 zu Ventil 2 in separates Abfallgefäß führen! \n 3. Puffergefäß gegen Desinfektionsmittelgefäß austauschen!");
-                System.Threading.Thread.Sleep(2000);
-                Comschnitstelle.SendToCOM(Sequenz.LeitungenSpuelen(false), true);
-                Console.WriteLine("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(false));
-                stlLog.Add("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(false) + "    " + System.DateTime.Now.ToString());
-                System.Threading.Thread.Sleep(2000);
 
-                COM.Sequenzen_uebertragen_aktiv = false;
-                BackgroundWorker BackgroundWorkerDesinfect = new BackgroundWorker();
-                stlLog.Add("Start BackgroundWorkerDesinfect" + "    " + System.DateTime.Now.ToString());
-                BackgroundWorkerDesinfect.RunWorkerCompleted += BackgroundWorkerDesinfect_RunWorkerCompleted;
-                BackgroundWorkerDesinfect.DoWork += BackgroundWorkerCommands_DoWork;
-                BackgroundWorkerDesinfect.RunWorkerAsync(new HelpClass((int)numDesinfektion.Value, "X18", "X19", "W0,01"));
-                BackgroundWorkerDesinfect.Dispose();
-            }
-            else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
+            oCommunicator.SendLeitungDesk((int)numDesinfektion.Value, (int)numSpuelen.Value);
         }
 
         private void btnReg_Click(object sender, EventArgs e)
         {
-            if (Comschnitstelle.bereit)
-            {
-                Comschnitstelle.SendToCOM(Sequenz.ElektrodenReg(), true);
-                BackgroundWorker BackgroundWorkerReg = new BackgroundWorker();
-                stlLog.Add("Start BackgroundWorkerReg" + "    " + System.DateTime.Now.ToString());
-                BackgroundWorkerReg.DoWork += BackgroundWorkerCommands_DoWork;
-                BackgroundWorkerReg.RunWorkerCompleted += BackgroundWorkerReg_RunWorkerCompleted;
-                BackgroundWorkerReg.RunWorkerAsync(new HelpClass(1, "X20", "W0,01"));
-                BackgroundWorkerReg.Dispose();
-                tabControl1.SelectedTab = tabGKommunikation;
-            }
-            else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
-        }
-
-        void BackgroundWorkerReg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            stlLog.Add("Completed BackgroundWorkerReg" + "    " + System.DateTime.Now.ToString());
-            MessageBox.Show("Elektroden wurden regeneriert!");
-        }
-        void BackgroundWorkerSendSequenz_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            COM.Sequenzen_uebertragen_aktiv = false;
-            MessageBox.Show("Sequenzen wurden an das Gerät übertragen!");
-            stlLog.Add("Sequenzen wurden an das Gerät übertragen!" + "    " + System.DateTime.Now.ToString());
-
-        }
-        void BackgroundWorkerDesinfect_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            stlLog.Add("Completed BackgroundWorkerDesinfect" + "    " + System.DateTime.Now.ToString());
-            MessageBox.Show("Schritt 2: Spülen \n Desinfektionsmittelgefäß gegen Puffergefäß austauschen!");
-
-            BackgroundWorker BackgroundWorkerFlush = new BackgroundWorker();
-            stlLog.Add("Start BackgroundWorkerFlush" + "    " + System.DateTime.Now.ToString());
-            BackgroundWorkerFlush.RunWorkerCompleted += BackgroundWorkerFlush_RunWorkerCompleted;
-            BackgroundWorkerFlush.DoWork += BackgroundWorkerCommands_DoWork;
-            BackgroundWorkerFlush.RunWorkerAsync(new HelpClass((int)numSpuelen.Value, "X18", "X19", "W0,01"));
-            BackgroundWorkerFlush.Dispose();
-        }
-        void BackgroundWorkerFlush_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            stlLog.Add("Completed BackgroundWorkerFlush" + "    " + System.DateTime.Now.ToString());
-            MessageBox.Show("System desinfiziert und gespült.\n 1. Blindgefäße gegen Inkubationsgefäße austauschen! \n 2. Zuleitungen zu Ventil 2 in die jeweiligen Vorratsgefäße führen!");
-        }
-        private void BackgroundWorkerCommands_DoWork(object sender, DoWorkEventArgs e)
-        {
-            Comschnitstelle.Execute_Commands(((HelpClass)e.Argument).iRepeat, ((HelpClass)e.Argument).arrCommands);
+            oCommunicator.SendReg();
         }
 
         private void btnPumpeMesszelleAus(object sender, EventArgs e)
         {
-            Comschnitstelle.SendToCOM("p1,0", true);
+            oCommunicator.SendToCOM("p1,0");
         }
 
         private void btnPumpeMesszelleEin(object sender, EventArgs e)
         {
 
-            Comschnitstelle.SendToCOM("p1,1", true);
+            oCommunicator.SendToCOM("p1,1");
         }
 
         private void btnPumpeAbfallEin(object sender, EventArgs e)
         {
 
-            Comschnitstelle.SendToCOM("p2,1", true);
+            oCommunicator.SendToCOM("p2,1");
         }
 
         private void btnPumpeAbfallAus(object sender, EventArgs e)
         {
 
-            Comschnitstelle.SendToCOM("p2,0", true);
+            oCommunicator.SendToCOM("p2,0");
         }
 
         private void btnTemperierungAus(object sender, EventArgs e)
         {
 
-            Comschnitstelle.SendToCOM("o0", true);
+            oCommunicator.SendToCOM("o0");
         }
+
 
         private void btnChart_Click(object sender, EventArgs e)
         {
             int SelectedRow = MesszyklusGrid.CurrentCell.RowIndex;
-          
+
             ChartForm _Chart = new ChartForm(this);
             _Chart.Show();
         }
@@ -634,18 +471,7 @@ namespace PharMS_Steuerung
             }
         }
 
-        public class HelpClass
-        {
-            public int iRepeat;
-            public string[] arrCommands;
 
-            public HelpClass(int Repeat, params string[] Commands)
-            {
-                iRepeat = Repeat;
-                arrCommands = Commands;
-
-            }
-        }
 
         private void MasterGrid_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
@@ -653,7 +479,7 @@ namespace PharMS_Steuerung
             {
                 if (e.Exception.Message == "Spalte 'S_ID' läßt nicht 'nulls' zu.")
                 {
-                    MasterGrid.Rows[e.RowIndex].Cells[1].Value = null;                    
+                    MasterGrid.Rows[e.RowIndex].Cells[1].Value = null;
                 }
                 else
                 {
@@ -689,14 +515,16 @@ namespace PharMS_Steuerung
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-             var result = MessageBox.Show("Möchten Sie Ihre Änderungen speichern?", "Speichern", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            var result = MessageBox.Show("Möchten Sie Ihre Änderungen speichern?", "Speichern", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             { DBMain.Save(); }
             if (result == DialogResult.Cancel)
             { e.Cancel = true; }
 
-            File.WriteAllLines("LogCOM.txt", stlLog);
+            if (oCommunicator != null)
+                oCommunicator.SaveLog();
+
         }
 
         private void btnLiveChart_Click(object sender, EventArgs e)
@@ -707,7 +535,17 @@ namespace PharMS_Steuerung
             _LiveChart = new LiveChartForm(this);
             _LiveChart.Show();
         }
-       
+
+        private void numeric_Intervall_ValueChanged(object sender, EventArgs e)
+        {
+            oCommunicator.Messintervall = (int)numeric_Intervall.Value;
+        }
+
+        private void numeric_Messdauer_ValueChanged(object sender, EventArgs e)
+        {
+            oCommunicator.Messdauer = (int)numeric_Messdauer.Value;
+        }
+
 
     }
 }

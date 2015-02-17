@@ -247,6 +247,32 @@ namespace PharMS_Steuerung.Funktionen
             dtr.Close();
             return IDs;
         }
+
+        public List<string> GetSequenzByIDAsList(int S_ID)
+        {
+            List<string> lstSequenz = new List<string>();
+
+            var query = from a in dsPharms.Tables["Sequenzen"].AsEnumerable()
+                        join b in dsPharms.Tables["SequenzEdit"].AsEnumerable()
+                            on a.Field<Int64>("ID") equals
+                                b.Field<Int64>("S_ID")
+                        where b.Field<Int64>("S_ID") == S_ID
+                        orderby b.Field<Int64>("Reihenfolge")
+                        select new
+                        {
+                            S_ID = b.Field<Int64>("S_ID"),
+                            Reihenfolge = b.Field<Int64>("Reihenfolge"),
+                            Befehl = b.Field<string>("Befehl"),
+                            Parameter = b.Field<string>("Parameter"),
+                            Speicherplatz = a.Field<string>("Speicherplatz")
+                        };
+
+            foreach (var q in query)
+            {
+                lstSequenz.Add(q.Befehl);
+            }
+            return lstSequenz;
+        }
         public string GetSequenzByID(int S_ID)
         {
             string sSequenz = "";
@@ -377,7 +403,8 @@ namespace PharMS_Steuerung.Funktionen
 
             // dtSequenzen.AcceptChanges();
         }
-        public string NameMesszyklus(int ID) {
+        public string NameMesszyklus(int ID)
+        {
             string Name = "";
 
 
