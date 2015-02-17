@@ -44,6 +44,7 @@ namespace PharMS_Steuerung.Funktionen
         {
             if (!port.IsOpen) return;
 
+            Status = port.ReadLine();
             oCommunicator.port_DataReceived(Status);
 
         }      

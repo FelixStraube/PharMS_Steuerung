@@ -269,7 +269,7 @@ namespace PharMS_Steuerung.Funktionen
 
             foreach (var q in query)
             {
-                lstSequenz.Add(q.Befehl);
+                lstSequenz.Add(q.Befehl+q.Parameter);
             }
             return lstSequenz;
         }

@@ -203,7 +203,9 @@ namespace PharMS_Steuerung
 
         private void Initialisierung_Click(object sender, EventArgs e)
         {
+            
             oCommunicator.SendToCOM("X01");
+            oCommunicator.AbfrageStatus();
         }
 
         private void AblaufListe_SelectedValueChanged(object sender, EventArgs e)
@@ -403,24 +405,28 @@ namespace PharMS_Steuerung
         private void btnPumpeMesszelleAus(object sender, EventArgs e)
         {
             oCommunicator.SendToCOM("p1,0");
+
         }
 
         private void btnPumpeMesszelleEin(object sender, EventArgs e)
         {
 
             oCommunicator.SendToCOM("p1,1");
+      
         }
 
         private void btnPumpeAbfallEin(object sender, EventArgs e)
         {
 
             oCommunicator.SendToCOM("p2,1");
+   
         }
 
         private void btnPumpeAbfallAus(object sender, EventArgs e)
         {
 
             oCommunicator.SendToCOM("p2,0");
+   
         }
 
         private void btnTemperierungAus(object sender, EventArgs e)
