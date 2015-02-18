@@ -414,17 +414,17 @@ namespace PharMS_Steuerung.Funktionen
                             case "s10":
 
                                 System.Threading.Thread.Sleep(1000);
-                              
+
                                 break;
 
                             case "s30":
                                 System.Threading.Thread.Sleep(1000);
-                                
+
                                 break;
 
                             case "s40":
                                 System.Threading.Thread.Sleep(5000);
-                          
+
                                 break;
                             /*default:
                                 System.Threading.Thread.Sleep(30000);
@@ -507,7 +507,7 @@ namespace PharMS_Steuerung.Funktionen
                 }
 
                 DBMain.SaveMeasurements(); // speichern der Daten nach dem Ende eines Messzyklus
-
+                oComschnitstelle.bereit = true; //neue Befehle können aufgenommen werden
                 // Die Status Abfrage fürte zu Fehlern im Automatisierten Betrieb. Wenn Status Abfrage Nötig wieder Einschalten
                 // AbfrageStatus();
             }
@@ -525,33 +525,57 @@ namespace PharMS_Steuerung.Funktionen
         {
             List<String> lstCommands = new List<string>();
             List<int> IDs;
-            IDs = DBMain.GetAllSequenzIDWithMemory();
+            IDs = DBMain.GetSequenzIDsFromMasterablauf();
+
+            FormLog.AddLog("Starte Masterablauf " + DateTime.Now);
 
             for (int j = 0; j < CountMasterIteration; j++)
             {
                 foreach (int ID in IDs)
                 {
                     lstCommands = DBMain.GetSequenzByIDAsList(ID);
-                    FormLog.AddLog("Starte Sequenz");
+                    FormLog.AddLog("Starte Sequenz mit ID: " + ID.ToString());
                     for (int i = 0; i < lstCommands.Count(); i++)
                     {
-                        HandleCommand(lstCommands[i]);
+
                         //Pufferzeit mitschicken wenn der Befehl lange zum abarbeiten braucht und eine eventbehandlung stattfindet, wenn der Thread fertig ist
                         Boolean bLock = false;
-                        do
+
+                        FormLog.AddLog("Akuteller Befehl : " + lstCommands[i]);
+                        if (lstCommands[i][0] == 'W')
                         {
-
-                            if (Abbruch == true) return;
+                            string[] sTime = lstCommands[i].Split(',');
+                            string[] sMin = sTime[0].Split('W');
                             sExpectedStatus = "Z";
-                            if (oComschnitstelle.bereit == true && !bLock)
+                            FormLog.AddLog("Wartezeit geht los " + DateTime.Now);
+                            oComschnitstelle.SendToCOM(lstCommands[i], false);
+                            System.Threading.Thread.Sleep((Convert.ToInt32(sMin[1]) * 60 * 1000) + Convert.ToInt32(sTime[1]) * 1000);
+                            FormLog.AddLog("Wartezeit ende " + DateTime.Now);
+                        }
+                        else
+                            if (lstCommands[i] == "M")
                             {
-                                FormLog.AddLog("Line: " + lstCommands[i]); //Sende Befehl
+                                if (Abbruch == true) return;
+                                sExpectedStatus = "M";
                                 oComschnitstelle.SendToCOM(lstCommands[i], false);
-                                System.Threading.Thread.Sleep(1000);
-                                bLock = true; //Somit wartet er bis das erwartete Z den Port für bereit erklärt
+                                FormLog.AddLog("Messwert gesendet " + DateTime.Now);
+                                System.Threading.Thread.Sleep((Messdauer * 60 * 1000) + 2000); //während er wartet müsste der Messwerttimer starten
+                                FormLog.AddLog("Ende Messung " + DateTime.Now);
                             }
-
-                        } while (oComschnitstelle.bereit == false);
+                            else
+                            {
+                                do
+                                {
+                                    if (Abbruch == true) return;
+                                    sExpectedStatus = "Z";
+                                    if (oComschnitstelle.bereit == true && !bLock)
+                                    {
+                                        oComschnitstelle.SendToCOM(lstCommands[i], false);
+                                        System.Threading.Thread.Sleep(1000);
+                                        bLock = true;
+                                    }
+                                } while (oComschnitstelle.bereit == false); //Somit wartet er bis das erwartete Z den Port für bereit erklärt, die Befehle M und W benötigen keine explizites warten
+                            }
 
                         do
                         {
@@ -559,20 +583,15 @@ namespace PharMS_Steuerung.Funktionen
                             AbfrageStatus(); //Warte bis neuer Befehl gesendet werden kann
                             Thread.Sleep(2000); //um zu verhindern dass das Gerät mit Abfragen zugespamt wird (führt sonst zu fehlern)
                         } while (oComschnitstelle.bereit == false);
+
+                        FormLog.AddLog("Akuteller Befehl abgearbeitet: " + lstCommands[i]);
                     }
                     FormLog.AddLog("Beende Sequenz");
                 }
             }
+            FormLog.AddLog("Ende Masterablauf" + DateTime.Now);
         }
 
-        private void HandleCommand(string sCommand)
-        {
-            if (sCommand == "M")
-                System.Threading.Thread.Sleep((Messdauer * 60 * 1000) + 2000);
-
-            sExpectedStatus = "Z";
-
-        }
         private void Execute_Commands(int repeat, params string[] Commands)
         {
             for (int j = 0; j < repeat; j++)
@@ -582,7 +601,7 @@ namespace PharMS_Steuerung.Funktionen
                     if (Commands[i].Length > 512)
                         MessageBox.Show("Der Befehl ist größere als 512 Zeichen");
 
-                    if (Commands[i] == "X")
+                    if (Commands[i][0] == 'X')
                         sExpectedStatus = sMakroEndeZeichen;
                     else sExpectedStatus = "Z";
 
@@ -607,10 +626,7 @@ namespace PharMS_Steuerung.Funktionen
         }
     }
 
-    /* if (Caption[0] == 'X')
-                        sExpectedStatus = sMakroEndeZeichen;
-                    else
-                        sExpectedStatus = "Z";*/
+
     public class HelpClass
     {
         public int iRepeat;

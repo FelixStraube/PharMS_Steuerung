@@ -169,6 +169,25 @@ namespace PharMS_Steuerung.Funktionen
             return Speicherplatz;
         }
 
+        public List<int> GetSequenzIDsFromMasterablauf()
+        {
+            List<int> IDs = new List<int>();
+            DataTable dtt = new DataTable();            //Erstellt eine leere Hilfs-Tabelle
+            DataTableReader dtr;
+            dsPharms.Tables["Masterablauf"].DefaultView.Sort = "Reihenfolge ASC";
+            dtt =  dsPharms.Tables["Masterablauf"].DefaultView.ToTable();         //Leere Hilfs-Tabelle wird gefüllt
+
+            dtr = dtt.CreateDataReader();
+
+            while (dtr.Read())
+            {
+                if (dtr["S_ID"].ToString() != " ")
+                    IDs.Add(Convert.ToInt32(dtr["S_ID"]));
+            }
+            dtr.Close();
+            return IDs;
+        }
+
         public void ImportSequenz(string sFileName)
         {
             var TextFile = File.ReadAllLines(sFileName);
@@ -237,6 +256,7 @@ namespace PharMS_Steuerung.Funktionen
         {
             List<int> IDs = new List<int>();
             DataTableReader dtr;
+            dsPharms.Tables["Sequenzen"].DefaultView.Sort = "Speicherplatz";
             dtr = dsPharms.Tables["Sequenzen"].CreateDataReader();
 
             while (dtr.Read())
