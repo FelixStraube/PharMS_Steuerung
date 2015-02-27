@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.Verzeichnisauswahl = new System.Windows.Forms.FolderBrowserDialog();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -106,6 +107,9 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.numericResponsetime = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.toolTipResponsetime = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -132,6 +136,7 @@
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericResponsetime)).BeginInit();
             this.SuspendLayout();
             // 
             // fileSystemWatcher1
@@ -643,6 +648,8 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.numericResponsetime);
+            this.groupBox5.Controls.Add(this.label3);
             this.groupBox5.Controls.Add(this.label13);
             this.groupBox5.Controls.Add(this.numeric_Messdauer);
             this.groupBox5.Controls.Add(this.label12);
@@ -655,6 +662,8 @@
             this.groupBox5.TabIndex = 3;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Messung";
+            this.toolTipResponsetime.SetToolTip(this.groupBox5, "Die Wartezeit gibt an wie lange die Software auf die Antwort vom Pharmsgerät maxi" +
+        "mal wartet.");
             // 
             // label13
             // 
@@ -959,6 +968,39 @@
             this.Column1.HeaderText = "Nr.:";
             this.Column1.Name = "Column1";
             // 
+            // numericResponsetime
+            // 
+            this.numericResponsetime.Location = new System.Drawing.Point(166, 93);
+            this.numericResponsetime.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numericResponsetime.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+            this.numericResponsetime.Name = "numericResponsetime";
+            this.numericResponsetime.Size = new System.Drawing.Size(94, 20);
+            this.numericResponsetime.TabIndex = 25;
+            this.toolTipResponsetime.SetToolTip(this.numericResponsetime, "Gibt die maximale Wartezeit für die Annahme eines Befehls an.");
+            this.numericResponsetime.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericResponsetime.ValueChanged += new System.EventHandler(this.numericResponsetime_ValueChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(166, 77);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(82, 13);
+            this.label3.TabIndex = 24;
+            this.label3.Text = "Wartezeit in min";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1005,6 +1047,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericResponsetime)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1094,6 +1137,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         public System.Windows.Forms.DataGridView MesszyklusGrid;
         private System.Windows.Forms.Button btnLiveChart;
+        private System.Windows.Forms.NumericUpDown numericResponsetime;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ToolTip toolTipResponsetime;
 
 
     }

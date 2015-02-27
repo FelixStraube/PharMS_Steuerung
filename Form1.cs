@@ -204,8 +204,7 @@ namespace PharMS_Steuerung
         private void Initialisierung_Click(object sender, EventArgs e)
         {
             
-            oCommunicator.SendToCOM("X01");
-            oCommunicator.AbfrageStatus();
+            oCommunicator.SendToCOM("X01");           
         }
 
         private void AblaufListe_SelectedValueChanged(object sender, EventArgs e)
@@ -332,6 +331,7 @@ namespace PharMS_Steuerung
                 oCommunicator = new Communicator(DBMain, ausg);
                 oCommunicator.Messdauer = (int)numeric_Messdauer.Value;
                 oCommunicator.Messintervall = (int)numeric_Intervall.Value;
+                oCommunicator.Responsetime = (int)numericResponsetime.Value;
 
             }
         }
@@ -550,6 +550,11 @@ namespace PharMS_Steuerung
         private void numeric_Messdauer_ValueChanged(object sender, EventArgs e)
         {
             oCommunicator.Messdauer = (int)numeric_Messdauer.Value;
+        }
+
+        private void numericResponsetime_ValueChanged(object sender, EventArgs e)
+        {
+            oCommunicator.Responsetime = (int)numericResponsetime.Value;
         }
 
 

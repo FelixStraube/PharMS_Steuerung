@@ -23,8 +23,7 @@ namespace PharMS_Steuerung.Funktionen
         private string sMakroEndeZeichen;
         private string sZyklus;
         private int iTickInterval, iTickAktuell;
-        private int CountUndefinedStatus = 0;
-
+        public System.Timers.Timer tmrResponsetimer;
 
         public System.Timers.Timer tmrMesswerteTimer;
         public System.Timers.Timer tmrAfterAllMesswerte;
@@ -35,11 +34,9 @@ namespace PharMS_Steuerung.Funktionen
         public bool bIgnoreNewMeasurements = false;
         public bool Sequenzen_uebertragen_aktiv = false;
         public int ende;
-        public int Messdauer, Messintervall;
+        public int Messdauer, Messintervall, Responsetime;
         public bool IsWithMakro;
 
-
-        public List<string> stlLog;
         public SQLMain DBMain;
         public bool Abbruch; //Abruch der Kommunikation 
         public bool Connection; //eher nach COM auslagern 
@@ -49,7 +46,6 @@ namespace PharMS_Steuerung.Funktionen
         #region Grundlegendefunktionen
         public Communicator(SQLMain p_DBMain, Consolen_LOG p_FormLog)
         {
-            stlLog = new List<string>();
             DBMain = p_DBMain;
             FormLog = p_FormLog;
 
@@ -59,7 +55,8 @@ namespace PharMS_Steuerung.Funktionen
         }
         public void SaveLog()
         {
-            File.WriteAllLines("LogCOM.txt", stlLog);
+            File.WriteAllText("LogCOM.txt", FormLog.GetLog());
+            //File.WriteAllLines("LogCOM.txt", FormLog.GetLog());
         }
 
         public bool ConnectToDevice()
@@ -96,7 +93,7 @@ namespace PharMS_Steuerung.Funktionen
                 if (lstMaster.Count == 0) return;
 
                 Thread threadAblaufStart = new Thread(new ThreadStart(Execute_MakroAblauf));
-                stlLog.Add("Start threadAblaufStart" + "    " + System.DateTime.Now.ToString());
+                FormLog.AddLog("Start threadAblaufStart" + "    " + System.DateTime.Now.ToString());
                 threadAblaufStart.Start();
             }
 
@@ -110,7 +107,7 @@ namespace PharMS_Steuerung.Funktionen
 
 
             BackgroundWorker BackgroundWorkerEinzelbefehle = new BackgroundWorker();
-            stlLog.Add("Start BackgroundWorkerSendSequenz" + "    " + System.DateTime.Now.ToString());
+            FormLog.AddLog("Start BackgroundWorkerSendSequenz" + "    " + System.DateTime.Now.ToString());
             BackgroundWorkerEinzelbefehle.RunWorkerCompleted += BackgroundWorkerEinzelbefehle_RunWorkerCompleted;
             BackgroundWorkerEinzelbefehle.DoWork += BackgroundWorkerEinzelbefehle_DoWork;
             BackgroundWorkerEinzelbefehle.RunWorkerAsync();
@@ -131,18 +128,17 @@ namespace PharMS_Steuerung.Funktionen
                         if (Abbruch == true) return;
                         Lauf = oComschnitstelle.SendToCOM("X" + lstMaster[i], false);
 
-                        stlLog.Add("Gesendet : " + lstMaster[i] + "    " + System.DateTime.Now.ToString());
                         FormLog.AddLog("Gesendet : " + lstMaster[i]);
 
                         if (Lauf == true) Console.WriteLine("Line: " + i + ";" + lstMaster.Count + ";" + "X" + lstMaster[i]);
-                        if (Lauf == true) stlLog.Add("Line: " + i + ";" + lstMaster.Count + ";" + "X" + lstMaster[i]);
+                        if (Lauf == true) FormLog.AddLog("Line: " + i + ";" + lstMaster.Count + ";" + "X" + lstMaster[i]);
                         System.Threading.Thread.Sleep(1000);
 
                     } while (Lauf == false);
                 }
 
             }
-            stlLog.Add("Completed threadAblaufStart" + "    " + System.DateTime.Now.ToString());
+            FormLog.AddLog("Completed threadAblaufStart" + "    " + System.DateTime.Now.ToString());
         }
         #endregion
 
@@ -154,12 +150,12 @@ namespace PharMS_Steuerung.Funktionen
                 oComschnitstelle.SendToCOM(Sequenz.ElektrodenTest(), true);
                 sExpectedStatus = "Z";
                 Console.WriteLine("Incoming Data gesendet:" + Sequenz.ElektrodenTest());
-                stlLog.Add("Incoming Data gesendet:" + Sequenz.ElektrodenTest() + "    " + System.DateTime.Now.ToString());
+                FormLog.AddLog("Incoming Data gesendet:" + Sequenz.ElektrodenTest() + "    " + System.DateTime.Now.ToString());
                 MessageBox.Show("Zuleitung 7 zu Ventil 2 in Testlösung führen !");//TODO evt abbrechen
                 System.Threading.Thread.Sleep(5000);
                 oComschnitstelle.SendToCOM("X20", true);
                 Console.WriteLine("X20");
-                stlLog.Add("X20");
+                FormLog.AddLog("X20");
 
             }
             else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
@@ -172,7 +168,7 @@ namespace PharMS_Steuerung.Funktionen
                 oComschnitstelle.SendToCOM(Sequenz.ElektrodenReg(), true);
                 sExpectedStatus = "Z";
                 BackgroundWorker BackgroundWorkerReg = new BackgroundWorker();
-                stlLog.Add("Start BackgroundWorkerReg" + "    " + System.DateTime.Now.ToString());
+                FormLog.AddLog("Start BackgroundWorkerReg" + "    " + System.DateTime.Now.ToString());
                 BackgroundWorkerReg.DoWork += BackgroundWorkerCommands_DoWork;
                 BackgroundWorkerReg.RunWorkerCompleted += BackgroundWorkerReg_RunWorkerCompleted;
                 BackgroundWorkerReg.RunWorkerAsync(new HelpClass(1, "X20", "W0,01"));
@@ -192,17 +188,17 @@ namespace PharMS_Steuerung.Funktionen
                 //tabControl1.SelectedTab = tabGKommunikation;
                 oComschnitstelle.SendToCOM(Sequenz.LeitungenSpuelen(true), true);
                 Console.WriteLine("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(true));
-                stlLog.Add("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(true) + "    " + System.DateTime.Now.ToString());
+                FormLog.AddLog("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(true) + "    " + System.DateTime.Now.ToString());
                 MessageBox.Show("Schritt 1: Desinfektion \n 1. Inkubationsgefäße gegen Blindgefäße austauschen! \n 2. Zuleitungen 1, 2, 3, 6, 7 zu Ventil 2 in separates Abfallgefäß führen! \n 3. Puffergefäß gegen Desinfektionsmittelgefäß austauschen!");
                 System.Threading.Thread.Sleep(2000);
                 oComschnitstelle.SendToCOM(Sequenz.LeitungenSpuelen(false), true);
                 Console.WriteLine("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(false));
-                stlLog.Add("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(false) + "    " + System.DateTime.Now.ToString());
+                FormLog.AddLog("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(false) + "    " + System.DateTime.Now.ToString());
                 System.Threading.Thread.Sleep(2000);
 
                 Sequenzen_uebertragen_aktiv = false;
                 BackgroundWorker BackgroundWorkerDesinfect = new BackgroundWorker();
-                stlLog.Add("Start BackgroundWorkerDesinfect" + "    " + System.DateTime.Now.ToString());
+                FormLog.AddLog("Start BackgroundWorkerDesinfect" + "    " + System.DateTime.Now.ToString());
                 BackgroundWorkerDesinfect.RunWorkerCompleted += BackgroundWorkerDesinfect_RunWorkerCompleted;
                 BackgroundWorkerDesinfect.DoWork += BackgroundWorkerCommands_DoWork;
                 BackgroundWorkerDesinfect.RunWorkerAsync(new HelpClass(p_CountDesItereation, "X18", "X19", "W0,01"));
@@ -213,11 +209,11 @@ namespace PharMS_Steuerung.Funktionen
 
         private void BackgroundWorkerDesinfect_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            stlLog.Add("Completed BackgroundWorkerDesinfect" + "    " + System.DateTime.Now.ToString());
+            FormLog.AddLog("Completed BackgroundWorkerDesinfect" + "    " + System.DateTime.Now.ToString());
             MessageBox.Show("Schritt 2: Spülen \n Desinfektionsmittelgefäß gegen Puffergefäß austauschen!");
 
             BackgroundWorker BackgroundWorkerFlush = new BackgroundWorker();
-            stlLog.Add("Start BackgroundWorkerFlush" + "    " + System.DateTime.Now.ToString());
+            FormLog.AddLog("Start BackgroundWorkerFlush" + "    " + System.DateTime.Now.ToString());
             BackgroundWorkerFlush.RunWorkerCompleted += BackgroundWorkerFlush_RunWorkerCompleted;
             BackgroundWorkerFlush.DoWork += BackgroundWorkerCommands_DoWork;
             BackgroundWorkerFlush.RunWorkerAsync(new HelpClass(CountSpulItereation, "X18", "X19", "W0,01"));
@@ -226,7 +222,7 @@ namespace PharMS_Steuerung.Funktionen
 
         private void BackgroundWorkerFlush_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            stlLog.Add("Completed BackgroundWorkerFlush" + "    " + System.DateTime.Now.ToString());
+            FormLog.AddLog("Completed BackgroundWorkerFlush" + "    " + System.DateTime.Now.ToString());
             MessageBox.Show("System desinfiziert und gespült.\n 1. Blindgefäße gegen Inkubationsgefäße austauschen! \n 2. Zuleitungen zu Ventil 2 in die jeweiligen Vorratsgefäße führen!");
         }
         private void BackgroundWorkerCommands_DoWork(object sender, DoWorkEventArgs e)
@@ -239,20 +235,20 @@ namespace PharMS_Steuerung.Funktionen
         }
         private void BackgroundWorkerEinzelbefehle_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            stlLog.Add("Completed BackgroundWorkerEinzelbefehle" + "    " + System.DateTime.Now.ToString());
+            FormLog.AddLog("Completed BackgroundWorkerEinzelbefehle" + "    " + System.DateTime.Now.ToString());
             // MessageBox.Show("Masterablauf erfoglreich absolviert!");
         }
 
         private void BackgroundWorkerReg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            stlLog.Add("Completed BackgroundWorkerReg" + "    " + System.DateTime.Now.ToString());
+            FormLog.AddLog("Completed BackgroundWorkerReg" + "    " + System.DateTime.Now.ToString());
             MessageBox.Show("Elektroden wurden regeneriert!");
         }
         private void BackgroundWorkerSendSequenz_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Sequenzen_uebertragen_aktiv = false;
             MessageBox.Show("Sequenzen wurden an das Gerät übertragen!");
-            stlLog.Add("Sequenzen wurden an das Gerät übertragen!" + "    " + System.DateTime.Now.ToString());
+            FormLog.AddLog("Sequenzen wurden an das Gerät übertragen!" + "    " + System.DateTime.Now.ToString());
         }
 
 
@@ -311,13 +307,13 @@ namespace PharMS_Steuerung.Funktionen
 
                 lstCommands.Add(DBMain.GetSequenzByID(ID));
                 Console.WriteLine(DBMain.GetSequenzByID(ID));
-                stlLog.Add(DBMain.GetSequenzByID(ID));
+                FormLog.AddLog(DBMain.GetSequenzByID(ID));
             }
 
             Sequenzen_uebertragen_aktiv = true;
             BackgroundWorker BackgroundWorkerSendSequenz = new BackgroundWorker();
+            FormLog.AddLog("Start BackgroundWorkerSendSequenz" + "    " + System.DateTime.Now.ToString());
 
-            stlLog.Add("Start BackgroundWorkerSendSequenz" + "    " + System.DateTime.Now.ToString());
             BackgroundWorkerSendSequenz.RunWorkerCompleted += BackgroundWorkerSendSequenz_RunWorkerCompleted;
             BackgroundWorkerSendSequenz.DoWork += BackgroundWorkerCommands_DoWork;
             BackgroundWorkerSendSequenz.RunWorkerAsync(new HelpClass(1, lstCommands.ToArray()));
@@ -331,10 +327,10 @@ namespace PharMS_Steuerung.Funktionen
         public void port_DataReceived(string p_Status)
         {
 
-            FormLog.AddLog(p_Status);
             string steuerzeichen = p_Status.Substring(0, 1);
             string sMsg;
-            stlLog.Add("Data received from device:  " + p_Status + "   expected status: " + sExpectedStatus + "     " + System.DateTime.Now.ToString());
+            FormLog.AddLog("Data received from device:  " + p_Status + "   expected status: " + sExpectedStatus);
+
             if (steuerzeichen == sExpectedStatus || steuerzeichen == "E" || p_Status == sMakroEndeZeichen || steuerzeichen == "M" || steuerzeichen == "Z")
                 switch (steuerzeichen)
                 {
@@ -379,8 +375,6 @@ namespace PharMS_Steuerung.Funktionen
                         break;
 
                     case "Z":
-                        CountUndefinedStatus = 0;   // Counter null da sonst bei langen Sequenzen kein abfragen status nach 5 min möglich währe
-                        // AbfrageStatus();
 
                         if (sExpectedStatus == sMakroEndeZeichen && p_Status == sMakroEndeZeichen)
                         {
@@ -403,28 +397,52 @@ namespace PharMS_Steuerung.Funktionen
                         {
                             case "s00":
                                 oComschnitstelle.bereit = true;
-                                CountUndefinedStatus = 0;
+                                FormLog.AddLog("Status s00: Empfangsbereit");
+                                break;
+
+                            case "s04":
+                                oComschnitstelle.bereit = true;
+                                FormLog.AddLog("Status s04: Ventil 1 in Bewegung");
+                                break;
+
+                            case "s08":
+                                oComschnitstelle.bereit = true;
+                                FormLog.AddLog("Status s08: Ventil 2 in Bewegung");
+                                break;
+
+                            case "s10":
+                                System.Threading.Thread.Sleep(1000);
+                                FormLog.AddLog("Status s10: Diluter Flüssigkeit aktiv");
                                 break;
 
                             case "s20":
-
                                 oComschnitstelle.bereit = true;
-                                CountUndefinedStatus = 0;
+                                FormLog.AddLog("Status s20: Diluter Begasung aktiv");
                                 break;
-                            case "s10":
 
-                                System.Threading.Thread.Sleep(1000);
+                            case "s24":
+                                oComschnitstelle.bereit = true;
+                                FormLog.AddLog("Status s24: Diluter Begasung aktiv und Ventil 1 in Bewegung");
+                                break;
 
+                            case "s28":
+                                oComschnitstelle.bereit = true;
+                                FormLog.AddLog("Status s28: Diluter Begasung aktiv und Ventil 2 in Bewegung");
                                 break;
 
                             case "s30":
                                 System.Threading.Thread.Sleep(1000);
-
+                                FormLog.AddLog("Status s30: Diluter Begasung aktiv und Diluter Flüssigkeit aktiv");
                                 break;
 
                             case "s40":
                                 System.Threading.Thread.Sleep(5000);
+                                FormLog.AddLog("Status s40: Wartezeit läuft");
+                                break;
 
+                            case "s60":
+                                System.Threading.Thread.Sleep(5000);
+                                FormLog.AddLog("Status s60: Diluter Begasung aktiv und Wartezeit läuft");
                                 break;
                             /*default:
                                 System.Threading.Thread.Sleep(30000);
@@ -521,8 +539,29 @@ namespace PharMS_Steuerung.Funktionen
             oComschnitstelle.SendToCOM("s", true);
         }
 
+
+        private void ResponsetimerTick(Object myObject, EventArgs myEventArgs)
+        {
+            FormLog.AddLog("Error:---------Gerät reagiert nicht, erneute Statusabfrage. " + DateTime.Now);
+            AbfrageStatus();
+
+        }
         private void Execute_SingleCommands()
         {
+
+            if (tmrResponsetimer == null)
+            {
+                tmrResponsetimer = new System.Timers.Timer();
+                tmrResponsetimer.Enabled = false;
+            }
+            if (tmrResponsetimer.Enabled == false)
+            {
+                tmrResponsetimer.Interval = Responsetime * 60 * 1000;  //s zu ms
+                tmrResponsetimer.Elapsed += new ElapsedEventHandler(ResponsetimerTick);
+
+            }
+
+
             List<String> lstCommands = new List<string>();
             List<int> IDs;
             IDs = DBMain.GetSequenzIDsFromMasterablauf();
@@ -531,6 +570,7 @@ namespace PharMS_Steuerung.Funktionen
 
             for (int j = 0; j < CountMasterIteration; j++)
             {
+                FormLog.AddLog("Masteriteration: " + (j + 1).ToString());
                 foreach (int ID in IDs)
                 {
                     lstCommands = DBMain.GetSequenzByIDAsList(ID);
@@ -564,6 +604,7 @@ namespace PharMS_Steuerung.Funktionen
                             }
                             else
                             {
+
                                 do
                                 {
                                     if (Abbruch == true) return;
@@ -571,10 +612,12 @@ namespace PharMS_Steuerung.Funktionen
                                     if (oComschnitstelle.bereit == true && !bLock)
                                     {
                                         oComschnitstelle.SendToCOM(lstCommands[i], false);
+                                        tmrResponsetimer.Start();
                                         System.Threading.Thread.Sleep(1000);
                                         bLock = true;
                                     }
                                 } while (oComschnitstelle.bereit == false); //Somit wartet er bis das erwartete Z den Port für bereit erklärt, die Befehle M und W benötigen keine explizites warten
+                                tmrResponsetimer.Stop();
                             }
 
                         do
