@@ -72,7 +72,7 @@ namespace PharMS_Steuerung
             }
         }
 
-        public void button2_Click(object sender, EventArgs e)
+        public void button_Export_Click(object sender, EventArgs e)
         {
 
             SaveFileDialog sfd = new SaveFileDialog();
@@ -82,13 +82,34 @@ namespace PharMS_Steuerung
             {
 
                 DataView dvMesswerte = new DataView(DBMain.dsPharms.Tables["Messwerte"]);
+                DataView dvMesszyklus = new DataView(DBMain.dsPharms.Tables["Messzyklus"]);
 
                 //Temp.DataSource = dvMesswerte;
                 DatenerfassungTab.DataSource = dvMesswerte;
+                List<string> MZID = new List<string>();
+                //Selekted in Array Exportieren
+                int i = -1;
+                DataTable[] Temp = new DataTable[5000];
+                if (MesszyklusGrid.SelectedRows.Count != 0)
+                {
+                    foreach (DataGridViewRow test in MesszyklusGrid.SelectedRows)
+                    {
+                       
+                        string MZ_ID = test.Cells["ID"].Value.ToString();
+                        MZID.Add(MZ_ID);
 
-                CSV_Export.toCSV(DatenerfassungTab, sfd.FileName, DBMain);
+
+                        
+
+                    }
+                    CSV_Export Exporter = new CSV_Export();
+                    Exporter.toCSV(dvMesswerte.Table, dvMesszyklus.Table, sfd.FileName, DBMain, MZID);
+                }
+                
+                
+                else { MessageBox.Show("Keine Messung ausgewählt. Bitte Messzyklus auswählen."); }
             }
-
+            
             oSequenzeditor.FillGridMeasurements();
         }
 

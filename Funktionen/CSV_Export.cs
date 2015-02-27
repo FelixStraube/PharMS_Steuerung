@@ -8,71 +8,117 @@ using System.Data;
 
 namespace PharMS_Steuerung.Funktionen
 {
-    static class CSV_Export
+    public class CSV_Export
     {
 
-        public static void toCSV(DataGridView gridIn, string outputFile,SQLMain DBaktuel)
+        public void toCSV(DataTable Tabelle_Messwerte,DataTable Tabelle_Messzyklus, string outputFile, SQLMain DBaktuel, List<string> MZ_ID)
         {
-            //CSV Trennzeichen
+            
+            StreamWriter swOut = new StreamWriter(outputFile);
             string sTrenzeichen = ";";
-            //test to see if the DataGridView has any rows
-            if (gridIn.RowCount > 0)
-            {
-                string value = "";
-                DataGridViewRow dr = new DataGridViewRow();
-                StreamWriter swOut = new StreamWriter(outputFile);
+            List<string> Ausgabe = new List<string>();
 
-                //write header rows to csv
-                for (int i = 0; i <= gridIn.Columns.Count - 1; i++)
-                {
-                    if (i > 0)
-                    {
-                        swOut.Write(sTrenzeichen);
-                    }
-                    if (i == 1) {
-                        swOut.Write("Bezeichnung" + sTrenzeichen);
-                    swOut.Write(gridIn.Columns[i].HeaderText);
-                    }
-                    else swOut.Write(gridIn.Columns[i].HeaderText);
-                }
+            Ausgabe.Add(" " );
+            Ausgabe.Add(" " );
+            
+            for (int i = 0; i <= MZ_ID.Count - 1; i++)
+            {   int Zeit_gesamt = 0;
+                int Zeitschritt = 0;
 
-                swOut.WriteLine();
+                Ausgabe[1] = Ausgabe[1] + sTrenzeichen + "Zeit [s] " + sTrenzeichen + "Sensor 1 [nA]" + sTrenzeichen + "Sensor 2 [nA]" + sTrenzeichen;
+                bool Interwall_bestimmen = true;
+               // Anzahl der Festen zeilen -1
+                int LängeAktuell = 1;
+                
+                int Datenindex = 0 ;
+                foreach (DataRow row in Tabelle_Messzyklus.Rows)
+                {                                 
+                    if (row["ID"].ToString() == MZ_ID[MZ_ID.Count - i - 1])
+                    {  
+                        string [] Datum  =  row["Datum"].ToString().Split(' ');
 
-                //write DataGridView rows to csv
-                for (int j = 0; j <= gridIn.Rows.Count - 2; j++)
-                {
-                    if (j > 0)
-                    {
-                        swOut.WriteLine();
-                    }
-
-                    dr = gridIn.Rows[j];
-
-                    for (int i = 0; i <= gridIn.Columns.Count - 1; i++)
-                    {
-                        if (i > 0)
-                        {
-                            swOut.Write(sTrenzeichen);
-                        }
-                        if (!Convert.IsDBNull(dr.Cells[i]))  {
-                        value = dr.Cells[i].Value.ToString();
-                        //replace comma's with spaces
-                       // value = value.Replace(',', ' ');
-                        //replace embedded newlines with spaces
-                        if (i == 1)
-                        {
-                            string Name;
-                            Name = DBaktuel.NameMesszyklus(Convert.ToInt32(dr.Cells[i].Value.ToString()));
-                            swOut.Write(Name + sTrenzeichen);
-                        }
-                        value = value.Replace(Environment.NewLine, " ");
-
-                        swOut.Write(value);}
+                        Ausgabe[0] = Ausgabe[0] + sTrenzeichen + row["Name"].ToString() + sTrenzeichen + "Datum :" + sTrenzeichen + Datum[0] + sTrenzeichen;
+                    
+                    
                     }
                 }
-                swOut.Close();
+                foreach (DataRow row in Tabelle_Messwerte.Rows)
+                { Datenindex = Datenindex + 1;
+
+                   
+
+                    if (row["MZ_ID"].ToString() == MZ_ID[MZ_ID.Count-i-1])
+                    {
+                        
+                        LängeAktuell = LängeAktuell + 1;
+                       
+
+                        if (Interwall_bestimmen == true)
+                        {
+                            Zeitschritt = Get_Interval(row["Datum"].ToString(), Tabelle_Messwerte.Rows[Datenindex]["Datum"].ToString());
+                            Interwall_bestimmen = false;
+                        }
+                        Zeit_gesamt = Zeit_gesamt + Zeitschritt;              
+                       
+
+                        if (Ausgabe.Count > LängeAktuell)
+                        {
+                            
+                            Ausgabe[LängeAktuell] = Ausgabe[LängeAktuell] + sTrenzeichen + Zeit_gesamt.ToString() + sTrenzeichen + row["MW1"].ToString() + sTrenzeichen + row["MW2"].ToString() + sTrenzeichen;
+
+                        }
+                        else
+                        {
+                            Ausgabe.Add(" ");
+                            for (int s = 0; i > s; s++)
+                            {
+                                Ausgabe[LängeAktuell] = Ausgabe[LängeAktuell] + sTrenzeichen+ sTrenzeichen+ sTrenzeichen+ sTrenzeichen;
+                            
+                            }
+                            Ausgabe[LängeAktuell] = Ausgabe[LängeAktuell] + sTrenzeichen + Zeit_gesamt.ToString() + sTrenzeichen + row["MW1"].ToString() + sTrenzeichen + row["MW2"].ToString() + sTrenzeichen;
+
+
+                        }
+
+                    }
+
+                }
+
             }
+
+            foreach (string Zeile in Ausgabe) { 
+            
+            swOut.WriteLine(Zeile);
+            
+            }
+            swOut.Close();
+      
+        
+      
+    
+    
+    }
+                  
+       static int Get_Interval (string Time1, string Time2){
+        
+        int Interval = 0;
+
+        string[] Start = Time2.Split(':');
+        string[] Start_Stunden = Start[0].Split(' ');
+        
+        string[] Ende = Time1.Split(':');
+        string[] Ende_Stunden = Ende[0].Split(' ');
+
+
+        Interval = (Convert.ToInt16(Start[2]) + Convert.ToInt16(Start[1]) * 60 + Convert.ToInt16(Start_Stunden[1]) * 360) - (Convert.ToInt16(Ende[2]) + Convert.ToInt16(Ende[1]) * 60 + Convert.ToInt16(Ende_Stunden[1]) * 360);
+
+          
+        
+        return Interval;
+        
         }
     }
+
+     
 }
 
