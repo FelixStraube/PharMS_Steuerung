@@ -102,9 +102,7 @@ namespace PharMS_Steuerung.Funktionen
         {
             CountMasterIteration = p_PCountMasterIteration;
 
-
             Abbruch = false;
-
 
             BackgroundWorker BackgroundWorkerEinzelbefehle = new BackgroundWorker();
             FormLog.AddLog("Start BackgroundWorkerSendSequenz" + "    " + System.DateTime.Now.ToString());
@@ -112,7 +110,6 @@ namespace PharMS_Steuerung.Funktionen
             BackgroundWorkerEinzelbefehle.DoWork += BackgroundWorkerEinzelbefehle_DoWork;
             BackgroundWorkerEinzelbefehle.RunWorkerAsync();
             BackgroundWorkerEinzelbefehle.Dispose();
-
 
         }
 
@@ -254,7 +251,14 @@ namespace PharMS_Steuerung.Funktionen
 
         public void SendFromConsole(string p_value)
         {
-            Abbruch = false;
+            if (p_value == "x")
+            {
+                Abbruch = true;
+            }
+            else
+            {
+                Abbruch = false;
+            }
             oComschnitstelle.SendToCOM(p_value, true);
             FormLog.AddLog(p_value);
         }
@@ -340,8 +344,19 @@ namespace PharMS_Steuerung.Funktionen
                         {
                             if (!bZyklusActive) // false beim ersten Aufruf
                             {
-                                sZyklus = DBMain.CreateZyklus();
-                                DBMain.SaveMeasurements();
+                                try
+                                {
+                                    sZyklus = DBMain.CreateZyklus();
+                                    DBMain.SaveMeasurements();
+                                }
+                                catch (Exception e)
+                                {                                   
+                                    FormLog.AddLog("Beim Zugriff auf die Datenbank trat folgende Exception auf: " + e.Message);
+                                    oComschnitstelle.NotStop();
+                                    SaveLog();
+                                    MessageBox.Show("Beim Zugriff auf die Datenbank trat folgende Exception auf (Nr.101): " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                
+                                }
                             }
 
                             string[] words = p_Status.Split(',');
@@ -349,8 +364,17 @@ namespace PharMS_Steuerung.Funktionen
                             Sensor1a = Sensor1a.Replace(".", ",");
                             string Sensor2b = words[1].Substring(0, words[1].Length);
                             Sensor2b = Sensor2b.Replace(".", ",");
-                            DBMain.SetMeasurements(Sensor1a, Sensor2b, sZyklus);
-
+                            try
+                            {
+                                DBMain.SetMeasurements(Sensor1a, Sensor2b, sZyklus);
+                            }
+                            catch (Exception e)
+                            {
+                                FormLog.AddLog("Beim Zugriff auf die Datenbank trat folgende Exception auf: " + e.Message);
+                                oComschnitstelle.NotStop();
+                                SaveLog();
+                                MessageBox.Show("Beim Zugriff auf die Datenbank trat folgende Exception auf (Nr.102): " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
 
 
                             if (tmrMesswerteTimer == null)
@@ -523,8 +547,18 @@ namespace PharMS_Steuerung.Funktionen
                     System.Threading.Thread.Sleep(500);
                     oComschnitstelle.SendToCOM("U000", true);
                 }
+                try
+                {
+                    DBMain.SaveMeasurements(); // speichern der Daten nach dem Ende eines Messzyklus
+                }
+                catch (Exception e)
+                {
+                    FormLog.AddLog("Beim Zugriff auf die Datenbank trat folgende Exception auf: " + e.Message);
+                    oComschnitstelle.NotStop();
+                    SaveLog();
+                    MessageBox.Show("Beim Zugriff auf die Datenbank trat folgende Exception auf (Nr.103): " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
-                DBMain.SaveMeasurements(); // speichern der Daten nach dem Ende eines Messzyklus
                 oComschnitstelle.bereit = true; //neue Befehle können aufgenommen werden
                 // Die Status Abfrage fürte zu Fehlern im Automatisierten Betrieb. Wenn Status Abfrage Nötig wieder Einschalten
                 // AbfrageStatus();
@@ -564,20 +598,43 @@ namespace PharMS_Steuerung.Funktionen
 
             List<String> lstCommands = new List<string>();
             List<int> IDs;
-            IDs = DBMain.GetSequenzIDsFromMasterablauf();
+            IDs = null;
+            try
+            {
+                IDs = DBMain.GetSequenzIDsFromMasterablauf();
+            }
+            catch (Exception e)
+            {
+                FormLog.AddLog("Beim Zugriff auf die Datenbank trat folgende Exception auf: " + e.Message);
+                oComschnitstelle.NotStop();
+                SaveLog();
+                MessageBox.Show("Beim Zugriff auf die Datenbank trat folgende Exception auf (Nr.104): " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             FormLog.AddLog("Starte Masterablauf " + DateTime.Now);
 
             for (int j = 0; j < CountMasterIteration; j++)
             {
+                if (Abbruch == true) return;
                 FormLog.AddLog("Masteriteration: " + (j + 1).ToString());
                 foreach (int ID in IDs)
                 {
-                    lstCommands = DBMain.GetSequenzByIDAsList(ID);
+                    if (Abbruch == true) return;
+                    try
+                    {
+                        lstCommands = DBMain.GetSequenzByIDAsList(ID);
+                    }
+                    catch (Exception e)
+                    {
+                        FormLog.AddLog("Beim Zugriff auf die Datenbank trat folgende Exception auf: " + e.Message);
+                        oComschnitstelle.NotStop();
+                        SaveLog();
+                        MessageBox.Show("Beim Zugriff auf die Datenbank trat folgende Exception auf (Nr.105): " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                     FormLog.AddLog("Starte Sequenz mit ID: " + ID.ToString());
                     for (int i = 0; i < lstCommands.Count(); i++)
                     {
-
+                        if (Abbruch == true) return;
                         //Pufferzeit mitschicken wenn der Befehl lange zum abarbeiten braucht und eine eventbehandlung stattfindet, wenn der Thread fertig ist
                         Boolean bLock = false;
 

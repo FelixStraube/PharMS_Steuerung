@@ -85,6 +85,7 @@ namespace PharMS_Steuerung.Funktionen
             port.WriteLine("U000");
             Thread.Sleep(1000);        
             bereit = true;
+            oCommunicator.Abbruch = true;
         }
 
 
