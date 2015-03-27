@@ -66,6 +66,45 @@ namespace PharMS_Steuerung.Funktionen
 
         }
 
+        public static string LeitungenBefuellen()
+        {
+            List<String> lstSequenz = new List<string>();
+
+
+            bool OrdnerExisitiert = Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "Abläufe");
+            if (!OrdnerExisitiert)
+            {
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "Abläufe");
+            }
+            CfgFile oCfgFile = new CfgFile(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\LeitungenBefuellen.txt");
+            lstSequenz = oCfgFile.Ausgabe(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\LeitungenBefuellen.txt");
+            lstSequenz.RemoveAt(0);
+            lstSequenz[0] = "Y2;";
+
+            string concat = String.Join(String.Empty, lstSequenz.ToArray());
+            return concat;
+
+        }
+
+        public static string Probe1_leeren()
+        {
+            List<String> lstSequenz = new List<string>();
+
+
+            bool OrdnerExisitiert = Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "Abläufe");
+            if (!OrdnerExisitiert)
+            {
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "Abläufe");
+            }
+            CfgFile oCfgFile = new CfgFile(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\Probe1_leeren.txt");
+            lstSequenz = oCfgFile.Ausgabe(AppDomain.CurrentDomain.BaseDirectory + "Abläufe\\Probe1_leeren.txt");
+            lstSequenz.RemoveAt(0);
+            lstSequenz[0] = "Y3;";
+
+            string concat = String.Join(String.Empty, lstSequenz.ToArray());
+            return concat;
+
+        }
         public static string ElektrodenReg()
         {
             List<String> lstSequenz = new List<string>();

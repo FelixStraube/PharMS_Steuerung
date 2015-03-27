@@ -158,6 +158,42 @@ namespace PharMS_Steuerung.Funktionen
             else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
         }
 
+        public void SendLeitungenBefuellen()
+        {
+            if (oComschnitstelle.bereit)
+            {
+                oComschnitstelle.SendToCOM(Sequenz.LeitungenBefuellen(), true);
+                sExpectedStatus = "Z";
+                Console.WriteLine("Incoming Data gesendet:" + Sequenz.LeitungenBefuellen());
+                FormLog.AddLog("Incoming Data gesendet:" + Sequenz.LeitungenBefuellen() + "    " + System.DateTime.Now.ToString());
+               
+                System.Threading.Thread.Sleep(5000);
+                oComschnitstelle.SendToCOM("X2", true);
+                Console.WriteLine("X2");
+                FormLog.AddLog("X2");
+
+            }
+            else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
+        }
+
+        public void SendProbe1_leeren()
+        {
+            if (oComschnitstelle.bereit)
+            {
+                oComschnitstelle.SendToCOM(Sequenz.Probe1_leeren(), true);
+                sExpectedStatus = "Z";
+                Console.WriteLine("Incoming Data gesendet:" + Sequenz.Probe1_leeren());
+                FormLog.AddLog("Incoming Data gesendet:" + Sequenz.Probe1_leeren() + "    " + System.DateTime.Now.ToString());
+
+                System.Threading.Thread.Sleep(5000);
+                oComschnitstelle.SendToCOM("X3", true);
+                Console.WriteLine("X3");
+                FormLog.AddLog("X3");
+                sExpectedStatus = "ZY";
+            }
+            else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
+        }
+
         public void SendReg()
         {
             if (oComschnitstelle.bereit)
@@ -228,7 +264,9 @@ namespace PharMS_Steuerung.Funktionen
         }
         private void BackgroundWorkerEinzelbefehle_DoWork(object sender, DoWorkEventArgs e)
         {
+            oComschnitstelle.SendToCOM("p2;1", true);            
             Execute_SingleCommands();
+            oComschnitstelle.SendToCOM("p2;0", true);
         }
         private void BackgroundWorkerEinzelbefehle_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -350,12 +388,12 @@ namespace PharMS_Steuerung.Funktionen
                                     DBMain.SaveMeasurements();
                                 }
                                 catch (Exception e)
-                                {                                   
+                                {
                                     FormLog.AddLog("Beim Zugriff auf die Datenbank trat folgende Exception auf: " + e.Message);
                                     oComschnitstelle.NotStop();
                                     SaveLog();
                                     MessageBox.Show("Beim Zugriff auf die Datenbank trat folgende Exception auf (Nr.101): " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                
+
                                 }
                             }
 
@@ -617,6 +655,7 @@ namespace PharMS_Steuerung.Funktionen
             {
                 if (Abbruch == true) return;
                 FormLog.AddLog("Masteriteration: " + (j + 1).ToString());
+                FormLog.SetLabelForMaster("Masteriteration: " + (j + 1).ToString());
                 foreach (int ID in IDs)
                 {
                     if (Abbruch == true) return;
@@ -632,6 +671,7 @@ namespace PharMS_Steuerung.Funktionen
                         MessageBox.Show("Beim Zugriff auf die Datenbank trat folgende Exception auf (Nr.105): " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     FormLog.AddLog("Starte Sequenz mit ID: " + ID.ToString());
+                    FormLog.SetLabelForSequenz(DBMain.GetSequenzNameByID(ID));
                     for (int i = 0; i < lstCommands.Count(); i++)
                     {
                         if (Abbruch == true) return;

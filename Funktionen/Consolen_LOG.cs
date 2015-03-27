@@ -27,6 +27,16 @@ namespace PharMS_Steuerung.Funktionen
             return true;
         }
 
+        public void SetLabelForMaster(String Übergabe)
+        {
+            tempForm.lblMaster.Text = Übergabe;
+        }
+
+        public void SetLabelForSequenz(String Übergabe)
+        {
+            tempForm.lblSequenz.Text = Übergabe;
+        }
+
         public String GetLog()
         {
             return tempForm.Console_Ausgabe.Text;

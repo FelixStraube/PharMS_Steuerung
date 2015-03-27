@@ -175,7 +175,7 @@ namespace PharMS_Steuerung.Funktionen
             DataTable dtt = new DataTable();            //Erstellt eine leere Hilfs-Tabelle
             DataTableReader dtr;
             dsPharms.Tables["Masterablauf"].DefaultView.Sort = "Reihenfolge ASC";
-            dtt =  dsPharms.Tables["Masterablauf"].DefaultView.ToTable();         //Leere Hilfs-Tabelle wird gefüllt
+            dtt = dsPharms.Tables["Masterablauf"].DefaultView.ToTable();         //Leere Hilfs-Tabelle wird gefüllt
 
             dtr = dtt.CreateDataReader();
 
@@ -289,7 +289,7 @@ namespace PharMS_Steuerung.Funktionen
 
             foreach (var q in query)
             {
-                lstSequenz.Add(q.Befehl+q.Parameter);
+                lstSequenz.Add(q.Befehl + q.Parameter);
             }
             return lstSequenz;
         }
@@ -323,6 +323,25 @@ namespace PharMS_Steuerung.Funktionen
                 i++;
             }
             return sSequenz;
+        }
+
+        public string GetSequenzNameByID(int S_ID)
+        {
+            string sSequenzName = "";
+
+            var query = from a in dsPharms.Tables["Sequenzen"].AsEnumerable()
+                        where a.Field<Int64>("ID") == S_ID
+                        select new
+                        {
+                            Name = a.Field<string>("Name"),
+
+                        };
+
+            foreach (var q in query)
+            {
+                sSequenzName = q.Name;
+            }
+            return sSequenzName;
         }
 
         public void DeleteSequenzEditByID(int ID)

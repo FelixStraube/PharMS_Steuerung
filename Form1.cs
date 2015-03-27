@@ -160,10 +160,15 @@ namespace PharMS_Steuerung
 
         private void AblaufStart_Click(object sender, EventArgs e)
         {
-            if (oCommunicator.IsWithMakro)
-                oCommunicator.StartMasterAblaufMitMakro(Convert.ToInt32(numericUpDown1.Value));
-            else
-                oCommunicator.StartMasterAblaufBefehlsweise(Convert.ToInt32(numericUpDown1.Value));
+            var result = MessageBox.Show("Alle Leitungen befüllt?", "Hinweis" ,MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                if (oCommunicator.IsWithMakro)
+                    oCommunicator.StartMasterAblaufMitMakro(Convert.ToInt32(numericUpDown1.Value));
+                else
+                    oCommunicator.StartMasterAblaufBefehlsweise(Convert.ToInt32(numericUpDown1.Value));
+            }
 
         }
 
@@ -576,6 +581,16 @@ namespace PharMS_Steuerung
         private void numericResponsetime_ValueChanged(object sender, EventArgs e)
         {
             oCommunicator.Responsetime = (int)numericResponsetime.Value;
+        }
+
+        private void btnLeitungen_Click(object sender, EventArgs e)
+        {
+            oCommunicator.SendLeitungenBefuellen();
+        }
+
+        private void btnProbe1_leeren_Click(object sender, EventArgs e)
+        {
+            oCommunicator.SendProbe1_leeren();
         }
 
 

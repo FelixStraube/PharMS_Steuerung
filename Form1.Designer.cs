@@ -65,6 +65,8 @@
             this.btnUebertragen = new System.Windows.Forms.Button();
             this.SequenzenGrid = new System.Windows.Forms.DataGridView();
             this.tabGKommunikation = new System.Windows.Forms.TabPage();
+            this.lblSequenz = new System.Windows.Forms.Label();
+            this.lblMaster = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.Console_Senden = new System.Windows.Forms.Button();
@@ -72,6 +74,7 @@
             this.Console_Ausgabe = new System.Windows.Forms.TextBox();
             this.tabDeviceParameter = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnLeitungen = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.numSpuelen = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
@@ -80,6 +83,8 @@
             this.btnElektrodenTest = new System.Windows.Forms.Button();
             this.btnReg = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.numericResponsetime = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.numeric_Messdauer = new System.Windows.Forms.NumericUpDown();
             this.label12 = new System.Windows.Forms.Label();
@@ -105,11 +110,29 @@
             this.Disconnect = new System.Windows.Forms.Button();
             this.Connect = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabProben = new System.Windows.Forms.TabPage();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.numericResponsetime = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
             this.toolTipResponsetime = new System.Windows.Forms.ToolTip(this.components);
+            this.btnProbe1_leeren = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -128,6 +151,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numSpuelen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDesinfektion)).BeginInit();
             this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericResponsetime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numeric_Messdauer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numeric_Intervall)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericZellspannung)).BeginInit();
@@ -136,7 +160,9 @@
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericResponsetime)).BeginInit();
+            this.tabProben.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // fileSystemWatcher1
@@ -313,6 +339,7 @@
             // 
             // tabMasterablauf
             // 
+            this.tabMasterablauf.Controls.Add(this.btnProbe1_leeren);
             this.tabMasterablauf.Controls.Add(this.numericUpDown1);
             this.tabMasterablauf.Controls.Add(this.AblaufStart);
             this.tabMasterablauf.Controls.Add(this.label5);
@@ -463,6 +490,8 @@
             // tabGKommunikation
             // 
             this.tabGKommunikation.BackColor = System.Drawing.Color.White;
+            this.tabGKommunikation.Controls.Add(this.lblSequenz);
+            this.tabGKommunikation.Controls.Add(this.lblMaster);
             this.tabGKommunikation.Controls.Add(this.label16);
             this.tabGKommunikation.Controls.Add(this.label15);
             this.tabGKommunikation.Controls.Add(this.Console_Senden);
@@ -474,6 +503,24 @@
             this.tabGKommunikation.Size = new System.Drawing.Size(583, 744);
             this.tabGKommunikation.TabIndex = 0;
             this.tabGKommunikation.Text = "Gerätekommunikation";
+            // 
+            // lblSequenz
+            // 
+            this.lblSequenz.AutoSize = true;
+            this.lblSequenz.Location = new System.Drawing.Point(494, 73);
+            this.lblSequenz.Name = "lblSequenz";
+            this.lblSequenz.Size = new System.Drawing.Size(49, 13);
+            this.lblSequenz.TabIndex = 40;
+            this.lblSequenz.Text = "Sequenz";
+            // 
+            // lblMaster
+            // 
+            this.lblMaster.AutoSize = true;
+            this.lblMaster.Location = new System.Drawing.Point(493, 45);
+            this.lblMaster.Name = "lblMaster";
+            this.lblMaster.Size = new System.Drawing.Size(39, 13);
+            this.lblMaster.TabIndex = 39;
+            this.lblMaster.Text = "Master";
             // 
             // label16
             // 
@@ -533,6 +580,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btnLeitungen);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.numSpuelen);
             this.groupBox2.Controls.Add(this.label7);
@@ -546,10 +594,20 @@
             this.groupBox2.Controls.Add(this.groupBox3);
             this.groupBox2.Location = new System.Drawing.Point(21, 171);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(540, 396);
+            this.groupBox2.Size = new System.Drawing.Size(540, 419);
             this.groupBox2.TabIndex = 41;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Geräteparameter";
+            // 
+            // btnLeitungen
+            // 
+            this.btnLeitungen.Location = new System.Drawing.Point(11, 390);
+            this.btnLeitungen.Name = "btnLeitungen";
+            this.btnLeitungen.Size = new System.Drawing.Size(112, 23);
+            this.btnLeitungen.TabIndex = 28;
+            this.btnLeitungen.Text = "Leitungen befüllen";
+            this.btnLeitungen.UseVisualStyleBackColor = true;
+            this.btnLeitungen.Click += new System.EventHandler(this.btnLeitungen_Click);
             // 
             // label8
             // 
@@ -664,6 +722,39 @@
             this.groupBox5.Text = "Messung";
             this.toolTipResponsetime.SetToolTip(this.groupBox5, "Die Wartezeit gibt an wie lange die Software auf die Antwort vom Pharmsgerät maxi" +
         "mal wartet.");
+            // 
+            // numericResponsetime
+            // 
+            this.numericResponsetime.Location = new System.Drawing.Point(166, 93);
+            this.numericResponsetime.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numericResponsetime.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+            this.numericResponsetime.Name = "numericResponsetime";
+            this.numericResponsetime.Size = new System.Drawing.Size(94, 20);
+            this.numericResponsetime.TabIndex = 25;
+            this.toolTipResponsetime.SetToolTip(this.numericResponsetime, "Gibt die maximale Wartezeit für die Annahme eines Befehls an.");
+            this.numericResponsetime.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericResponsetime.ValueChanged += new System.EventHandler(this.numericResponsetime_ValueChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(166, 77);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(82, 13);
+            this.label3.TabIndex = 24;
+            this.label3.Text = "Wartezeit in min";
             // 
             // label13
             // 
@@ -947,6 +1038,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabDeviceParameter);
+            this.tabControl1.Controls.Add(this.tabProben);
             this.tabControl1.Controls.Add(this.tabGKommunikation);
             this.tabControl1.Controls.Add(this.tabSequenzList);
             this.tabControl1.Controls.Add(this.tabSequenzedit);
@@ -958,6 +1050,179 @@
             this.tabControl1.Size = new System.Drawing.Size(591, 770);
             this.tabControl1.TabIndex = 3;
             // 
+            // tabProben
+            // 
+            this.tabProben.Controls.Add(this.groupBox7);
+            this.tabProben.Controls.Add(this.groupBox6);
+            this.tabProben.Location = new System.Drawing.Point(4, 22);
+            this.tabProben.Name = "tabProben";
+            this.tabProben.Size = new System.Drawing.Size(583, 744);
+            this.tabProben.TabIndex = 7;
+            this.tabProben.Text = "Proben";
+            this.tabProben.UseVisualStyleBackColor = true;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.textBox8);
+            this.groupBox7.Controls.Add(this.textBox7);
+            this.groupBox7.Controls.Add(this.textBox6);
+            this.groupBox7.Controls.Add(this.textBox5);
+            this.groupBox7.Controls.Add(this.label19);
+            this.groupBox7.Controls.Add(this.label18);
+            this.groupBox7.Controls.Add(this.label17);
+            this.groupBox7.Controls.Add(this.label14);
+            this.groupBox7.Location = new System.Drawing.Point(16, 208);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(504, 100);
+            this.groupBox7.TabIndex = 1;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Proben";
+            // 
+            // textBox8
+            // 
+            this.textBox8.Location = new System.Drawing.Point(325, 63);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(135, 20);
+            this.textBox8.TabIndex = 8;
+            // 
+            // textBox7
+            // 
+            this.textBox7.Location = new System.Drawing.Point(325, 41);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(135, 20);
+            this.textBox7.TabIndex = 7;
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(84, 63);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(135, 20);
+            this.textBox6.TabIndex = 6;
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(84, 41);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(135, 20);
+            this.textBox5.TabIndex = 5;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(272, 66);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(47, 13);
+            this.label19.TabIndex = 4;
+            this.label19.Text = "Probe 4:";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(272, 40);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(47, 13);
+            this.label18.TabIndex = 3;
+            this.label18.Text = "Probe 3:";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(16, 66);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(47, 13);
+            this.label17.TabIndex = 2;
+            this.label17.Text = "Probe 2:";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(16, 41);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(47, 13);
+            this.label14.TabIndex = 1;
+            this.label14.Text = "Probe 1:";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.textBox4);
+            this.groupBox6.Controls.Add(this.textBox3);
+            this.groupBox6.Controls.Add(this.textBox2);
+            this.groupBox6.Controls.Add(this.textBox1);
+            this.groupBox6.Controls.Add(this.label10);
+            this.groupBox6.Controls.Add(this.label9);
+            this.groupBox6.Controls.Add(this.label6);
+            this.groupBox6.Controls.Add(this.label4);
+            this.groupBox6.Location = new System.Drawing.Point(16, 23);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(504, 149);
+            this.groupBox6.TabIndex = 0;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Protokolldaten";
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(119, 105);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(135, 20);
+            this.textBox4.TabIndex = 7;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(119, 84);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(135, 20);
+            this.textBox3.TabIndex = 6;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(119, 62);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(135, 20);
+            this.textBox2.TabIndex = 5;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(119, 40);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(135, 20);
+            this.textBox1.TabIndex = 4;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(16, 112);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(55, 13);
+            this.label10.TabIndex = 3;
+            this.label10.Text = "??charge:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(16, 87);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(80, 13);
+            this.label9.TabIndex = 2;
+            this.label9.Text = "Mediumcharge:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(16, 62);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(74, 13);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Linsencharge:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(16, 40);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(58, 13);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Bearbeiter:";
+            // 
             // Column2
             // 
             this.Column2.HeaderText = "Bezeichnung";
@@ -968,38 +1233,15 @@
             this.Column1.HeaderText = "Nr.:";
             this.Column1.Name = "Column1";
             // 
-            // numericResponsetime
+            // btnProbe1_leeren
             // 
-            this.numericResponsetime.Location = new System.Drawing.Point(166, 93);
-            this.numericResponsetime.Maximum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
-            this.numericResponsetime.Minimum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            -2147483648});
-            this.numericResponsetime.Name = "numericResponsetime";
-            this.numericResponsetime.Size = new System.Drawing.Size(94, 20);
-            this.numericResponsetime.TabIndex = 25;
-            this.toolTipResponsetime.SetToolTip(this.numericResponsetime, "Gibt die maximale Wartezeit für die Annahme eines Befehls an.");
-            this.numericResponsetime.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.numericResponsetime.ValueChanged += new System.EventHandler(this.numericResponsetime_ValueChanged);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(166, 77);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(82, 13);
-            this.label3.TabIndex = 24;
-            this.label3.Text = "Wartezeit in min";
+            this.btnProbe1_leeren.Location = new System.Drawing.Point(441, 76);
+            this.btnProbe1_leeren.Name = "btnProbe1_leeren";
+            this.btnProbe1_leeren.Size = new System.Drawing.Size(100, 23);
+            this.btnProbe1_leeren.TabIndex = 33;
+            this.btnProbe1_leeren.Text = "Gefäß 1 leeren";
+            this.btnProbe1_leeren.UseVisualStyleBackColor = true;
+            this.btnProbe1_leeren.Click += new System.EventHandler(this.btnProbe1_leeren_Click);
             // 
             // Form1
             // 
@@ -1037,6 +1279,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numDesinfektion)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericResponsetime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numeric_Messdauer)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numeric_Intervall)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericZellspannung)).EndInit();
@@ -1047,7 +1290,11 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericResponsetime)).EndInit();
+            this.tabProben.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1095,7 +1342,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button Disconnect;
         private System.Windows.Forms.Button Connect;
-        private System.Windows.Forms.TabPage tabGKommunikation;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button Console_Senden;
@@ -1140,6 +1386,30 @@
         private System.Windows.Forms.NumericUpDown numericResponsetime;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ToolTip toolTipResponsetime;
+        public System.Windows.Forms.Label lblMaster;
+        public System.Windows.Forms.TabPage tabGKommunikation;
+        public System.Windows.Forms.Label lblSequenz;
+        private System.Windows.Forms.Button btnLeitungen;
+        private System.Windows.Forms.TabPage tabProben;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnProbe1_leeren;
 
 
     }
