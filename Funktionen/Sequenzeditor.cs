@@ -178,7 +178,18 @@ namespace PharMS_Steuerung.Funktionen
             MainForm.MasterGrid.Columns["ID"].Visible = false;
             MainForm.MasterGrid.Columns["Speicherplatz"].ReadOnly = true;
             MainForm.MasterGrid.Columns["Name"].Visible = false;
+            MainForm.MasterGrid.Columns["Reihenfolge_Master"].Visible = false;
+            MainForm.MasterGrid.Columns["Iterationsanzahl"].Visible = false;
             // MainForm.MasterGrid.Columns["Reihenfolge"].Visible = false;
+
+        }
+        public void FillGridMaster2()
+        {
+             
+            MainForm.MasterGrid2.AutoGenerateColumns = true;
+            MainForm.MasterGrid2.DataSource = MainForm.DBMain.GetGroupedMasterablauf();
+
+           
 
         }
 

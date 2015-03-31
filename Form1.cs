@@ -27,6 +27,7 @@ namespace PharMS_Steuerung
         public static int ende;
         public bool SchleifenStopp = false;
         private LiveChartForm _LiveChart;
+        private int RowCountMaster2 = 0;
         //    static System.Windows.Forms.Timer Zeitsteuerung = new System.Windows.Forms.Timer();
         static int alarmCounter = 1;
         static bool exitFlag = false;
@@ -37,7 +38,7 @@ namespace PharMS_Steuerung
 
         static bool Live_Cahrtausgabe = true;
         private int iSpeicherplatzForMNItem = -999;
-
+        private bool IsDataBindingComplete;
         private Communicator oCommunicator;
         public SQLMain DBMain;
 
@@ -94,22 +95,22 @@ namespace PharMS_Steuerung
                 {
                     foreach (DataGridViewRow test in MesszyklusGrid.SelectedRows)
                     {
-                       
+
                         string MZ_ID = test.Cells["ID"].Value.ToString();
                         MZID.Add(MZ_ID);
 
 
-                        
+
 
                     }
                     CSV_Export Exporter = new CSV_Export();
                     Exporter.toCSV(dvMesswerte.Table, dvMesszyklus.Table, sfd.FileName, DBMain, MZID);
                 }
-                
-                
+
+
                 else { MessageBox.Show("Keine Messung ausgewählt. Bitte Messzyklus auswählen."); }
             }
-            
+
             oSequenzeditor.FillGridMeasurements();
         }
 
@@ -160,14 +161,19 @@ namespace PharMS_Steuerung
 
         private void AblaufStart_Click(object sender, EventArgs e)
         {
-            var result = MessageBox.Show("Alle Leitungen befüllt?", "Hinweis" ,MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            var result = MessageBox.Show("Alle Leitungen befüllt?", "Hinweis", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
-                if (oCommunicator.IsWithMakro)
-                    oCommunicator.StartMasterAblaufMitMakro(Convert.ToInt32(numericUpDown1.Value));
-                else
-                    oCommunicator.StartMasterAblaufBefehlsweise(Convert.ToInt32(numericUpDown1.Value));
+                result = MessageBox.Show("Gefäß 1 geleert?", "Hinweis", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+
+                    if (oCommunicator.IsWithMakro)
+                        oCommunicator.StartMasterAblaufMitMakro(Convert.ToInt32(numericUpDown1.Value));
+                    else
+                        oCommunicator.StartMasterAblaufBefehlsweise(Convert.ToInt32(numericUpDown1.Value));
+                }
             }
 
         }
@@ -229,8 +235,8 @@ namespace PharMS_Steuerung
 
         private void Initialisierung_Click(object sender, EventArgs e)
         {
-            
-            oCommunicator.SendToCOM("X01");           
+
+            oCommunicator.SendToCOM("X01");
         }
 
         private void AblaufListe_SelectedValueChanged(object sender, EventArgs e)
@@ -299,7 +305,7 @@ namespace PharMS_Steuerung
                 oSequenzeditor.LoadGridSequenz();
 
                 oSequenzeditor.FillGridMaster();
-
+                oSequenzeditor.FillGridMaster2();
                 oSequenzeditor.FillGridMeasurements();
                 oSequenzeditor.FillGridMesszyklus();
 
@@ -338,7 +344,7 @@ namespace PharMS_Steuerung
                 oSequenzeditor.LoadGridSequenz();
 
                 oSequenzeditor.FillGridMaster();
-
+                oSequenzeditor.FillGridMaster2();
                 oSequenzeditor.FillGridMeasurements();
 
                 oSequenzeditor.FillGridMesszyklus();
@@ -414,18 +420,32 @@ namespace PharMS_Steuerung
 
         private void btnElektrodenTest_Click(object sender, EventArgs e)
         {
-            oCommunicator.SendElektrodenTest();
+            var result = MessageBox.Show("Möchten Sie den Elektrodentest ausführen?", "Elektrodentest", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                oCommunicator.SendElektrodenTest();
+            }
         }
 
         private void btnLeitungDes_Click(object sender, EventArgs e)
         {
+            var result = MessageBox.Show("Möchten Sie Leitungen desinfizieren und spülen?", "Leitungen", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            oCommunicator.SendLeitungDesk((int)numDesinfektion.Value, (int)numSpuelen.Value);
+            if (result == DialogResult.Yes)
+            {
+                oCommunicator.SendLeitungDesk((int)numDesinfektion.Value, (int)numSpuelen.Value);
+            }
         }
 
         private void btnReg_Click(object sender, EventArgs e)
         {
-            oCommunicator.SendReg();
+            var result = MessageBox.Show("Möchten Sie die Elektroden regenerieren?", "Elektroden regenerieren", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                oCommunicator.SendReg();
+            }
         }
 
         private void btnPumpeMesszelleAus(object sender, EventArgs e)
@@ -438,21 +458,21 @@ namespace PharMS_Steuerung
         {
 
             oCommunicator.SendToCOM("p1,1");
-      
+
         }
 
         private void btnPumpeAbfallEin(object sender, EventArgs e)
         {
 
             oCommunicator.SendToCOM("p2,1");
-   
+
         }
 
         private void btnPumpeAbfallAus(object sender, EventArgs e)
         {
 
             oCommunicator.SendToCOM("p2,0");
-   
+
         }
 
         private void btnTemperierungAus(object sender, EventArgs e)
@@ -592,6 +612,67 @@ namespace PharMS_Steuerung
         {
             oCommunicator.SendProbe1_leeren();
         }
+
+        private void MasterGrid2_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (tabControl1.SelectedTab == tabMasterablauf)
+            {
+
+                if (MasterGrid2.Rows[e.RowIndex].Cells[0].Value.ToString() == "")
+                {
+                    MessageBox.Show("Geben Sie bitte einen Namen für die Mastersequenz ein", "Hinweis", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (MasterGrid2.Rows[e.RowIndex].Cells[1].Value.ToString() == "")
+                {
+                    MasterGrid2.Rows[e.RowIndex].Cells[1].Value = 0;
+                }
+                if (MasterGrid2.Rows[e.RowIndex].Cells[2].Value.ToString() == "")
+                {
+                    MasterGrid2.Rows[e.RowIndex].Cells[2].Value = 0;
+                }
+                string Name = MasterGrid2.Rows[e.RowIndex].Cells[0].Value.ToString();
+                int Reihenfolge = Convert.ToInt32(MasterGrid2.Rows[e.RowIndex].Cells[1].Value);
+                int Iteration = Convert.ToInt32(MasterGrid2.Rows[e.RowIndex].Cells[2].Value);
+
+                if (IsDataBindingComplete)
+                    if (RowCountMaster2 != MasterGrid2.RowCount) //check ob es sich um einen neue Zeile handelt
+                    {
+                        DBMain.InsertMasterGrid2(Name, Reihenfolge, Iteration);
+                        RowCountMaster2 = MasterGrid2.RowCount;
+                    }
+                    else
+                        DBMain.UpdateMasterGrid2(Name, Reihenfolge, Iteration);
+
+
+
+                //  MasterGrid2.Rows[e.RowIndex].Cells[1].Value = "Master"; //Reihenfolge
+                // MasterGrid2.Rows[e.RowIndex].Cells[2].Value = "Master"; //Iterationsanzahl
+            }
+        }
+
+        private void MasterGrid2_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            if (e.Exception != null)
+            {
+
+
+                if (e.Exception.GetType().Name == "FormatException")
+                {
+                    MessageBox.Show("Ungültiges Eingabeformat!", "Hinweis", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    e.Cancel = true;
+                }
+
+            }
+        }
+
+        private void MasterGrid2_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            IsDataBindingComplete = true;
+            RowCountMaster2 = MasterGrid2.RowCount;
+        }
+
 
 
     }

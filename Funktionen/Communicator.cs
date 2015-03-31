@@ -189,7 +189,7 @@ namespace PharMS_Steuerung.Funktionen
                 oComschnitstelle.SendToCOM("X3", true);
                 Console.WriteLine("X3");
                 FormLog.AddLog("X3");
-                sExpectedStatus = "ZY";
+                sExpectedStatus = "Z";
             }
             else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
         }
@@ -750,7 +750,7 @@ namespace PharMS_Steuerung.Funktionen
                     do
                     {
                         if (Abbruch == true) return;
-                        if (Lauf == true) FormLog.AddLog("Line: " + Commands[i]);
+                        if (Lauf == true) FormLog.AddLog("Line: " + Commands[i]);              
                         Lauf = oComschnitstelle.SendToCOM(Commands[i], false);
                         if (Lauf == true) System.Threading.Thread.Sleep(1000);
 

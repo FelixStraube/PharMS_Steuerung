@@ -132,7 +132,9 @@ namespace PharMS_Steuerung.Funktionen
                "Name VARCHAR(256) NOT NULL," +
                "S_ID INTEGER NOT NULL," +
                "Reihenfolge INTEGER NOT NULL," +
-               "Speicherplatz VARCHAR(2));";
+               "Speicherplatz VARCHAR(2)," +
+               "Iterationsanzahl INTEGER" +
+               "Reihenfolge_Master INTEGER);";
 
             cmd.ExecuteNonQuery();
 
@@ -187,6 +189,50 @@ namespace PharMS_Steuerung.Funktionen
             dtr.Close();
             return IDs;
         }
+
+        public DataTable GetGroupedMasterablauf()
+        {
+            DataTable dt = new DataTable();
+
+            conn.Open();
+            SQLiteCommand cmd = new SQLiteCommand("Select Name,Reihenfolge_Master,Iterationsanzahl FROM Masterablauf Group By Name", conn);
+            SQLiteDataAdapter da = new SQLiteDataAdapter(cmd);
+            da.Fill(dt);
+
+            conn.Close();
+
+            return dt;
+        }
+
+
+        public void UpdateMasterGrid2(string Name, int Reihenfolge, int Iteration)
+        {
+            conn.Open();
+
+            SQLiteCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "Update Masterablauf " +
+                "Set Name = \"" + Name + "\", " +
+                "Reihenfolge_Master = " + Reihenfolge.ToString() + ", " +
+                "Iterationsanzahl = " + Iteration.ToString() + " " +
+                "WHERE Name = \"" + Name + "\";";
+
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
+            conn.Close();
+        }
+        public void InsertMasterGrid2(string Name, int Reihenfolge, int Iteration)
+        {
+            conn.Open();
+
+            SQLiteCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "INSERT INTO Masterablauf (Name, Reihenfolge_Master, Iterationsanzahl,S_ID,Reihenfolge) " +
+                              "VALUES (\"" + Name + " \",\"" + Reihenfolge + "\",\"" + Iteration + "\",1,999)";
+
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
+            conn.Close();
+        }
+
 
         public void ImportSequenz(string sFileName)
         {
