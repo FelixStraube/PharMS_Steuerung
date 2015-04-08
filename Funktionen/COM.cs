@@ -33,10 +33,13 @@ namespace PharMS_Steuerung.Funktionen
             System.Console.Out.WriteLine("Das ist Com Port  " + ComPort);
             port = new SerialPort(ComPort, 9600, Parity.None, 8, StopBits.One);
             Console.WriteLine("Incoming Data:");
-
-            port.DataReceived += new SerialDataReceivedEventHandler(port_DataReceived);
-            if (port.IsOpen) return;
-            else { port.Open(); bereit = true; };
+            
+            if (!GlobalVar.IsTest)
+            {
+                port.DataReceived += new SerialDataReceivedEventHandler(port_DataReceived);
+                if (port.IsOpen) return;
+                else { port.Open(); bereit = true; };
+            }
         }
 
         private void port_DataReceived(object sender,
@@ -51,22 +54,26 @@ namespace PharMS_Steuerung.Funktionen
 
         public bool SendToCOM(String Caption, bool bForce)
         {
-            if (!port.IsOpen)
+            if (!GlobalVar.IsTest)
             {
-                MessageBox.Show("COM nicht verbunden");
-                return false;
-            }
-            if (Caption != "")
-            {
-                if (bereit == true || bForce == true)
+                if (!port.IsOpen)
                 {
-                    port.WriteLine(Caption);    
-                    bereit = false;
-                    return true;
+                    MessageBox.Show("COM nicht verbunden");
+                    return false;
                 }
-                else return false;               
+                if (Caption != "")
+                {
+                    if (bereit == true || bForce == true)
+                    {
+                        port.WriteLine(Caption);
+                        bereit = false;
+                        return true;
+                    }
+                    else return false;
+                }
+                else return false;
             }
-            else return false;
+            else return true; //wenn test dann gib einfach immer true zurück
         }
         public void COMDisconnect()
         {

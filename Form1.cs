@@ -170,9 +170,12 @@ namespace PharMS_Steuerung
                 {
 
                     if (oCommunicator.IsWithMakro)
-                        oCommunicator.StartMasterAblaufMitMakro(Convert.ToInt32(numericUpDown1.Value));
+                        oCommunicator.StartMasterAblaufMitMakro(5);//5 ist platzhalter
                     else
-                        oCommunicator.StartMasterAblaufBefehlsweise(Convert.ToInt32(numericUpDown1.Value));
+                    {
+                        if (!oCommunicator.IsMasterThreadActiv) oCommunicator.StartMasterAblaufBefehlsweise();
+                        else MessageBox.Show("Der Masterablauf läuft bereits, es könnte sein das der vorangegangene Masterablauf nicht richtig beendet wurde. In den Fall Klicken Sie auf Stopp oder senden ein x.", "Hinweis", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
             }
 
@@ -313,6 +316,10 @@ namespace PharMS_Steuerung
                 AblaufListe.ValueMember = "ID";
                 AblaufListe.DataSource = DBMain.dsPharms.Tables["Sequenzen"];
 
+                cmbMastersequenz.DisplayMember = "Name";
+                cmbMastersequenz.ValueMember = "Name";
+                cmbMastersequenz.DataSource = DBMain.GetGroupedMasterablauf();
+
                 mnItemSpeichern.Enabled = true;
                 mnItemSpeichernUnter.Enabled = true;
                 tabControl1.Visible = true;
@@ -354,6 +361,10 @@ namespace PharMS_Steuerung
                 AblaufListe.DisplayMember = "Name";
                 AblaufListe.ValueMember = "ID";
                 AblaufListe.DataSource = DBMain.dsPharms.Tables["Sequenzen"];
+
+                cmbMastersequenz.DisplayMember = "Name";
+                cmbMastersequenz.ValueMember = "Name";
+                cmbMastersequenz.DataSource = DBMain.GetGroupedMasterablauf();
 
 
                 mnItemSpeichern.Enabled = true;
@@ -673,7 +684,24 @@ namespace PharMS_Steuerung
             RowCountMaster2 = MasterGrid2.RowCount;
         }
 
+        private void cmbMastersequenz_SelectedValueChanged(object sender, EventArgs e)
+        {
+            oSequenzeditor.FillGridMaster();
+        }
+
+        private void MasterGrid2_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+
+            string Name = MasterGrid2.Rows[e.Row.Index].Cells[0].Value.ToString();
+            DBMain.DeleteMasterGrid2(Name);
+        }
 
 
+
+    }
+    public static class GlobalVar
+    {
+
+        public static bool IsTest = true;
     }
 }

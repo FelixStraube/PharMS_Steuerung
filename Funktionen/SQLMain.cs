@@ -171,11 +171,12 @@ namespace PharMS_Steuerung.Funktionen
             return Speicherplatz;
         }
 
-        public List<int> GetSequenzIDsFromMasterablauf()
+        public List<int> GetSequenzIDsFromMasterablauf(string Name)
         {
             List<int> IDs = new List<int>();
             DataTable dtt = new DataTable();            //Erstellt eine leere Hilfs-Tabelle
             DataTableReader dtr;
+            dsPharms.Tables["Masterablauf"].DefaultView.RowFilter = "Name = '" +Name+"'";
             dsPharms.Tables["Masterablauf"].DefaultView.Sort = "Reihenfolge ASC";
             dtt = dsPharms.Tables["Masterablauf"].DefaultView.ToTable();         //Leere Hilfs-Tabelle wird gefüllt
 
@@ -231,6 +232,19 @@ namespace PharMS_Steuerung.Funktionen
             cmd.ExecuteNonQuery();
             cmd.Dispose();
             conn.Close();
+        }
+
+        public void DeleteMasterGrid2(string Name)
+        {
+            conn.Open();
+
+            SQLiteCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "Delete FROM Masterablauf where Name = '" + Name + "'";
+
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
+            conn.Close();
+            daMasterablauf.Update(dsPharms, "Masterablauf");
         }
 
 

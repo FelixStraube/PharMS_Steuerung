@@ -91,7 +91,7 @@ namespace PharMS_Steuerung.Funktionen
         }
 
         public void FillGridSequenzEdit()
-        { 
+        {
             MainForm.SequenzeditorGrid.Columns.Clear();
             DataView dvSequenzEdit = new DataView(MainForm.DBMain.dsPharms.Tables["SequenzEdit"]);
             if (MainForm.AblaufListe.SelectedItem != null)
@@ -105,7 +105,7 @@ namespace PharMS_Steuerung.Funktionen
                 colErklaerung.HeaderText = "Erklärung";
 
                 DataGridViewComboBoxColumn ComboBoxColumn = new DataGridViewComboBoxColumn();
-              
+
                 ComboBoxColumn.Name = "Befehl";
                 ComboBoxColumn.HeaderText = "Befehl";
                 ComboBoxColumn.DataPropertyName = "Befehl";
@@ -124,7 +124,7 @@ namespace PharMS_Steuerung.Funktionen
                 MainForm.SequenzeditorGrid.Columns["Reihenfolge"].CellTemplate.Value = MainForm.SequenzeditorGrid.RowCount;
                 //Maximale länge der Einträge 256
                 ((DataGridViewTextBoxColumn)MainForm.SequenzeditorGrid.Columns["Parameter"]).MaxInputLength = 256;
-               
+
                 MainForm.SequenzeditorGrid.Columns["Parameter"].HeaderText = "Parameter";
 
 
@@ -157,40 +157,46 @@ namespace PharMS_Steuerung.Funktionen
 
         public void FillGridMaster()
         {
-
-            DataGridViewComboBoxColumn ComboBoxColumn2 = null;
-            if (ComboBoxColumn2 == null)
+            MainForm.MasterGrid.Columns.Clear();
+            if (MainForm.cmbMastersequenz.SelectedItem != null)
             {
-                ComboBoxColumn2 = new DataGridViewComboBoxColumn();
-                ComboBoxColumn2.Name = "Sequenz";
-                ComboBoxColumn2.HeaderText = "Sequenz";
-                ComboBoxColumn2.DataPropertyName = "S_ID";
-                ComboBoxColumn2.ValueType = typeof(int);
-                ComboBoxColumn2.DisplayMember = "Name";
-                ComboBoxColumn2.ValueMember = "ID";
-                ComboBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                ComboBoxColumn2.DataSource = MainForm.DBMain.dsPharms.Tables["Sequenzen"];
-                MainForm.MasterGrid.Columns.Add(ComboBoxColumn2);
+                DataView dvMasterEdit = new DataView(MainForm.DBMain.dsPharms.Tables["Masterablauf"]);
+                string sName = MainForm.cmbMastersequenz.SelectedValue.ToString();
+
+                dvMasterEdit.RowFilter = "Name = '" + sName + "'";
+                dvMasterEdit.Sort = "Reihenfolge";
+
+                DataGridViewComboBoxColumn ComboBoxColumn2 = null;
+                if (ComboBoxColumn2 == null)
+                {
+                    ComboBoxColumn2 = new DataGridViewComboBoxColumn();
+                    ComboBoxColumn2.Name = "Sequenz";
+                    ComboBoxColumn2.HeaderText = "Sequenz";
+                    ComboBoxColumn2.DataPropertyName = "S_ID";
+                    ComboBoxColumn2.ValueType = typeof(int);
+                    ComboBoxColumn2.DisplayMember = "Name";
+                    ComboBoxColumn2.ValueMember = "ID";
+                    ComboBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    ComboBoxColumn2.DataSource = MainForm.DBMain.dsPharms.Tables["Sequenzen"];
+                    MainForm.MasterGrid.Columns.Add(ComboBoxColumn2);
+                }
+
+                MainForm.MasterGrid.AutoGenerateColumns = true;
+                MainForm.MasterGrid.DataSource = dvMasterEdit;
+                MainForm.MasterGrid.Columns["ID"].Visible = false;
+                MainForm.MasterGrid.Columns["Speicherplatz"].ReadOnly = true;
+                MainForm.MasterGrid.Columns["Speicherplatz"].Visible = false;
+                MainForm.MasterGrid.Columns["Name"].Visible = false;
+                MainForm.MasterGrid.Columns["Reihenfolge_Master"].Visible = false;
+                MainForm.MasterGrid.Columns["Iterationsanzahl"].Visible = false;
+                // MainForm.MasterGrid.Columns["Reihenfolge"].Visible = false;
             }
-
-            MainForm.MasterGrid.AutoGenerateColumns = true;
-            MainForm.MasterGrid.DataSource = MainForm.DBMain.dsPharms.Tables["Masterablauf"];
-            MainForm.MasterGrid.Columns["ID"].Visible = false;
-            MainForm.MasterGrid.Columns["Speicherplatz"].ReadOnly = true;
-            MainForm.MasterGrid.Columns["Name"].Visible = false;
-            MainForm.MasterGrid.Columns["Reihenfolge_Master"].Visible = false;
-            MainForm.MasterGrid.Columns["Iterationsanzahl"].Visible = false;
-            // MainForm.MasterGrid.Columns["Reihenfolge"].Visible = false;
-
         }
         public void FillGridMaster2()
         {
-             
+
             MainForm.MasterGrid2.AutoGenerateColumns = true;
             MainForm.MasterGrid2.DataSource = MainForm.DBMain.GetGroupedMasterablauf();
-
-           
-
         }
 
         public void FillGridMeasurements()

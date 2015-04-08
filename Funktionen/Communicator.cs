@@ -7,6 +7,7 @@ using System.Threading;
 using System.ComponentModel;
 using System.IO;
 using System.Timers;
+using System.Data;
 
 namespace PharMS_Steuerung.Funktionen
 {
@@ -36,6 +37,7 @@ namespace PharMS_Steuerung.Funktionen
         public int ende;
         public int Messdauer, Messintervall, Responsetime;
         public bool IsWithMakro;
+        public bool IsMasterThreadActiv;
 
         public SQLMain DBMain;
         public bool Abbruch; //Abruch der Kommunikation 
@@ -51,6 +53,13 @@ namespace PharMS_Steuerung.Funktionen
 
             CfgFile Config = new CfgFile("Config.ini");
             sMakroEndeZeichen = Config.getValue("Steuerzeichen", "MakroEnde", false);
+
+            if (GlobalVar.IsTest)
+            {
+                oComschnitstelle = new COM(this);
+                Connection = true;
+                oComschnitstelle.bereit = true; //zum test ohne Gerät
+            }
 
         }
         public void SaveLog()
@@ -98,9 +107,9 @@ namespace PharMS_Steuerung.Funktionen
             }
 
         }
-        public void StartMasterAblaufBefehlsweise(int p_PCountMasterIteration)
+        public void StartMasterAblaufBefehlsweise()
         {
-            CountMasterIteration = p_PCountMasterIteration;
+            //  CountMasterIteration = p_PCountMasterIteration;
 
             Abbruch = false;
 
@@ -109,6 +118,7 @@ namespace PharMS_Steuerung.Funktionen
             BackgroundWorkerEinzelbefehle.RunWorkerCompleted += BackgroundWorkerEinzelbefehle_RunWorkerCompleted;
             BackgroundWorkerEinzelbefehle.DoWork += BackgroundWorkerEinzelbefehle_DoWork;
             BackgroundWorkerEinzelbefehle.RunWorkerAsync();
+            IsMasterThreadActiv = true;
             BackgroundWorkerEinzelbefehle.Dispose();
 
         }
@@ -150,9 +160,7 @@ namespace PharMS_Steuerung.Funktionen
                 FormLog.AddLog("Incoming Data gesendet:" + Sequenz.ElektrodenTest() + "    " + System.DateTime.Now.ToString());
                 MessageBox.Show("Zuleitung 7 zu Ventil 2 in Testlösung führen !");//TODO evt abbrechen
                 System.Threading.Thread.Sleep(5000);
-                oComschnitstelle.SendToCOM("X20", true);
-                Console.WriteLine("X20");
-                FormLog.AddLog("X20");
+                Execute_Makro("X20");
 
             }
             else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
@@ -166,12 +174,9 @@ namespace PharMS_Steuerung.Funktionen
                 sExpectedStatus = "Z";
                 Console.WriteLine("Incoming Data gesendet:" + Sequenz.LeitungenBefuellen());
                 FormLog.AddLog("Incoming Data gesendet:" + Sequenz.LeitungenBefuellen() + "    " + System.DateTime.Now.ToString());
-               
-                System.Threading.Thread.Sleep(5000);
-                oComschnitstelle.SendToCOM("X2", true);
-                Console.WriteLine("X2");
-                FormLog.AddLog("X2");
 
+                System.Threading.Thread.Sleep(5000);
+                Execute_Makro("X2");
             }
             else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
         }
@@ -186,10 +191,7 @@ namespace PharMS_Steuerung.Funktionen
                 FormLog.AddLog("Incoming Data gesendet:" + Sequenz.Probe1_leeren() + "    " + System.DateTime.Now.ToString());
 
                 System.Threading.Thread.Sleep(5000);
-                oComschnitstelle.SendToCOM("X3", true);
-                Console.WriteLine("X3");
-                FormLog.AddLog("X3");
-                sExpectedStatus = "Z";
+                Execute_Makro("X3");
             }
             else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
         }
@@ -249,7 +251,7 @@ namespace PharMS_Steuerung.Funktionen
             FormLog.AddLog("Start BackgroundWorkerFlush" + "    " + System.DateTime.Now.ToString());
             BackgroundWorkerFlush.RunWorkerCompleted += BackgroundWorkerFlush_RunWorkerCompleted;
             BackgroundWorkerFlush.DoWork += BackgroundWorkerCommands_DoWork;
-            BackgroundWorkerFlush.RunWorkerAsync(new HelpClass(CountSpulItereation, "X18", "X19", "W0,01"));
+            BackgroundWorkerFlush.RunWorkerAsync(new HelpClass(CountSpulItereation, "X18", "X19"));
             BackgroundWorkerFlush.Dispose();
         }
 
@@ -260,17 +262,18 @@ namespace PharMS_Steuerung.Funktionen
         }
         private void BackgroundWorkerCommands_DoWork(object sender, DoWorkEventArgs e)
         {
-            Execute_Commands(((HelpClass)e.Argument).iRepeat, ((HelpClass)e.Argument).arrCommands);
+            Execute_MakroCommands(((HelpClass)e.Argument).iRepeat, ((HelpClass)e.Argument).arrCommands);
         }
         private void BackgroundWorkerEinzelbefehle_DoWork(object sender, DoWorkEventArgs e)
         {
-            oComschnitstelle.SendToCOM("p2;1", true);            
+            oComschnitstelle.SendToCOM("p2;1", true);
             Execute_SingleCommands();
             oComschnitstelle.SendToCOM("p2;0", true);
         }
         private void BackgroundWorkerEinzelbefehle_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             FormLog.AddLog("Completed BackgroundWorkerEinzelbefehle" + "    " + System.DateTime.Now.ToString());
+            IsMasterThreadActiv = false;
             // MessageBox.Show("Masterablauf erfoglreich absolviert!");
         }
 
@@ -633,128 +636,138 @@ namespace PharMS_Steuerung.Funktionen
 
             }
 
-
             List<String> lstCommands = new List<string>();
             List<int> IDs;
             IDs = null;
-            try
+            DataTable dt = DBMain.GetGroupedMasterablauf();
+            dt.DefaultView.Sort = "Reihenfolge_Master ASC";
+            foreach (DataRow row in dt.Rows)
             {
-                IDs = DBMain.GetSequenzIDsFromMasterablauf();
-            }
-            catch (Exception e)
-            {
-                FormLog.AddLog("Beim Zugriff auf die Datenbank trat folgende Exception auf: " + e.Message);
-                oComschnitstelle.NotStop();
-                SaveLog();
-                MessageBox.Show("Beim Zugriff auf die Datenbank trat folgende Exception auf (Nr.104): " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                string Name = row.ItemArray[0].ToString();
+                int Iterationszahl = Convert.ToInt32(row.ItemArray[2].ToString());
 
-            FormLog.AddLog("Starte Masterablauf " + DateTime.Now);
+                IDs = DBMain.GetSequenzIDsFromMasterablauf(Name);
 
-            for (int j = 0; j < CountMasterIteration; j++)
-            {
-                if (Abbruch == true) return;
-                FormLog.AddLog("Masteriteration: " + (j + 1).ToString());
-                FormLog.SetLabelForMaster("Masteriteration: " + (j + 1).ToString());
-                foreach (int ID in IDs)
+
+
+                FormLog.AddLog("Starte Masterablauf " + Name + DateTime.Now);
+
+                for (int j = 0; j < Iterationszahl; j++)
                 {
                     if (Abbruch == true) return;
-                    try
+                    FormLog.AddLog("Masterzyklus: " + (j + 1).ToString());
+                    //FormLog.SetLabelForMaster("Masterzyklus: " + (j + 1).ToString());
+                    foreach (int ID in IDs)
                     {
-                        lstCommands = DBMain.GetSequenzByIDAsList(ID);
-                    }
-                    catch (Exception e)
-                    {
-                        FormLog.AddLog("Beim Zugriff auf die Datenbank trat folgende Exception auf: " + e.Message);
-                        oComschnitstelle.NotStop();
-                        SaveLog();
-                        MessageBox.Show("Beim Zugriff auf die Datenbank trat folgende Exception auf (Nr.105): " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    FormLog.AddLog("Starte Sequenz mit ID: " + ID.ToString());
-                    FormLog.SetLabelForSequenz(DBMain.GetSequenzNameByID(ID));
-                    for (int i = 0; i < lstCommands.Count(); i++)
-                    {
+                        string SequenzName = DBMain.GetSequenzNameByID(ID);
                         if (Abbruch == true) return;
-                        //Pufferzeit mitschicken wenn der Befehl lange zum abarbeiten braucht und eine eventbehandlung stattfindet, wenn der Thread fertig ist
-                        Boolean bLock = false;
-
-                        FormLog.AddLog("Akuteller Befehl : " + lstCommands[i]);
-                        if (lstCommands[i][0] == 'W')
+                        try
                         {
-                            string[] sTime = lstCommands[i].Split(',');
-                            string[] sMin = sTime[0].Split('W');
-                            sExpectedStatus = "Z";
-                            FormLog.AddLog("Wartezeit geht los " + DateTime.Now);
-                            oComschnitstelle.SendToCOM(lstCommands[i], false);
-                            System.Threading.Thread.Sleep((Convert.ToInt32(sMin[1]) * 60 * 1000) + Convert.ToInt32(sTime[1]) * 1000);
-                            FormLog.AddLog("Wartezeit ende " + DateTime.Now);
+                            lstCommands = DBMain.GetSequenzByIDAsList(ID);
                         }
-                        else
-                            if (lstCommands[i] == "M")
-                            {
-                                if (Abbruch == true) return;
-                                sExpectedStatus = "M";
-                                oComschnitstelle.SendToCOM(lstCommands[i], false);
-                                FormLog.AddLog("Messwert gesendet " + DateTime.Now);
-                                System.Threading.Thread.Sleep((Messdauer * 60 * 1000) + 2000); //während er wartet müsste der Messwerttimer starten
-                                FormLog.AddLog("Ende Messung " + DateTime.Now);
-                            }
-                            else
-                            {
-
-                                do
-                                {
-                                    if (Abbruch == true) return;
-                                    sExpectedStatus = "Z";
-                                    if (oComschnitstelle.bereit == true && !bLock)
-                                    {
-                                        oComschnitstelle.SendToCOM(lstCommands[i], false);
-                                        tmrResponsetimer.Start();
-                                        System.Threading.Thread.Sleep(1000);
-                                        bLock = true;
-                                    }
-                                } while (oComschnitstelle.bereit == false); //Somit wartet er bis das erwartete Z den Port für bereit erklärt, die Befehle M und W benötigen keine explizites warten
-                                tmrResponsetimer.Stop();
-                            }
-
-                        do
+                        catch (Exception e)
+                        {
+                            FormLog.AddLog("Beim Zugriff auf die Datenbank trat folgende Exception auf: " + e.Message);
+                            oComschnitstelle.NotStop();
+                            SaveLog();
+                            MessageBox.Show("Beim Zugriff auf die Datenbank trat folgende Exception auf (Nr.105): " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        FormLog.AddLog("Starte Sequenz mit ID: " + SequenzName);
+                        //  FormLog.SetLabelForSequenz(SequenzName);
+                        for (int i = 0; i < lstCommands.Count(); i++)
                         {
                             if (Abbruch == true) return;
-                            AbfrageStatus(); //Warte bis neuer Befehl gesendet werden kann
-                            Thread.Sleep(2000); //um zu verhindern dass das Gerät mit Abfragen zugespamt wird (führt sonst zu fehlern)
-                        } while (oComschnitstelle.bereit == false);
+                            //Pufferzeit mitschicken wenn der Befehl lange zum abarbeiten braucht und eine eventbehandlung stattfindet, wenn der Thread fertig ist
+                            Boolean bLock = false;
 
-                        FormLog.AddLog("Akuteller Befehl abgearbeitet: " + lstCommands[i]);
+                            FormLog.AddLog("Akuteller Befehl : " + lstCommands[i]);
+                            if (lstCommands[i][0] == 'W')
+                            {
+                                string[] sTime = lstCommands[i].Split(',');
+                                string[] sMin = sTime[0].Split('W');
+                                sExpectedStatus = "Z";
+                                FormLog.AddLog("Wartezeit geht los " + DateTime.Now);
+                                oComschnitstelle.SendToCOM(lstCommands[i], false);
+                                if (!GlobalVar.IsTest) System.Threading.Thread.Sleep((Convert.ToInt32(sMin[1]) * 60 * 1000) + Convert.ToInt32(sTime[1]) * 1000);
+                                FormLog.AddLog("Wartezeit ende " + DateTime.Now);
+                            }
+                            else
+                                if (lstCommands[i] == "M")
+                                {
+                                    if (Abbruch == true) return;
+                                    sExpectedStatus = "M";
+                                    oComschnitstelle.SendToCOM(lstCommands[i], false);
+                                    FormLog.AddLog("Messwert gesendet " + DateTime.Now);
+                                    if (!GlobalVar.IsTest) System.Threading.Thread.Sleep((Messdauer * 60 * 1000) + 2000); //während er wartet müsste der Messwerttimer starten
+                                    FormLog.AddLog("Ende Messung " + DateTime.Now);
+                                }
+                                else
+                                {
+
+                                    do
+                                    {
+                                        if (Abbruch == true) return;
+                                        sExpectedStatus = "Z";
+                                        if (oComschnitstelle.bereit == true && !bLock)
+                                        {
+                                            oComschnitstelle.SendToCOM(lstCommands[i], false);
+                                            tmrResponsetimer.Start();
+                                            if (!GlobalVar.IsTest) System.Threading.Thread.Sleep(1000);
+                                            bLock = true;
+                                        }
+                                    } while (oComschnitstelle.bereit == false); //Somit wartet er bis das erwartete Z den Port für bereit erklärt, die Befehle M und W benötigen keine explizites warten
+                                    tmrResponsetimer.Stop();
+                                }
+
+                            do
+                            {
+                                if (Abbruch == true) return;
+                                if (!GlobalVar.IsTest) AbfrageStatus(); //Warte bis neuer Befehl gesendet werden kann
+                                if (!GlobalVar.IsTest) Thread.Sleep(2000); //um zu verhindern dass das Gerät mit Abfragen zugespamt wird (führt sonst zu fehlern)
+                            } while (oComschnitstelle.bereit == false);
+
+                            FormLog.AddLog("Akuteller Befehl abgearbeitet: " + lstCommands[i]);
+                        }
+                        FormLog.AddLog("Beende Sequenz");
                     }
-                    FormLog.AddLog("Beende Sequenz");
                 }
+                FormLog.AddLog("Ende Masterablauf" + DateTime.Now);
             }
-            FormLog.AddLog("Ende Masterablauf" + DateTime.Now);
         }
 
-        private void Execute_Commands(int repeat, params string[] Commands)
+        private void Execute_Makro(string Makro)
+        {
+            do
+            {
+                if (Abbruch == true) return;
+                System.Threading.Thread.Sleep(2000);
+                if (oComschnitstelle.bereit == true)
+                {
+                    sExpectedStatus = "Z";
+                    FormLog.AddLog("Send: " + Makro);
+                    oComschnitstelle.SendToCOM(Makro, false);
+                    System.Threading.Thread.Sleep(2000);
+
+                }
+            } while (oComschnitstelle.bereit == false);
+
+            sExpectedStatus = "ZY"; //Makro wurde angenommen
+            FormLog.AddLog("Makro wurde übertragen, COM wird solange Blockiert bis Makro abgearbeitet wurde (ZY)");
+            oComschnitstelle.bereit = false; //deswegen warten wir solange bis es auch abgearbeitet wurde und uns ein ZY zurück gibt
+            do
+            {
+                if (Abbruch == true) return;
+                if (!GlobalVar.IsTest) Thread.Sleep(2000);
+            } while (oComschnitstelle.bereit == false);
+            FormLog.AddLog("Makro wurde abgearbeitet");
+        }
+        private void Execute_MakroCommands(int repeat, params string[] Commands)
         {
             for (int j = 0; j < repeat; j++)
             {
                 for (int i = 0; i < Commands.Count(); i++)
                 {
-                    if (Commands[i].Length > 512)
-                        MessageBox.Show("Der Befehl ist größere als 512 Zeichen");
-
-                    if (Commands[i][0] == 'X')
-                        sExpectedStatus = sMakroEndeZeichen;
-                    else sExpectedStatus = "Z";
-
-
-                    Boolean Lauf = true; //Pufferzeit mitschicken wenn der Befehl lange zum abarbeiten braucht und eine eventbehandlung stattfindet, wenn der Thread fertig ist
-                    do
-                    {
-                        if (Abbruch == true) return;
-                        if (Lauf == true) FormLog.AddLog("Line: " + Commands[i]);              
-                        Lauf = oComschnitstelle.SendToCOM(Commands[i], false);
-                        if (Lauf == true) System.Threading.Thread.Sleep(1000);
-
-                    } while (Lauf == false);
+                    Execute_Makro(Commands[i]);
                 }
             }
         }
