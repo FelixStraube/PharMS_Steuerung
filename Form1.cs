@@ -29,15 +29,14 @@ namespace PharMS_Steuerung
         private LiveChartForm _LiveChart;
         private int RowCountMaster2 = 0;
         //    static System.Windows.Forms.Timer Zeitsteuerung = new System.Windows.Forms.Timer();
-        static int alarmCounter = 1;
-        static bool exitFlag = false;
+
         public Sequenzeditor oSequenzeditor;
 
         public DataGridView Temp = new DataGridView();
         public int maxObjectKey;
 
         static bool Live_Cahrtausgabe = true;
-        private int iSpeicherplatzForMNItem = -999;
+        private int IDForMNItem = -999;
         private bool IsDataBindingComplete;
         private Communicator oCommunicator;
         public SQLMain DBMain;
@@ -165,18 +164,14 @@ namespace PharMS_Steuerung
 
             if (result == DialogResult.Yes)
             {
-                result = MessageBox.Show("Gefäß 1 geleert?", "Hinweis", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
+                if (oCommunicator.IsWithMakro)
+                    oCommunicator.StartMasterAblaufMitMakro(5);//5 ist platzhalter
+                else
                 {
-
-                    if (oCommunicator.IsWithMakro)
-                        oCommunicator.StartMasterAblaufMitMakro(5);//5 ist platzhalter
-                    else
-                    {
-                        if (!oCommunicator.IsMasterThreadActiv) oCommunicator.StartMasterAblaufBefehlsweise();
-                        else MessageBox.Show("Der Masterablauf läuft bereits, es könnte sein das der vorangegangene Masterablauf nicht richtig beendet wurde. In den Fall Klicken Sie auf Stopp oder senden ein x.", "Hinweis", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
+                    if (!oCommunicator.IsMasterThreadActiv) oCommunicator.StartMasterAblaufBefehlsweise();
+                    else MessageBox.Show("Der Masterablauf läuft bereits, es könnte sein das der vorangegangene Masterablauf nicht richtig beendet wurde. In den Fall Klicken Sie auf Stopp oder senden ein x.", "Hinweis", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
+
             }
 
         }
@@ -270,12 +265,12 @@ namespace PharMS_Steuerung
                 if (icurrentMouseOverRow >= 0)
                 {
                     AblaufListeVorAuswahl = SequenzenGrid.Rows[icurrentMouseOverRow].Cells[0].Value.ToString();
-                    if (SequenzenGrid.Rows[icurrentMouseOverRow].Cells["Speicherplatz"].Value != null)
-                        if (SequenzenGrid.Rows[icurrentMouseOverRow].Cells["Speicherplatz"].Value.ToString() != "" && SequenzenGrid.Rows[icurrentMouseOverRow].Cells["Speicherplatz"].Value.ToString() != "       ")
+                    if (SequenzenGrid.Rows[icurrentMouseOverRow].Cells["ID"].Value != null)
+                        if (SequenzenGrid.Rows[icurrentMouseOverRow].Cells["ID"].Value.ToString() != "" && SequenzenGrid.Rows[icurrentMouseOverRow].Cells["ID"].Value.ToString() != "       ")
                         {
                             m.MenuItems.Add(new MenuItem("Starten"));
                             m.MenuItems[1].Click += mnItemStarten_Click;
-                            iSpeicherplatzForMNItem = Convert.ToInt32(SequenzenGrid.Rows[icurrentMouseOverRow].Cells["Speicherplatz"].Value.ToString());
+                            IDForMNItem = Convert.ToInt32(SequenzenGrid.Rows[icurrentMouseOverRow].Cells["ID"].Value.ToString());
                         }
                     m.Show(SequenzenGrid, new Point(e.X, e.Y));
                 }
@@ -286,7 +281,7 @@ namespace PharMS_Steuerung
 
         void mnItemStarten_Click(object sender, EventArgs e)
         {
-            oCommunicator.SendToCOM("X" + iSpeicherplatzForMNItem.ToString());
+            oCommunicator.StartSequenzfBefehlsweise(IDForMNItem);
         }
         void mnItemEditieren_Click(object sender, EventArgs e)
         {
@@ -652,6 +647,7 @@ namespace PharMS_Steuerung
                     {
                         DBMain.InsertMasterGrid2(Name, Reihenfolge, Iteration);
                         RowCountMaster2 = MasterGrid2.RowCount;
+                        cmbMastersequenz.DataSource = DBMain.GetGroupedMasterablauf();
                     }
                     else
                         DBMain.UpdateMasterGrid2(Name, Reihenfolge, Iteration);
@@ -696,12 +692,23 @@ namespace PharMS_Steuerung
             DBMain.DeleteMasterGrid2(Name);
         }
 
+        private void MasterGrid_DefaultValuesNeeded_1(object sender, DataGridViewRowEventArgs e)
+        {
+            e.Row.Cells["Reihenfolge"].Value = MasterGrid.RowCount;
+            e.Row.Cells["Name"].Value = cmbMastersequenz.SelectedValue.ToString();
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cmbMastersequenz.DataSource = DBMain.GetGroupedMasterablauf();
+        }
+
 
 
     }
     public static class GlobalVar
     {
 
-        public static bool IsTest = true;
+        public static bool IsTest = false;
     }
 }

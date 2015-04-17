@@ -64,7 +64,8 @@ namespace PharMS_Steuerung.Funktionen
         }
         public void SaveLog()
         {
-            File.WriteAllText("LogCOM.txt", FormLog.GetLog());
+
+            File.WriteAllText("LogCOM-" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm") + ".txt", FormLog.GetLog());
             //File.WriteAllLines("LogCOM.txt", FormLog.GetLog());
         }
 
@@ -116,8 +117,23 @@ namespace PharMS_Steuerung.Funktionen
             BackgroundWorker BackgroundWorkerEinzelbefehle = new BackgroundWorker();
             FormLog.AddLog("Start BackgroundWorkerSendSequenz" + "    " + System.DateTime.Now.ToString());
             BackgroundWorkerEinzelbefehle.RunWorkerCompleted += BackgroundWorkerEinzelbefehle_RunWorkerCompleted;
-            BackgroundWorkerEinzelbefehle.DoWork += BackgroundWorkerEinzelbefehle_DoWork;
+            BackgroundWorkerEinzelbefehle.DoWork += BackgroundWorkerMasterEinzelbefehle_DoWork;
             BackgroundWorkerEinzelbefehle.RunWorkerAsync();
+            IsMasterThreadActiv = true;
+            BackgroundWorkerEinzelbefehle.Dispose();
+        }
+
+        public void StartSequenzfBefehlsweise(int ID)
+        {
+            //  CountMasterIteration = p_PCountMasterIteration;
+
+            Abbruch = false;
+
+            BackgroundWorker BackgroundWorkerEinzelbefehle = new BackgroundWorker();
+            FormLog.AddLog("Start BackgroundWorkerSendSequenz" + "    " + System.DateTime.Now.ToString());
+            BackgroundWorkerEinzelbefehle.RunWorkerCompleted += BackgroundWorkerEinzelbefehle_RunWorkerCompleted;
+            BackgroundWorkerEinzelbefehle.DoWork += BackgroundWorkerEinzelbefehle_DoWork;
+            BackgroundWorkerEinzelbefehle.RunWorkerAsync(ID);
             IsMasterThreadActiv = true;
             BackgroundWorkerEinzelbefehle.Dispose();
 
@@ -159,8 +175,14 @@ namespace PharMS_Steuerung.Funktionen
                 Console.WriteLine("Incoming Data gesendet:" + Sequenz.ElektrodenTest());
                 FormLog.AddLog("Incoming Data gesendet:" + Sequenz.ElektrodenTest() + "    " + System.DateTime.Now.ToString());
                 MessageBox.Show("Zuleitung 7 zu Ventil 2 in Testlösung führen !");//TODO evt abbrechen
-                System.Threading.Thread.Sleep(5000);
-                Execute_Makro("X20");
+
+                BackgroundWorker BackgroundWorkerTest = new BackgroundWorker();
+                FormLog.AddLog("Start BackgroundWorkerBefuellen" + "    " + System.DateTime.Now.ToString());
+                BackgroundWorkerTest.DoWork += BackgroundWorkerCommands_DoWork;
+                //BackgroundWorkerLeeren.RunWorkerCompleted += BackgroundWorkerReg_RunWorkerCompleted;
+                BackgroundWorkerTest.RunWorkerAsync(new HelpClass(1, "X20"));
+                BackgroundWorkerTest.Dispose();
+
 
             }
             else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
@@ -175,8 +197,13 @@ namespace PharMS_Steuerung.Funktionen
                 Console.WriteLine("Incoming Data gesendet:" + Sequenz.LeitungenBefuellen());
                 FormLog.AddLog("Incoming Data gesendet:" + Sequenz.LeitungenBefuellen() + "    " + System.DateTime.Now.ToString());
 
-                System.Threading.Thread.Sleep(5000);
-                Execute_Makro("X2");
+                BackgroundWorker BackgroundWorkerBefuellen = new BackgroundWorker();
+                FormLog.AddLog("Start BackgroundWorkerBefuellen" + "    " + System.DateTime.Now.ToString());
+                BackgroundWorkerBefuellen.DoWork += BackgroundWorkerCommands_DoWork;
+                //BackgroundWorkerLeeren.RunWorkerCompleted += BackgroundWorkerReg_RunWorkerCompleted;
+                BackgroundWorkerBefuellen.RunWorkerAsync(new HelpClass(1, "X2"));
+                BackgroundWorkerBefuellen.Dispose();
+
             }
             else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
         }
@@ -187,11 +214,12 @@ namespace PharMS_Steuerung.Funktionen
             {
                 oComschnitstelle.SendToCOM(Sequenz.Probe1_leeren(), true);
                 sExpectedStatus = "Z";
-                Console.WriteLine("Incoming Data gesendet:" + Sequenz.Probe1_leeren());
-                FormLog.AddLog("Incoming Data gesendet:" + Sequenz.Probe1_leeren() + "    " + System.DateTime.Now.ToString());
-
-                System.Threading.Thread.Sleep(5000);
-                Execute_Makro("X3");
+                BackgroundWorker BackgroundWorkerLeeren = new BackgroundWorker();
+                FormLog.AddLog("Start BackgroundWorkerLeeren" + "    " + System.DateTime.Now.ToString());
+                BackgroundWorkerLeeren.DoWork += BackgroundWorkerCommands_DoWork;
+                //BackgroundWorkerLeeren.RunWorkerCompleted += BackgroundWorkerReg_RunWorkerCompleted;
+                BackgroundWorkerLeeren.RunWorkerAsync(new HelpClass(1, "X3"));
+                BackgroundWorkerLeeren.Dispose();
             }
             else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
         }
@@ -206,7 +234,7 @@ namespace PharMS_Steuerung.Funktionen
                 FormLog.AddLog("Start BackgroundWorkerReg" + "    " + System.DateTime.Now.ToString());
                 BackgroundWorkerReg.DoWork += BackgroundWorkerCommands_DoWork;
                 BackgroundWorkerReg.RunWorkerCompleted += BackgroundWorkerReg_RunWorkerCompleted;
-                BackgroundWorkerReg.RunWorkerAsync(new HelpClass(1, "X20", "W0,01"));
+                BackgroundWorkerReg.RunWorkerAsync(new HelpClass(1, "X20"));
                 BackgroundWorkerReg.Dispose();
                 //  tabControl1.SelectedTab = tabGKommunikation;
             }
@@ -222,11 +250,13 @@ namespace PharMS_Steuerung.Funktionen
                 Sequenzen_uebertragen_aktiv = true;
                 //tabControl1.SelectedTab = tabGKommunikation;
                 oComschnitstelle.SendToCOM(Sequenz.LeitungenSpuelen(true), true);
+                sExpectedStatus = "Z";
                 Console.WriteLine("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(true));
                 FormLog.AddLog("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(true) + "    " + System.DateTime.Now.ToString());
                 MessageBox.Show("Schritt 1: Desinfektion \n 1. Inkubationsgefäße gegen Blindgefäße austauschen! \n 2. Zuleitungen 1, 2, 3, 6, 7 zu Ventil 2 in separates Abfallgefäß führen! \n 3. Puffergefäß gegen Desinfektionsmittelgefäß austauschen!");
                 System.Threading.Thread.Sleep(2000);
                 oComschnitstelle.SendToCOM(Sequenz.LeitungenSpuelen(false), true);
+                sExpectedStatus = "Z";
                 Console.WriteLine("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(false));
                 FormLog.AddLog("Incoming Data gesendet:" + Sequenz.LeitungenSpuelen(false) + "    " + System.DateTime.Now.ToString());
                 System.Threading.Thread.Sleep(2000);
@@ -236,7 +266,7 @@ namespace PharMS_Steuerung.Funktionen
                 FormLog.AddLog("Start BackgroundWorkerDesinfect" + "    " + System.DateTime.Now.ToString());
                 BackgroundWorkerDesinfect.RunWorkerCompleted += BackgroundWorkerDesinfect_RunWorkerCompleted;
                 BackgroundWorkerDesinfect.DoWork += BackgroundWorkerCommands_DoWork;
-                BackgroundWorkerDesinfect.RunWorkerAsync(new HelpClass(p_CountDesItereation, "X18", "X19", "W0,01"));
+                BackgroundWorkerDesinfect.RunWorkerAsync(new HelpClass(p_CountDesItereation, "X18", "X19"));
                 BackgroundWorkerDesinfect.Dispose();
             }
             else MessageBox.Show("Eine Sequenz befindet sich bereits in Bearbeitung");
@@ -264,10 +294,17 @@ namespace PharMS_Steuerung.Funktionen
         {
             Execute_MakroCommands(((HelpClass)e.Argument).iRepeat, ((HelpClass)e.Argument).arrCommands);
         }
+        private void BackgroundWorkerMasterEinzelbefehle_DoWork(object sender, DoWorkEventArgs e)
+        {
+            oComschnitstelle.SendToCOM("p2;1", true);
+            Execute_MasterSingleCommands();
+            oComschnitstelle.SendToCOM("p2;0", true);
+        }
+
         private void BackgroundWorkerEinzelbefehle_DoWork(object sender, DoWorkEventArgs e)
         {
             oComschnitstelle.SendToCOM("p2;1", true);
-            Execute_SingleCommands();
+            Execute_SingleCommands((int)e.Argument);
             oComschnitstelle.SendToCOM("p2;0", true);
         }
         private void BackgroundWorkerEinzelbefehle_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -447,6 +484,12 @@ namespace PharMS_Steuerung.Funktionen
                             oComschnitstelle.bereit = true;
                         }
 
+                        if (sExpectedStatus == "M" && p_Status == sMakroEndeZeichen)
+                        {
+                            //der Elektrodentest macht dies notwendig
+                            System.Threading.Thread.Sleep(500);
+                            oComschnitstelle.bereit = true;
+                        }
                         if (/*Sequenzen_uebertragen_aktiv == true && */sExpectedStatus == "Z")
                         {
                             System.Threading.Thread.Sleep(500);
@@ -524,20 +567,16 @@ namespace PharMS_Steuerung.Funktionen
                         switch (p_Status)
                         {
                             case "E01":
-                                sMsg = "Unbekanntes Kommando! Überprüfen Sie bitte ihre Sequenz auf Fehler.";
-                                //  tempForm.Invoke(new Action(() => { MessageBox.Show(tempForm, sMsg); }));
+                                FormLog.AddLog("Unbekanntes Kommando! Überprüfen Sie bitte ihre Sequenz auf Fehler.");
                                 break;
                             case "E02":
-                                sMsg = "Unzulässiges Element! Überprüfen Sie bitte ihre Sequenz auf Fehler.";
-                                //   tempForm.Invoke(new Action(() => { MessageBox.Show(tempForm, sMsg); }));
+                                FormLog.AddLog("Unzulässiges Element! Überprüfen Sie bitte ihre Sequenz auf Fehler.");
                                 break;
                             case "E03":
-                                sMsg = "Unzulässiges Argument! Überprüfen Sie bitte ihre Sequenz auf Fehler.";
-                                //   tempForm.Invoke(new Action(() => { MessageBox.Show(tempForm, sMsg); }));
+                                FormLog.AddLog("Unzulässiges Argument! Überprüfen Sie bitte ihre Sequenz auf Fehler.");
                                 break;
                             default:
-                                sMsg = "Unbekannter Fehler!";
-                                //   tempForm.Invoke(new Action(() => { MessageBox.Show(tempForm, sMsg); }));
+                                FormLog.AddLog("Unbekannter Fehler!");
                                 break;
                         }
                         oComschnitstelle.bereit = false;
@@ -621,7 +660,7 @@ namespace PharMS_Steuerung.Funktionen
             AbfrageStatus();
 
         }
-        private void Execute_SingleCommands()
+        private void Execute_MasterSingleCommands()
         {
 
             if (tmrResponsetimer == null)
@@ -732,7 +771,100 @@ namespace PharMS_Steuerung.Funktionen
                     }
                 }
                 FormLog.AddLog("Ende Masterablauf" + DateTime.Now);
+                SaveLog();
             }
+        }
+
+
+
+        private void Execute_SingleCommands(int ID)
+        {
+
+            if (tmrResponsetimer == null)
+            {
+                tmrResponsetimer = new System.Timers.Timer();
+                tmrResponsetimer.Enabled = false;
+            }
+            if (tmrResponsetimer.Enabled == false)
+            {
+                tmrResponsetimer.Interval = Responsetime * 60 * 1000;  //s zu ms
+                tmrResponsetimer.Elapsed += new ElapsedEventHandler(ResponsetimerTick);
+
+            }
+
+            List<String> lstCommands = new List<string>();
+
+
+            string SequenzName = DBMain.GetSequenzNameByID(ID);
+            if (Abbruch == true) return;
+            try
+            {
+                lstCommands = DBMain.GetSequenzByIDAsList(ID);
+            }
+            catch (Exception e)
+            {
+                FormLog.AddLog("Beim Zugriff auf die Datenbank trat folgende Exception auf: " + e.Message);
+                oComschnitstelle.NotStop();
+                SaveLog();
+                MessageBox.Show("Beim Zugriff auf die Datenbank trat folgende Exception auf (Nr.105): " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            FormLog.AddLog("Starte Sequenz mit ID: " + SequenzName);
+            //  FormLog.SetLabelForSequenz(SequenzName);
+            for (int i = 0; i < lstCommands.Count(); i++)
+            {
+                if (Abbruch == true) return;
+                //Pufferzeit mitschicken wenn der Befehl lange zum abarbeiten braucht und eine eventbehandlung stattfindet, wenn der Thread fertig ist
+                Boolean bLock = false;
+
+                FormLog.AddLog("Akuteller Befehl : " + lstCommands[i]);
+                if (lstCommands[i][0] == 'W')
+                {
+                    string[] sTime = lstCommands[i].Split(',');
+                    string[] sMin = sTime[0].Split('W');
+                    sExpectedStatus = "Z";
+                    FormLog.AddLog("Wartezeit geht los " + DateTime.Now);
+                    oComschnitstelle.SendToCOM(lstCommands[i], false);
+                    if (!GlobalVar.IsTest) System.Threading.Thread.Sleep((Convert.ToInt32(sMin[1]) * 60 * 1000) + Convert.ToInt32(sTime[1]) * 1000);
+                    FormLog.AddLog("Wartezeit ende " + DateTime.Now);
+                }
+                else
+                    if (lstCommands[i] == "M")
+                    {
+                        if (Abbruch == true) return;
+                        sExpectedStatus = "M";
+                        oComschnitstelle.SendToCOM(lstCommands[i], false);
+                        FormLog.AddLog("Messwert gesendet " + DateTime.Now);
+                        if (!GlobalVar.IsTest) System.Threading.Thread.Sleep((Messdauer * 60 * 1000) + 2000); //während er wartet müsste der Messwerttimer starten
+                        FormLog.AddLog("Ende Messung " + DateTime.Now);
+                    }
+                    else
+                    {
+                        do
+                        {
+                            if (Abbruch == true) return;
+                            sExpectedStatus = "Z";
+                            if (oComschnitstelle.bereit == true && !bLock)
+                            {
+                                oComschnitstelle.SendToCOM(lstCommands[i], false);
+                                tmrResponsetimer.Start();
+                                if (!GlobalVar.IsTest) System.Threading.Thread.Sleep(1000);
+                                bLock = true;
+                            }
+                        } while (oComschnitstelle.bereit == false); //Somit wartet er bis das erwartete Z den Port für bereit erklärt, die Befehle M und W benötigen keine explizites warten
+                        tmrResponsetimer.Stop();
+                    }
+                do
+                {
+                    if (Abbruch == true) return;
+                    if (!GlobalVar.IsTest) AbfrageStatus(); //Warte bis neuer Befehl gesendet werden kann
+                    if (!GlobalVar.IsTest) Thread.Sleep(2000); //um zu verhindern dass das Gerät mit Abfragen zugespamt wird (führt sonst zu fehlern)
+                } while (oComschnitstelle.bereit == false);
+
+                FormLog.AddLog("Akuteller Befehl abgearbeitet: " + lstCommands[i]);
+            }
+            FormLog.AddLog("Beende Sequenz");
+
+            SaveLog();
         }
 
         private void Execute_Makro(string Makro)

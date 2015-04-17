@@ -153,6 +153,8 @@ namespace PharMS_Steuerung.Funktionen
             MainForm.SequenzenGrid.Columns["ID"].Visible = false;
             MainForm.SequenzenGrid.Columns["Name"].HeaderText = "Sequenz";
             MainForm.SequenzenGrid.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            MainForm.SequenzenGrid.Columns["Speicherplatz"].ReadOnly = true;
+            MainForm.SequenzenGrid.Columns["Speicherplatz"].Visible = false;
         }
 
         public void FillGridMaster()

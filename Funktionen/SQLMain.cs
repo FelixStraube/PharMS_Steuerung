@@ -176,7 +176,7 @@ namespace PharMS_Steuerung.Funktionen
             List<int> IDs = new List<int>();
             DataTable dtt = new DataTable();            //Erstellt eine leere Hilfs-Tabelle
             DataTableReader dtr;
-            dsPharms.Tables["Masterablauf"].DefaultView.RowFilter = "Name = '" +Name+"'";
+            dsPharms.Tables["Masterablauf"].DefaultView.RowFilter = "Name = '" + Name + "'";
             dsPharms.Tables["Masterablauf"].DefaultView.Sort = "Reihenfolge ASC";
             dtt = dsPharms.Tables["Masterablauf"].DefaultView.ToTable();         //Leere Hilfs-Tabelle wird gefüllt
 
@@ -217,7 +217,17 @@ namespace PharMS_Steuerung.Funktionen
                 "Iterationsanzahl = " + Iteration.ToString() + " " +
                 "WHERE Name = \"" + Name + "\";";
 
-            cmd.ExecuteNonQuery();
+            int affectedRows = cmd.ExecuteNonQuery();
+
+            if (affectedRows == 0)
+            {
+                cmd.CommandText = "Update Masterablauf " +
+               "Set Name = \"" + Name + "\", " +
+               "Reihenfolge_Master = " + Reihenfolge.ToString() + ", " +
+               "Iterationsanzahl = " + Iteration.ToString() + " " +
+               "WHERE Reihenfolge_Master = " + Reihenfolge.ToString() + ";";
+            }
+            affectedRows = cmd.ExecuteNonQuery();
             cmd.Dispose();
             conn.Close();
         }

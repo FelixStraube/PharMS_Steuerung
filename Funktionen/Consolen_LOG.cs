@@ -39,7 +39,15 @@ namespace PharMS_Steuerung.Funktionen
 
         public String GetLog()
         {
-            return tempForm.Console_Ausgabe.Text;
+            string r = tempForm.Console_Ausgabe.Text;
+
+            if (tempForm.InvokeRequired)
+            {
+                return (string)tempForm.Invoke((Func<string>)GetLog);
+            }
+
+            tempForm.Console_Ausgabe.Clear();
+            return r;
         }
     }
 }
