@@ -27,14 +27,25 @@ namespace PharMS_Steuerung.Funktionen
             return true;
         }
 
-        public void SetLabelForMaster(String Übergabe)
+        public bool SetLabelForMaster(String Übergabe)
         {
+
+            if (tempForm.InvokeRequired)
+            {
+                return (bool)tempForm.Invoke((Func<string, bool>)SetLabelForMaster, Übergabe);
+            }
             tempForm.lblMaster.Text = Übergabe;
+            return true;
         }
 
-        public void SetLabelForSequenz(String Übergabe)
+        public bool SetLabelForSequenz(String Übergabe)
         {
+            if (tempForm.InvokeRequired)
+            {
+                return (bool)tempForm.Invoke((Func<string, bool>)SetLabelForSequenz, Übergabe);
+            }
             tempForm.lblSequenz.Text = Übergabe;
+            return true;
         }
 
         public String GetLog()

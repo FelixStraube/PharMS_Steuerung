@@ -199,6 +199,7 @@ namespace PharMS_Steuerung.Funktionen
 
             MainForm.MasterGrid2.AutoGenerateColumns = true;
             MainForm.MasterGrid2.DataSource = MainForm.DBMain.GetGroupedMasterablauf();
+            MainForm.MasterGrid2.Columns["Iterationsanzahl"].HeaderText = "Zyklusanzahl";
         }
 
         public void FillGridMeasurements()

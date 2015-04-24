@@ -134,6 +134,7 @@
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolTipResponsetime = new System.Windows.Forms.ToolTip(this.components);
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -165,6 +166,7 @@
             this.groupBox6.SuspendLayout();
             this.tabMastersequenz.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MasterGrid)).BeginInit();
+            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // fileSystemWatcher1
@@ -243,25 +245,20 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.btnLiveChart);
             this.tabPage2.Controls.Add(this.MesszyklusGrid);
-            this.tabPage2.Controls.Add(this.btnChart);
-            this.tabPage2.Controls.Add(this.btnNeueMessung);
-            this.tabPage2.Controls.Add(this.Messung_Stopp);
-            this.tabPage2.Controls.Add(this.Man_Messung);
-            this.tabPage2.Controls.Add(this.button2);
             this.tabPage2.Controls.Add(this.DatenerfassungTab);
+            this.tabPage2.Controls.Add(this.groupBox8);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(583, 744);
+            this.tabPage2.Size = new System.Drawing.Size(614, 744);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Messdaten";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // btnLiveChart
             // 
-            this.btnLiveChart.Location = new System.Drawing.Point(447, 268);
+            this.btnLiveChart.Location = new System.Drawing.Point(17, 164);
             this.btnLiveChart.Name = "btnLiveChart";
             this.btnLiveChart.Size = new System.Drawing.Size(75, 23);
             this.btnLiveChart.TabIndex = 35;
@@ -281,7 +278,7 @@
             // 
             // btnChart
             // 
-            this.btnChart.Location = new System.Drawing.Point(447, 225);
+            this.btnChart.Location = new System.Drawing.Point(17, 135);
             this.btnChart.Name = "btnChart";
             this.btnChart.Size = new System.Drawing.Size(75, 23);
             this.btnChart.TabIndex = 11;
@@ -291,7 +288,7 @@
             // 
             // btnNeueMessung
             // 
-            this.btnNeueMessung.Location = new System.Drawing.Point(447, 103);
+            this.btnNeueMessung.Location = new System.Drawing.Point(17, 19);
             this.btnNeueMessung.Name = "btnNeueMessung";
             this.btnNeueMessung.Size = new System.Drawing.Size(96, 23);
             this.btnNeueMessung.TabIndex = 9;
@@ -302,7 +299,7 @@
             // 
             // Messung_Stopp
             // 
-            this.Messung_Stopp.Location = new System.Drawing.Point(447, 181);
+            this.Messung_Stopp.Location = new System.Drawing.Point(17, 106);
             this.Messung_Stopp.Name = "Messung_Stopp";
             this.Messung_Stopp.Size = new System.Drawing.Size(75, 23);
             this.Messung_Stopp.TabIndex = 8;
@@ -312,7 +309,7 @@
             // 
             // Man_Messung
             // 
-            this.Man_Messung.Location = new System.Drawing.Point(447, 141);
+            this.Man_Messung.Location = new System.Drawing.Point(17, 77);
             this.Man_Messung.Name = "Man_Messung";
             this.Man_Messung.Size = new System.Drawing.Size(75, 23);
             this.Man_Messung.TabIndex = 7;
@@ -322,7 +319,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(447, 63);
+            this.button2.Location = new System.Drawing.Point(17, 48);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(117, 23);
             this.button2.TabIndex = 5;
@@ -353,13 +350,11 @@
             // 
             // MasterGrid2
             // 
-            this.MasterGrid2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.MasterGrid2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.MasterGrid2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.MasterGrid2.Location = new System.Drawing.Point(3, 64);
+            this.MasterGrid2.Location = new System.Drawing.Point(3, 53);
             this.MasterGrid2.Name = "MasterGrid2";
-            this.MasterGrid2.Size = new System.Drawing.Size(466, 540);
+            this.MasterGrid2.Size = new System.Drawing.Size(608, 540);
             this.MasterGrid2.TabIndex = 34;
             this.MasterGrid2.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.MasterGrid2_DataBindingComplete);
             this.MasterGrid2.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.MasterGrid2_DataError);
@@ -379,12 +374,13 @@
             // 
             // AblaufStart
             // 
-            this.AblaufStart.Location = new System.Drawing.Point(156, 21);
+            this.AblaufStart.BackColor = System.Drawing.Color.SkyBlue;
+            this.AblaufStart.Location = new System.Drawing.Point(20, 21);
             this.AblaufStart.Name = "AblaufStart";
-            this.AblaufStart.Size = new System.Drawing.Size(75, 23);
+            this.AblaufStart.Size = new System.Drawing.Size(211, 23);
             this.AblaufStart.TabIndex = 30;
             this.AblaufStart.Text = "Start";
-            this.AblaufStart.UseVisualStyleBackColor = true;
+            this.AblaufStart.UseVisualStyleBackColor = false;
             this.AblaufStart.Click += new System.EventHandler(this.AblaufStart_Click);
             // 
             // tabSequenzedit
@@ -395,7 +391,7 @@
             this.tabSequenzedit.Controls.Add(this.SequenzeditorGrid);
             this.tabSequenzedit.Location = new System.Drawing.Point(4, 22);
             this.tabSequenzedit.Name = "tabSequenzedit";
-            this.tabSequenzedit.Size = new System.Drawing.Size(583, 744);
+            this.tabSequenzedit.Size = new System.Drawing.Size(614, 744);
             this.tabSequenzedit.TabIndex = 3;
             this.tabSequenzedit.Text = "Sequenzeditor";
             this.tabSequenzedit.UseVisualStyleBackColor = true;
@@ -431,13 +427,11 @@
             // 
             // SequenzeditorGrid
             // 
-            this.SequenzeditorGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SequenzeditorGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.SequenzeditorGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.SequenzeditorGrid.Location = new System.Drawing.Point(0, 51);
+            this.SequenzeditorGrid.Location = new System.Drawing.Point(3, 53);
             this.SequenzeditorGrid.Name = "SequenzeditorGrid";
-            this.SequenzeditorGrid.Size = new System.Drawing.Size(435, 441);
+            this.SequenzeditorGrid.Size = new System.Drawing.Size(608, 537);
             this.SequenzeditorGrid.TabIndex = 0;
             this.SequenzeditorGrid.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.SequenzeditorGrid_CellValidated);
             this.SequenzeditorGrid.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.SequenzeditorGrid_DefaultValuesNeeded);
@@ -466,12 +460,11 @@
             // 
             // SequenzenGrid
             // 
-            this.SequenzenGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SequenzenGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.SequenzenGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.SequenzenGrid.Location = new System.Drawing.Point(1, 3);
+            this.SequenzenGrid.Location = new System.Drawing.Point(3, 53);
             this.SequenzenGrid.Name = "SequenzenGrid";
-            this.SequenzenGrid.Size = new System.Drawing.Size(464, 500);
+            this.SequenzenGrid.Size = new System.Drawing.Size(608, 537);
             this.SequenzenGrid.TabIndex = 0;
             this.SequenzenGrid.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.SequenzenGrid_UserDeletingRow);
             this.SequenzenGrid.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SequenzenGrid_MouseClick);
@@ -1047,7 +1040,7 @@
             this.tabProben.Controls.Add(this.groupBox6);
             this.tabProben.Location = new System.Drawing.Point(4, 22);
             this.tabProben.Name = "tabProben";
-            this.tabProben.Size = new System.Drawing.Size(583, 744);
+            this.tabProben.Size = new System.Drawing.Size(614, 744);
             this.tabProben.TabIndex = 7;
             this.tabProben.Text = "Proben";
             this.tabProben.UseVisualStyleBackColor = true;
@@ -1246,13 +1239,11 @@
             // 
             // MasterGrid
             // 
-            this.MasterGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.MasterGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.MasterGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.MasterGrid.Location = new System.Drawing.Point(3, 53);
             this.MasterGrid.Name = "MasterGrid";
-            this.MasterGrid.Size = new System.Drawing.Size(466, 540);
+            this.MasterGrid.Size = new System.Drawing.Size(608, 540);
             this.MasterGrid.TabIndex = 2;
             this.MasterGrid.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.MasterGrid_DefaultValuesNeeded_1);
             // 
@@ -1265,6 +1256,20 @@
             // 
             this.Column1.HeaderText = "Nr.:";
             this.Column1.Name = "Column1";
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.btnLiveChart);
+            this.groupBox8.Controls.Add(this.btnNeueMessung);
+            this.groupBox8.Controls.Add(this.button2);
+            this.groupBox8.Controls.Add(this.btnChart);
+            this.groupBox8.Controls.Add(this.Man_Messung);
+            this.groupBox8.Controls.Add(this.Messung_Stopp);
+            this.groupBox8.Location = new System.Drawing.Point(447, 32);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(151, 210);
+            this.groupBox8.TabIndex = 36;
+            this.groupBox8.TabStop = false;
             // 
             // Form1
             // 
@@ -1318,6 +1323,7 @@
             this.tabMastersequenz.ResumeLayout(false);
             this.tabMastersequenz.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MasterGrid)).EndInit();
+            this.groupBox8.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1434,6 +1440,7 @@
         public System.Windows.Forms.DataGridView MasterGrid;
         public System.Windows.Forms.DataGridView MasterGrid2;
         public System.Windows.Forms.ComboBox cmbMastersequenz;
+        private System.Windows.Forms.GroupBox groupBox8;
 
 
     }

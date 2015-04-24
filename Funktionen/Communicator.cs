@@ -297,6 +297,7 @@ namespace PharMS_Steuerung.Funktionen
         private void BackgroundWorkerMasterEinzelbefehle_DoWork(object sender, DoWorkEventArgs e)
         {
             oComschnitstelle.SendToCOM("p2;1", true);
+            sExpectedStatus = "Z";
             Execute_MasterSingleCommands();
             oComschnitstelle.SendToCOM("p2;0", true);
         }
@@ -304,6 +305,7 @@ namespace PharMS_Steuerung.Funktionen
         private void BackgroundWorkerEinzelbefehle_DoWork(object sender, DoWorkEventArgs e)
         {
             oComschnitstelle.SendToCOM("p2;1", true);
+            sExpectedStatus = "Z";
             Execute_SingleCommands((int)e.Argument);
             oComschnitstelle.SendToCOM("p2;0", true);
         }
@@ -680,6 +682,16 @@ namespace PharMS_Steuerung.Funktionen
             IDs = null;
             DataTable dt = DBMain.GetGroupedMasterablauf();
             dt.DefaultView.Sort = "Reihenfolge_Master ASC";
+
+
+            do
+            {//um sicher zu gehen dass das Gerät empfangsbereit ist
+                if (Abbruch == true) return;
+                if (!GlobalVar.IsTest) AbfrageStatus(); 
+                if (!GlobalVar.IsTest) Thread.Sleep(2000); 
+            } while (oComschnitstelle.bereit == false);
+
+            if (!GlobalVar.IsTest) Thread.Sleep(2000); //Hat manchmal probleme mit den ersten Befehl (wird nicht ausgeführt)
             foreach (DataRow row in dt.Rows)
             {
                 string Name = row.ItemArray[0].ToString();
@@ -695,7 +707,7 @@ namespace PharMS_Steuerung.Funktionen
                 {
                     if (Abbruch == true) return;
                     FormLog.AddLog("Masterzyklus: " + (j + 1).ToString());
-                    //FormLog.SetLabelForMaster("Masterzyklus: " + (j + 1).ToString());
+                    FormLog.SetLabelForMaster("Masterzyklus: " + (j + 1).ToString());
                     foreach (int ID in IDs)
                     {
                         string SequenzName = DBMain.GetSequenzNameByID(ID);
@@ -712,7 +724,7 @@ namespace PharMS_Steuerung.Funktionen
                             MessageBox.Show("Beim Zugriff auf die Datenbank trat folgende Exception auf (Nr.105): " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         FormLog.AddLog("Starte Sequenz mit ID: " + SequenzName);
-                        //  FormLog.SetLabelForSequenz(SequenzName);
+                        FormLog.SetLabelForSequenz(SequenzName);
                         for (int i = 0; i < lstCommands.Count(); i++)
                         {
                             if (Abbruch == true) return;
@@ -751,7 +763,7 @@ namespace PharMS_Steuerung.Funktionen
                                         {
                                             oComschnitstelle.SendToCOM(lstCommands[i], false);
                                             tmrResponsetimer.Start();
-                                            if (!GlobalVar.IsTest) System.Threading.Thread.Sleep(1000);
+                                            if (!GlobalVar.IsTest) System.Threading.Thread.Sleep(1500);
                                             bLock = true;
                                         }
                                     } while (oComschnitstelle.bereit == false); //Somit wartet er bis das erwartete Z den Port für bereit erklärt, die Befehle M und W benötigen keine explizites warten
