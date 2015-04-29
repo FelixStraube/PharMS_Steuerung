@@ -64,8 +64,12 @@ namespace PharMS_Steuerung.Funktionen
         }
         public void SaveLog()
         {
-
-            File.WriteAllText("LogCOM-" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm") + ".txt", FormLog.GetLog());
+            bool OrdnerExisitiert = Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "Logs");
+            if (!OrdnerExisitiert)
+            {
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "Logs");
+            }
+            File.WriteAllText("Logs/LogCOM-" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm") + ".txt", FormLog.GetLog());
             //File.WriteAllLines("LogCOM.txt", FormLog.GetLog());
         }
 
@@ -297,22 +301,27 @@ namespace PharMS_Steuerung.Funktionen
         private void BackgroundWorkerMasterEinzelbefehle_DoWork(object sender, DoWorkEventArgs e)
         {
             oComschnitstelle.SendToCOM("p2;1", true);
+            FormLog.AddLog("Aktueller Schnellbefehl : p2;1");
             sExpectedStatus = "Z";
             Execute_MasterSingleCommands();
             oComschnitstelle.SendToCOM("p2;0", true);
+            FormLog.AddLog("Aktueller Schnellbefehl : p2;0");
         }
 
         private void BackgroundWorkerEinzelbefehle_DoWork(object sender, DoWorkEventArgs e)
         {
             oComschnitstelle.SendToCOM("p2;1", true);
+            FormLog.AddLog("Aktueller Schnellbefehl : p2;1");
             sExpectedStatus = "Z";
             Execute_SingleCommands((int)e.Argument);
             oComschnitstelle.SendToCOM("p2;0", true);
+            FormLog.AddLog("Aktueller  Schnellbefehl : p2;0");
         }
         private void BackgroundWorkerEinzelbefehle_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             FormLog.AddLog("Completed BackgroundWorkerEinzelbefehle" + "    " + System.DateTime.Now.ToString());
             IsMasterThreadActiv = false;
+            SaveLog();
             // MessageBox.Show("Masterablauf erfoglreich absolviert!");
         }
 
@@ -374,8 +383,10 @@ namespace PharMS_Steuerung.Funktionen
                 bZyklusActive = false;
             }
             oComschnitstelle.SendToCOM("p1,0", true);
+            FormLog.AddLog("Aktueller Schnellbefehl : p2;0");
             System.Threading.Thread.Sleep(500);
             oComschnitstelle.SendToCOM("U000", true);
+            FormLog.AddLog("Aktueller Schnellbefehl : U000");
             bStopTimer = false;
         }
 
@@ -731,7 +742,7 @@ namespace PharMS_Steuerung.Funktionen
                             //Pufferzeit mitschicken wenn der Befehl lange zum abarbeiten braucht und eine eventbehandlung stattfindet, wenn der Thread fertig ist
                             Boolean bLock = false;
 
-                            FormLog.AddLog("Akuteller Befehl : " + lstCommands[i]);
+                            FormLog.AddLog("Aktueller  Befehl : " + lstCommands[i]);
                             if (lstCommands[i][0] == 'W')
                             {
                                 string[] sTime = lstCommands[i].Split(',');
@@ -777,13 +788,13 @@ namespace PharMS_Steuerung.Funktionen
                                 if (!GlobalVar.IsTest) Thread.Sleep(2000); //um zu verhindern dass das Gerät mit Abfragen zugespamt wird (führt sonst zu fehlern)
                             } while (oComschnitstelle.bereit == false);
 
-                            FormLog.AddLog("Akuteller Befehl abgearbeitet: " + lstCommands[i]);
+                            FormLog.AddLog("Aktueller  Befehl abgearbeitet: " + lstCommands[i]);
                         }
                         FormLog.AddLog("Beende Sequenz");
                     }
                 }
                 FormLog.AddLog("Ende Masterablauf" + DateTime.Now);
-                SaveLog();
+                //SaveLog();
             }
         }
 
@@ -828,7 +839,7 @@ namespace PharMS_Steuerung.Funktionen
                 //Pufferzeit mitschicken wenn der Befehl lange zum abarbeiten braucht und eine eventbehandlung stattfindet, wenn der Thread fertig ist
                 Boolean bLock = false;
 
-                FormLog.AddLog("Akuteller Befehl : " + lstCommands[i]);
+                FormLog.AddLog("Aktueller  Befehl : " + lstCommands[i]);
                 if (lstCommands[i][0] == 'W')
                 {
                     string[] sTime = lstCommands[i].Split(',');
@@ -872,7 +883,7 @@ namespace PharMS_Steuerung.Funktionen
                     if (!GlobalVar.IsTest) Thread.Sleep(2000); //um zu verhindern dass das Gerät mit Abfragen zugespamt wird (führt sonst zu fehlern)
                 } while (oComschnitstelle.bereit == false);
 
-                FormLog.AddLog("Akuteller Befehl abgearbeitet: " + lstCommands[i]);
+                FormLog.AddLog("Aktueller  Befehl abgearbeitet: " + lstCommands[i]);
             }
             FormLog.AddLog("Beende Sequenz");
 
